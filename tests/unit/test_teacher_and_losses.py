@@ -1,0 +1,130 @@
+from copy import deepcopy
+from pathlib import Path
+
+import numpy as np
+import pytest
+import torch
+
+from malr.models.patchtst import PatchTSTCore
+from malr.models.recovery import MissingAwareRecovery
+from malr.models.relations import HistoricalRelation
+from malr.models.stage1 import ModelVariant, Stage1Model, initialize_from_clean_checkpoint
+from malr.prototypes.bank import PrototypeBank, source_checksum
+from malr.training.checkpoints import load_checkpoint, save_checkpoint
+from malr.training.losses import Stage1Loss, forecast_mse, latent_recovery_mse
+
+
+def test_recovery_loss_covers_only_damaged_nonpadding_patches():
+    output = torch.tensor([[[[1.0], [2.0], [3.0]]]])
+    target = torch.zeros_like(output)
+    state = torch.tensor([[[0, 1, 2]]])
+    valid = torch.tensor([[[True, True, False]]])
+
+    loss = latent_recovery_mse(output, target, state, valid)
+
+    assert loss.item() == pytest.approx(4.0)
+
+
+def test_empty_recovery_loss_is_differentiable_zero():
+    output = torch.randn(2, 1, 3, 4, requires_grad=True)
+    target = torch.zeros_like(output)
+    state = torch.zeros(2, 1, 3, dtype=torch.long)
+    valid = torch.ones_like(state, dtype=torch.bool)
+
+    loss = latent_recovery_mse(output, target, state, valid)
+    loss.backward()
+
+    assert loss.item() == 0.0
+    torch.testing.assert_close(output.grad, torch.zeros_like(output))
+
+
+def test_stage1_total_contains_mse_not_mae():
+    prediction = torch.tensor([0.0, 2.0])
+    target = torch.tensor([0.0, 0.0])
+    recovery = prediction.sum() * 0 + 3.0
+    result = Stage1Loss.create(prediction, target, recovery, damaged_patch_count=1, lambda_rec=2.0)
+
+    assert forecast_mse(prediction, target).item() == pytest.approx(2.0)
+    assert result.total.item() == pytest.approx(8.0)
+
+
+def _empty_bank() -> PrototypeBank:
+    source = np.zeros((64, 1), dtype=np.float64)
+    return PrototypeBank(
+        dataset="fixture",
+        train_end=64,
+        source_checksum=source_checksum(source),
+        config_sha256="fixture",
+        records=((),),
+        factor_mean=np.zeros((1, 7)),
+        factor_std=np.ones((1, 7)),
+    )
+
+
+def _tiny_ours() -> Stage1Model:
+    core = PatchTSTCore(
+        c_in=1,
+        seq_len=32,
+        pred_len=4,
+        patch_len=16,
+        stride=8,
+        d_model=8,
+        n_heads=2,
+        d_ff=16,
+        n_layers=1,
+        dropout=0.0,
+    )
+    teacher = deepcopy(core.W_P)
+    historical = HistoricalRelation(_empty_bank(), teacher, topk=4)
+    recovery = MissingAwareRecovery(
+        c_in=1,
+        patch_num=core.patch_num,
+        patch_len=16,
+        d_model=8,
+        temporal_topk=2,
+        variable_topk=1,
+        historical_relation=historical,
+        use_historical=False,
+    )
+    model = Stage1Model(core, ModelVariant.OURS, recovery=recovery)
+    initialize_from_clean_checkpoint(model, deepcopy(core.state_dict()))
+    return model
+
+
+def test_teacher_target_uses_query_normalization_and_is_frozen():
+    model = _tiny_ours()
+    clean_raw = torch.full((1, 1, 4, 16), 12.0)
+    mean = torch.tensor([[10.0]])
+    std = torch.tensor([[2.0]])
+
+    target = model.teacher_target(clean_raw, mean, std)
+    expected = model.teacher_projection(torch.ones_like(clean_raw))
+
+    torch.testing.assert_close(target, expected)
+    assert not target.requires_grad
+    assert all(not parameter.requires_grad for parameter in model.teacher_projection.parameters())
+
+
+def test_evaluation_rejects_clean_teacher_input():
+    model = _tiny_ours().eval()
+    patch_count = model.core.patch_num
+    with pytest.raises(ValueError, match="training-only"):
+        model(
+            torch.zeros(1, 1, patch_count, 16),
+            torch.zeros(1, 1, patch_count, 16, dtype=torch.bool),
+            torch.zeros(1, 1, patch_count),
+            torch.full((1, 1, patch_count), 2, dtype=torch.long),
+            torch.zeros(1, 1),
+            torch.ones(1, 1),
+            clean_raw_patches=torch.zeros(1, 1, patch_count, 16),
+        )
+
+
+def test_checkpoint_metadata_is_validated(tmp_path: Path):
+    path = tmp_path / "clean.pt"
+    save_checkpoint(path, {"weight": torch.ones(1)}, {"dataset": "ETTh1", "hash": "abc"})
+    restored = load_checkpoint(path, expected_metadata={"dataset": "ETTh1", "hash": "abc"})
+    torch.testing.assert_close(restored["model_state"]["weight"], torch.ones(1))
+
+    with pytest.raises(ValueError, match="metadata"):
+        load_checkpoint(path, expected_metadata={"dataset": "Weather"})
