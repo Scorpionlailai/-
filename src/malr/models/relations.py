@@ -6,10 +6,10 @@ from math import sqrt
 import numpy as np
 import torch
 from torch import Tensor, nn
+from torch.nn import functional as F
 
 from malr.data.patching import PATCH_OBSERVED
 from malr.prototypes.bank import PrototypeBank
-from malr.prototypes.factors import compute_context_factors
 
 
 @dataclass(frozen=True)
@@ -187,6 +187,65 @@ class HistoricalRelation(nn.Module):
         self.patch_len = patch_len
         self.patch_stride = patch_stride
         self.eps = eps
+        maximum_prototypes = max(
+            (len(records) for records in bank.records), default=0
+        )
+        padded_prototypes = max(maximum_prototypes, 1)
+        variable_count = len(bank.records)
+        prototype_factors = np.zeros(
+            (variable_count, padded_prototypes, 7), dtype=np.float32
+        )
+        prototype_available = np.zeros(
+            (variable_count, padded_prototypes, 7), dtype=np.bool_
+        )
+        prototype_centers = np.zeros(
+            (variable_count, padded_prototypes, patch_len), dtype=np.float32
+        )
+        prototype_exists = np.zeros(
+            (variable_count, padded_prototypes), dtype=np.bool_
+        )
+        for variable_index, records in enumerate(bank.records):
+            for prototype_index, record in enumerate(records):
+                prototype_factors[variable_index, prototype_index] = (
+                    record.factors.values
+                )
+                prototype_available[variable_index, prototype_index] = (
+                    record.factors.available
+                )
+                prototype_centers[variable_index, prototype_index] = (
+                    record.raw_segment[record.center_slice]
+                )
+                prototype_exists[variable_index, prototype_index] = True
+        self.register_buffer(
+            "prototype_factors",
+            torch.from_numpy(prototype_factors),
+            persistent=False,
+        )
+        self.register_buffer(
+            "prototype_available",
+            torch.from_numpy(prototype_available),
+            persistent=False,
+        )
+        self.register_buffer(
+            "prototype_centers",
+            torch.from_numpy(prototype_centers),
+            persistent=False,
+        )
+        self.register_buffer(
+            "prototype_exists",
+            torch.from_numpy(prototype_exists),
+            persistent=False,
+        )
+        self.register_buffer(
+            "factor_mean",
+            torch.from_numpy(np.asarray(bank.factor_mean, dtype=np.float32)),
+            persistent=False,
+        )
+        self.register_buffer(
+            "factor_std",
+            torch.from_numpy(np.asarray(bank.factor_std, dtype=np.float32)),
+            persistent=False,
+        )
         for parameter in self.teacher.parameters():
             parameter.requires_grad_(False)
         self.teacher.eval()
@@ -197,36 +256,141 @@ class HistoricalRelation(nn.Module):
             return int(self.teacher.out_features)
         raise ValueError("teacher projection must expose out_features")
 
-    def _query_segment(
+    @staticmethod
+    def _masked_side_factors(
+        values: Tensor,
+        valid: Tensor,
+        indices: Tensor,
+    ) -> tuple[Tensor, Tensor, Tensor, Tensor, Tensor, Tensor]:
+        counts = valid.sum(dim=-1)
+        selected = torch.where(valid, values, torch.zeros_like(values))
+        safe_counts = counts.clamp_min(1).to(dtype=values.dtype)
+        mean = selected.sum(dim=-1) / safe_counts
+        mean_available = counts > 0
+
+        index_values = indices.to(device=values.device, dtype=values.dtype)
+        index_sum = torch.where(
+            valid, index_values, torch.zeros_like(index_values)
+        ).sum(dim=-1)
+        index_mean = index_sum / safe_counts
+        centered_index = index_values - index_mean.unsqueeze(-1)
+        centered_values = values - mean.unsqueeze(-1)
+        slope_denominator = torch.where(
+            valid, centered_index.square(), torch.zeros_like(values)
+        ).sum(dim=-1)
+        slope_numerator = torch.where(
+            valid,
+            centered_index * centered_values,
+            torch.zeros_like(values),
+        ).sum(dim=-1)
+        slope_available = counts >= 2
+        slope = torch.where(
+            slope_available,
+            slope_numerator / slope_denominator.clamp_min(
+                torch.finfo(values.dtype).eps
+            ),
+            torch.zeros_like(mean),
+        )
+
+        difference_valid = valid[..., :-1] & valid[..., 1:]
+        differences = values[..., 1:] - values[..., :-1]
+        difference_count = difference_valid.sum(dim=-1)
+        safe_difference_count = difference_count.clamp_min(1).to(values.dtype)
+        difference_mean = torch.where(
+            difference_valid, differences, torch.zeros_like(differences)
+        ).sum(dim=-1) / safe_difference_count
+        difference_variance = torch.where(
+            difference_valid,
+            (differences - difference_mean.unsqueeze(-1)).square(),
+            torch.zeros_like(differences),
+        ).sum(dim=-1) / safe_difference_count
+        volatility_available = difference_count > 0
+        volatility = torch.where(
+            volatility_available,
+            torch.sqrt(difference_variance),
+            torch.zeros_like(mean),
+        )
+        return (
+            mean,
+            mean_available,
+            slope,
+            slope_available,
+            volatility,
+            volatility_available,
+        )
+
+    def _batched_query_factors(
         self,
         context: Tensor,
         context_mask: Tensor,
-        batch_index: int,
-        variable_index: int,
-        patch_index: int,
-    ) -> tuple[np.ndarray, np.ndarray]:
-        raw_start = patch_index * self.patch_stride - 24
-        segment = np.zeros(64, dtype=np.float64)
-        valid = np.zeros(64, dtype=np.bool_)
-        source_start = max(raw_start, 0)
-        source_stop = min(raw_start + 64, context.shape[1])
-        if source_start < source_stop:
-            target_start = source_start - raw_start
-            target_stop = target_start + source_stop - source_start
-            segment[target_start:target_stop] = (
-                context[batch_index, source_start:source_stop, variable_index]
-                .detach()
-                .cpu()
-                .numpy()
-            )
-            valid[target_start:target_stop] = (
-                context_mask[batch_index, source_start:source_stop, variable_index]
-                .detach()
-                .cpu()
-                .numpy()
-            )
-        valid[24:40] = False
-        return segment, valid
+        patch_count: int,
+        train_std: Tensor,
+    ) -> tuple[Tensor, Tensor]:
+        context_by_variable = context.permute(0, 2, 1)
+        mask_by_variable = context_mask.permute(0, 2, 1).to(torch.bool)
+        required_length = (patch_count - 1) * self.patch_stride + 64
+        right_padding = required_length - (context.shape[1] + 24)
+        if right_padding < 0:
+            raise ValueError("context is longer than the configured patch geometry")
+        padded_context = F.pad(context_by_variable, (24, right_padding))
+        padded_mask = F.pad(mask_by_variable, (24, right_padding), value=False)
+        segments = padded_context.unfold(-1, 64, self.patch_stride)
+        valid = padded_mask.unfold(-1, 64, self.patch_stride)
+        if segments.shape[2] != patch_count:
+            raise ValueError("context and patch state geometry are inconsistent")
+
+        left_values, left_valid = segments[..., :24], valid[..., :24]
+        right_values, right_valid = segments[..., 40:], valid[..., 40:]
+        left = self._masked_side_factors(
+            left_values, left_valid, torch.arange(24, device=context.device)
+        )
+        right = self._masked_side_factors(
+            right_values,
+            right_valid,
+            torch.arange(40, 64, device=context.device),
+        )
+
+        left_positions = torch.arange(24, device=context.device)
+        left_last_index = torch.where(
+            left_valid,
+            left_positions,
+            torch.full_like(left_positions, -1),
+        ).max(dim=-1).values
+        right_positions = torch.arange(24, device=context.device)
+        right_first_index = torch.where(
+            right_valid,
+            right_positions,
+            torch.full_like(right_positions, 24),
+        ).min(dim=-1).values
+        boundary_available = (left_last_index >= 0) & (right_first_index < 24)
+        safe_left_index = left_last_index.clamp_min(0).unsqueeze(-1)
+        safe_right_index = right_first_index.clamp_max(23).unsqueeze(-1)
+        left_boundary = left_values.gather(-1, safe_left_index).squeeze(-1)
+        right_boundary = right_values.gather(-1, safe_right_index).squeeze(-1)
+        boundary_gap = torch.where(
+            boundary_available,
+            (right_boundary - left_boundary)
+            / train_std.to(context.dtype).view(1, -1, 1),
+            torch.zeros_like(left_boundary),
+        )
+
+        factor_values = torch.stack(
+            (left[0], left[2], left[4], right[0], right[2], right[4], boundary_gap),
+            dim=-1,
+        )
+        factor_available = torch.stack(
+            (
+                left[1],
+                left[3],
+                left[5],
+                right[1],
+                right[3],
+                right[5],
+                boundary_available,
+            ),
+            dim=-1,
+        )
+        return factor_values, factor_available
 
     def select(
         self,
@@ -266,73 +430,92 @@ class HistoricalRelation(nn.Module):
         )
 
         with torch.no_grad():
-            for batch_index in range(batch_size):
-                for variable_index, records in enumerate(self.bank.records):
-                    if not records:
-                        continue
-                    factor_mean = self.bank.factor_mean[variable_index]
-                    factor_std = self.bank.factor_std[variable_index]
-                    for patch_index in range(patch_count):
-                        if int(state[batch_index, variable_index, patch_index]) == PATCH_OBSERVED:
-                            continue
-                        segment, valid = self._query_segment(
-                            context,
-                            context_mask,
-                            batch_index,
-                            variable_index,
-                            patch_index,
-                        )
-                        query_factors = compute_context_factors(
-                            segment,
-                            valid,
-                            center_slice=slice(24, 40),
-                            train_std=float(train_std[variable_index]),
-                        )
-                        query_values = (query_factors.values - factor_mean) / factor_std
-                        distances: list[tuple[float, int]] = []
-                        for prototype_id, record in enumerate(records):
-                            shared = query_factors.available & record.factors.available
-                            if not shared.any():
-                                continue
-                            prototype_values = (
-                                record.factors.values - factor_mean
-                            ) / factor_std
-                            distance = float(
-                                np.sqrt(np.mean((query_values[shared] - prototype_values[shared]) ** 2))
-                            )
-                            distances.append((distance, prototype_id))
-                        distances.sort(key=lambda item: (item[0], item[1]))
-                        chosen = distances[: self.topk]
-                        candidate_count[batch_index, variable_index, patch_index] = len(distances)
-                        if not chosen:
-                            continue
-                        distance_tensor = context.new_tensor([item[0] for item in chosen])
-                        inverse = 1.0 / (distance_tensor + self.eps)
-                        weights = inverse / inverse.sum()
-                        centers = context.new_tensor(
-                            np.stack(
-                                [
-                                    records[item[1]].raw_segment[24:40]
-                                    for item in chosen
-                                ]
-                            )
-                        )
-                        centers = (
-                            centers - query_mean[batch_index, variable_index]
-                        ) / query_std[batch_index, variable_index]
-                        prototype_latents = self.teacher(centers)
-                        count = len(chosen)
-                        message[batch_index, variable_index, patch_index] = (
-                            weights.unsqueeze(-1) * prototype_latents
-                        ).sum(dim=0)
-                        selected[batch_index, variable_index, patch_index, :count] = torch.tensor(
-                            [item[1] for item in chosen],
-                            dtype=torch.long,
-                            device=context.device,
-                        )
-                        selected_weights[
-                            batch_index, variable_index, patch_index, :count
-                        ] = weights
+            if not bool(self.prototype_exists.any()):
+                return RelationSelection(
+                    message, selected_weights, selected, candidate_count
+                )
+            query_factors, query_available = self._batched_query_factors(
+                context, context_mask, patch_count, train_std
+            )
+            factor_mean = self.factor_mean.to(dtype=context.dtype)
+            factor_std = self.factor_std.to(dtype=context.dtype)
+            standardized_query = (
+                query_factors - factor_mean.view(1, variable_count, 1, 7)
+            ) / factor_std.view(1, variable_count, 1, 7)
+            standardized_prototypes = (
+                self.prototype_factors.to(dtype=context.dtype)
+                - factor_mean.unsqueeze(1)
+            ) / factor_std.unsqueeze(1)
+            shared = (
+                query_available.unsqueeze(-2)
+                & self.prototype_available.unsqueeze(0).unsqueeze(2)
+            )
+            shared_count = shared.sum(dim=-1)
+            difference = (
+                standardized_query.unsqueeze(-2)
+                - standardized_prototypes.unsqueeze(0).unsqueeze(2)
+            )
+            distances = torch.sqrt(
+                torch.where(shared, difference.square(), torch.zeros_like(difference)).sum(
+                    dim=-1
+                )
+                / shared_count.clamp_min(1).to(context.dtype)
+            )
+            eligible = (
+                (shared_count > 0)
+                & self.prototype_exists.unsqueeze(0).unsqueeze(2)
+                & (state != PATCH_OBSERVED).unsqueeze(-1)
+            )
+            candidate_count = eligible.sum(dim=-1)
+            _, chosen = stable_masked_topk(
+                distances,
+                eligible,
+                self.topk,
+                largest=False,
+                normalize="none",
+            )
+            actual_width = chosen.shape[-1]
+            safe_chosen = chosen.clamp_min(0)
+            chosen_eligible = eligible.gather(-1, safe_chosen) & (chosen >= 0)
+            chosen_distances = distances.gather(-1, safe_chosen)
+            inverse = torch.where(
+                chosen_eligible,
+                1.0 / (chosen_distances + self.eps),
+                torch.zeros_like(chosen_distances),
+            )
+            weights = inverse / inverse.sum(dim=-1, keepdim=True).clamp_min(
+                torch.finfo(context.dtype).tiny
+            )
+
+            centers = self.prototype_centers.to(dtype=context.dtype)
+            centers = centers.unsqueeze(0).unsqueeze(2).expand(
+                batch_size, variable_count, patch_count, -1, self.patch_len
+            )
+            chosen_centers = centers.gather(
+                3,
+                safe_chosen.unsqueeze(-1).expand(
+                    batch_size,
+                    variable_count,
+                    patch_count,
+                    actual_width,
+                    self.patch_len,
+                ),
+            )
+            normalized_centers = (
+                chosen_centers - query_mean[:, :, None, None, None]
+            ) / query_std[:, :, None, None, None]
+            prototype_latents = self.teacher(
+                normalized_centers.reshape(-1, self.patch_len)
+            ).reshape(
+                batch_size,
+                variable_count,
+                patch_count,
+                actual_width,
+                self.d_model,
+            )
+            message = (weights.unsqueeze(-1) * prototype_latents).sum(dim=-2)
+            selected[..., :actual_width] = chosen
+            selected_weights[..., :actual_width] = weights
         return RelationSelection(message, selected_weights, selected, candidate_count)
 
     def forward(

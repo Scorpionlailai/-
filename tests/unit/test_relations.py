@@ -128,3 +128,75 @@ def test_empty_historical_bank_returns_zero_message():
         torch.ones(1),
     )
     torch.testing.assert_close(message, torch.zeros_like(message))
+
+
+def test_historical_retrieval_does_not_transfer_each_query_to_cpu(monkeypatch):
+    relation = HistoricalRelation(
+        _bank_with_centers(10.0, 20.0), nn.Linear(16, 4), topk=2
+    )
+    context = torch.arange(96, dtype=torch.float32).view(1, 96, 1)
+    context_mask = torch.ones_like(context, dtype=torch.bool)
+    state = torch.ones((1, 1, 12), dtype=torch.long)
+
+    def reject_cpu_transfer(self, *args, **kwargs):
+        raise AssertionError("historical queries must remain in batched tensor form")
+
+    monkeypatch.setattr(torch.Tensor, "cpu", reject_cpu_transfer)
+    result = relation.select(
+        context,
+        context_mask,
+        state,
+        torch.zeros(1, 1),
+        torch.ones(1, 1),
+        torch.ones(1),
+    )
+
+    assert result.message.shape == (1, 1, 12, 4)
+
+
+def test_historical_retrieval_broadcasts_normalization_over_a_batch():
+    relation = HistoricalRelation(
+        _bank_with_centers(10.0, 20.0), nn.Linear(16, 4), topk=2
+    )
+    context = torch.arange(192, dtype=torch.float32).view(2, 96, 1)
+    context_mask = torch.ones_like(context, dtype=torch.bool)
+    state = torch.ones((2, 1, 12), dtype=torch.long)
+
+    result = relation.select(
+        context,
+        context_mask,
+        state,
+        torch.tensor([[0.0], [100.0]]),
+        torch.tensor([[1.0], [2.0]]),
+        torch.ones(1),
+    )
+
+    assert result.message.shape == (2, 1, 12, 4)
+
+
+def test_batched_query_factors_match_the_reference_definition():
+    relation = HistoricalRelation(
+        _bank_with_centers(10.0, 20.0), nn.Linear(16, 4), topk=2
+    )
+    context = torch.arange(96, dtype=torch.float32).view(1, 96, 1)
+    context_mask = torch.ones_like(context, dtype=torch.bool)
+    context_mask[:, 20:23] = False
+    values, available = relation._batched_query_factors(
+        context, context_mask, patch_count=12, train_std=torch.tensor([2.0])
+    )
+
+    patch_index = 5
+    raw_start = patch_index * 8 - 24
+    reference = compute_context_factors(
+        context[0, raw_start : raw_start + 64, 0].numpy(),
+        context_mask[0, raw_start : raw_start + 64, 0].numpy(),
+        center_slice=slice(24, 40),
+        train_std=2.0,
+    )
+
+    np.testing.assert_allclose(
+        values[0, 0, patch_index].numpy(), reference.values, rtol=1e-6, atol=1e-6
+    )
+    np.testing.assert_array_equal(
+        available[0, 0, patch_index].numpy(), reference.available
+    )
