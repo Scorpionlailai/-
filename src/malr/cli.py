@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 from copy import deepcopy
 from dataclasses import asdict
+from datetime import datetime, timezone
+from hashlib import sha256
 import json
 from pathlib import Path
 from typing import Any
@@ -22,6 +24,14 @@ from malr.data.masks import (
 from malr.data.normalization import TrainVariableStats, fit_train_variable_stats
 from malr.data.splits import DatasetProtocol, protocol_for
 from malr.data.windows import build_window_index
+from malr.evaluation.evaluator import evaluate_model
+from malr.evaluation.metrics import degradation_recovery_rate
+from malr.evaluation.report import (
+    ResultRecord,
+    file_sha256,
+    write_json_atomic,
+    write_result_record,
+)
 from malr.models.patchtst import PatchTSTCore
 from malr.models.recovery import MissingAwareRecovery
 from malr.models.relations import HistoricalRelation
@@ -316,6 +326,39 @@ def run_training(
     result = trainer.fit(training_batches, validation_batches)
     output = asdict(result)
     output["best_checkpoint"] = str(result.best_checkpoint)
+    checkpoint_digest = file_sha256(result.best_checkpoint)
+    run_identity = json.dumps(
+        {
+            "dataset": dataset,
+            "variant": selected.value,
+            "config_hash": metadata["config_hash"],
+            "checkpoint_sha256": checkpoint_digest,
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    run_id = f"{dataset}-{selected.value}-{sha256(run_identity).hexdigest()[:12]}"
+    manifest = {
+        "format_version": 1,
+        "run_id": run_id,
+        "dataset": dataset,
+        "variant": selected.value,
+        "checkpoint": str(result.best_checkpoint.resolve()),
+        "checkpoint_sha256": checkpoint_digest,
+        "clean_checkpoint": (
+            str(clean_checkpoint_path.resolve())
+            if clean_checkpoint_path is not None
+            else None
+        ),
+        "bank": str(bank_path.resolve()) if bank_path is not None else None,
+        "metadata": run_metadata,
+        "training": output,
+        "ablations": asdict(config.ablations),
+    }
+    manifest_path = _artifact_path(artifacts, "runs", f"{run_id}.json")
+    write_json_atomic(manifest_path, manifest)
+    output["run_id"] = run_id
+    output["run_manifest"] = str(manifest_path)
     return output
 
 
@@ -367,6 +410,17 @@ def _command_make_eval_masks(args: argparse.Namespace) -> None:
 
 def _command_train(args: argparse.Namespace, variant: ModelVariant) -> None:
     config, series, protocol = _load_context(args.config, args.dataset)
+    clean_checkpoint = getattr(args, "clean_checkpoint", None)
+    if clean_checkpoint is None and variant in {
+        ModelVariant.MISSING_PRETRAINED,
+        ModelVariant.OURS,
+    }:
+        clean_checkpoint = _artifact_path(
+            args.artifacts, "checkpoints", f"{args.dataset}_clean.pt"
+        )
+    bank = getattr(args, "bank", None)
+    if bank is None and variant is ModelVariant.OURS:
+        bank = _artifact_path(args.artifacts, "banks", f"{args.dataset}.npz")
     result = run_training(
         config,
         series,
@@ -375,8 +429,8 @@ def _command_train(args: argparse.Namespace, variant: ModelVariant) -> None:
         variant,
         args.artifacts,
         device=args.device,
-        clean_checkpoint_path=getattr(args, "clean_checkpoint", None),
-        bank_path=getattr(args, "bank", None),
+        clean_checkpoint_path=clean_checkpoint,
+        bank_path=bank,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
@@ -385,13 +439,17 @@ def _command_build_bank(args: argparse.Namespace) -> None:
     config, series, protocol = _load_context(args.config, args.dataset)
     metadata = _base_metadata(config, series, protocol, args.dataset)
     expected = {key: metadata[key] for key in ("dataset", "config_hash", "train_checksum")}
-    _load_dependency(args.clean_checkpoint, expected)
+    clean_checkpoint = args.clean_checkpoint or _artifact_path(
+        args.artifacts, "checkpoints", f"{args.dataset}_clean.pt"
+    )
+    _load_dependency(clean_checkpoint, expected)
     prototype = config.prototype
     bank = build_prototype_bank(
         series.values[: protocol.train.end],
         train_end=protocol.train.end,
         dataset=args.dataset,
         config_sha256=metadata["config_hash"],
+        allowed_train_end=protocol.train.end,
         window=prototype.matrix_profile_window,
         scan_stride=prototype.scan_stride * config.patch.stride,
         exclusion=prototype.matrix_profile_exclusion,
@@ -413,6 +471,176 @@ def _command_build_bank(args: argparse.Namespace) -> None:
             indent=2,
         )
     )
+
+
+def _read_json(path: Path) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"invalid JSON artifact: {path}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"JSON artifact must contain an object: {path}")
+    return payload
+
+
+def _find_variant_result(
+    artifacts: Path, dataset: str, variant: str
+) -> dict[str, Any] | None:
+    result_directory = _artifact_path(artifacts, "evaluations", "")
+    matches = []
+    for path in result_directory.glob("*.json"):
+        payload = _read_json(path)
+        if payload.get("dataset") == dataset and payload.get("variant") == variant:
+            matches.append(payload)
+    if not matches:
+        return None
+    return sorted(matches, key=lambda item: str(item.get("timestamp_utc", "")))[-1]
+
+
+def _evaluate_manifest(
+    args: argparse.Namespace,
+    manifest: dict[str, Any],
+    *,
+    allow_existing: bool,
+) -> dict[str, Any]:
+    run_id = str(manifest["run_id"])
+    result_path = _artifact_path(args.artifacts, "evaluations", f"{run_id}.json")
+    if result_path.exists():
+        if allow_existing:
+            return _read_json(result_path)
+        raise ValueError(f"run {run_id!r} has already been evaluated")
+
+    config, series, protocol = _load_context(args.config, args.dataset)
+    if manifest.get("dataset") != args.dataset:
+        raise ValueError("run manifest dataset does not match evaluation dataset")
+    metadata = _base_metadata(config, series, protocol, args.dataset)
+    expected = {key: metadata[key] for key in ("dataset", "config_hash", "train_checksum")}
+    validate_dependency_metadata(manifest.get("metadata", {}), expected)
+    checkpoint_path = Path(manifest["checkpoint"])
+    if file_sha256(checkpoint_path) != manifest.get("checkpoint_sha256"):
+        raise ValueError("final checkpoint checksum mismatch")
+    checkpoint = _load_dependency(checkpoint_path, expected)
+    selected = ModelVariant(manifest["variant"])
+
+    clean_payload = None
+    if selected in {ModelVariant.MISSING_PRETRAINED, ModelVariant.OURS}:
+        clean_path_value = manifest.get("clean_checkpoint")
+        if not clean_path_value:
+            raise ValueError("run manifest lacks its clean checkpoint dependency")
+        clean_payload = _load_dependency(Path(clean_path_value), expected)
+    bank = None
+    bank_path = None
+    if selected is ModelVariant.OURS:
+        bank_value = manifest.get("bank")
+        if not bank_value:
+            raise ValueError("ours run manifest lacks its prototype bank")
+        bank_path = Path(bank_value)
+        bank = load_bank(
+            bank_path,
+            source_train=series.values[: protocol.train.end],
+            dataset=args.dataset,
+            config_sha256=metadata["config_hash"],
+        )
+    model = build_experiment_model(
+        config,
+        args.dataset,
+        selected,
+        clean_checkpoint=clean_payload,
+        bank=bank,
+    )
+    model.load_state_dict(checkpoint["model_state"], strict=True)
+
+    support_start, _, mask_expected = _mask_identity(
+        config, args.dataset, protocol, "test"
+    )
+    mask_path = _fixed_mask_path(args.artifacts, args.dataset, "test")
+    test_mask, mask_metadata = load_fixed_mask(mask_path, mask_expected)
+    stats = _train_stats(series, protocol)
+    refs = build_window_index(
+        protocol, "test", config.data.seq_len, config.data.pred_len
+    )
+    batches = iter_prepared_batches(
+        series.values,
+        refs,
+        test_mask,
+        mask_support_start=support_start,
+        train_stats=stats,
+        variant=selected,
+        batch_size=config.training.batch_size,
+        patch_len=config.patch.length,
+        patch_stride=config.patch.stride,
+    )
+    metrics = evaluate_model(model, batches, device=args.device)
+
+    clean_result = _find_variant_result(args.artifacts, args.dataset, "clean")
+    naive_result = _find_variant_result(args.artifacts, args.dataset, "missing")
+    drr_mse = drr_mae = None
+    if clean_result is not None and naive_result is not None:
+        drr_mse = degradation_recovery_rate(
+            clean=float(clean_result["mse"]),
+            naive=float(naive_result["mse"]),
+            ours=metrics.mse,
+        )
+        drr_mae = degradation_recovery_rate(
+            clean=float(clean_result["mae"]),
+            naive=float(naive_result["mae"]),
+            ours=metrics.mae,
+        )
+    training = manifest["training"]
+    record = ResultRecord(
+        run_id=run_id,
+        dataset=args.dataset,
+        variant=selected.value,
+        ablations={key: bool(value) for key, value in manifest["ablations"].items()},
+        mse=metrics.mse,
+        mae=metrics.mae,
+        drr_mse=drr_mse,
+        drr_mae=drr_mae,
+        final_rate=(
+            0.0 if selected is ModelVariant.CLEAN else mask_metadata.final_rate
+        ),
+        trainable_parameters=int(training["trainable_parameters"]),
+        training_seconds=float(training["training_seconds"]),
+        config_hash=metadata["config_hash"],
+        checkpoint_sha256=file_sha256(checkpoint_path),
+        mask_sha256=file_sha256(mask_path),
+        bank_sha256=file_sha256(bank_path) if bank_path is not None else None,
+        source_csv_sha256=file_sha256(series.source_path),
+        seed=config.training.seed,
+        timestamp_utc=datetime.now(timezone.utc).isoformat(),
+    )
+    write_result_record(record, result_path)
+    return asdict(record)
+
+
+def _latest_run_manifest(
+    artifacts: Path, dataset: str, variant: str
+) -> dict[str, Any]:
+    matches = []
+    for path in _artifact_path(artifacts, "runs", "").glob("*.json"):
+        payload = _read_json(path)
+        if payload.get("dataset") == dataset and payload.get("variant") == variant:
+            matches.append((path.stat().st_mtime_ns, payload))
+    if not matches:
+        raise ValueError(f"no finalized {variant} run found for {dataset}")
+    return sorted(matches, key=lambda item: item[0])[-1][1]
+
+
+def _command_evaluate(args: argparse.Namespace) -> None:
+    manifest_path = _artifact_path(args.artifacts, "runs", f"{args.run_id}.json")
+    manifest = _read_json(manifest_path)
+    if manifest.get("run_id") != args.run_id:
+        raise ValueError("run manifest identity mismatch")
+    if manifest.get("variant") == ModelVariant.OURS.value:
+        # A single final command evaluates the selected clean and naive baselines
+        # first when needed, enabling both DRRs without any model touching test twice.
+        for baseline_variant in (ModelVariant.CLEAN.value, ModelVariant.MISSING.value):
+            baseline = _latest_run_manifest(
+                args.artifacts, args.dataset, baseline_variant
+            )
+            _evaluate_manifest(args, baseline, allow_existing=True)
+    record = _evaluate_manifest(args, manifest, allow_existing=False)
+    print(json.dumps(record, ensure_ascii=False, indent=2))
 
 
 def _add_common(parser: argparse.ArgumentParser) -> None:
@@ -440,7 +668,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     bank = commands.add_parser("build-bank")
     _add_common(bank)
-    bank.add_argument("--clean-checkpoint", type=Path, required=True)
+    bank.add_argument("--clean-checkpoint", type=Path)
     bank.add_argument("--bank", type=Path)
     bank.set_defaults(handler=_command_build_bank)
 
@@ -460,14 +688,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     evaluate = commands.add_parser("evaluate")
     _add_common(evaluate)
-    evaluate.add_argument("--variant", choices=tuple(item.value for item in ModelVariant), required=True)
-    evaluate.add_argument("--checkpoint", type=Path, required=True)
+    evaluate.add_argument("--run-id", required=True)
     evaluate.add_argument("--device", default="cpu")
-    evaluate.set_defaults(
-        handler=lambda args: (_ for _ in ()).throw(
-            NotImplementedError("evaluation reporting is installed in Task 10")
-        )
-    )
+    evaluate.set_defaults(handler=_command_evaluate)
     return parser
 
 

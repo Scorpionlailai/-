@@ -105,6 +105,7 @@ def build_prototype_bank(
     source_train: ArrayLike,
     *,
     train_end: int,
+    allowed_train_end: int | None = None,
     dataset: str = "unknown",
     config_sha256: str | None = None,
     window: int = 64,
@@ -120,6 +121,8 @@ def build_prototype_bank(
         raise ValueError("source_train must have shape [train time, variables]")
     if values.shape[0] != train_end:
         raise ValueError("source_train must contain exactly the declared train interval")
+    if allowed_train_end is not None and train_end != allowed_train_end:
+        raise ValueError("prototype construction exceeds the declared train boundary")
     if not np.isfinite(values).all():
         raise ValueError("source_train must be finite")
     if window != 64 or scan_stride <= 0 or exclusion <= 0:

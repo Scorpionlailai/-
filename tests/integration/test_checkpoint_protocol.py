@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 import torch
 
 from malr.training.checkpoints import load_checkpoint
@@ -29,14 +30,10 @@ def test_incompatible_dependency_fails_before_model_factory_is_called():
         nonlocal called
         called = True
 
-    try:
+    with pytest.raises(ValueError, match="dependency metadata mismatch"):
         validate_dependency_metadata(
             {"dataset": "ETTh1", "config_hash": "old"},
             {"dataset": "Weather", "config_hash": "new"},
         )
-    except ValueError:
-        pass
-    else:
-        raise AssertionError("dependency mismatch was not rejected")
 
     assert called is False
