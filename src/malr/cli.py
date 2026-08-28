@@ -375,7 +375,7 @@ def _command_validate_data(args: argparse.Namespace) -> None:
                 "test": asdict(protocol.test),
                 "config_hash": config_sha256(config),
             },
-            ensure_ascii=False,
+            ensure_ascii=True,
             indent=2,
         )
     )
