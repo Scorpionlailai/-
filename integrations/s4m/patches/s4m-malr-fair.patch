@@ -1,0 +1,427 @@
+diff --git a/s4m/data_provider/data_factory.py b/s4m/data_provider/data_factory.py
+index 95c57da..d8d548f 100644
+--- a/s4m/data_provider/data_factory.py
++++ b/s4m/data_provider/data_factory.py
+@@ -20,6 +20,9 @@ data_dict = {
+ 
+ 
+ def data_provider(args, flag):
++    if getattr(args, 'fair_protocol', 0):
++        from malr_fair import fair_data_provider
++        return fair_data_provider(args, flag)
+     Data = data_dict[args.data]
+     timeenc = 0 if args.embed != 'timeF' else 1
+     if flag == 'test':
+@@ -59,4 +62,4 @@ def data_provider(args, flag):
+         shuffle=shuffle_flag,
+         num_workers=args.num_workers,
+         drop_last=True)
+-    return data_set, data_loader
+\ No newline at end of file
++    return data_set, data_loader
+diff --git a/s4m/experiments/exp_pretrain1.py b/s4m/experiments/exp_pretrain1.py
+index 43ea309..1daf768 100644
+--- a/s4m/experiments/exp_pretrain1.py
++++ b/s4m/experiments/exp_pretrain1.py
+@@ -1,4 +1,5 @@
+ import random
++import json
+ from thop import profile
+ 
+ from data_provider.data_factory import data_provider
+@@ -14,6 +15,16 @@ import wandb
+ import warnings
+ import numpy as np
+ import pandas as pd
++from pathlib import Path
++
++from malr_fair import (
++    MetricAccumulator,
++    authorize_test,
++    environment_identity,
++    file_sha256,
++    write_evaluation_result,
++    write_training_manifest,
++)
+ 
+ from torchstat import stat
+ 
+@@ -60,6 +71,19 @@ class Exp_Long_Term_Forecast(Exp_Basic):
+         return data_set, data_loader
+ 
+     def _select_optimizer(self):
++        if getattr(self.args, 'fair_protocol', 0):
++            if self.args.fair_optimizer == 'adam':
++                return optim.Adam(
++                    self.model.parameters(),
++                    lr=self.args.learning_rate,
++                    weight_decay=self.args.fair_weight_decay,
++                )
++            return optim.SGD(
++                self.model.parameters(),
++                lr=self.args.learning_rate,
++                momentum=0.9,
++                weight_decay=self.args.fair_weight_decay,
++            )
+         model_optim = optim.SGD(self.model.parameters(), lr = self.args.learning_rate, momentum=0.9,weight_decay=1e-5)
+         # model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+         return model_optim
+@@ -90,6 +114,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
+         return self.model
+ 
+     def vali(self, vali_data, vali_loader, criterion,epoch=0):
++        if getattr(self.args, 'fair_protocol', 0):
++            return self._fair_validate(vali_loader)['mse']
+         total_loss = []
+         f_dim = -1 if self.args.features == 'MS' else 0
+         self.model.eval()
+@@ -113,6 +139,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
+         return total_loss
+ 
+     def train(self, setting):
++        if getattr(self.args, 'fair_protocol', 0):
++            return self._fair_train(setting)
+         train_data, train_loader = self._get_data(flag='train')
+         # print(train_data.data_x)
+         vali_data, vali_loader = self._get_data(flag='val')
+@@ -201,6 +229,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
+         return self.model
+ 
+     def test(self, setting, test=0,epoch=0):
++        if getattr(self.args, 'fair_protocol', 0):
++            return self._fair_test(setting)
+         test_data, test_loader = self._get_data(flag='test')
+         f_dim = -1 if self.args.features == 'MS' else 0
+         criterion = self._select_criterion()
+@@ -283,6 +313,219 @@ class Exp_Long_Term_Forecast(Exp_Basic):
+ 
+         # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
+         return
++
++    def _fair_batch(self, batch):
++        (
++            seq_x,
++            seq_x_mask,
++            seq_y,
++            seq_y_mask,
++            seq_true_x,
++            seq_true_y,
++            max_idx,
++            min_idx,
++            max_value,
++            min_value,
++        ) = [value.float().to(self.device) for value in batch]
++        outputs = self.model(
++            seq_x,
++            seq_x_mask,
++            max_idx,
++            min_idx,
++            max_value,
++            min_value,
++        )
++        prediction = outputs[:, -self.args.pred_len:, :]
++        target = seq_true_y[:, -self.args.pred_len:, :]
++        return prediction, target
++
++    def _fair_initialize_bank(self):
++        if not self.args.no_renew:
++            self.model.mem_net.memory.init_bank()
++
++    def _fair_validate(self, loader):
++        accumulator = MetricAccumulator()
++        self.model.eval()
++        self.change_mode(0)
++        with torch.no_grad():
++            for batch in loader:
++                prediction, target = self._fair_batch(batch)
++                accumulator.update(prediction, target)
++        metrics = accumulator.compute()
++        self.model.train()
++        self.change_mode(1)
++        return metrics
++
++    def _fair_arguments(self):
++        payload = {}
++        for key, value in vars(self.args).items():
++            if value is None or isinstance(value, (str, int, float, bool)):
++                payload[key] = value
++            elif isinstance(value, (list, tuple)):
++                payload[key] = list(value)
++            else:
++                payload[key] = str(value)
++        return payload
++
++    def smoke(self):
++        train_data, train_loader = self._get_data(flag='train')
++        train_data.set_epoch(0)
++        self.model.train()
++        self.change_mode(1)
++        self._fair_initialize_bank()
++        batch = next(iter(train_loader))
++        tensors = [value.float().to(self.device) for value in batch]
++        self.model.warmup(
++            tensors[0], tensors[1], tensors[6], tensors[7], tensors[8], tensors[9]
++        )
++        prediction, target = self._fair_batch(batch)
++        loss = torch.mean((prediction - target) ** 2)
++        loss.backward()
++        print('FAIR_SMOKE_OK loss={:.8f}'.format(float(loss.detach().cpu())))
++        return float(loss.detach().cpu())
++
++    def _fair_train(self, setting):
++        if not self.args.fair_run_id:
++            raise ValueError('--fair_run_id is required for fair training')
++        train_data, train_loader = self._get_data(flag='train')
++        validation_data, validation_loader = self._get_data(flag='val')
++        run_root = Path(self.args.fair_run_dir).resolve()
++        checkpoint_dir = run_root / 'checkpoints' / self.args.fair_run_id
++        checkpoint_dir.mkdir(parents=True, exist_ok=True)
++        checkpoint_path = checkpoint_dir / 'checkpoint.pth'
++        manifest_path = run_root / 'runs' / f'{self.args.fair_run_id}.json'
++        if manifest_path.exists():
++            raise ValueError(f'run manifest already exists: {manifest_path}')
++
++        optimizer = self._select_optimizer()
++        criterion = self._select_criterion()
++        best_mse = float('inf')
++        best_mae = float('inf')
++        best_epoch = -1
++        patience_count = 0
++        started = time.perf_counter()
++
++        for epoch in range(self.args.train_epochs):
++            train_data.set_epoch(epoch)
++            self.model.train()
++            self.change_mode(1)
++            self._fair_initialize_bank()
++            train_losses = []
++            for index, batch in enumerate(train_loader):
++                optimizer.zero_grad()
++                if epoch == 0 and index == 0:
++                    tensors = [value.float().to(self.device) for value in batch]
++                    self.model.warmup(
++                        tensors[0], tensors[1], tensors[6], tensors[7],
++                        tensors[8], tensors[9]
++                    )
++                    continue
++                prediction, target = self._fair_batch(batch)
++                loss = criterion(prediction, target)
++                if not torch.isfinite(loss):
++                    raise ValueError('non-finite S4M training loss')
++                loss.backward()
++                optimizer.step()
++                train_losses.append(float(loss.detach().cpu()))
++
++            if not train_losses:
++                raise ValueError('S4M fair training produced no optimized batches')
++            validation = self._fair_validate(validation_loader)
++            print(
++                'Epoch: {} Train MSE: {:.7f} Validation MSE: {:.7f} '
++                'Validation MAE: {:.7f}'.format(
++                    epoch + 1,
++                    float(np.mean(train_losses)),
++                    validation['mse'],
++                    validation['mae'],
++                )
++            )
++            if validation['mse'] < best_mse:
++                best_mse = validation['mse']
++                best_mae = validation['mae']
++                best_epoch = epoch
++                patience_count = 0
++                self.save_model(str(checkpoint_path))
++            else:
++                patience_count += 1
++                if patience_count >= self.args.patience:
++                    print('Early stopping')
++                    break
++            if self.args.fair_lradj == 'type1':
++                adjust_learning_rate(optimizer, epoch + 1, self.args)
++
++        if best_epoch < 0 or not checkpoint_path.is_file():
++            raise ValueError('S4M fair training did not produce a checkpoint')
++        self.load_model(str(checkpoint_path))
++        training_seconds = time.perf_counter() - started
++        identity = validation_data.identity()
++        manifest = {
++            'run_id': self.args.fair_run_id,
++            'status': 'validation_finalized',
++            'dataset': self.args.malr_dataset,
++            'variant': self.args.fair_variant,
++            'profile': self.args.fair_profile,
++            'validation_mse': best_mse,
++            'validation_mae': best_mae,
++            'best_epoch': best_epoch,
++            'epochs_completed': epoch + 1,
++            'training_seconds': training_seconds,
++            'trainable_parameters': sum(
++                parameter.numel()
++                for parameter in self.model.parameters()
++                if parameter.requires_grad
++            ),
++            'checkpoint': str(checkpoint_path),
++            'checkpoint_sha256': file_sha256(checkpoint_path),
++            'validation_identity': identity,
++            'training_final_rate': train_data.final_rate,
++            'upstream_commit': self.args.fair_upstream_commit,
++            'environment': environment_identity(),
++            'hyperparameters': self._fair_arguments(),
++            'test_evaluated': False,
++        }
++        write_training_manifest(manifest_path, manifest)
++        print(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2))
++        return self.model
++
++    def _fair_test(self, setting):
++        if not self.args.fair_run_id:
++            raise ValueError('--fair_run_id is required for fair evaluation')
++        checkpoint_path = Path(self.args.fair_checkpoint).resolve()
++        selection_path = Path(self.args.fair_selection).resolve()
++        authorize_test(selection_path, self.args.fair_run_id, checkpoint_path)
++        self.load_model(str(checkpoint_path))
++        test_data, test_loader = self._get_data(flag='test')
++        metrics = self._fair_validate(test_loader)
++        run_root = Path(self.args.fair_run_dir).resolve()
++        manifest_path = run_root / 'runs' / f'{self.args.fair_run_id}.json'
++        with manifest_path.open('r', encoding='utf-8') as stream:
++            manifest = json.load(stream)
++        result = {
++            'run_id': self.args.fair_run_id,
++            'status': 'test_finalized',
++            'dataset': self.args.malr_dataset,
++            'variant': self.args.fair_variant,
++            'profile': self.args.fair_profile,
++            'mse': metrics['mse'],
++            'mae': metrics['mae'],
++            'final_rate': test_data.final_rate,
++            'metric_space': 'train_standardized',
++            'mask_sha256': test_data.identity()['mask_sha256'],
++            'source_csv_sha256': test_data.identity()['source_csv_sha256'],
++            'config_hash': test_data.identity()['config_hash'],
++            'test_identity': test_data.identity(),
++            'checkpoint': str(checkpoint_path),
++            'checkpoint_sha256': file_sha256(checkpoint_path),
++            'trainable_parameters': manifest['trainable_parameters'],
++            'training_seconds': manifest['training_seconds'],
++            'seed': self.args.seed,
++            'upstream_commit': self.args.fair_upstream_commit,
++        }
++        result_path = run_root / 'evaluations' / f'{self.args.fair_run_id}.json'
++        write_evaluation_result(result_path, result, authorized=True)
++        print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2))
++        return result
+     
+     def get_input(self, setting):
+         test_data, test_loader = self._get_data(flag='test')
+@@ -291,4 +534,4 @@ class Exp_Long_Term_Forecast(Exp_Basic):
+             input = data_i[0].detach().cpu().numpy()
+             inputs.append((input))
+         folder_path = './results/' + setting + '/'
+-        np.save(folder_path + 'input.npy', inputs)
+\ No newline at end of file
++        np.save(folder_path + 'input.npy', inputs)
+diff --git a/s4m/run.py b/s4m/run.py
+index 8512b16..6247a4b 100644
+--- a/s4m/run.py
++++ b/s4m/run.py
+@@ -7,6 +7,7 @@ from experiments.exp_pretrain1 import Exp_Long_Term_Forecast as Exp_pretrain1
+ # from experiments.exp_grafiti import Exp_Long_Term_Forecast as Exp_grafiti
+ # from experiments.exp_cru import Exp_Long_Term_Forecast as Exp_cru
+ import random
++import os
+ import numpy as np
+ import wandb
+ import torch, gc
+@@ -235,6 +236,26 @@ if __name__ == '__main__':
+     parser.add_argument('--alpha', type=float, default=0.5)
+     parser.add_argument('--task_name', type=str,default='long_term_forecast',
+                         help='task name, options:[long_term_forecast, short_term_forecast, imputation, classification, anomaly_detection]')
++
++    # MALR fair-comparison protocol. These arguments are ignored by upstream modes.
++    parser.add_argument('--fair_protocol', type=int, default=0)
++    parser.add_argument('--fair_mode', choices=['smoke', 'train', 'evaluate'], default='train')
++    parser.add_argument('--fair_variant', choices=['clean', 'missing'], default='missing')
++    parser.add_argument('--fair_profile', type=str, default='official')
++    parser.add_argument('--fair_optimizer', choices=['adam', 'sgd'], default='adam')
++    parser.add_argument('--fair_weight_decay', type=float, default=0.0)
++    parser.add_argument('--fair_lradj', choices=['none', 'type1'], default='none')
++    parser.add_argument('--fair_device', choices=['cpu', 'cuda'], default='cuda')
++    parser.add_argument('--malr_config', type=str, default='')
++    parser.add_argument('--malr_dataset', choices=['ETTh1', 'Weather'], default='ETTh1')
++    parser.add_argument('--malr_artifacts', type=str, default='')
++    parser.add_argument('--fair_run_dir', type=str, default='artifacts/s4m_fair')
++    parser.add_argument('--fair_run_id', type=str, default='')
++    parser.add_argument('--fair_selection', type=str, default='')
++    parser.add_argument('--fair_checkpoint', type=str, default='')
++    parser.add_argument('--fair_eval_reference_batch', type=int, default=128)
++    parser.add_argument('--fair_upstream_commit', type=str, default='a718823addd3606e763dfc261174e0135b2535f4')
++    parser.add_argument('--wandb_mode', choices=['disabled', 'offline', 'online'], default='disabled')
+     args = parser.parse_args()
+     
+     
+@@ -280,6 +301,36 @@ if __name__ == '__main__':
+     elif "simulation" in args.data_path:
+         args.d_var = 10
+ 
++    if args.fair_protocol:
++        from malr.config import load_config
++
++        if args.model != 'S4M':
++            raise ValueError('--fair_protocol requires --model S4M')
++        if not args.malr_config or not args.malr_artifacts:
++            raise ValueError('--malr_config and --malr_artifacts are required')
++        fair_config = load_config(args.malr_config)
++        if args.malr_dataset not in fair_config.data.datasets:
++            raise ValueError(f'dataset {args.malr_dataset!r} is not configured')
++        if (args.seq_len, args.pred_len) != (
++            fair_config.data.seq_len,
++            fair_config.data.pred_len,
++        ):
++            raise ValueError('S4M seq_len/pred_len must match the MALR config')
++        if args.seed != fair_config.training.seed:
++            raise ValueError('S4M seed must match the MALR config seed')
++        args.d_var = fair_config.data.datasets[args.malr_dataset].n_vars
++        args.enc_in = args.d_var
++        args.dec_in = args.d_var
++        args.c_out = args.d_var
++        args.mask = True
++        if args.fair_device == 'cuda' and not torch.cuda.is_available():
++            raise ValueError('CUDA was requested but torch.cuda.is_available() is false')
++        args.use_gpu = args.fair_device == 'cuda'
++        args.device = torch.device(
++            'cuda:{}'.format(args.gpu) if args.use_gpu else 'cpu'
++        )
++        os.environ['WANDB_MODE'] = args.wandb_mode
++
+     if args.use_gpu and args.use_multi_gpu:
+         args.devices = args.devices.replace(' ', '')
+         device_ids = args.devices.split(',')
+@@ -319,7 +370,20 @@ if __name__ == '__main__':
+ 
+     torch.multiprocessing.set_sharing_strategy('file_system')
+ 
+-    wandb.init(config=args, project='S4',name = args.model)
++    wandb.init(config=args, project='S4', name=args.model, mode=args.wandb_mode)
++
++    if args.fair_protocol:
++        setting = args.fair_run_id or 's4m-fair-smoke'
++        exp = Exp(args)
++        if args.fair_mode == 'smoke':
++            exp.smoke()
++        elif args.fair_mode == 'train':
++            exp.train(setting)
++        else:
++            exp.test(setting)
++        if torch.cuda.is_available():
++            torch.cuda.empty_cache()
++        raise SystemExit(0)
+     
+     if args.is_training==1:
+             
+@@ -392,4 +456,4 @@ if __name__ == '__main__':
+             exp = Exp(args)
+             exp.get_input(setting)
+         
+-        torch.cuda.empty_cache()
+\ No newline at end of file
++        torch.cuda.empty_cache()

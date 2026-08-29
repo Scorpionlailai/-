@@ -24,6 +24,8 @@ def _repository(tmp_path: Path) -> tuple[Path, Path]:
     protected = repo / "s4m" / "model" / "S4M.py"
     protected.parent.mkdir(parents=True)
     protected.write_text("official core\n", encoding="utf-8")
+    run_path = repo / "s4m" / "run.py"
+    run_path.write_text("official entry\n", encoding="utf-8")
     _git(repo, "init")
     _git(repo, "config", "user.email", "test@example.com")
     _git(repo, "config", "user.name", "Test")

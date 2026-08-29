@@ -7,6 +7,19 @@ import subprocess
 from typing import Any
 
 
+def patch_paths(path: Path) -> set[str]:
+    if not path.is_file():
+        raise ValueError(f"S4M patch is missing: {path}")
+    touched: set[str] = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("+++ b/"):
+            continue
+        touched.add(line[len("+++ b/") :])
+    if not touched:
+        raise ValueError(f"S4M patch does not contain file changes: {path}")
+    return touched
+
+
 def _git(root: Path, *arguments: str) -> str:
     completed = subprocess.run(
         ["git", "-C", str(root), *arguments],
@@ -19,7 +32,7 @@ def _git(root: Path, *arguments: str) -> str:
     if completed.returncode != 0:
         detail = completed.stderr.strip() or completed.stdout.strip()
         raise ValueError(f"git {' '.join(arguments)} failed: {detail}")
-    return completed.stdout.strip()
+    return completed.stdout.rstrip()
 
 
 def _dirty_paths(root: Path) -> list[str]:
