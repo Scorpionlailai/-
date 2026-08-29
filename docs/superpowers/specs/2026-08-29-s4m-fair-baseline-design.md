@@ -2,7 +2,7 @@
 
 日期：2026-08-29
 
-状态：待用户确认后进入实现计划
+状态：已确认，实施计划已编写
 
 范围：第一阶段仅 ETTh1，`seq_len=96`、`pred_len=96`、`start_rate=0.10`
 
@@ -22,10 +22,11 @@
 |---|---|---|
 | PatchTST | clean | 已有的完整数据性能上界参考 |
 | PatchTST | missing | 现有普通预测模型的缺失基线 |
-| S4M | clean | 测量 S4M 骨干自身在完整输入上的能力 |
-| S4M | missing | 专门缺失方法的核心对照 |
+| S4M official | clean | 测量 S4M 骨干自身在完整输入上的能力 |
+| S4M official | missing | 官方公开配置下的缺失结果 |
+| S4M tuned | missing | 只在验证集上优化后的 S4M 能力上限 |
 
-主比较是 `S4M missing` 对 `PatchTST missing` 的测试集标准化空间 MSE/MAE。为了避免把骨干本身的强弱误认为缺失处理能力，同时报告每个骨干从 clean 到 missing 的绝对退化量与相对退化率：
+主比较同时报告 `S4M official missing` 和 `S4M tuned missing` 对 `PatchTST missing` 的测试集标准化空间 MSE/MAE。前者回答官方配置能达到什么水平，后者回答在本实验协议下经过验证集优化后 S4M 能达到什么水平。为了避免把骨干本身的强弱误认为缺失处理能力，同时报告每个骨干从 clean 到 missing 的绝对退化量与相对退化率：
 
 ```text
 absolute_degradation = metric_missing - metric_clean
@@ -49,7 +50,7 @@ relative_degradation = (metric_missing - metric_clean) / metric_clean * 100%
 
 ### 3.2 标准化
 
-- 只用训练段的观测值拟合每个变量的均值和标准差。
+- 只用完整训练段 `[0,8640)` 拟合每个变量的均值和标准差，与当前 MALR 的 `train_standardized` 评价空间一致；被遮挡值只从模型输入移除，不从 scaler 拟合样本中删除。
 - 验证集和测试集只应用训练统计量，不重新拟合。
 - 训练、选模和最终报告均使用 `train_standardized` 空间。
 - 不额外报告原始量纲指标。
@@ -81,9 +82,9 @@ relative_degradation = (metric_missing - metric_clean) / metric_clean * 100%
 
 官方仓库当前未提供明确的 LICENSE 文件。因此：
 
-- 不把其源代码复制到本项目的受版本控制目录。
-- 用户在本机把官方仓库检出到被 `.gitignore` 排除的 `external/S4M`。
-- 适配器通过配置的 `s4m_root` 动态导入官方实现。
+- 不把其完整源代码复制到本项目的受版本控制目录。
+- 用户在本机把官方仓库检出到被 `.gitignore` 排除的 `external/S4M`，训练直接从该官方 checkout 的 `s4m/run.py` 启动。
+- 本项目只保存针对固定 commit 的小型补丁文件、校验脚本和运行配置；补丁只改数据/掩码接入、Windows 路径、可追溯记录和测试期访问时机，不重写 `model/S4M.py`、Memory Bank 或 S4 层。
 - 每个运行清单记录仓库 URL、提交哈希和本地代码状态；提交不匹配时默认拒绝正式运行。
 
 ### 4.2 独立环境
@@ -97,25 +98,31 @@ S4M 使用独立 Conda 环境 `s4m-fair`，避免其依赖影响当前 `malr` �
 
 ## 5. 代码边界与组件设计
 
-S4M 是独立基线，不进入 `Stage1Model`，也不新增 `ModelVariant.S4M`。建议新增以下边界：
+S4M 是独立基线，不进入 `Stage1Model`，也不新增 `ModelVariant.S4M`。官方 checkout 是执行主体：
 
 ```text
-src/malr/baselines/s4m/
-├── adapter.py       # 官方 S4M 的动态导入和统一 forward 接口
-├── data.py          # MALR batch -> S4M 输入及辅助张量
-├── trainer.py       # S4M 独立训练、验证、早停和 checkpoint
-├── evaluator.py     # 固定测试掩码下的 MSE/MAE
-└── provenance.py    # 上游 commit、环境和代码状态校验
+external/S4M/s4m/                    # 官方固定 commit，本项目忽略
+├── run.py                            # 官方 CLI，应用公平协议补丁
+├── data_provider/data_factory.py     # 将公平模式路由到 overlay 数据集
+├── experiments/exp_pretrain1.py      # 每 epoch 切换训练 mask；测试显式执行
+├── malr_fair/                         # 从本项目 overlay 复制的公平协议桥接层
+└── model/S4M.py                      # 保持官方文件原样
+
+integrations/s4m/
+├── patches/s4m-malr-fair.patch       # 对固定 commit 可重复应用的最小补丁
+├── bootstrap.ps1                     # clone、checkout、校验并应用补丁
+├── verify_upstream.py                # commit 与核心文件哈希校验
+├── compare_results.py                # 汇总 PatchTST/S4M 公平结果
+└── README.md                          # 用户运行命令与来源说明
 ```
 
-CLI 使用独立入口，避免与现有 `train --variant ...` 混淆：
+训练从官方入口启动，例如：
 
 ```powershell
-malr train-baseline --model s4m --config <config> --dataset ETTh1 --artifacts <dir> --device cuda
-malr evaluate-baseline --model s4m --config <config> --dataset ETTh1 --artifacts <dir> --run-id <id> --device cuda
+python external/S4M/s4m/run.py --model S4M --malr_config configs/stage1_sr010_no_recloss.yaml --malr_artifacts artifacts/etth1_sr010_no_recloss_scratch --malr_dataset ETTh1 --fair_protocol 1 <S4M 官方参数>
 ```
 
-现有 PatchTST/MALR 训练命令、checkpoint 格式和模型代码不因 S4M 适配而改变。
+现有 PatchTST/MALR CLI、checkpoint 格式和模型代码不因 S4M 适配而改变。
 
 ## 6. 数据适配细节
 
@@ -125,13 +132,13 @@ malr evaluate-baseline --model s4m --config <config> --dataset ETTh1 --artifacts
 seq_x, seq_x_mask, max_idx, min_idx, max_value, min_value
 ```
 
-适配层负责从 MALR 的标准化窗口和观测掩码构造这些张量：
+overlay 中的公平数据集负责从 MALR 的标准化窗口和观测掩码构造这些张量，并保持官方 `Dataset_Custom4` 的 10 张量返回契约：
 
 1. `seq_x_mask` 与 MALR 的 `observed_mask` 保持相同语义和位置。
 2. 标准化后缺失位置以训练均值对应的 `0` 作为占位值，真实值不会进入 `seq_x`。
 3. `max_idx/min_idx/max_value/min_value` 仅由当前输入窗口内的已观测值计算。
 4. 当某变量在输入窗口内没有任何观测值时，使用显式的安全哨兵和全缺失标记；不得回看验证/测试窗口之外的数据取得值。
-5. 适配结果需要在合成数据上与官方 `Dataset_Custom4` 的同义输出逐项比对，确认索引方向、mask 语义和张量形状一致。
+5. `max_idx/min_idx/max_value/min_value` 保持官方 `Dataset_Custom4` 的现有计算公式，只替换其数据来源；测试需要确认相同 `seq_x` 时补丁前后的辅助张量逐项一致。
 6. 预测标签使用同一 MALR 窗口生成器产生的 clean future target；两种模型必须评估相同的样本集合。
 
 ## 7. 训练配置
@@ -172,12 +179,13 @@ S4M memory 参数使用官方 Weather/README 所公开的基础组合作为首�
 | memnet | 13 |
 | mem_type | 3 |
 
-训练分两级：
+训练分三级：
 
 1. 冒烟测试：`e_layers=2`、1 epoch，只验证数据、前后向、显存和 checkpoint 流程。
-2. 正式比较：分别训练 `e_layers in {2,4,8}`，只用固定验证 MSE 选择最佳配置，然后对测试集评估一次。
+2. 官方配置：按上表和官方公开 memory 参数训练，得到 `S4M official` 结果。
+3. 验证集优化：固定 `d_model=d_ff=256` 和官方 memory 机制，先搜索 `e_layers in {2,4,8}` 与 `learning_rate in {0.001,0.003,0.005}`；再对验证 MSE 最好的两个配置搜索 `dropout in {0.0,0.1,0.2}`。最终只对唯一最佳配置评估测试集，得到 `S4M tuned` 结果。
 
-不基于测试集调整层数、学习率、阈值或 memory 参数。
+不基于测试集调整层数、学习率、dropout、阈值或 memory 参数。若继续扩大 memory 参数搜索，必须作为新实验批次预先写入配置，而不能看过测试结果后追加。
 
 ## 8. 工件与可追溯性
 
@@ -247,8 +255,9 @@ artifacts/s4m_fair_etth1_sr010/
 |---|---|---:|---:|---:|---:|---:|---|
 | PatchTST | clean | 已有 | 已有 | — | — | 0 | — |
 | PatchTST | missing | 已有 | 已有 | 计算 | 计算 | 记录 | 记录 |
-| S4M | clean | 新运行 | 新运行 | — | — | 0 | — |
-| S4M | missing | 新运行 | 新运行 | 计算 | 计算 | 同上 | 同上 |
+| S4M official | clean | 新运行 | 新运行 | — | — | 0 | — |
+| S4M official | missing | 新运行 | 新运行 | 计算 | 计算 | 同上 | 同上 |
+| S4M tuned | missing | 新运行 | 新运行 | 与 official clean 比较 | 与 official clean 比较 | 同上 | 同上 |
 
 ## 11. 非目标
 
@@ -259,17 +268,16 @@ artifacts/s4m_fair_etth1_sr010/
 - 不更改 MALR/ours 的恢复架构、原型库或损失。
 - 不把 S4M memory 融入 MALR。
 - 不使用测试集进行调参。
-- 不复制未明确授权的上游源代码到本仓库。
+- 不复制未明确授权的完整上游源代码到本仓库；只保存针对固定 commit 的补丁。
 - 不安装官方 Linux CUDA 环境，也不改动本机系统 CUDA。
 
 ## 12. 实施顺序
 
-用户确认本设计后，下一步单独编写可执行实施计划。计划将按以下依赖顺序拆解：
+对应实施计划见 `docs/superpowers/plans/2026-08-29-s4m-official-fair-baseline.md`，并按以下依赖顺序拆解：
 
-1. 来源固定、`.gitignore` 和环境清单。
-2. 配置 schema 与 provenance 校验。
-3. 数据/掩码适配及一致性测试。
-4. S4M 动态导入和模型 adapter。
-5. 独立 trainer、checkpoint 与 evaluator。
-6. CLI、冒烟测试和用户运行命令。
-7. 正式 ETTh1 比较表生成。
+1. 来源固定、`.gitignore`、环境清单和可重复 bootstrap。
+2. 对官方数据加载器增加 MALR 划分及同掩码模式。
+3. 对官方训练循环增加 epoch 动态掩码、显式测试和 manifest。
+4. 生成并验证针对固定 commit 的最小补丁。
+5. 冒烟测试、官方配置运行命令和验证集搜索命令。
+6. 正式 ETTh1 比较表生成。
