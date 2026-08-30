@@ -197,7 +197,7 @@ index 43ea309..1daf768 100644
 +            train_losses = []
 +            for index, batch in enumerate(train_loader):
 +                optimizer.zero_grad()
-+                if epoch == 0 and index == 0:
++                if index == 0:
 +                    tensors = [value.float().to(self.device) for value in batch]
 +                    self.model.warmup(
 +                        tensors[0], tensors[1], tensors[6], tensors[7],
