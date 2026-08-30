@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 
 import pytest
 
@@ -134,3 +137,37 @@ def test_train_command_uses_official_entry_and_fair_train_mode(tmp_path: Path) -
     assert "--malr_config" in command
     assert "evaluate" not in command
     assert "--seed 2021" in joined
+
+
+def test_s4m_subprocess_environment_makes_bundled_s4_importable(
+    tmp_path: Path,
+) -> None:
+    from integrations.s4m import search
+
+    s4m_root = tmp_path / "S4M"
+    package = s4m_root / "s4m" / "model" / "S4"
+    package.mkdir(parents=True)
+    (package / "__init__.py").write_text("VALUE = 17\n", encoding="utf-8")
+
+    build_environment = getattr(search, "build_s4m_subprocess_environment", None)
+    assert build_environment is not None, (
+        "the S4M launcher must provide the bundled model directory on PYTHONPATH"
+    )
+    environment = build_environment(
+        s4m_root,
+        base_environment={"PYTHONPATH": "existing-entry", "KEEP_ME": "yes"},
+    )
+    completed = subprocess.run(
+        [sys.executable, "-c", "import S4; print(S4.VALUE)"],
+        env={**os.environ, **environment},
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert completed.stdout.strip() == "17"
+    assert environment["KEEP_ME"] == "yes"
+    assert environment["PYTHONPATH"].endswith(
+        os.pathsep + "existing-entry"
+    )

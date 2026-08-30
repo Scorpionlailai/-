@@ -16,6 +16,20 @@ from typing import Iterable, Sequence
 UPSTREAM_COMMIT = "a718823addd3606e763dfc261174e0135b2535f4"
 
 
+def build_s4m_subprocess_environment(
+    s4m_root: Path,
+    *,
+    base_environment: dict[str, str] | None = None,
+) -> dict[str, str]:
+    environment = dict(os.environ if base_environment is None else base_environment)
+    model_path = str((s4m_root.resolve() / "s4m" / "model"))
+    existing = environment.get("PYTHONPATH")
+    environment["PYTHONPATH"] = (
+        model_path + os.pathsep + existing if existing else model_path
+    )
+    return environment
+
+
 def _number_slug(value: float) -> str:
     return format(value, "g").replace(".", "p")
 
@@ -278,6 +292,7 @@ def _run_commands(
         completed = subprocess.run(
             command,
             cwd=args.s4m_root.resolve() / "s4m",
+            env=build_s4m_subprocess_environment(args.s4m_root),
             check=False,
         )
         if completed.returncode != 0:
@@ -332,6 +347,7 @@ def _evaluate_selected(args: argparse.Namespace) -> None:
     completed = subprocess.run(
         command,
         cwd=args.s4m_root.resolve() / "s4m",
+        env=build_s4m_subprocess_environment(args.s4m_root),
         check=False,
     )
     if completed.returncode != 0:
@@ -388,6 +404,7 @@ def main(argv: list[str] | None = None) -> int:
         completed = subprocess.run(
             command,
             cwd=args.s4m_root.resolve() / "s4m",
+            env=build_s4m_subprocess_environment(args.s4m_root),
             check=False,
         )
         if completed.returncode != 0:
