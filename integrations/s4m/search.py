@@ -394,7 +394,6 @@ def main(argv: list[str] | None = None) -> int:
             variant="missing",
         )
         _replace_argument(command, "--fair_mode", "smoke")
-        _replace_argument(command, "--batch_size", "2")
         _replace_argument(command, "--d_model", "32")
         _replace_argument(command, "--d_ff", "32")
         _replace_argument(command, "--train_epochs", "1")

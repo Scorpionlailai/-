@@ -12,6 +12,7 @@ from integrations.s4m.search import (
     SearchCandidate,
     build_train_command,
     dropout_refinement_candidates,
+    main,
     official_candidates,
     select_best,
     tuned_stage1_candidates,
@@ -171,3 +172,29 @@ def test_s4m_subprocess_environment_makes_bundled_s4_importable(
     assert environment["PYTHONPATH"].endswith(
         os.pathsep + "existing-entry"
     )
+
+
+def test_smoke_keeps_enough_samples_for_official_memory_clustering(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    result = main(
+        [
+            "--config",
+            str(tmp_path / "config.yaml"),
+            "--artifacts",
+            str(tmp_path / "malr-artifacts"),
+            "--s4m-root",
+            str(tmp_path / "S4M"),
+            "--output",
+            str(tmp_path / "s4m-artifacts"),
+            "--smoke",
+            "--device",
+            "cuda",
+            "--dry-run",
+        ]
+    )
+
+    command = capsys.readouterr().out
+    assert result == 0
+    assert "--batch_size 16" in command
