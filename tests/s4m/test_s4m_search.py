@@ -138,6 +138,7 @@ def test_train_command_uses_official_entry_and_fair_train_mode(tmp_path: Path) -
     assert "--malr_config" in command
     assert "evaluate" not in command
     assert "--seed 2021" in joined
+    assert "--patience 5" in joined
 
 
 def test_s4m_subprocess_environment_makes_bundled_s4_importable(

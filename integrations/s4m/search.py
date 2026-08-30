@@ -231,7 +231,7 @@ def build_train_command(
         "--dropout", str(candidate.dropout),
         "--learning_rate", str(candidate.learning_rate),
         "--train_epochs", "15",
-        "--patience", "3",
+        "--patience", "5",
         "--batch_size", "16",
         "--num_workers", "0",
         "--per_mem_size", "5",
