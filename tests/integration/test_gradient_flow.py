@@ -96,3 +96,12 @@ def test_forecast_loss_trains_residual_output_then_hidden_layer():
     assert earlier_linear.weight.grad is not None
     assert torch.isfinite(earlier_linear.weight.grad).all()
     assert torch.count_nonzero(earlier_linear.weight.grad) > 0
+    temporal_gradients = [
+        parameter.grad for parameter in model.recovery.temporal.parameters()
+    ]
+    assert any(
+        gradient is not None
+        and torch.isfinite(gradient).all()
+        and torch.count_nonzero(gradient) > 0
+        for gradient in temporal_gradients
+    )

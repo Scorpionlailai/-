@@ -114,6 +114,8 @@ def _base_metadata(
     return {
         "dataset": dataset,
         "config_hash": config_sha256(config),
+        "source_csv_sha256": file_sha256(series.source_path),
+        "seed": config.training.seed,
         "train_checksum": source_checksum(train_values),
         "train_start": protocol.train.start,
         "train_end": protocol.train.end,
@@ -291,14 +293,16 @@ def run_training(
     validation_support_start, validation_support_end, validation_expected = _mask_identity(
         config, dataset, protocol, "validation"
     )
+    validation_mask_path = _fixed_mask_path(artifacts, dataset, "validation")
     if selected is ModelVariant.CLEAN:
         validation_mask = np.ones(
             (validation_support_end - validation_support_start, series.values.shape[1]),
             dtype=bool,
         )
+        validation_mask_metadata = None
     else:
-        validation_mask, _ = load_fixed_mask(
-            _fixed_mask_path(artifacts, dataset, "validation"), validation_expected
+        validation_mask, validation_mask_metadata = load_fixed_mask(
+            validation_mask_path, validation_expected
         )
 
     def training_batches(epoch: int):
@@ -344,6 +348,16 @@ def run_training(
         **metadata,
         "role": "clean" if selected is ModelVariant.CLEAN else "missing_experiment",
         "variant": selected.value,
+        "validation_mask_sha256": (
+            None
+            if validation_mask_metadata is None
+            else file_sha256(validation_mask_path)
+        ),
+        "validation_final_rate": (
+            0.0
+            if validation_mask_metadata is None
+            else validation_mask_metadata.final_rate
+        ),
     }
     trainer = Trainer(
         model,
@@ -489,14 +503,11 @@ def _command_train(args: argparse.Namespace, variant: ModelVariant) -> None:
 def _command_build_bank(args: argparse.Namespace) -> None:
     config, series, protocol = _load_context(args.config, args.dataset)
     metadata = _base_metadata(config, series, protocol, args.dataset)
-    clean_checkpoint = args.clean_checkpoint or _artifact_path(
-        args.artifacts, "checkpoints", f"{args.dataset}_clean.pt"
-    )
     if args.clean_checkpoint is not None:
         expected = {
             key: metadata[key] for key in ("dataset", "config_hash", "train_checksum")
         }
-        _load_dependency(clean_checkpoint, expected)
+        _load_dependency(args.clean_checkpoint, expected)
     prototype = config.prototype
     standardized_series, _ = _standardized_context(series, protocol)
     bank = build_prototype_bank(
@@ -701,20 +712,98 @@ def _latest_run_manifest(
     return sorted(matches, key=lambda item: item[0])[-1][1]
 
 
+_VALIDATION_GATE_METADATA_FIELDS = (
+    "dataset",
+    "config_hash",
+    "source_csv_sha256",
+    "seed",
+    "validation_mask_sha256",
+    "validation_final_rate",
+    "train_start",
+    "train_end",
+    "validation_end",
+    "test_end",
+    "seq_len",
+    "pred_len",
+    "metric_space",
+)
+_MISSING_METADATA = object()
+
+
+def _validate_ours_evaluation_gate(
+    ours_manifest: dict[str, Any], missing_manifest: dict[str, Any]
+) -> None:
+    ours_metadata = ours_manifest.get("metadata")
+    missing_metadata = missing_manifest.get("metadata")
+    ours_metadata = ours_metadata if isinstance(ours_metadata, dict) else {}
+    missing_metadata = missing_metadata if isinstance(missing_metadata, dict) else {}
+    mismatches = []
+    for field in _VALIDATION_GATE_METADATA_FIELDS:
+        ours_value = ours_metadata.get(field, _MISSING_METADATA)
+        missing_value = missing_metadata.get(field, _MISSING_METADATA)
+        if (
+            ours_value is _MISSING_METADATA
+            or missing_value is _MISSING_METADATA
+            or ours_value != missing_value
+        ):
+            ours_display = (
+                "<missing>" if ours_value is _MISSING_METADATA else repr(ours_value)
+            )
+            missing_display = (
+                "<missing>"
+                if missing_value is _MISSING_METADATA
+                else repr(missing_value)
+            )
+            mismatches.append(
+                f"{field}: missing={missing_display}, ours={ours_display}"
+            )
+    if mismatches:
+        raise ValueError(
+            "validation comparison provenance mismatch: "
+            + "; ".join(mismatches)
+            + "; test evaluation is blocked"
+        )
+
+    try:
+        ours_val_mse = float(ours_manifest["training"]["best_val_mse"])
+        missing_val_mse = float(missing_manifest["training"]["best_val_mse"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError(
+            "validation comparison requires numeric best_val_mse values; "
+            "test evaluation is blocked"
+        ) from exc
+    if not ours_val_mse < missing_val_mse:
+        raise ValueError(
+            f"validation gate failed: ours best_val_mse={ours_val_mse} must be lower "
+            f"than missing best_val_mse={missing_val_mse}; test evaluation is blocked"
+        )
+
+
 def _command_evaluate(args: argparse.Namespace) -> None:
     manifest_path = _artifact_path(args.artifacts, "runs", f"{args.run_id}.json")
     manifest = _read_json(manifest_path)
     if manifest.get("run_id") != args.run_id:
         raise ValueError("run manifest identity mismatch")
+    missing_record = None
     if manifest.get("variant") == ModelVariant.OURS.value:
-        # A single final command evaluates the selected clean and naive baselines
-        # first when needed, enabling both DRRs without any model touching test twice.
-        for baseline_variant in (ModelVariant.CLEAN.value, ModelVariant.MISSING.value):
-            baseline = _latest_run_manifest(
-                args.artifacts, args.dataset, baseline_variant
-            )
-            _evaluate_manifest(args, baseline, allow_existing=True)
+        missing_manifest = _latest_run_manifest(
+            args.artifacts, args.dataset, ModelVariant.MISSING.value
+        )
+        _validate_ours_evaluation_gate(manifest, missing_manifest)
+        missing_record = _evaluate_manifest(args, missing_manifest, allow_existing=True)
     record = _evaluate_manifest(args, manifest, allow_existing=False)
+    if missing_record is not None:
+        missing_mask_sha256 = missing_record.get("mask_sha256")
+        ours_mask_sha256 = record.get("mask_sha256")
+        if (
+            not isinstance(missing_mask_sha256, str)
+            or not isinstance(ours_mask_sha256, str)
+            or missing_mask_sha256 != ours_mask_sha256
+        ):
+            raise ValueError(
+                "test mask SHA-256 mismatch after gated evaluation: "
+                f"missing={missing_mask_sha256!r}, ours={ours_mask_sha256!r}"
+            )
     print(json.dumps(record, ensure_ascii=False, indent=2))
 
 

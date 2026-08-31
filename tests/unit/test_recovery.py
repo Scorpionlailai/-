@@ -1,7 +1,22 @@
+import pytest
 import torch
 
 from malr.data.patching import PATCH_MISSING, PATCH_OBSERVED, PATCH_PARTIAL
 from malr.models.recovery import MissingAwareRecovery
+
+
+@pytest.mark.parametrize("hidden_multiplier", [1.5, True])
+def test_residual_hidden_multiplier_requires_a_non_boolean_integer(
+    hidden_multiplier: object,
+) -> None:
+    with pytest.raises(ValueError, match="positive non-boolean integer"):
+        MissingAwareRecovery(
+            c_in=1,
+            patch_num=3,
+            patch_len=4,
+            d_model=8,
+            residual_hidden_multiplier=hidden_multiplier,  # type: ignore[arg-type]
+        )
 
 
 def test_state_fusion_is_exact_and_observed_bypasses_prior():
@@ -144,8 +159,11 @@ def test_residual_mlp_reports_detached_damage_diagnostics() -> None:
         ]
     )
     base = torch.randn(1, 2, 3, 8)
+    with torch.no_grad():
+        module.residual_mlp[-1].bias.fill_(0.25)
 
-    diagnostics = module(values, mask, rho, state, base_latents=base).diagnostics
+    output = module(values, mask, rho, state, base_latents=base)
+    diagnostics = output.diagnostics
 
     keys = {
         "residual_delta_norm",
@@ -155,6 +173,36 @@ def test_residual_mlp_reports_detached_damage_diagnostics() -> None:
     }
     assert keys <= diagnostics.keys()
     assert all(diagnostics[key].requires_grad is False for key in keys)
+    expected_delta_norm = output.recovered.norm(dim=-1)
+    expected_applied_norm = ((1.0 - rho).unsqueeze(-1) * output.recovered).norm(
+        dim=-1
+    )
+    torch.testing.assert_close(diagnostics["residual_delta_norm"], expected_delta_norm)
+    torch.testing.assert_close(diagnostics["residual_applied_norm"], expected_applied_norm)
+
+
+def test_residual_mlp_reports_detached_zero_means_without_damaged_patches() -> None:
+    module = MissingAwareRecovery(
+        c_in=2,
+        patch_num=3,
+        patch_len=4,
+        d_model=8,
+        use_temporal=False,
+        use_variable=False,
+        use_historical=False,
+        fusion="residual_mlp",
+    )
+    values = torch.randn(1, 2, 3, 4)
+    mask = torch.ones_like(values, dtype=torch.bool)
+    rho = torch.ones(1, 2, 3)
+    state = torch.full((1, 2, 3), PATCH_OBSERVED, dtype=torch.long)
+    base = torch.randn(1, 2, 3, 8)
+
+    diagnostics = module(values, mask, rho, state, base_latents=base).diagnostics
+
+    for key in ("residual_partial_mean_norm", "residual_missing_mean_norm"):
+        assert torch.equal(diagnostics[key], torch.zeros(()))
+        assert diagnostics[key].requires_grad is False
 
 
 def test_frontend_shape_and_disabled_messages():

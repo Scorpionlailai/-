@@ -191,8 +191,13 @@ class Stage1Config:
             raise ValueError("all relation top-k values must be positive")
         if self.recovery.fusion not in {"additive", "residual_mlp"}:
             raise ValueError("recovery.fusion must be additive or residual_mlp")
-        if self.recovery.hidden_multiplier <= 0:
-            raise ValueError("recovery.hidden_multiplier must be positive")
+        if (
+            type(self.recovery.hidden_multiplier) is not int
+            or self.recovery.hidden_multiplier <= 0
+        ):
+            raise ValueError(
+                "recovery.hidden_multiplier must be a positive non-boolean integer"
+            )
         if not 0.0 <= self.recovery.dropout < 1.0:
             raise ValueError("recovery.dropout must be in [0, 1)")
         if self.recovery.output_init != "zero":

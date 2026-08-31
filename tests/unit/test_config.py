@@ -79,6 +79,8 @@ def test_residual_experiment_config_is_explicit() -> None:
     [
         ("fusion", "unknown"),
         ("hidden_multiplier", 0),
+        ("hidden_multiplier", 1.5),
+        ("hidden_multiplier", True),
         ("dropout", -0.1),
         ("dropout", 1.0),
         ("output_init", "default"),

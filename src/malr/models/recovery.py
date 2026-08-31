@@ -52,8 +52,13 @@ class MissingAwareRecovery(nn.Module):
             raise ValueError("recovery dimensions must be positive")
         if fusion not in {"additive", "residual_mlp"}:
             raise ValueError("recovery.fusion must be additive or residual_mlp")
-        if residual_hidden_multiplier <= 0:
-            raise ValueError("recovery.hidden_multiplier must be positive")
+        if (
+            type(residual_hidden_multiplier) is not int
+            or residual_hidden_multiplier <= 0
+        ):
+            raise ValueError(
+                "recovery.hidden_multiplier must be a positive non-boolean integer"
+            )
         if not 0.0 <= residual_dropout < 1.0:
             raise ValueError("recovery.dropout must be in [0, 1)")
         if residual_output_init != "zero":
