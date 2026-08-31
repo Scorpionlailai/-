@@ -47,6 +47,54 @@ Each training command prints a `run_id`. Copy the exact `run_id` printed by the 
 
 The four agreed ablations use the booleans under `ablations` in `configs/stage1.yaml`; change only one switch per run. Generated masks, prototype banks, checkpoints, run manifests, and result records live under `artifacts/` and are excluded from Git. Evaluation writes immutable JSON provenance plus `summary.csv` and `summary.md`; unavailable DRR values are shown as `N/A`.
 
+## ETTh1 residual-MLP comparison
+
+This controlled comparison uses the following protocol:
+
+```text
+Dataset: ETTh1
+Lookback / horizon: 96 / 96
+Mask: fixed validation/test variable missing mask
+start_rate: 0.10
+Compared variants: missing and ours
+ours initialization: scratch
+Recovery loss: disabled
+Metric space: train-standardized
+Seed: 2021
+```
+
+Run the following from the repository root in the clean `malr` environment:
+
+```powershell
+conda activate malr
+$CFG="configs/stage1_sr010_residual_no_recloss.yaml"
+$ART="artifacts/etth1_sr010_residual_no_recloss"
+
+malr make-eval-masks --config $CFG --dataset ETTh1 --artifacts $ART
+malr train-clean --config $CFG --dataset ETTh1 --artifacts $ART --device cuda
+malr build-bank --config $CFG --dataset ETTh1 --artifacts $ART
+malr train --config $CFG --dataset ETTh1 --artifacts $ART --variant missing --device cuda
+malr train --config $CFG --dataset ETTh1 --artifacts $ART --variant ours --device cuda
+
+$missingRun=(Get-ChildItem "$ART/runs/ETTh1-missing-*.json" | Sort-Object LastWriteTime -Descending | Select-Object -First 1).BaseName
+$oursRun=(Get-ChildItem "$ART/runs/ETTh1-ours-*.json" | Sort-Object LastWriteTime -Descending | Select-Object -First 1).BaseName
+malr evaluate --config $CFG --dataset ETTh1 --artifacts $ART --run-id $missingRun --device cuda
+malr evaluate --config $CFG --dataset ETTh1 --artifacts $ART --run-id $oursRun --device cuda
+```
+
+The `train-clean` command exists only to produce clean training representations for the historical prototype bank. The residual `ours` model itself starts from scratch.
+
+Before inspecting results, use these acceptance criteria:
+
+```text
+Primary: ours test MSE < missing test MSE on the identical mask SHA-256.
+Secondary: ours test MAE <= missing test MAE.
+Sanity: both run manifests have the same config hash, mask hash, source CSV hash, seed, final_rate, and metric_space.
+Diagnostic: residual applied norms are finite and nonzero after training; observed patches remain exact bypasses.
+```
+
+After training, compare `missing` and `ours` only when their mask SHA-256, source CSV SHA-256, seed, final rate, metric space, and configuration hash match. If residual `ours` improves validation and test MSE, repeat with Weather before adding complexity. If validation MSE improves but test MSE does not, inspect overfitting and repeat across additional fixed seeds before changing architecture. If validation MSE does not improve, keep the residual MLP fixed and run relation-source ablations in this order: temporal only, variable only, temporal plus variable, then add historical. Do not increase MLP depth first. If residual applied norms stay zero, inspect gradient flow and output-gate learning rate before judging the relation messages. If residual applied norms explode, reduce residual learning rate or add an explicit residual scale; do not reintroduce direct prior addition.
+
 ## Verification
 
 ```powershell
