@@ -9,15 +9,152 @@ def test_state_fusion_is_exact_and_observed_bypasses_prior():
     visible = torch.full((1, 1, 3, 4), 2.0)
     prior = torch.full_like(visible, 3.0)
     recovered = torch.full_like(visible, 5.0)
+    rho = torch.tensor([[[1.0, 0.5, 0.0]]])
     state = torch.tensor([[[PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING]]])
 
-    output = module.fuse(visible, prior, recovered, state)
+    output = module.fuse(visible, prior, recovered, state, rho)
 
     torch.testing.assert_close(output[:, :, 0], visible[:, :, 0])
     torch.testing.assert_close(
         output[:, :, 1], visible[:, :, 1] + prior[:, :, 1] + recovered[:, :, 1]
     )
     torch.testing.assert_close(output[:, :, 2], prior[:, :, 2] + recovered[:, :, 2])
+
+
+def test_residual_mlp_is_exact_identity_at_initialization() -> None:
+    module = MissingAwareRecovery(
+        c_in=2,
+        patch_num=3,
+        patch_len=4,
+        d_model=8,
+        use_temporal=False,
+        use_variable=False,
+        use_historical=False,
+        fusion="residual_mlp",
+    )
+    base = torch.randn(2, 2, 3, 8)
+    rho = torch.tensor([[[1.0, 0.5, 0.0], [0.0, 0.75, 1.0]]]).expand(2, -1, -1)
+    state = torch.tensor(
+        [
+            [
+                [PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING],
+                [PATCH_MISSING, PATCH_PARTIAL, PATCH_OBSERVED],
+            ]
+        ]
+    ).expand(2, -1, -1)
+    values = torch.zeros(2, 2, 3, 4)
+    mask = torch.ones_like(values, dtype=torch.bool)
+
+    out = module(values, mask, rho, state, base_latents=base)
+
+    assert torch.equal(out.latents, base)
+    assert torch.count_nonzero(module.residual_mlp[-1].weight) == 0
+    assert torch.count_nonzero(module.residual_mlp[-1].bias) == 0
+
+
+def test_residual_mlp_scales_recovery_by_missing_fraction() -> None:
+    module = MissingAwareRecovery(
+        c_in=2,
+        patch_num=3,
+        patch_len=4,
+        d_model=8,
+        fusion="residual_mlp",
+    )
+    base = torch.randn(2, 2, 3, 8)
+    prior = torch.randn_like(base)
+    recovered = torch.full_like(base, 2.0)
+    rho = torch.tensor([[[1.0, 0.5, 0.0], [0.0, 0.75, 1.0]]]).expand(2, -1, -1)
+    state = torch.tensor(
+        [
+            [
+                [PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING],
+                [PATCH_MISSING, PATCH_PARTIAL, PATCH_OBSERVED],
+            ]
+        ]
+    ).expand(2, -1, -1)
+
+    output = module.fuse(base, prior, recovered, state, rho)
+    expected = base + (1.0 - rho).unsqueeze(-1) * 2.0
+
+    assert torch.equal(output[rho == 1.0], base[rho == 1.0])
+    assert torch.allclose(output, expected)
+
+
+def test_residual_mlp_output_gate_opens_before_earlier_layers_learn() -> None:
+    module = MissingAwareRecovery(
+        c_in=2,
+        patch_num=3,
+        patch_len=4,
+        d_model=8,
+        use_temporal=False,
+        use_variable=False,
+        use_historical=False,
+        fusion="residual_mlp",
+    )
+    base = torch.randn(2, 2, 3, 8)
+    rho = torch.tensor([[[1.0, 0.5, 0.0], [0.0, 0.75, 1.0]]]).expand(2, -1, -1)
+    state = torch.tensor(
+        [
+            [
+                [PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING],
+                [PATCH_MISSING, PATCH_PARTIAL, PATCH_OBSERVED],
+            ]
+        ]
+    ).expand(2, -1, -1)
+    values = torch.zeros(2, 2, 3, 4)
+    mask = torch.ones_like(values, dtype=torch.bool)
+
+    loss = module(values, mask, rho, state, base_latents=base).latents.square().mean()
+    loss.backward()
+
+    assert module.residual_mlp[-1].weight.grad is not None
+    assert module.residual_mlp[-1].weight.grad.abs().sum() > 0
+    assert module.residual_mlp[1].weight.grad is not None
+    assert torch.count_nonzero(module.residual_mlp[1].weight.grad) == 0
+
+    with torch.no_grad():
+        module.residual_mlp[-1].weight.fill_(0.001)
+    module.zero_grad()
+    loss = module(values, mask, rho, state, base_latents=base).latents.square().mean()
+    loss.backward()
+
+    assert module.residual_mlp[1].weight.grad.abs().sum() > 0
+
+
+def test_residual_mlp_reports_detached_damage_diagnostics() -> None:
+    module = MissingAwareRecovery(
+        c_in=2,
+        patch_num=3,
+        patch_len=4,
+        d_model=8,
+        use_temporal=False,
+        use_variable=False,
+        use_historical=False,
+        fusion="residual_mlp",
+    )
+    values = torch.zeros(1, 2, 3, 4)
+    mask = torch.ones_like(values, dtype=torch.bool)
+    rho = torch.tensor([[[1.0, 0.5, 0.0], [0.0, 0.75, 1.0]]])
+    state = torch.tensor(
+        [
+            [
+                [PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING],
+                [PATCH_MISSING, PATCH_PARTIAL, PATCH_OBSERVED],
+            ]
+        ]
+    )
+    base = torch.randn(1, 2, 3, 8)
+
+    diagnostics = module(values, mask, rho, state, base_latents=base).diagnostics
+
+    keys = {
+        "residual_delta_norm",
+        "residual_applied_norm",
+        "residual_partial_mean_norm",
+        "residual_missing_mean_norm",
+    }
+    assert keys <= diagnostics.keys()
+    assert all(diagnostics[key].requires_grad is False for key in keys)
 
 
 def test_frontend_shape_and_disabled_messages():

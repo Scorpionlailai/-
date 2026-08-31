@@ -41,10 +41,25 @@ class MissingAwareRecovery(nn.Module):
         use_temporal: bool = True,
         use_variable: bool = True,
         use_historical: bool = True,
+        fusion: str = "additive",
+        residual_hidden_multiplier: int = 2,
+        residual_dropout: float = 0.0,
+        residual_output_init: str = "zero",
+        damage_scaling: str = "missing_fraction",
     ) -> None:
         super().__init__()
         if min(c_in, patch_num, patch_len, d_model) <= 0:
             raise ValueError("recovery dimensions must be positive")
+        if fusion not in {"additive", "residual_mlp"}:
+            raise ValueError("recovery.fusion must be additive or residual_mlp")
+        if residual_hidden_multiplier <= 0:
+            raise ValueError("recovery.hidden_multiplier must be positive")
+        if not 0.0 <= residual_dropout < 1.0:
+            raise ValueError("recovery.dropout must be in [0, 1)")
+        if residual_output_init != "zero":
+            raise ValueError("recovery.output_init must be zero")
+        if damage_scaling != "missing_fraction":
+            raise ValueError("recovery.damage_scaling must be missing_fraction")
         self.c_in = c_in
         self.patch_num = patch_num
         self.patch_len = patch_len
@@ -52,6 +67,8 @@ class MissingAwareRecovery(nn.Module):
         self.use_temporal = use_temporal
         self.use_variable = use_variable
         self.use_historical = use_historical and historical_relation is not None
+        self.fusion_mode = fusion
+        self.damage_scaling = damage_scaling
 
         self.W_m = nn.Linear(patch_len, d_model)
         self.variable_embedding = nn.Parameter(torch.empty(c_in, d_model))
@@ -62,22 +79,53 @@ class MissingAwareRecovery(nn.Module):
         self.variable = VariableRelation(d_model, variable_topk)
         self.historical = historical_relation
         self.fusion = nn.Linear(3 * d_model, d_model)
+        self.residual_mlp: nn.Sequential | None = None
+        if fusion == "residual_mlp":
+            hidden_dim = residual_hidden_multiplier * d_model
+            self.residual_mlp = nn.Sequential(
+                nn.LayerNorm(4 * d_model),
+                nn.Linear(4 * d_model, hidden_dim),
+                nn.GELU(),
+                nn.Dropout(residual_dropout),
+                nn.Linear(hidden_dim, d_model),
+            )
+            nn.init.zeros_(self.residual_mlp[-1].weight)
+            nn.init.zeros_(self.residual_mlp[-1].bias)
         nn.init.normal_(self.variable_embedding, std=0.02)
         nn.init.normal_(self.position_embedding, std=0.02)
         nn.init.normal_(self.state_embedding, std=0.02)
 
-    def fuse(self, visible: Tensor, prior: Tensor, recovered: Tensor, state: Tensor) -> Tensor:
+    def fuse(
+        self,
+        visible: Tensor,
+        prior: Tensor,
+        recovered: Tensor,
+        state: Tensor,
+        rho: Tensor,
+    ) -> Tensor:
         if visible.shape != prior.shape or visible.shape != recovered.shape:
             raise ValueError("visible, prior, and recovered tensors must match")
         if state.shape != visible.shape[:-1]:
             raise ValueError("state must match the node dimensions")
+        if rho.shape != state.shape:
+            raise ValueError("rho must match the node dimensions")
+        if not torch.isfinite(rho).all():
+            raise ValueError("rho must contain only finite values")
+        if not torch.all((rho >= 0.0) & (rho <= 1.0)):
+            raise ValueError("rho must be in [0, 1]")
         observed = state == PATCH_OBSERVED
         partial = state == PATCH_PARTIAL
         missing = state == PATCH_MISSING
         if not torch.all(observed | partial | missing):
             raise ValueError("state contains an unknown patch state")
-        damaged_output = prior + recovered + partial.unsqueeze(-1) * visible
-        return torch.where(observed.unsqueeze(-1), visible, damaged_output)
+        if self.fusion_mode == "additive":
+            partial = partial.unsqueeze(-1).to(visible.dtype)
+            damaged_output = prior + recovered + partial * visible
+            return torch.where(observed.unsqueeze(-1), visible, damaged_output)
+
+        damage_strength = (1.0 - rho).unsqueeze(-1).to(visible.dtype)
+        residual_output = visible + damage_strength * recovered
+        return torch.where(observed.unsqueeze(-1), visible, residual_output)
 
     def _validate(
         self,
@@ -182,10 +230,27 @@ class MissingAwareRecovery(nn.Module):
             variable=variable_message,
             historical=historical_message,
         )
-        recovered = self.fusion(
-            torch.cat(
-                (messages.temporal, messages.variable, messages.historical), dim=-1
-            )
+        relation_messages = torch.cat(
+            (messages.temporal, messages.variable, messages.historical), dim=-1
         )
-        latents = self.fuse(visible, prior, recovered, state)
+        if self.fusion_mode == "residual_mlp":
+            assert self.residual_mlp is not None
+            recovered = self.residual_mlp(torch.cat((relation_messages, prior), dim=-1))
+        else:
+            recovered = self.fusion(relation_messages)
+        latents = self.fuse(visible, prior, recovered, state, rho)
+        if self.fusion_mode == "residual_mlp":
+            delta_norm = recovered.norm(dim=-1)
+            applied_norm = ((1.0 - rho).unsqueeze(-1) * recovered).norm(dim=-1)
+            partial_mask = state == PATCH_PARTIAL
+            missing_mask = state == PATCH_MISSING
+            zero = applied_norm.new_zeros(())
+            diagnostics["residual_delta_norm"] = delta_norm.detach()
+            diagnostics["residual_applied_norm"] = applied_norm.detach()
+            diagnostics["residual_partial_mean_norm"] = (
+                applied_norm[partial_mask].mean() if partial_mask.any() else zero
+            ).detach()
+            diagnostics["residual_missing_mean_norm"] = (
+                applied_norm[missing_mask].mean() if missing_mask.any() else zero
+            ).detach()
         return RecoveryOutput(latents, visible, prior, recovered, messages, diagnostics)
