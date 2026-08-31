@@ -29,7 +29,7 @@ def test_cpu_synthetic_raw_series_to_checkpoint_acceptance(tmp_path: Path):
     validation_mask, _ = generate_variable_missing_mask(
         64, 1, 0.06, 5, 2021, support_start=32
     )
-    model = _tiny_ours()
+    model = _tiny_ours(fusion="residual_mlp")
     trainer = Trainer(
         model,
         checkpoint_path=tmp_path / "synthetic_ours.pt",

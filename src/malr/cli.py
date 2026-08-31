@@ -200,6 +200,11 @@ def build_experiment_model(
             use_temporal=config.ablations.use_temporal,
             use_variable=config.ablations.use_variable,
             use_historical=config.ablations.use_historical,
+            fusion=config.recovery.fusion,
+            residual_hidden_multiplier=config.recovery.hidden_multiplier,
+            residual_dropout=config.recovery.dropout,
+            residual_output_init=config.recovery.output_init,
+            damage_scaling=config.recovery.damage_scaling,
         )
         model = Stage1Model(core, selected, recovery=recovery)
         return model

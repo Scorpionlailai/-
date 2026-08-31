@@ -1,4 +1,5 @@
 from copy import deepcopy
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -129,6 +130,20 @@ def test_ours_builds_without_clean_checkpoint_when_historical_is_disabled():
     model = build_experiment_model(config, "ETTh1", "ours")
 
     assert model.variant is ModelVariant.OURS
+
+
+def test_residual_config_builds_residual_recovery_without_clean_initialization() -> None:
+    config = load_config(Path("configs/stage1_sr010_residual_no_recloss.yaml"))
+    config = replace(
+        config,
+        ablations=replace(config.ablations, use_historical=False),
+    )
+
+    model = build_experiment_model(config, "ETTh1", "ours")
+
+    assert model.recovery.fusion_mode == "residual_mlp"
+    assert model.recovery.residual_mlp is not None
+    assert torch.count_nonzero(model.recovery.residual_mlp[-1].weight) == 0
 
 
 def test_patchtst_type3_learning_rate_matches_official_schedule():
