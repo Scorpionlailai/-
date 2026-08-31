@@ -34,12 +34,29 @@ def fit_train_variable_stats(values: Tensor, eps: float = 1e-5) -> TrainVariable
         raise ValueError("train values must have shape [time, variables]")
     if values.shape[0] == 0 or values.shape[1] == 0:
         raise ValueError("train values cannot be empty")
+    if eps < 0:
+        raise ValueError("eps cannot be negative")
     if not torch.isfinite(values).all():
         raise ValueError("train values must be finite")
     mean = values.mean(dim=0).detach()
     variance = ((values - mean) ** 2).mean(dim=0)
     std = torch.sqrt(variance + eps).detach()
+    std = torch.where(std > 0, std, torch.ones_like(std))
     return TrainVariableStats(mean=mean, std=std)
+
+
+def standardize_values(values: Tensor, stats: TrainVariableStats) -> Tensor:
+    """Apply train-fitted, per-variable StandardScaler statistics."""
+
+    if values.ndim != 2:
+        raise ValueError("values must have shape [time, variables]")
+    if values.shape[1] != stats.mean.numel():
+        raise ValueError("standardization statistics do not match variable count")
+    if not torch.isfinite(values).all():
+        raise ValueError("values must be finite")
+    mean = stats.mean.to(device=values.device, dtype=values.dtype)
+    std = stats.std.to(device=values.device, dtype=values.dtype)
+    return (values - mean) / std
 
 
 def _broadcast_validity(validity: Tensor | None, reference: Tensor) -> Tensor:
@@ -112,4 +129,3 @@ def denormalize_forecast(forecast: Tensor, mean: Tensor, std: Tensor) -> Tensor:
     if forecast.shape[0] != mean.shape[0] or forecast.shape[2] != mean.shape[1]:
         raise ValueError("forecast does not match normalization statistics")
     return forecast * std.unsqueeze(1) + mean.unsqueeze(1)
-

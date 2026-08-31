@@ -55,7 +55,10 @@ def load_clean_csv(
     ):
         raise ValueError(f"expected {expected_length} rows, found {len(frame)}")
     try:
-        values = frame.loc[:, numeric_columns].to_numpy(dtype=np.float32)
+        # Keep source precision while fitting the train-only scaler, matching
+        # sklearn's float64 statistics in the official PatchTST loader. Batches
+        # are converted to float32 only after standardization.
+        values = frame.loc[:, numeric_columns].to_numpy(dtype=np.float64)
     except (TypeError, ValueError) as exc:
         raise ValueError("all non-date columns must be numeric") from exc
     if not np.isfinite(values).all():

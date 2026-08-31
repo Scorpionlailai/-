@@ -166,26 +166,26 @@ class VariableRelation(nn.Module):
 
 
 class HistoricalRelation(nn.Module):
-    """Frozen variable-specific prototype retrieval and center encoding."""
+    """Variable-specific prototype retrieval with caller-supplied center encoding."""
 
     def __init__(
         self,
         bank: PrototypeBank,
-        teacher_projection: nn.Module,
         topk: int = 4,
         *,
         patch_len: int = 16,
         patch_stride: int = 8,
+        d_model: int,
         eps: float = 1e-8,
     ) -> None:
         super().__init__()
-        if topk <= 0 or patch_len != 16 or patch_stride != 8:
+        if topk <= 0 or patch_len != 16 or patch_stride != 8 or d_model <= 0:
             raise ValueError("invalid stage-1 historical relation geometry")
         self.bank = bank
-        self.teacher = teacher_projection
         self.topk = topk
         self.patch_len = patch_len
         self.patch_stride = patch_stride
+        self._d_model = d_model
         self.eps = eps
         maximum_prototypes = max(
             (len(records) for records in bank.records), default=0
@@ -246,15 +246,10 @@ class HistoricalRelation(nn.Module):
             torch.from_numpy(np.asarray(bank.factor_std, dtype=np.float32)),
             persistent=False,
         )
-        for parameter in self.teacher.parameters():
-            parameter.requires_grad_(False)
-        self.teacher.eval()
 
     @property
     def d_model(self) -> int:
-        if hasattr(self.teacher, "out_features"):
-            return int(self.teacher.out_features)
-        raise ValueError("teacher projection must expose out_features")
+        return self._d_model
 
     @staticmethod
     def _masked_side_factors(
@@ -400,6 +395,8 @@ class HistoricalRelation(nn.Module):
         query_mean: Tensor,
         query_std: Tensor,
         train_std: Tensor,
+        *,
+        prototype_projection: nn.Module,
     ) -> RelationSelection:
         if context.ndim != 3 or context_mask.shape != context.shape:
             raise ValueError("context and mask must match [batch, time, variables]")
@@ -504,18 +501,18 @@ class HistoricalRelation(nn.Module):
             normalized_centers = (
                 chosen_centers - query_mean[:, :, None, None, None]
             ) / query_std[:, :, None, None, None]
-            prototype_latents = self.teacher(
-                normalized_centers.reshape(-1, self.patch_len)
-            ).reshape(
-                batch_size,
-                variable_count,
-                patch_count,
-                actual_width,
-                self.d_model,
-            )
-            message = (weights.unsqueeze(-1) * prototype_latents).sum(dim=-2)
             selected[..., :actual_width] = chosen
             selected_weights[..., :actual_width] = weights
+        prototype_latents = prototype_projection(
+            normalized_centers.reshape(-1, self.patch_len)
+        ).reshape(
+            batch_size,
+            variable_count,
+            patch_count,
+            actual_width,
+            self.d_model,
+        )
+        message = (weights.unsqueeze(-1) * prototype_latents).sum(dim=-2)
         return RelationSelection(message, selected_weights, selected, candidate_count)
 
     def forward(
@@ -526,7 +523,15 @@ class HistoricalRelation(nn.Module):
         query_mean: Tensor,
         query_std: Tensor,
         train_std: Tensor,
+        *,
+        prototype_projection: nn.Module,
     ) -> Tensor:
         return self.select(
-            context, context_mask, state, query_mean, query_std, train_std
+            context,
+            context_mask,
+            state,
+            query_mean,
+            query_std,
+            train_std,
+            prototype_projection=prototype_projection,
         ).message

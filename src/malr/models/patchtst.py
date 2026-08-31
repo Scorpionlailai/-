@@ -23,6 +23,7 @@ class PatchTSTCore(nn.Module):
         d_ff: int = 256,
         n_layers: int = 3,
         dropout: float = 0.2,
+        fc_dropout: float = 0.0,
         head_dropout: float = 0.0,
         attn_dropout: float = 0.0,
         norm: str = "BatchNorm",
@@ -35,12 +36,17 @@ class PatchTSTCore(nn.Module):
             raise ValueError("d_model must be divisible by n_heads")
         if stride <= 0 or patch_len <= 0:
             raise ValueError("patch_len and stride must be positive")
+        if not 0.0 <= fc_dropout < 1.0:
+            raise ValueError("fc_dropout must be in [0, 1)")
         self.c_in = c_in
         self.seq_len = seq_len
         self.pred_len = pred_len
         self.patch_len = patch_len
         self.stride = stride
         self.d_model = d_model
+        # Kept in the experiment profile for parity with the official scripts.
+        # The official supervised flatten head does not consume fc_dropout.
+        self.fc_dropout = float(fc_dropout)
         self.patch_num = 1 + (seq_len + stride - patch_len) // stride
         self.backbone = TSTiEncoder(
             c_in=c_in,

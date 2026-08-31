@@ -76,6 +76,18 @@ artifacts/s4m_fair_etth1_sr010/selection-official-clean.json
 
 Finalized validation manifests are reused when the command is resumed; they are never overwritten.
 
+To run only the eight-layer model for a full 100 epochs without early termination,
+use a fresh output directory and set patience equal to the epoch count:
+
+```powershell
+$S4M_ART_8L100="artifacts/s4m_fair_etth1_sr010_el8_e100"
+python integrations/s4m/search.py --config $CFG --artifacts $MALR_ART --s4m-root external/S4M --output $S4M_ART_8L100 --profile official --e-layers 8 --train-epochs 100 --patience 100 --device cuda
+```
+
+Validation is still measured after every epoch, and the best validation checkpoint
+across all 100 epochs is retained. The command trains the missing-data run followed
+by its clean reference using the same eight-layer configuration.
+
 ## 6. Run the tuned validation search
 
 ```powershell

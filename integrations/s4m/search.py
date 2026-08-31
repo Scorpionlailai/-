@@ -53,7 +53,9 @@ class SearchCandidate:
         )
 
 
-def official_candidates() -> list[SearchCandidate]:
+def official_candidates(
+    layer_choices: Sequence[int] = (2, 4, 8),
+) -> list[SearchCandidate]:
     return [
         SearchCandidate(
             e_layers=e_layers,
@@ -61,11 +63,13 @@ def official_candidates() -> list[SearchCandidate]:
             dropout=0.1,
             profile="official",
         )
-        for e_layers in (2, 4, 8)
+        for e_layers in layer_choices
     ]
 
 
-def tuned_stage1_candidates() -> list[SearchCandidate]:
+def tuned_stage1_candidates(
+    layer_choices: Sequence[int] = (2, 4, 8),
+) -> list[SearchCandidate]:
     return [
         SearchCandidate(
             e_layers=e_layers,
@@ -74,7 +78,7 @@ def tuned_stage1_candidates() -> list[SearchCandidate]:
             profile="tuned-stage1",
         )
         for e_layers, learning_rate in itertools.product(
-            (2, 4, 8), (0.001, 0.003, 0.005)
+            layer_choices, (0.001, 0.003, 0.005)
         )
     ]
 
@@ -198,6 +202,8 @@ def build_train_command(
     output: Path,
     device: str,
     variant: str,
+    train_epochs: int = 15,
+    patience: int = 5,
 ) -> list[str]:
     run_id = candidate.run_id_for(variant)
     return [
@@ -230,8 +236,8 @@ def build_train_command(
         "--d_ff", "256",
         "--dropout", str(candidate.dropout),
         "--learning_rate", str(candidate.learning_rate),
-        "--train_epochs", "15",
-        "--patience", "5",
+        "--train_epochs", str(train_epochs),
+        "--patience", str(patience),
         "--batch_size", "16",
         "--num_workers", "0",
         "--per_mem_size", "5",
@@ -276,6 +282,8 @@ def _run_commands(
             output=args.output,
             device=args.device,
             variant=variant,
+            train_epochs=args.train_epochs,
+            patience=args.patience,
         )
         manifest = (
             args.output.resolve()
@@ -330,6 +338,8 @@ def _evaluate_selected(args: argparse.Namespace) -> None:
         output=args.output,
         device=args.device,
         variant=str(manifest["variant"]),
+        train_epochs=args.train_epochs,
+        patience=args.patience,
     )
     _replace_argument(command, "--fair_mode", "evaluate")
     _replace_argument(command, "--fair_run_id", str(selection["selected_run_id"]))
@@ -362,6 +372,16 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cuda")
     parser.add_argument("--profile", choices=("official", "tuned"))
+    parser.add_argument(
+        "--e-layers",
+        type=int,
+        choices=(2, 4, 8),
+        nargs="+",
+        default=None,
+        help="S4M encoder depths to run; defaults to 2 4 8",
+    )
+    parser.add_argument("--train-epochs", type=int, default=15)
+    parser.add_argument("--patience", type=int, default=5)
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--evaluate-selected", action="store_true")
     parser.add_argument("--selection", type=Path)
@@ -371,6 +391,11 @@ def _parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.train_epochs < 1:
+        raise ValueError("--train-epochs must be positive")
+    if args.patience < 1:
+        raise ValueError("--patience must be positive")
+    layer_choices = args.e_layers or (2, 4, 8)
     selected_modes = sum(
         (bool(args.profile), bool(args.smoke), bool(args.evaluate_selected))
     )
@@ -382,7 +407,7 @@ def main(argv: list[str] | None = None) -> int:
         _evaluate_selected(args)
         return 0
     if args.smoke:
-        candidate = official_candidates()[0]
+        candidate = official_candidates(layer_choices)[0]
         command = build_train_command(
             candidate,
             python=sys.executable,
@@ -392,6 +417,8 @@ def main(argv: list[str] | None = None) -> int:
             output=args.output,
             device=args.device,
             variant="missing",
+            train_epochs=args.train_epochs,
+            patience=args.patience,
         )
         _replace_argument(command, "--fair_mode", "smoke")
         _replace_argument(command, "--d_model", "32")
@@ -411,7 +438,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.profile == "official":
-        candidates = official_candidates()
+        candidates = official_candidates(layer_choices)
         manifests = _run_commands(candidates, args=args)
         if args.dry_run:
             return 0
@@ -428,7 +455,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    stage1 = tuned_stage1_candidates()
+    stage1 = tuned_stage1_candidates(layer_choices)
     stage1_manifests = _run_commands(stage1, args=args)
     if args.dry_run:
         return 0

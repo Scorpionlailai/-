@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-from copy import deepcopy
 from dataclasses import asdict
 from datetime import datetime, timezone
 from hashlib import sha256
@@ -21,7 +20,11 @@ from malr.data.masks import (
     load_fixed_mask,
     save_fixed_mask,
 )
-from malr.data.normalization import TrainVariableStats, fit_train_variable_stats
+from malr.data.normalization import (
+    TrainVariableStats,
+    fit_train_variable_stats,
+    standardize_values,
+)
 from malr.data.splits import DatasetProtocol, protocol_for
 from malr.data.windows import build_window_index
 from malr.evaluation.evaluator import evaluate_model
@@ -116,28 +119,51 @@ def _base_metadata(
         "train_end": protocol.train.end,
         "validation_end": protocol.validation.end,
         "test_end": protocol.test.end,
+        "metric_space": "train_standardized",
+        "sentinel_handling": "preserve",
+        "seq_len": config.data.seq_len,
+        "pred_len": config.data.pred_len,
     }
 
 
 def _train_stats(series: CleanSeries, protocol: DatasetProtocol) -> TrainVariableStats:
     return fit_train_variable_stats(
-        torch.from_numpy(series.values[protocol.train.start : protocol.train.end])
+        torch.from_numpy(series.values[protocol.train.start : protocol.train.end]),
+        eps=0.0,
     )
 
 
-def _build_core(config: Stage1Config, n_vars: int) -> PatchTSTCore:
+def _standardized_context(
+    series: CleanSeries, protocol: DatasetProtocol
+) -> tuple[np.ndarray, TrainVariableStats]:
+    raw_stats = _train_stats(series, protocol)
+    standardized = standardize_values(torch.from_numpy(series.values), raw_stats)
+    values = np.ascontiguousarray(standardized.numpy(), dtype=np.float32)
+    fallback = fit_train_variable_stats(
+        torch.from_numpy(
+            values[protocol.train.start : protocol.train.end]
+        ),
+        eps=0.0,
+    )
+    return values, fallback
+
+
+def _build_core(config: Stage1Config, dataset: str, n_vars: int) -> PatchTSTCore:
+    profile = config.model.for_dataset(dataset)
     return PatchTSTCore(
         c_in=n_vars,
         seq_len=config.data.seq_len,
         pred_len=config.data.pred_len,
         patch_len=config.patch.length,
         stride=config.patch.stride,
-        d_model=config.model.d_model,
-        n_heads=config.model.n_heads,
-        d_ff=config.model.d_ff,
-        n_layers=config.model.encoder_layers,
-        dropout=config.model.dropout,
-        head_dropout=config.model.head_dropout,
+        d_model=profile.d_model,
+        n_heads=profile.n_heads,
+        d_ff=profile.d_ff,
+        n_layers=profile.encoder_layers,
+        dropout=profile.dropout,
+        head_dropout=profile.head_dropout,
+        attn_dropout=profile.attn_dropout,
+        fc_dropout=profile.fc_dropout,
     )
 
 
@@ -150,18 +176,19 @@ def build_experiment_model(
     bank: PrototypeBank | None = None,
 ) -> Stage1Model:
     selected = ModelVariant(variant)
-    core = _build_core(config, config.data.datasets[dataset].n_vars)
+    core = _build_core(config, dataset, config.data.datasets[dataset].n_vars)
     if selected is ModelVariant.OURS:
-        if clean_checkpoint is None or bank is None:
-            raise ValueError("ours requires a clean checkpoint and prototype bank")
-        teacher = deepcopy(core.W_P)
-        historical = HistoricalRelation(
-            bank,
-            teacher,
-            topk=config.relations.historical_topk,
-            patch_len=config.patch.length,
-            patch_stride=config.patch.stride,
-        )
+        historical = None
+        if config.ablations.use_historical:
+            if bank is None:
+                raise ValueError("ours with historical recovery requires a prototype bank")
+            historical = HistoricalRelation(
+                bank,
+                topk=config.relations.historical_topk,
+                patch_len=config.patch.length,
+                patch_stride=config.patch.stride,
+                d_model=core.d_model,
+            )
         recovery = MissingAwareRecovery(
             c_in=core.c_in,
             patch_num=core.patch_num,
@@ -175,7 +202,6 @@ def build_experiment_model(
             use_historical=config.ablations.use_historical,
         )
         model = Stage1Model(core, selected, recovery=recovery)
-        initialize_from_clean_checkpoint(model, clean_checkpoint)
         return model
     model = Stage1Model(core, selected)
     if selected is ModelVariant.MISSING_PRETRAINED:
@@ -213,24 +239,26 @@ def run_training(
     selected = ModelVariant(variant)
     seed_everything(config.training.seed)
     metadata = _base_metadata(config, series, protocol, dataset)
+    standardized_series, stats = _standardized_context(series, protocol)
+    training_profile = config.training.for_dataset(dataset)
     dependency_expected = {
         key: metadata[key] for key in ("dataset", "config_hash", "train_checksum")
     }
 
     clean_payload = None
-    if selected in {ModelVariant.MISSING_PRETRAINED, ModelVariant.OURS}:
+    if selected is ModelVariant.MISSING_PRETRAINED:
         if clean_checkpoint_path is None:
             raise ValueError(f"{selected.value} requires --clean-checkpoint")
         # Dependency validation deliberately precedes model allocation.
         clean_payload = _load_dependency(clean_checkpoint_path, dependency_expected)
 
     bank = None
-    if selected is ModelVariant.OURS:
+    if selected is ModelVariant.OURS and config.ablations.use_historical:
         if bank_path is None:
-            raise ValueError("ours requires --bank")
+            raise ValueError("ours with historical recovery requires --bank")
         bank = load_bank(
             bank_path,
-            source_train=series.values[: protocol.train.end],
+            source_train=standardized_series[: protocol.train.end],
             dataset=dataset,
             config_sha256=metadata["config_hash"],
         )
@@ -242,7 +270,6 @@ def run_training(
         clean_checkpoint=clean_payload,
         bank=bank,
     )
-    stats = _train_stats(series, protocol)
     train_refs = build_window_index(
         protocol, "train", config.data.seq_len, config.data.pred_len
     )
@@ -276,29 +303,33 @@ def run_training(
             else mask_manager.mask_for_epoch(epoch)
         )
         return iter_prepared_batches(
-            series.values,
+            standardized_series,
             train_refs,
             timeline_mask,
             mask_support_start=0,
             train_stats=stats,
             variant=selected,
-            batch_size=config.training.batch_size,
+            batch_size=training_profile.batch_size,
             patch_len=config.patch.length,
             patch_stride=config.patch.stride,
             shuffle_seed=config.training.seed + epoch,
+            normalization_eps=config.model.normalization_eps,
+            drop_last=training_profile.drop_last,
         )
 
     def validation_batches():
         return iter_prepared_batches(
-            series.values,
+            standardized_series,
             validation_refs,
             validation_mask,
             mask_support_start=validation_support_start,
             train_stats=stats,
             variant=selected,
-            batch_size=config.training.batch_size,
+            batch_size=training_profile.batch_size,
             patch_len=config.patch.length,
             patch_stride=config.patch.stride,
+            normalization_eps=config.model.normalization_eps,
+            drop_last=training_profile.drop_last,
         )
 
     checkpoint_path = _artifact_path(
@@ -313,10 +344,11 @@ def run_training(
         model,
         checkpoint_path=checkpoint_path,
         checkpoint_metadata=run_metadata,
-        max_epochs=config.training.max_epochs,
-        patience=config.training.early_stopping_patience,
-        learning_rate=config.training.learning_rate,
+        max_epochs=training_profile.max_epochs,
+        patience=training_profile.early_stopping_patience,
+        learning_rate=training_profile.learning_rate,
         weight_decay=config.training.weight_decay,
+        lr_schedule=training_profile.lr_schedule,
         lambda_rec=config.training.lambda_rec,
         use_recovery_loss=(
             selected is ModelVariant.OURS and config.ablations.use_recovery_loss
@@ -347,10 +379,17 @@ def run_training(
         "checkpoint_sha256": checkpoint_digest,
         "clean_checkpoint": (
             str(clean_checkpoint_path.resolve())
-            if clean_checkpoint_path is not None
+            if selected is ModelVariant.MISSING_PRETRAINED
+            and clean_checkpoint_path is not None
             else None
         ),
-        "bank": str(bank_path.resolve()) if bank_path is not None else None,
+        "bank": (
+            str(bank_path.resolve())
+            if selected is ModelVariant.OURS
+            and config.ablations.use_historical
+            and bank_path is not None
+            else None
+        ),
         "metadata": run_metadata,
         "training": output,
         "ablations": asdict(config.ablations),
@@ -373,6 +412,12 @@ def _command_validate_data(args: argparse.Namespace) -> None:
                 "train": asdict(protocol.train),
                 "validation": asdict(protocol.validation),
                 "test": asdict(protocol.test),
+                "metric_space": "train_standardized",
+                "sentinel_handling": "preserve",
+                "model_profile": asdict(config.model.for_dataset(args.dataset)),
+                "training_profile": asdict(
+                    config.training.for_dataset(args.dataset)
+                ),
                 "config_hash": config_sha256(config),
             },
             ensure_ascii=True,
@@ -411,15 +456,16 @@ def _command_make_eval_masks(args: argparse.Namespace) -> None:
 def _command_train(args: argparse.Namespace, variant: ModelVariant) -> None:
     config, series, protocol = _load_context(args.config, args.dataset)
     clean_checkpoint = getattr(args, "clean_checkpoint", None)
-    if clean_checkpoint is None and variant in {
-        ModelVariant.MISSING_PRETRAINED,
-        ModelVariant.OURS,
-    }:
+    if clean_checkpoint is None and variant is ModelVariant.MISSING_PRETRAINED:
         clean_checkpoint = _artifact_path(
             args.artifacts, "checkpoints", f"{args.dataset}_clean.pt"
         )
     bank = getattr(args, "bank", None)
-    if bank is None and variant is ModelVariant.OURS:
+    if (
+        bank is None
+        and variant is ModelVariant.OURS
+        and config.ablations.use_historical
+    ):
         bank = _artifact_path(args.artifacts, "banks", f"{args.dataset}.npz")
     result = run_training(
         config,
@@ -438,14 +484,18 @@ def _command_train(args: argparse.Namespace, variant: ModelVariant) -> None:
 def _command_build_bank(args: argparse.Namespace) -> None:
     config, series, protocol = _load_context(args.config, args.dataset)
     metadata = _base_metadata(config, series, protocol, args.dataset)
-    expected = {key: metadata[key] for key in ("dataset", "config_hash", "train_checksum")}
     clean_checkpoint = args.clean_checkpoint or _artifact_path(
         args.artifacts, "checkpoints", f"{args.dataset}_clean.pt"
     )
-    _load_dependency(clean_checkpoint, expected)
+    if args.clean_checkpoint is not None:
+        expected = {
+            key: metadata[key] for key in ("dataset", "config_hash", "train_checksum")
+        }
+        _load_dependency(clean_checkpoint, expected)
     prototype = config.prototype
+    standardized_series, _ = _standardized_context(series, protocol)
     bank = build_prototype_bank(
-        series.values[: protocol.train.end],
+        standardized_series[: protocol.train.end],
         train_end=protocol.train.end,
         dataset=args.dataset,
         config_sha256=metadata["config_hash"],
@@ -484,13 +534,17 @@ def _read_json(path: Path) -> dict[str, Any]:
 
 
 def _find_variant_result(
-    artifacts: Path, dataset: str, variant: str
+    artifacts: Path, dataset: str, variant: str, config_hash: str
 ) -> dict[str, Any] | None:
     result_directory = _artifact_path(artifacts, "evaluations", "")
     matches = []
     for path in result_directory.glob("*.json"):
         payload = _read_json(path)
-        if payload.get("dataset") == dataset and payload.get("variant") == variant:
+        if (
+            payload.get("dataset") == dataset
+            and payload.get("variant") == variant
+            and payload.get("config_hash") == config_hash
+        ):
             matches.append(payload)
     if not matches:
         return None
@@ -521,23 +575,25 @@ def _evaluate_manifest(
         raise ValueError("final checkpoint checksum mismatch")
     checkpoint = _load_dependency(checkpoint_path, expected)
     selected = ModelVariant(manifest["variant"])
+    standardized_series, stats = _standardized_context(series, protocol)
+    training_profile = config.training.for_dataset(args.dataset)
 
     clean_payload = None
-    if selected in {ModelVariant.MISSING_PRETRAINED, ModelVariant.OURS}:
+    if selected is ModelVariant.MISSING_PRETRAINED:
         clean_path_value = manifest.get("clean_checkpoint")
         if not clean_path_value:
             raise ValueError("run manifest lacks its clean checkpoint dependency")
         clean_payload = _load_dependency(Path(clean_path_value), expected)
     bank = None
     bank_path = None
-    if selected is ModelVariant.OURS:
+    if selected is ModelVariant.OURS and config.ablations.use_historical:
         bank_value = manifest.get("bank")
         if not bank_value:
             raise ValueError("ours run manifest lacks its prototype bank")
         bank_path = Path(bank_value)
         bank = load_bank(
             bank_path,
-            source_train=series.values[: protocol.train.end],
+            source_train=standardized_series[: protocol.train.end],
             dataset=args.dataset,
             config_sha256=metadata["config_hash"],
         )
@@ -550,30 +606,43 @@ def _evaluate_manifest(
     )
     model.load_state_dict(checkpoint["model_state"], strict=True)
 
-    support_start, _, mask_expected = _mask_identity(
+    support_start, support_end, mask_expected = _mask_identity(
         config, args.dataset, protocol, "test"
     )
     mask_path = _fixed_mask_path(args.artifacts, args.dataset, "test")
-    test_mask, mask_metadata = load_fixed_mask(mask_path, mask_expected)
-    stats = _train_stats(series, protocol)
+    if selected is ModelVariant.CLEAN:
+        test_mask = np.ones(
+            (support_end - support_start, series.values.shape[1]), dtype=bool
+        )
+        mask_metadata = None
+        mask_digest = None
+    else:
+        test_mask, mask_metadata = load_fixed_mask(mask_path, mask_expected)
+        mask_digest = file_sha256(mask_path)
     refs = build_window_index(
         protocol, "test", config.data.seq_len, config.data.pred_len
     )
     batches = iter_prepared_batches(
-        series.values,
+        standardized_series,
         refs,
         test_mask,
         mask_support_start=support_start,
         train_stats=stats,
         variant=selected,
-        batch_size=config.training.batch_size,
+        batch_size=training_profile.batch_size,
         patch_len=config.patch.length,
         patch_stride=config.patch.stride,
+        normalization_eps=config.model.normalization_eps,
+        drop_last=training_profile.drop_last,
     )
     metrics = evaluate_model(model, batches, device=args.device)
 
-    clean_result = _find_variant_result(args.artifacts, args.dataset, "clean")
-    naive_result = _find_variant_result(args.artifacts, args.dataset, "missing")
+    clean_result = _find_variant_result(
+        args.artifacts, args.dataset, "clean", metadata["config_hash"]
+    )
+    naive_result = _find_variant_result(
+        args.artifacts, args.dataset, "missing", metadata["config_hash"]
+    )
     drr_mse = drr_mae = None
     if clean_result is not None and naive_result is not None:
         drr_mse = degradation_recovery_rate(
@@ -597,13 +666,14 @@ def _evaluate_manifest(
         drr_mse=drr_mse,
         drr_mae=drr_mae,
         final_rate=(
-            0.0 if selected is ModelVariant.CLEAN else mask_metadata.final_rate
+            0.0 if mask_metadata is None else mask_metadata.final_rate
         ),
         trainable_parameters=int(training["trainable_parameters"]),
         training_seconds=float(training["training_seconds"]),
+        metric_space="train_standardized",
         config_hash=metadata["config_hash"],
         checkpoint_sha256=file_sha256(checkpoint_path),
-        mask_sha256=file_sha256(mask_path),
+        mask_sha256=mask_digest,
         bank_sha256=file_sha256(bank_path) if bank_path is not None else None,
         source_csv_sha256=file_sha256(series.source_path),
         seed=config.training.seed,

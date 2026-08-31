@@ -3,7 +3,7 @@ import torch
 from tests.unit.test_teacher_and_losses import _tiny_ours
 
 
-def test_teacher_is_frozen_while_frontend_encoder_and_head_receive_gradients():
+def test_ours_joint_training_updates_patch_projection_encoder_and_head():
     torch.manual_seed(7)
     model = _tiny_ours().train()
     batch_size = 2
@@ -33,9 +33,8 @@ def test_teacher_is_frozen_while_frontend_encoder_and_head_receive_gradients():
     )
     result.loss.total.backward()
 
-    assert all(parameter.grad is None for parameter in model.teacher_projection.parameters())
     assert not result.teacher_target.requires_grad
     assert not result.prototype_latents.requires_grad
-    assert model.recovery.W_x.weight.grad is not None
+    assert model.core.W_P.weight.grad is not None
     assert model.core.encoder.layers[0].self_attn.W_Q.weight.grad is not None
     assert model.core.head.linear.weight.grad is not None

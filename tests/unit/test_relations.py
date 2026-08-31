@@ -91,20 +91,69 @@ def _bank_with_centers(center_a: float, center_b: float) -> PrototypeBank:
 
 def test_historical_selection_does_not_read_prototype_centers():
     teacher = nn.Linear(16, 4, bias=False)
-    first = HistoricalRelation(_bank_with_centers(10.0, 20.0), teacher, topk=2)
-    second = HistoricalRelation(_bank_with_centers(-1e6, 1e6), teacher, topk=2)
+    first = HistoricalRelation(_bank_with_centers(10.0, 20.0), topk=2, d_model=4)
+    second = HistoricalRelation(_bank_with_centers(-1e6, 1e6), topk=2, d_model=4)
     context = torch.arange(96, dtype=torch.float32).view(1, 96, 1)
     context_mask = torch.ones_like(context, dtype=torch.bool)
     state = torch.ones((1, 1, 12), dtype=torch.long)
     mean = torch.zeros((1, 1))
     std = torch.ones((1, 1))
 
-    first_result = first.select(context, context_mask, state, mean, std, torch.ones(1))
-    second_result = second.select(context, context_mask, state, mean, std, torch.ones(1))
+    first_result = first.select(
+        context,
+        context_mask,
+        state,
+        mean,
+        std,
+        torch.ones(1),
+        prototype_projection=teacher,
+    )
+    second_result = second.select(
+        context,
+        context_mask,
+        state,
+        mean,
+        std,
+        torch.ones(1),
+        prototype_projection=teacher,
+    )
 
     torch.testing.assert_close(first_result.selected, second_result.selected)
     torch.testing.assert_close(first_result.weights, second_result.weights)
     assert not torch.allclose(first_result.message, second_result.message)
+
+
+def test_historical_message_uses_projection_supplied_at_selection_time():
+    projection = nn.Linear(16, 1, bias=False)
+    with torch.no_grad():
+        projection.weight.fill_(1.0)
+    relation = HistoricalRelation(_bank_with_centers(10.0, 20.0), topk=1, d_model=1)
+    context = torch.arange(96, dtype=torch.float32).view(1, 96, 1)
+    context_mask = torch.ones_like(context, dtype=torch.bool)
+    state = torch.ones((1, 1, 12), dtype=torch.long)
+
+    first = relation.select(
+        context,
+        context_mask,
+        state,
+        torch.zeros(1, 1),
+        torch.ones(1, 1),
+        torch.ones(1),
+        prototype_projection=projection,
+    )
+    with torch.no_grad():
+        projection.weight.fill_(2.0)
+    second = relation.select(
+        context,
+        context_mask,
+        state,
+        torch.zeros(1, 1),
+        torch.ones(1, 1),
+        torch.ones(1),
+        prototype_projection=projection,
+    )
+
+    torch.testing.assert_close(second.message, first.message * 2.0)
 
 
 def test_empty_historical_bank_returns_zero_message():
@@ -118,7 +167,8 @@ def test_empty_historical_bank_returns_zero_message():
         factor_mean=np.zeros((1, 7)),
         factor_std=np.ones((1, 7)),
     )
-    relation = HistoricalRelation(bank, nn.Linear(16, 3), topk=4)
+    projection = nn.Linear(16, 3)
+    relation = HistoricalRelation(bank, topk=4, d_model=3)
     message = relation(
         torch.zeros(1, 96, 1),
         torch.zeros(1, 96, 1, dtype=torch.bool),
@@ -126,14 +176,16 @@ def test_empty_historical_bank_returns_zero_message():
         torch.zeros(1, 1),
         torch.ones(1, 1),
         torch.ones(1),
+        prototype_projection=projection,
     )
     torch.testing.assert_close(message, torch.zeros_like(message))
 
 
 def test_historical_retrieval_does_not_transfer_each_query_to_cpu(monkeypatch):
     relation = HistoricalRelation(
-        _bank_with_centers(10.0, 20.0), nn.Linear(16, 4), topk=2
+        _bank_with_centers(10.0, 20.0), topk=2, d_model=4
     )
+    projection = nn.Linear(16, 4)
     context = torch.arange(96, dtype=torch.float32).view(1, 96, 1)
     context_mask = torch.ones_like(context, dtype=torch.bool)
     state = torch.ones((1, 1, 12), dtype=torch.long)
@@ -149,6 +201,7 @@ def test_historical_retrieval_does_not_transfer_each_query_to_cpu(monkeypatch):
         torch.zeros(1, 1),
         torch.ones(1, 1),
         torch.ones(1),
+        prototype_projection=projection,
     )
 
     assert result.message.shape == (1, 1, 12, 4)
@@ -156,8 +209,9 @@ def test_historical_retrieval_does_not_transfer_each_query_to_cpu(monkeypatch):
 
 def test_historical_retrieval_broadcasts_normalization_over_a_batch():
     relation = HistoricalRelation(
-        _bank_with_centers(10.0, 20.0), nn.Linear(16, 4), topk=2
+        _bank_with_centers(10.0, 20.0), topk=2, d_model=4
     )
+    projection = nn.Linear(16, 4)
     context = torch.arange(192, dtype=torch.float32).view(2, 96, 1)
     context_mask = torch.ones_like(context, dtype=torch.bool)
     state = torch.ones((2, 1, 12), dtype=torch.long)
@@ -169,6 +223,7 @@ def test_historical_retrieval_broadcasts_normalization_over_a_batch():
         torch.tensor([[0.0], [100.0]]),
         torch.tensor([[1.0], [2.0]]),
         torch.ones(1),
+        prototype_projection=projection,
     )
 
     assert result.message.shape == (2, 1, 12, 4)
@@ -176,7 +231,7 @@ def test_historical_retrieval_broadcasts_normalization_over_a_batch():
 
 def test_batched_query_factors_match_the_reference_definition():
     relation = HistoricalRelation(
-        _bank_with_centers(10.0, 20.0), nn.Linear(16, 4), topk=2
+        _bank_with_centers(10.0, 20.0), topk=2, d_model=4
     )
     context = torch.arange(96, dtype=torch.float32).view(1, 96, 1)
     context_mask = torch.ones_like(context, dtype=torch.bool)

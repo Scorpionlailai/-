@@ -199,3 +199,40 @@ def test_smoke_keeps_enough_samples_for_official_memory_clustering(
     command = capsys.readouterr().out
     assert result == 0
     assert "--batch_size 16" in command
+
+
+def test_official_profile_accepts_single_layer_and_full_training_controls(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    result = main(
+        [
+            "--config",
+            str(tmp_path / "config.yaml"),
+            "--artifacts",
+            str(tmp_path / "malr-artifacts"),
+            "--s4m-root",
+            str(tmp_path / "S4M"),
+            "--output",
+            str(tmp_path / "s4m-artifacts"),
+            "--profile",
+            "official",
+            "--e-layers",
+            "8",
+            "--train-epochs",
+            "100",
+            "--patience",
+            "100",
+            "--device",
+            "cuda",
+            "--dry-run",
+        ]
+    )
+
+    command = capsys.readouterr().out
+    assert result == 0
+    assert command.count("--e_layers 8") == 1
+    assert "--e_layers 2" not in command
+    assert "--e_layers 4" not in command
+    assert "--train_epochs 100" in command
+    assert "--patience 100" in command

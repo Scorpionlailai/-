@@ -51,9 +51,12 @@ def patchify_with_state(
 
     valid = _validity_like(validity, values)
     observed = observed_mask.to(device=values.device, dtype=torch.bool)
-    replicated_values = values[:, -1:, :].expand(-1, stride, -1)
+    effective_values = torch.where(
+        observed & valid, values, torch.zeros_like(values)
+    )
+    replicated_values = effective_values[:, -1:, :].expand(-1, stride, -1)
     replicated_observed = observed[:, -1:, :].expand(-1, stride, -1)
-    padded_values = torch.cat((values, replicated_values), dim=1)
+    padded_values = torch.cat((effective_values, replicated_values), dim=1)
     padded_observed = torch.cat((observed, replicated_observed), dim=1)
     padded_validity = torch.cat(
         (
@@ -69,7 +72,6 @@ def patchify_with_state(
         dim=1,
     )
     effective = padded_observed & padded_validity
-    padded_values = torch.where(effective, padded_values, torch.zeros_like(padded_values))
 
     value_patches = padded_values.unfold(1, length, stride).permute(0, 2, 1, 3)
     mask_patches = effective.unfold(1, length, stride).permute(0, 2, 1, 3)

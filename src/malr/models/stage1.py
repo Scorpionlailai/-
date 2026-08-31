@@ -59,20 +59,13 @@ class Stage1Model(nn.Module):
             raise ValueError("ours variant requires MissingAwareRecovery")
         if self.variant is not ModelVariant.OURS and recovery is not None:
             raise ValueError("only ours variant may own a recovery front-end")
-        self._clean_initialized = self.variant in {
-            ModelVariant.CLEAN,
-            ModelVariant.MISSING,
-        }
+        self._clean_initialized = self.variant is not ModelVariant.MISSING_PRETRAINED
 
     @property
     def teacher_projection(self) -> nn.Module:
-        if (
-            self.variant is not ModelVariant.OURS
-            or self.recovery is None
-            or self.recovery.historical is None
-        ):
-            raise AttributeError("this model has no clean teacher projection")
-        return self.recovery.historical.teacher
+        if self.variant is not ModelVariant.OURS:
+            raise AttributeError("this model has no recovery teacher projection")
+        return self.core.W_P
 
     def teacher_target(
         self,
@@ -90,7 +83,7 @@ class Stage1Model(nn.Module):
             clean_raw_patches - query_mean.unsqueeze(-1).unsqueeze(-1)
         ) / query_std.unsqueeze(-1).unsqueeze(-1)
         with torch.no_grad():
-            return self.teacher_projection(normalized).detach()
+            return self.core.project_clean_patches(normalized).detach()
 
     def forward(
         self,
@@ -106,12 +99,13 @@ class Stage1Model(nn.Module):
         train_std: Tensor | None = None,
         clean_raw_patches: Tensor | None = None,
     ) -> Stage1Forward:
-        if self.variant in {ModelVariant.MISSING_PRETRAINED, ModelVariant.OURS} and not self._clean_initialized:
+        if self.variant is ModelVariant.MISSING_PRETRAINED and not self._clean_initialized:
             raise RuntimeError(f"{self.variant.value} requires clean-checkpoint initialization")
         if clean_raw_patches is not None and not self.training:
             raise ValueError("clean teacher input is training-only")
 
         recovery_output: RecoveryOutput | None = None
+        base_latents = self.core.project_clean_patches(patch_values)
         if self.variant is ModelVariant.OURS:
             assert self.recovery is not None
             recovery_output = self.recovery(
@@ -124,10 +118,12 @@ class Stage1Model(nn.Module):
                 query_mean=query_mean,
                 query_std=query_std,
                 train_std=train_std,
+                base_latents=base_latents,
+                prototype_projection=self.core.W_P,
             )
             latents = recovery_output.latents
         else:
-            latents = self.core.project_clean_patches(patch_values)
+            latents = base_latents
 
         normalized_forecast = self.core.forecast_from_latents(latents)
         forecast = denormalize_forecast(
@@ -234,9 +230,4 @@ def initialize_from_clean_checkpoint(
         raise ValueError("clean checkpoint is incompatible with PatchTST core")
     if model.variant is ModelVariant.OURS:
         assert model.recovery is not None
-        model.recovery.W_x.load_state_dict(model.core.W_P.state_dict(), strict=True)
-        model.teacher_projection.load_state_dict(model.core.W_P.state_dict(), strict=True)
-        model.teacher_projection.eval()
-        for parameter in model.teacher_projection.parameters():
-            parameter.requires_grad_(False)
     model._clean_initialized = True

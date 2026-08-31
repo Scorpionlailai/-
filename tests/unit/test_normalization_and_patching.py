@@ -5,6 +5,7 @@ from malr.data.normalization import (
     denormalize_forecast,
     fit_train_variable_stats,
     masked_window_normalize,
+    standardize_values,
 )
 from malr.data.patching import (
     PATCH_MISSING,
@@ -64,6 +65,20 @@ def test_train_variable_stats_and_denormalization() -> None:
     torch.testing.assert_close(restored[0, 0], stats.mean)
 
 
+def test_official_scaling_is_fit_on_training_values_only() -> None:
+    values = torch.tensor([[1.0], [3.0], [101.0], [-9999.0]])
+    train_stats = fit_train_variable_stats(values[:2], eps=0.0)
+
+    standardized = standardize_values(values, train_stats)
+
+    torch.testing.assert_close(standardized[:2].mean(0), torch.zeros(1))
+    torch.testing.assert_close(
+        standardized[:2].square().mean(0).sqrt(), torch.ones(1)
+    )
+    assert standardized[2, 0].item() == 99.0
+    assert torch.isfinite(standardized[3, 0])
+
+
 def test_patchtst_geometry_and_states_exclude_padding() -> None:
     values = torch.ones(1, 96, 1)
     observed = torch.ones_like(values, dtype=torch.bool)
@@ -83,12 +98,14 @@ def test_patchtst_geometry_and_states_exclude_padding() -> None:
     assert patches.rho[0, 0, -1].item() == 1.0
 
 
-def test_padding_values_and_effective_mask_are_zero() -> None:
+def test_padding_replicates_last_value_but_is_excluded_from_observation_counts() -> None:
     values = torch.arange(96, dtype=torch.float32).view(1, 96, 1)
     observed = torch.ones_like(values, dtype=torch.bool)
 
     patches = patchify_with_state(values, observed, length=16, stride=8)
 
-    torch.testing.assert_close(patches.values[0, 0, -1, 8:], torch.zeros(8))
+    torch.testing.assert_close(
+        patches.values[0, 0, -1, 8:], torch.full((8,), 95.0)
+    )
     assert not patches.effective_mask[0, 0, -1, 8:].any()
     assert not patches.validity[0, 0, -1, 8:].any()

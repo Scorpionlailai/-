@@ -6,8 +6,13 @@ import torch
 
 from malr.models.patchtst import PatchTSTCore
 from malr.models.stage1 import ModelVariant, Stage1Model, initialize_from_clean_checkpoint
-from malr.training.trainer import PreparedBatch, Trainer
-from malr.cli import build_parser
+from malr.training.trainer import (
+    PreparedBatch,
+    Trainer,
+    patchtst_type3_learning_rate,
+)
+from malr.cli import build_experiment_model, build_parser
+from malr.config import load_config
 from tests.unit.test_teacher_and_losses import _tiny_ours
 
 
@@ -116,3 +121,21 @@ def test_cli_exposes_the_agreed_stage1_workflow():
         "train",
         "evaluate",
     } <= set(actions.choices)
+
+
+def test_ours_builds_without_clean_checkpoint_when_historical_is_disabled():
+    config = load_config(Path("configs/stage1_no_historical.yaml"))
+
+    model = build_experiment_model(config, "ETTh1", "ours")
+
+    assert model.variant is ModelVariant.OURS
+
+
+def test_patchtst_type3_learning_rate_matches_official_schedule():
+    base = 1.0e-4
+
+    assert patchtst_type3_learning_rate(base, 1) == pytest.approx(base)
+    assert patchtst_type3_learning_rate(base, 2) == pytest.approx(base)
+    assert patchtst_type3_learning_rate(base, 3) == pytest.approx(base)
+    assert patchtst_type3_learning_rate(base, 4) == pytest.approx(base * 0.9)
+    assert patchtst_type3_learning_rate(base, 5) == pytest.approx(base * 0.9**2)

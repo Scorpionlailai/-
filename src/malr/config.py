@@ -81,27 +81,53 @@ class RelationConfig:
 
 
 @dataclass(frozen=True)
-class ModelConfig:
+class ModelProfile:
     d_model: int
     n_heads: int
     d_ff: int
     encoder_layers: int
     dropout: float
+    fc_dropout: float
     head_dropout: float
+    attn_dropout: float
+
+
+@dataclass(frozen=True)
+class ModelConfig:
     normalization_eps: float
+    profiles: dict[str, ModelProfile]
+
+    def for_dataset(self, dataset: str) -> ModelProfile:
+        try:
+            return self.profiles[dataset]
+        except KeyError as exc:
+            raise ValueError(f"no model profile configured for {dataset!r}") from exc
+
+
+@dataclass(frozen=True)
+class TrainingProfile:
+    learning_rate: float
+    batch_size: int
+    max_epochs: int
+    early_stopping_patience: int
+    lr_schedule: str
+    drop_last: bool
 
 
 @dataclass(frozen=True)
 class TrainingConfig:
     optimizer: str
-    learning_rate: float
     weight_decay: float
-    batch_size: int
-    max_epochs: int
-    early_stopping_patience: int
     checkpoint_metric: str
     lambda_rec: float
     seed: int
+    profiles: dict[str, TrainingProfile]
+
+    def for_dataset(self, dataset: str) -> TrainingProfile:
+        try:
+            return self.profiles[dataset]
+        except KeyError as exc:
+            raise ValueError(f"no training profile configured for {dataset!r}") from exc
 
 
 @dataclass(frozen=True)
@@ -157,12 +183,47 @@ class Stage1Config:
             raise ValueError("matrix_profile_window must equal 64")
         if self.prototype.max_per_variable > 256:
             raise ValueError("prototype max_per_variable cannot exceed 256")
-        if self.model.d_model % self.model.n_heads:
-            raise ValueError("model.d_model must be divisible by model.n_heads")
+        dataset_names = set(self.data.datasets)
+        if set(self.model.profiles) != dataset_names:
+            raise ValueError("model profiles must exactly match configured datasets")
+        if set(self.training.profiles) != dataset_names:
+            raise ValueError("training profiles must exactly match configured datasets")
+        if self.model.normalization_eps <= 0:
+            raise ValueError("model.normalization_eps must be positive")
+        for name, profile in self.model.profiles.items():
+            if profile.d_model % profile.n_heads:
+                raise ValueError(
+                    f"model profile {name!r} d_model must be divisible by n_heads"
+                )
+            if min(profile.d_model, profile.n_heads, profile.d_ff, profile.encoder_layers) <= 0:
+                raise ValueError(f"model profile {name!r} dimensions must be positive")
+            if any(
+                not 0.0 <= value < 1.0
+                for value in (
+                    profile.dropout,
+                    profile.fc_dropout,
+                    profile.head_dropout,
+                    profile.attn_dropout,
+                )
+            ):
+                raise ValueError(f"model profile {name!r} dropout must be in [0, 1)")
         if self.training.optimizer.lower() != "adam":
             raise ValueError("stage1 optimizer must equal adam")
         if self.training.checkpoint_metric != "val_mse":
             raise ValueError("checkpoint_metric must equal val_mse")
+        for name, profile in self.training.profiles.items():
+            if profile.learning_rate <= 0 or profile.batch_size <= 0:
+                raise ValueError(f"training profile {name!r} has invalid optimizer values")
+            if profile.max_epochs <= 0 or profile.early_stopping_patience <= 0:
+                raise ValueError(f"training profile {name!r} has invalid epoch values")
+            if profile.lr_schedule != "type3":
+                raise ValueError(
+                    f"training profile {name!r} must use PatchTST type3 schedule"
+                )
+            if not profile.drop_last:
+                raise ValueError(
+                    f"training profile {name!r} must drop incomplete batches"
+                )
 
 
 def _require_mapping(raw: Any, name: str) -> dict[str, Any]:
@@ -184,6 +245,12 @@ def load_config(path: Path) -> Stage1Config:
         },
     )
     patch_raw = _require_mapping(raw["patch"], "patch")
+    model_raw = _require_mapping(raw["model"], "model")
+    model_profiles_raw = _require_mapping(model_raw["profiles"], "model.profiles")
+    training_raw = _require_mapping(raw["training"], "training")
+    training_profiles_raw = _require_mapping(
+        training_raw["profiles"], "training.profiles"
+    )
     config = Stage1Config(
         version=int(raw["version"]),
         data=data,
@@ -195,9 +262,25 @@ def load_config(path: Path) -> Stage1Config:
         relations=RelationConfig(
             **_require_mapping(raw["relations"], "relations")
         ),
-        model=ModelConfig(**_require_mapping(raw["model"], "model")),
+        model=ModelConfig(
+            normalization_eps=float(model_raw["normalization_eps"]),
+            profiles={
+                name: ModelProfile(**_require_mapping(value, f"model profile {name}"))
+                for name, value in model_profiles_raw.items()
+            },
+        ),
         training=TrainingConfig(
-            **_require_mapping(raw["training"], "training")
+            optimizer=str(training_raw["optimizer"]),
+            weight_decay=float(training_raw["weight_decay"]),
+            checkpoint_metric=str(training_raw["checkpoint_metric"]),
+            lambda_rec=float(training_raw["lambda_rec"]),
+            seed=int(training_raw["seed"]),
+            profiles={
+                name: TrainingProfile(
+                    **_require_mapping(value, f"training profile {name}")
+                )
+                for name, value in training_profiles_raw.items()
+            },
         ),
         ablations=AblationConfig(
             **_require_mapping(raw["ablations"], "ablations")
@@ -215,4 +298,3 @@ def config_sha256(config: Stage1Config) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return sha256(payload).hexdigest()
-

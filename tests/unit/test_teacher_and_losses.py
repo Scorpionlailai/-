@@ -48,20 +48,20 @@ def test_stage1_total_contains_mse_not_mae():
     assert result.total.item() == pytest.approx(8.0)
 
 
-def _empty_bank() -> PrototypeBank:
-    source = np.zeros((64, 1), dtype=np.float64)
+def _empty_bank(variable_count: int = 1) -> PrototypeBank:
+    source = np.zeros((64, variable_count), dtype=np.float64)
     return PrototypeBank(
         dataset="fixture",
         train_end=64,
         source_checksum=source_checksum(source),
         config_sha256="fixture",
-        records=((),),
-        factor_mean=np.zeros((1, 7)),
-        factor_std=np.ones((1, 7)),
+        records=tuple(() for _ in range(variable_count)),
+        factor_mean=np.zeros((variable_count, 7)),
+        factor_std=np.ones((variable_count, 7)),
     )
 
 
-def _tiny_ours() -> Stage1Model:
+def _tiny_ours(*, clean_initialized: bool = False) -> Stage1Model:
     core = PatchTSTCore(
         c_in=1,
         seq_len=32,
@@ -74,8 +74,7 @@ def _tiny_ours() -> Stage1Model:
         n_layers=1,
         dropout=0.0,
     )
-    teacher = deepcopy(core.W_P)
-    historical = HistoricalRelation(_empty_bank(), teacher, topk=4)
+    historical = HistoricalRelation(_empty_bank(), topk=4, d_model=8)
     recovery = MissingAwareRecovery(
         c_in=1,
         patch_num=core.patch_num,
@@ -87,22 +86,58 @@ def _tiny_ours() -> Stage1Model:
         use_historical=False,
     )
     model = Stage1Model(core, ModelVariant.OURS, recovery=recovery)
-    initialize_from_clean_checkpoint(model, deepcopy(core.state_dict()))
+    if clean_initialized:
+        initialize_from_clean_checkpoint(model, deepcopy(core.state_dict()))
     return model
 
 
-def test_teacher_target_uses_query_normalization_and_is_frozen():
+def test_ours_forward_runs_from_scratch_without_clean_checkpoint():
+    model = _tiny_ours(clean_initialized=False)
+    patch_count = model.core.patch_num
+    state = torch.full((1, 1, patch_count), 2, dtype=torch.long)
+    mask = torch.zeros(1, 1, patch_count, 16, dtype=torch.bool)
+    values = torch.zeros(1, 1, patch_count, 16)
+
+    output = model(
+        values,
+        mask,
+        torch.zeros(1, 1, patch_count),
+        state,
+        torch.zeros(1, 1),
+        torch.ones(1, 1),
+    )
+
+    assert output.forecast.shape == (1, 1, 4)
+
+
+def test_recovery_loss_target_uses_current_patch_projection():
+    model = _tiny_ours(clean_initialized=False)
+    with torch.no_grad():
+        model.core.W_P.weight.fill_(1.0)
+        model.core.W_P.bias.zero_()
+    clean_raw = torch.ones((1, 1, model.core.patch_num, 16))
+    mean = torch.zeros((1, 1))
+    std = torch.ones((1, 1))
+
+    target = model.teacher_target(clean_raw, mean, std)
+
+    torch.testing.assert_close(target, torch.full_like(target, 16.0))
+
+
+def test_teacher_target_uses_query_normalization_and_is_detached():
     model = _tiny_ours()
+    with torch.no_grad():
+        model.core.W_P.weight.fill_(0.5)
+        model.core.W_P.bias.zero_()
     clean_raw = torch.full((1, 1, 4, 16), 12.0)
     mean = torch.tensor([[10.0]])
     std = torch.tensor([[2.0]])
 
     target = model.teacher_target(clean_raw, mean, std)
-    expected = model.teacher_projection(torch.ones_like(clean_raw))
 
-    torch.testing.assert_close(target, expected)
+    torch.testing.assert_close(target, torch.full_like(target, 8.0))
     assert not target.requires_grad
-    assert all(not parameter.requires_grad for parameter in model.teacher_projection.parameters())
+    assert all(parameter.requires_grad for parameter in model.teacher_projection.parameters())
 
 
 def test_evaluation_rejects_clean_teacher_input():

@@ -37,8 +37,9 @@ def test_frontend_shape_and_disabled_messages():
     rho = torch.ones(2, 2, 3)
     state = torch.zeros(2, 2, 3, dtype=torch.long)
     state[:, :, 1] = PATCH_PARTIAL
+    base_latents = torch.randn(2, 2, 3, 8)
 
-    result = module(values, mask, rho, state)
+    result = module(values, mask, rho, state, base_latents=base_latents)
 
     assert result.latents.shape == (2, 2, 3, 8)
     torch.testing.assert_close(result.messages.temporal, torch.zeros_like(result.latents))
@@ -58,8 +59,6 @@ def test_recovery_relations_use_immutable_pre_recovery_visible_sources():
         use_historical=False,
     )
     with torch.no_grad():
-        module.W_x.weight.copy_(torch.eye(2))
-        module.W_x.bias.zero_()
         module.W_m.weight.zero_()
         module.W_m.bias.zero_()
         module.W_q.weight.copy_(torch.eye(2))
@@ -77,8 +76,9 @@ def test_recovery_relations_use_immutable_pre_recovery_visible_sources():
     mask = torch.tensor([[[[True, True], [False, False], [True, True]]]])
     rho = torch.tensor([[[1.0, 0.0, 1.0]]])
     state = torch.tensor([[[PATCH_OBSERVED, PATCH_MISSING, PATCH_OBSERVED]]])
+    base_latents = values.clone()
 
-    result = module(values, mask, rho, state)
+    result = module(values, mask, rho, state, base_latents=base_latents)
 
     # Patch 1 recovers from patch 0 or 2, but cannot then feed its recovered value
     # back into any target in the same layer because relation sources are `visible`.

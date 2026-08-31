@@ -6,7 +6,7 @@ import torch
 from malr.data.masks import EpochMaskManager, generate_variable_missing_mask
 from malr.data.normalization import fit_train_variable_stats
 from malr.data.splits import DatasetProtocol, SplitBounds
-from malr.data.windows import build_window_index
+from malr.data.windows import WindowRef, build_window_index
 from malr.training.data import iter_prepared_batches
 from malr.training.trainer import Trainer
 from tests.unit.test_teacher_and_losses import _tiny_ours
@@ -71,3 +71,32 @@ def test_cpu_synthetic_raw_series_to_checkpoint_acceptance(tmp_path: Path):
     assert result.best_checkpoint.exists()
     assert np.isfinite(result.best_val_mse)
     assert result.test_evaluated is False
+
+
+def test_official_drop_last_discards_only_the_incomplete_batch():
+    series = np.arange(64, dtype=np.float32)[:, None]
+    refs = [
+        WindowRef(0, 32, 32, 36, "train"),
+        WindowRef(1, 33, 33, 37, "train"),
+        WindowRef(2, 34, 34, 38, "train"),
+    ]
+    stats = fit_train_variable_stats(torch.from_numpy(series), eps=0.0)
+
+    batches = list(
+        iter_prepared_batches(
+            series,
+            refs,
+            np.zeros_like(series, dtype=bool),
+            mask_support_start=0,
+            train_stats=stats,
+            variant="clean",
+            batch_size=2,
+            patch_len=16,
+            patch_stride=8,
+            drop_last=True,
+        )
+    )
+
+    assert len(batches) == 1
+    assert batches[0].forecast_target.shape[0] == 2
+    assert not batches[0].state.any()

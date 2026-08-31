@@ -40,6 +40,7 @@ def _record(run_id: str = "fixture-run") -> ResultRecord:
         final_rate=0.25,
         trainable_parameters=10,
         training_seconds=2.0,
+        metric_space="train_standardized",
         config_hash="a" * 64,
         checkpoint_sha256="b" * 64,
         mask_sha256="c" * 64,

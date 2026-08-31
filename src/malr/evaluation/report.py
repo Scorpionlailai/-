@@ -23,9 +23,10 @@ class ResultRecord:
     final_rate: float
     trainable_parameters: int
     training_seconds: float
+    metric_space: str
     config_hash: str
     checkpoint_sha256: str
-    mask_sha256: str
+    mask_sha256: str | None
     bank_sha256: str | None
     source_csv_sha256: str
     seed: int
@@ -34,6 +35,8 @@ class ResultRecord:
     def __post_init__(self) -> None:
         if not self.run_id or not self.dataset or not self.variant:
             raise ValueError("result identity fields cannot be empty")
+        if self.metric_space != "train_standardized":
+            raise ValueError("result metric_space must equal train_standardized")
         if self.mse < 0 or self.mae < 0 or not 0.0 <= self.final_rate <= 1.0:
             raise ValueError("result metrics or final_rate are invalid")
         if self.trainable_parameters <= 0 or self.training_seconds < 0:

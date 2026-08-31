@@ -14,6 +14,20 @@ from malr.models.stage1 import Stage1Model
 from .checkpoints import load_checkpoint, save_checkpoint
 
 
+def patchtst_type3_learning_rate(
+    base_learning_rate: float, completed_epoch: int
+) -> float:
+    """Match PatchTST's one-based ``type3`` epoch schedule."""
+
+    if base_learning_rate <= 0:
+        raise ValueError("base_learning_rate must be positive")
+    if completed_epoch <= 0:
+        raise ValueError("completed_epoch must be positive")
+    if completed_epoch < 3:
+        return float(base_learning_rate)
+    return float(base_learning_rate) * 0.9 ** (completed_epoch - 3)
+
+
 @dataclass(frozen=True)
 class PreparedBatch:
     patch_values: Tensor
@@ -103,17 +117,22 @@ class Trainer:
         patience: int = 5,
         learning_rate: float = 1e-4,
         weight_decay: float = 0.0,
+        lr_schedule: str = "constant",
         lambda_rec: float = 1.0,
         use_recovery_loss: bool = True,
         device: str | torch.device = "cpu",
     ) -> None:
         if max_epochs <= 0 or patience <= 0:
             raise ValueError("max_epochs and patience must be positive")
+        if lr_schedule not in {"constant", "type3"}:
+            raise ValueError("lr_schedule must be 'constant' or 'type3'")
         self.device = torch.device(device)
         self.model = model.to(self.device)
         self.checkpoint_path = checkpoint_path
         self.max_epochs = max_epochs
         self.patience = patience
+        self.base_learning_rate = float(learning_rate)
+        self.lr_schedule = lr_schedule
         self.lambda_rec = lambda_rec
         self.use_recovery_loss = use_recovery_loss
         trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
@@ -199,8 +218,20 @@ class Trainer:
             )
             epochs_completed = epoch + 1
             epochs_without_improvement = 0 if improved else epochs_without_improvement + 1
+            current_lr = float(self.optimizer.param_groups[0]["lr"])
+            print(
+                f"epoch={epoch + 1}/{self.max_epochs} "
+                f"val_mse={metric:.7f} best_val_mse={self.tracker.best_metric:.7f} "
+                f"lr={current_lr:.8g}"
+            )
             if epochs_without_improvement >= self.patience:
                 break
+            if self.lr_schedule == "type3":
+                next_lr = patchtst_type3_learning_rate(
+                    self.base_learning_rate, epoch + 1
+                )
+                for parameter_group in self.optimizer.param_groups:
+                    parameter_group["lr"] = next_lr
 
         elapsed = perf_counter() - start_time
         best = load_checkpoint(self.checkpoint_path, map_location=self.device)

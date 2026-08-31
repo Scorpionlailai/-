@@ -54,28 +54,51 @@ relations:
   num_message_passing_layers: 1
 
 model:
-  d_model: 128
-  n_heads: 16
-  d_ff: 256
-  encoder_layers: 3
-  dropout: 0.2
-  head_dropout: 0.0
   normalization_eps: 1.0e-5
+  profiles:
+    ETTh1:
+      d_model: 16
+      n_heads: 4
+      d_ff: 128
+      encoder_layers: 3
+      dropout: 0.3
+      fc_dropout: 0.3
+      head_dropout: 0.0
+      attn_dropout: 0.0
+    Weather:
+      d_model: 128
+      n_heads: 16
+      d_ff: 256
+      encoder_layers: 3
+      dropout: 0.2
+      fc_dropout: 0.2
+      head_dropout: 0.0
+      attn_dropout: 0.0
 
 training:
   optimizer: adam
-  learning_rate: 1.0e-4
   weight_decay: 0.0
-  batch_size: 32
-  max_epochs: 50
-  early_stopping_patience: 5
   checkpoint_metric: val_mse
   lambda_rec: 1.0
   seed: 2021
+  profiles:
+    ETTh1:
+      learning_rate: 1.0e-4
+      batch_size: 128
+      max_epochs: 100
+      early_stopping_patience: 100
+      lr_schedule: type3
+      drop_last: true
+    Weather:
+      learning_rate: 1.0e-4
+      batch_size: 128
+      max_epochs: 100
+      early_stopping_patience: 20
+      lr_schedule: type3
+      drop_last: true
 
 ablations:
   use_temporal: true
   use_variable: true
   use_historical: true
   use_recovery_loss: true
-

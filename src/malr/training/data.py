@@ -25,6 +25,8 @@ def iter_prepared_batches(
     patch_len: int,
     patch_stride: int,
     shuffle_seed: int | None = None,
+    normalization_eps: float = 1e-5,
+    drop_last: bool = False,
 ) -> Iterable[PreparedBatch]:
     values = np.asarray(series, dtype=np.float32)
     observed_timeline = np.asarray(timeline_mask, dtype=bool)
@@ -39,7 +41,10 @@ def iter_prepared_batches(
     indices = np.arange(len(refs))
     if shuffle_seed is not None:
         np.random.default_rng(shuffle_seed).shuffle(indices)
-    for offset in range(0, len(indices), batch_size):
+    usable = (
+        len(indices) - len(indices) % batch_size if drop_last else len(indices)
+    )
+    for offset in range(0, usable, batch_size):
         batch_refs = [refs[int(index)] for index in indices[offset : offset + batch_size]]
         clean_numpy = np.stack(
             [values[ref.input_start : ref.input_end] for ref in batch_refs]
@@ -60,7 +65,12 @@ def iter_prepared_batches(
 
         clean = torch.from_numpy(clean_numpy)
         observed = torch.from_numpy(observed_numpy)
-        normalized = masked_window_normalize(clean, observed, train_stats)
+        normalized = masked_window_normalize(
+            clean,
+            observed,
+            train_stats,
+            eps=normalization_eps,
+        )
         patches = patchify_with_state(
             normalized.student,
             normalized.effective_mask,

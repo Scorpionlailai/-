@@ -53,7 +53,6 @@ class MissingAwareRecovery(nn.Module):
         self.use_variable = use_variable
         self.use_historical = use_historical and historical_relation is not None
 
-        self.W_x = nn.Linear(patch_len, d_model)
         self.W_m = nn.Linear(patch_len, d_model)
         self.variable_embedding = nn.Parameter(torch.empty(c_in, d_model))
         self.position_embedding = nn.Parameter(torch.empty(patch_num, d_model))
@@ -80,7 +79,14 @@ class MissingAwareRecovery(nn.Module):
         damaged_output = prior + recovered + partial.unsqueeze(-1) * visible
         return torch.where(observed.unsqueeze(-1), visible, damaged_output)
 
-    def _validate(self, values: Tensor, mask: Tensor, rho: Tensor, state: Tensor) -> None:
+    def _validate(
+        self,
+        values: Tensor,
+        mask: Tensor,
+        rho: Tensor,
+        state: Tensor,
+        base_latents: Tensor,
+    ) -> None:
         expected = (self.c_in, self.patch_num, self.patch_len)
         if values.ndim != 4 or tuple(values.shape[1:]) != expected:
             raise ValueError(f"values must have shape [batch, {expected}]")
@@ -88,6 +94,9 @@ class MissingAwareRecovery(nn.Module):
             raise ValueError("mask must match patch values")
         if rho.shape != values.shape[:-1] or state.shape != rho.shape:
             raise ValueError("rho and state must match patch nodes")
+        latent_shape = (*values.shape[:-1], self.d_model)
+        if base_latents.shape != latent_shape:
+            raise ValueError("base_latents must match patch nodes and d_model")
 
     def forward(
         self,
@@ -101,15 +110,18 @@ class MissingAwareRecovery(nn.Module):
         query_mean: Tensor | None = None,
         query_std: Tensor | None = None,
         train_std: Tensor | None = None,
+        base_latents: Tensor,
+        prototype_projection: nn.Module | None = None,
     ) -> RecoveryOutput:
-        self._validate(values, mask, rho, state)
-        visible = self.W_x(values) + self.W_m(mask.to(dtype=values.dtype))
+        self._validate(values, mask, rho, state, base_latents)
+        visible = base_latents
+        query_visible = visible + self.W_m(mask.to(dtype=values.dtype))
         prior = (
             self.variable_embedding.view(1, self.c_in, 1, self.d_model)
             + self.position_embedding.view(1, 1, self.patch_num, self.d_model)
             + self.state_embedding[state]
         )
-        query = self.W_q(visible + prior)
+        query = self.W_q(query_visible + prior)
         damaged = state != PATCH_OBSERVED
         zeros = torch.zeros_like(visible)
         diagnostics: dict[str, Tensor] = {}
@@ -137,7 +149,14 @@ class MissingAwareRecovery(nn.Module):
         if self.use_historical:
             if any(
                 item is None
-                for item in (raw_context, context_mask, query_mean, query_std, train_std)
+                for item in (
+                    raw_context,
+                    context_mask,
+                    query_mean,
+                    query_std,
+                    train_std,
+                    prototype_projection,
+                )
             ):
                 raise ValueError("historical recovery requires context and normalization inputs")
             assert self.historical is not None
@@ -148,6 +167,7 @@ class MissingAwareRecovery(nn.Module):
                 query_mean,
                 query_std,
                 train_std,
+                prototype_projection=prototype_projection,
             )
             historical_message = historical.message
             diagnostics["historical_selected"] = historical.selected
