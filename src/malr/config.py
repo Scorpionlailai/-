@@ -81,6 +81,15 @@ class RelationConfig:
 
 
 @dataclass(frozen=True)
+class RecoveryConfig:
+    fusion: str = "additive"
+    hidden_multiplier: int = 2
+    dropout: float = 0.0
+    output_init: str = "zero"
+    damage_scaling: str = "missing_fraction"
+
+
+@dataclass(frozen=True)
 class ModelProfile:
     d_model: int
     n_heads: int
@@ -146,6 +155,7 @@ class Stage1Config:
     missing: MissingConfig
     prototype: PrototypeConfig
     relations: RelationConfig
+    recovery: RecoveryConfig
     model: ModelConfig
     training: TrainingConfig
     ablations: AblationConfig
@@ -179,6 +189,16 @@ class Stage1Config:
             raise ValueError("recovered nodes cannot be relation sources")
         if any(value <= 0 for value in self.relations.topk.values()):
             raise ValueError("all relation top-k values must be positive")
+        if self.recovery.fusion not in {"additive", "residual_mlp"}:
+            raise ValueError("recovery.fusion must be additive or residual_mlp")
+        if self.recovery.hidden_multiplier <= 0:
+            raise ValueError("recovery.hidden_multiplier must be positive")
+        if not 0.0 <= self.recovery.dropout < 1.0:
+            raise ValueError("recovery.dropout must be in [0, 1)")
+        if self.recovery.output_init != "zero":
+            raise ValueError("recovery.output_init must be zero")
+        if self.recovery.damage_scaling != "missing_fraction":
+            raise ValueError("recovery.damage_scaling must be missing_fraction")
         if self.prototype.matrix_profile_window != 64:
             raise ValueError("matrix_profile_window must equal 64")
         if self.prototype.max_per_variable > 256:
@@ -245,6 +265,7 @@ def load_config(path: Path) -> Stage1Config:
         },
     )
     patch_raw = _require_mapping(raw["patch"], "patch")
+    recovery_raw = raw.get("recovery", {})
     model_raw = _require_mapping(raw["model"], "model")
     model_profiles_raw = _require_mapping(model_raw["profiles"], "model.profiles")
     training_raw = _require_mapping(raw["training"], "training")
@@ -262,6 +283,7 @@ def load_config(path: Path) -> Stage1Config:
         relations=RelationConfig(
             **_require_mapping(raw["relations"], "relations")
         ),
+        recovery=RecoveryConfig(**_require_mapping(recovery_raw, "recovery")),
         model=ModelConfig(
             normalization_eps=float(model_raw["normalization_eps"]),
             profiles={
@@ -291,8 +313,11 @@ def load_config(path: Path) -> Stage1Config:
 
 
 def config_sha256(config: Stage1Config) -> str:
+    payload_mapping = asdict(config)
+    if config.recovery == RecoveryConfig():
+        payload_mapping.pop("recovery")
     payload = json.dumps(
-        asdict(config),
+        payload_mapping,
         ensure_ascii=False,
         sort_keys=True,
         separators=(",", ":"),

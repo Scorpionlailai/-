@@ -1,8 +1,12 @@
+from dataclasses import asdict
+from hashlib import sha256
+import json
 from pathlib import Path
 
 import pytest
+import yaml
 
-from malr.config import config_sha256, load_config
+from malr.config import RecoveryConfig, config_sha256, load_config
 
 
 def test_stage1_defaults_are_locked() -> None:
@@ -49,6 +53,51 @@ def test_stage1_defaults_are_locked() -> None:
     assert cfg.training.seed == 2021
 
 
+def test_legacy_config_defaults_to_additive_recovery() -> None:
+    cfg = load_config(Path("configs/stage1.yaml"))
+
+    assert cfg.recovery == RecoveryConfig()
+
+
+def test_residual_experiment_config_is_explicit() -> None:
+    cfg = load_config(Path("configs/stage1_sr010_residual_no_recloss.yaml"))
+
+    assert cfg.missing.start_rate == pytest.approx(0.10)
+    assert cfg.recovery.fusion == "residual_mlp"
+    assert cfg.recovery.hidden_multiplier == 2
+    assert cfg.recovery.dropout == pytest.approx(0.0)
+    assert cfg.recovery.output_init == "zero"
+    assert cfg.recovery.damage_scaling == "missing_fraction"
+    assert cfg.ablations.use_recovery_loss is False
+    assert cfg.ablations.use_temporal is True
+    assert cfg.ablations.use_variable is True
+    assert cfg.ablations.use_historical is True
+
+
+@pytest.mark.parametrize(
+    ("key", "value"),
+    [
+        ("fusion", "unknown"),
+        ("hidden_multiplier", 0),
+        ("dropout", -0.1),
+        ("dropout", 1.0),
+        ("output_init", "default"),
+        ("damage_scaling", "none"),
+    ],
+)
+def test_invalid_recovery_config_is_rejected(
+    tmp_path: Path, key: str, value: object
+) -> None:
+    raw = yaml.safe_load(Path("configs/stage1.yaml").read_text(encoding="utf-8"))
+    raw["recovery"] = asdict(RecoveryConfig())
+    raw["recovery"][key] = value
+    bad = tmp_path / f"bad_recovery_{key}.yaml"
+    bad.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="recovery"):
+        load_config(bad)
+
+
 def test_invalid_multilayer_recovery_is_rejected(tmp_path: Path) -> None:
     text = Path("configs/stage1.yaml").read_text(encoding="utf-8")
     bad = tmp_path / "bad.yaml"
@@ -69,6 +118,22 @@ def test_config_hash_is_stable() -> None:
 
     assert config_sha256(cfg) == config_sha256(cfg)
     assert len(config_sha256(cfg)) == 64
+
+
+def test_legacy_config_hash_omits_default_recovery() -> None:
+    cfg = load_config(Path("configs/stage1.yaml"))
+    payload_mapping = asdict(cfg)
+    payload_mapping.pop("recovery")
+    payload = json.dumps(
+        payload_mapping,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+    assert config_sha256(cfg) == sha256(payload).hexdigest()
+    residual = load_config(Path("configs/stage1_sr010_residual_no_recloss.yaml"))
+    assert config_sha256(residual) != config_sha256(cfg)
 
 
 def test_sr010_no_recovery_loss_keeps_historical_relations_enabled() -> None:
