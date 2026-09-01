@@ -146,6 +146,22 @@ def test_residual_config_builds_residual_recovery_without_clean_initialization()
     assert torch.count_nonzero(model.recovery.residual_mlp[-1].weight) == 0
 
 
+def test_global_replacement_config_builds_enabled_refiner() -> None:
+    config = load_config(
+        Path("configs/stage1_sr010_replacement_global_no_recloss.yaml")
+    )
+    config = replace(
+        config,
+        ablations=replace(config.ablations, use_historical=False),
+    )
+
+    model = build_experiment_model(config, "ETTh1", "ours")
+
+    assert model.recovery.fusion_mode == "replacement_mlp"
+    assert model.recovery.replacement_mlp is not None
+    assert model.recovery.global_refiner is not None
+
+
 def test_patchtst_type3_learning_rate_matches_official_schedule():
     base = 1.0e-4
 

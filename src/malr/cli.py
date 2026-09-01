@@ -207,6 +207,11 @@ def build_experiment_model(
             residual_dropout=config.recovery.dropout,
             residual_output_init=config.recovery.output_init,
             damage_scaling=config.recovery.damage_scaling,
+            global_refiner_enabled=config.recovery.refiner_enabled,
+            global_refiner_heads=config.recovery.refiner_heads,
+            global_refiner_ff_multiplier=config.recovery.refiner_ff_multiplier,
+            global_refiner_dropout=config.recovery.refiner_dropout,
+            global_refiner_output_init=config.recovery.refiner_output_init,
         )
         model = Stage1Model(core, selected, recovery=recovery)
         return model

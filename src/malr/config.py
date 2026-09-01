@@ -87,6 +87,11 @@ class RecoveryConfig:
     dropout: float = 0.0
     output_init: str = "zero"
     damage_scaling: str = "missing_fraction"
+    refiner_enabled: bool = False
+    refiner_heads: int = 4
+    refiner_ff_multiplier: int = 2
+    refiner_dropout: float = 0.0
+    refiner_output_init: str = "zero"
 
 
 @dataclass(frozen=True)
@@ -189,8 +194,14 @@ class Stage1Config:
             raise ValueError("recovered nodes cannot be relation sources")
         if any(value <= 0 for value in self.relations.topk.values()):
             raise ValueError("all relation top-k values must be positive")
-        if self.recovery.fusion not in {"additive", "residual_mlp"}:
-            raise ValueError("recovery.fusion must be additive or residual_mlp")
+        if self.recovery.fusion not in {
+            "additive",
+            "residual_mlp",
+            "replacement_mlp",
+        }:
+            raise ValueError(
+                "recovery.fusion must be additive, residual_mlp, or replacement_mlp"
+            )
         if (
             type(self.recovery.hidden_multiplier) is not int
             or self.recovery.hidden_multiplier <= 0
@@ -204,6 +215,31 @@ class Stage1Config:
             raise ValueError("recovery.output_init must be zero")
         if self.recovery.damage_scaling != "missing_fraction":
             raise ValueError("recovery.damage_scaling must be missing_fraction")
+        if type(self.recovery.refiner_enabled) is not bool:
+            raise ValueError("recovery.refiner_enabled must be boolean")
+        if (
+            type(self.recovery.refiner_heads) is not int
+            or self.recovery.refiner_heads <= 0
+        ):
+            raise ValueError("recovery.refiner_heads must be a positive integer")
+        if (
+            type(self.recovery.refiner_ff_multiplier) is not int
+            or self.recovery.refiner_ff_multiplier <= 0
+        ):
+            raise ValueError(
+                "recovery.refiner_ff_multiplier must be a positive integer"
+            )
+        if not 0.0 <= self.recovery.refiner_dropout < 1.0:
+            raise ValueError("recovery.refiner_dropout must be in [0, 1)")
+        if self.recovery.refiner_output_init != "zero":
+            raise ValueError("recovery.refiner_output_init must be zero")
+        if (
+            self.recovery.refiner_enabled
+            and self.recovery.fusion != "replacement_mlp"
+        ):
+            raise ValueError(
+                "recovery refiner requires recovery.fusion=replacement_mlp"
+            )
         if self.prototype.matrix_profile_window != 64:
             raise ValueError("matrix_profile_window must equal 64")
         if self.prototype.max_per_variable > 256:
@@ -222,6 +258,13 @@ class Stage1Config:
                 )
             if min(profile.d_model, profile.n_heads, profile.d_ff, profile.encoder_layers) <= 0:
                 raise ValueError(f"model profile {name!r} dimensions must be positive")
+            if (
+                self.recovery.refiner_enabled
+                and profile.d_model % self.recovery.refiner_heads
+            ):
+                raise ValueError(
+                    f"recovery.refiner_heads must divide model profile {name!r} d_model"
+                )
             if any(
                 not 0.0 <= value < 1.0
                 for value in (

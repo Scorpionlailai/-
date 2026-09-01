@@ -62,7 +62,10 @@ def _empty_bank(variable_count: int = 1) -> PrototypeBank:
 
 
 def _tiny_ours(
-    *, clean_initialized: bool = False, fusion: str = "additive"
+    *,
+    clean_initialized: bool = False,
+    fusion: str = "additive",
+    global_refiner_enabled: bool = False,
 ) -> Stage1Model:
     core = PatchTSTCore(
         c_in=1,
@@ -87,6 +90,8 @@ def _tiny_ours(
         historical_relation=historical,
         use_historical=False,
         fusion=fusion,
+        global_refiner_enabled=global_refiner_enabled,
+        global_refiner_heads=2,
     )
     model = Stage1Model(core, ModelVariant.OURS, recovery=recovery)
     if clean_initialized:

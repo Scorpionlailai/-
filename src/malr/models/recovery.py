@@ -7,6 +7,7 @@ from torch import Tensor, nn
 
 from malr.data.patching import PATCH_MISSING, PATCH_OBSERVED, PATCH_PARTIAL
 
+from .refinement import GlobalLatentRefiner
 from .relations import HistoricalRelation, TemporalRelation, VariableRelation
 
 
@@ -46,12 +47,19 @@ class MissingAwareRecovery(nn.Module):
         residual_dropout: float = 0.0,
         residual_output_init: str = "zero",
         damage_scaling: str = "missing_fraction",
+        global_refiner_enabled: bool = False,
+        global_refiner_heads: int = 4,
+        global_refiner_ff_multiplier: int = 2,
+        global_refiner_dropout: float = 0.0,
+        global_refiner_output_init: str = "zero",
     ) -> None:
         super().__init__()
         if min(c_in, patch_num, patch_len, d_model) <= 0:
             raise ValueError("recovery dimensions must be positive")
-        if fusion not in {"additive", "residual_mlp"}:
-            raise ValueError("recovery.fusion must be additive or residual_mlp")
+        if fusion not in {"additive", "residual_mlp", "replacement_mlp"}:
+            raise ValueError(
+                "recovery.fusion must be additive, residual_mlp, or replacement_mlp"
+            )
         if (
             type(residual_hidden_multiplier) is not int
             or residual_hidden_multiplier <= 0
@@ -65,6 +73,8 @@ class MissingAwareRecovery(nn.Module):
             raise ValueError("recovery.output_init must be zero")
         if damage_scaling != "missing_fraction":
             raise ValueError("recovery.damage_scaling must be missing_fraction")
+        if global_refiner_enabled and fusion != "replacement_mlp":
+            raise ValueError("global refiner requires replacement_mlp fusion")
         self.c_in = c_in
         self.patch_num = patch_num
         self.patch_len = patch_len
@@ -85,6 +95,8 @@ class MissingAwareRecovery(nn.Module):
         self.historical = historical_relation
         self.fusion = nn.Linear(3 * d_model, d_model)
         self.residual_mlp: nn.Sequential | None = None
+        self.replacement_mlp: nn.Sequential | None = None
+        self.global_refiner: GlobalLatentRefiner | None = None
         if fusion == "residual_mlp":
             hidden_dim = residual_hidden_multiplier * d_model
             self.residual_mlp = nn.Sequential(
@@ -96,6 +108,25 @@ class MissingAwareRecovery(nn.Module):
             )
             nn.init.zeros_(self.residual_mlp[-1].weight)
             nn.init.zeros_(self.residual_mlp[-1].bias)
+        elif fusion == "replacement_mlp":
+            hidden_dim = residual_hidden_multiplier * d_model
+            self.replacement_mlp = nn.Sequential(
+                nn.LayerNorm(5 * d_model),
+                nn.Linear(5 * d_model, hidden_dim),
+                nn.GELU(),
+                nn.Dropout(residual_dropout),
+                nn.Linear(hidden_dim, d_model),
+            )
+            nn.init.zeros_(self.replacement_mlp[-1].weight)
+            nn.init.zeros_(self.replacement_mlp[-1].bias)
+        if global_refiner_enabled:
+            self.global_refiner = GlobalLatentRefiner(
+                d_model=d_model,
+                n_heads=global_refiner_heads,
+                ff_multiplier=global_refiner_ff_multiplier,
+                dropout=global_refiner_dropout,
+                output_init=global_refiner_output_init,
+            )
         nn.init.normal_(self.variable_embedding, std=0.02)
         nn.init.normal_(self.position_embedding, std=0.02)
         nn.init.normal_(self.state_embedding, std=0.02)
@@ -129,8 +160,13 @@ class MissingAwareRecovery(nn.Module):
             return torch.where(observed.unsqueeze(-1), visible, damaged_output)
 
         damage_strength = (1.0 - rho).unsqueeze(-1).to(visible.dtype)
-        residual_output = visible + damage_strength * recovered
-        return torch.where(observed.unsqueeze(-1), visible, residual_output)
+        if self.fusion_mode == "residual_mlp":
+            residual_output = visible + damage_strength * recovered
+            return torch.where(observed.unsqueeze(-1), visible, residual_output)
+
+        replacement_output = rho.unsqueeze(-1).to(visible.dtype) * visible
+        replacement_output = replacement_output + damage_strength * recovered
+        return torch.where(observed.unsqueeze(-1), visible, replacement_output)
 
     def _validate(
         self,
@@ -241,6 +277,11 @@ class MissingAwareRecovery(nn.Module):
         if self.fusion_mode == "residual_mlp":
             assert self.residual_mlp is not None
             recovered = self.residual_mlp(torch.cat((relation_messages, prior), dim=-1))
+        elif self.fusion_mode == "replacement_mlp":
+            assert self.replacement_mlp is not None
+            recovered = self.replacement_mlp(
+                torch.cat((relation_messages, prior, visible), dim=-1)
+            )
         else:
             recovered = self.fusion(relation_messages)
         latents = self.fuse(visible, prior, recovered, state, rho)
@@ -258,4 +299,27 @@ class MissingAwareRecovery(nn.Module):
             diagnostics["residual_missing_mean_norm"] = (
                 applied_norm[missing_mask].mean() if missing_mask.any() else zero
             ).detach()
+        elif self.fusion_mode == "replacement_mlp":
+            replacement_delta = (1.0 - rho).unsqueeze(-1) * (recovered - visible)
+            applied_norm = replacement_delta.norm(dim=-1)
+            partial_mask = state == PATCH_PARTIAL
+            missing_mask = state == PATCH_MISSING
+            zero = applied_norm.new_zeros(())
+            diagnostics["replacement_candidate_norm"] = recovered.norm(dim=-1).detach()
+            diagnostics["replacement_applied_norm"] = applied_norm.detach()
+            diagnostics["replacement_partial_mean_norm"] = (
+                applied_norm[partial_mask].mean() if partial_mask.any() else zero
+            ).detach()
+            diagnostics["replacement_missing_mean_norm"] = (
+                applied_norm[missing_mask].mean() if missing_mask.any() else zero
+            ).detach()
+        if self.global_refiner is not None:
+            refinement = self.global_refiner(latents, prior, rho)
+            latents = refinement.latents
+            diagnostics["global_refiner_delta_norm"] = (
+                refinement.delta.norm(dim=-1).detach()
+            )
+            diagnostics["global_refiner_applied_norm"] = (
+                refinement.applied_delta.norm(dim=-1).detach()
+            )
         return RecoveryOutput(latents, visible, prior, recovered, messages, diagnostics)

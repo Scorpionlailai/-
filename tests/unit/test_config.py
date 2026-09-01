@@ -75,6 +75,28 @@ def test_residual_experiment_config_is_explicit() -> None:
 
 
 @pytest.mark.parametrize(
+    ("path", "refiner_enabled"),
+    [
+        ("configs/stage1_sr010_replacement_no_recloss.yaml", False),
+        ("configs/stage1_sr010_replacement_global_no_recloss.yaml", True),
+    ],
+)
+def test_replacement_experiment_configs_are_explicit(
+    path: str, refiner_enabled: bool
+) -> None:
+    cfg = load_config(Path(path))
+
+    assert cfg.missing.start_rate == pytest.approx(0.10)
+    assert cfg.recovery.fusion == "replacement_mlp"
+    assert cfg.recovery.refiner_enabled is refiner_enabled
+    assert cfg.recovery.refiner_heads == 4
+    assert cfg.recovery.refiner_ff_multiplier == 2
+    assert cfg.recovery.refiner_dropout == pytest.approx(0.0)
+    assert cfg.recovery.refiner_output_init == "zero"
+    assert cfg.ablations.use_recovery_loss is False
+
+
+@pytest.mark.parametrize(
     ("key", "value"),
     [
         ("fusion", "unknown"),
@@ -85,6 +107,13 @@ def test_residual_experiment_config_is_explicit() -> None:
         ("dropout", 1.0),
         ("output_init", "default"),
         ("damage_scaling", "none"),
+        ("refiner_heads", 0),
+        ("refiner_heads", True),
+        ("refiner_ff_multiplier", 0),
+        ("refiner_ff_multiplier", True),
+        ("refiner_dropout", -0.1),
+        ("refiner_dropout", 1.0),
+        ("refiner_output_init", "default"),
     ],
 )
 def test_invalid_recovery_config_is_rejected(
@@ -97,6 +126,32 @@ def test_invalid_recovery_config_is_rejected(
     bad.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
     with pytest.raises(ValueError, match="recovery"):
+        load_config(bad)
+
+
+def test_enabled_global_refiner_requires_replacement_fusion(tmp_path: Path) -> None:
+    raw = yaml.safe_load(Path("configs/stage1.yaml").read_text(encoding="utf-8"))
+    raw["recovery"] = asdict(RecoveryConfig())
+    raw["recovery"]["refiner_enabled"] = True
+    bad = tmp_path / "bad_refiner_fusion.yaml"
+    bad.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="refiner.*replacement_mlp"):
+        load_config(bad)
+
+
+def test_enabled_global_refiner_heads_must_divide_model_width(tmp_path: Path) -> None:
+    raw = yaml.safe_load(Path("configs/stage1.yaml").read_text(encoding="utf-8"))
+    raw["recovery"] = asdict(RecoveryConfig())
+    raw["recovery"].update(
+        fusion="replacement_mlp",
+        refiner_enabled=True,
+        refiner_heads=3,
+    )
+    bad = tmp_path / "bad_refiner_heads.yaml"
+    bad.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="refiner_heads"):
         load_config(bad)
 
 

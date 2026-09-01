@@ -105,3 +105,43 @@ def test_forecast_loss_trains_residual_output_then_hidden_layer():
         and torch.count_nonzero(gradient) > 0
         for gradient in temporal_gradients
     )
+
+
+def test_forecast_loss_reaches_replacement_and_global_refiner_output_gates() -> None:
+    torch.manual_seed(17)
+    model = _tiny_ours(
+        fusion="replacement_mlp",
+        global_refiner_enabled=True,
+    ).train()
+    batch_size = 2
+    patch_count = model.core.patch_num
+    values = torch.randn(batch_size, 1, patch_count, 16)
+    mask = torch.ones_like(values, dtype=torch.bool)
+    mask[:, :, 1] = False
+    values = torch.where(mask, values, torch.zeros_like(values))
+    rho = mask.float().mean(dim=-1)
+    state = torch.zeros(batch_size, 1, patch_count, dtype=torch.long)
+    state[:, :, 1] = 2
+    targets = torch.randn(batch_size, 1, 4)
+    patch_valid = torch.ones_like(state, dtype=torch.bool)
+
+    result = model.training_objective(
+        values,
+        mask,
+        rho,
+        state,
+        torch.zeros(batch_size, 1),
+        torch.ones(batch_size, 1),
+        targets,
+        None,
+        patch_valid,
+        use_recovery_loss=False,
+    )
+    result.loss.total.backward()
+
+    replacement_gate = model.recovery.replacement_mlp[-1]
+    refiner_gate = model.recovery.global_refiner.output_projection
+    assert replacement_gate.weight.grad is not None
+    assert replacement_gate.weight.grad.abs().sum() > 0
+    assert refiner_gate.weight.grad is not None
+    assert refiner_gate.weight.grad.abs().sum() > 0

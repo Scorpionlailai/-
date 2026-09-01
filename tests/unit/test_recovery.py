@@ -95,6 +95,87 @@ def test_residual_mlp_scales_recovery_by_missing_fraction() -> None:
     assert torch.allclose(output, expected)
 
 
+def test_replacement_mlp_interpolates_base_and_candidate_by_observation_ratio() -> None:
+    module = MissingAwareRecovery(
+        c_in=1,
+        patch_num=3,
+        patch_len=4,
+        d_model=8,
+        fusion="replacement_mlp",
+    )
+    base = torch.full((1, 1, 3, 8), 2.0)
+    candidate = torch.full_like(base, 10.0)
+    prior = torch.zeros_like(base)
+    rho = torch.tensor([[[1.0, 0.5, 0.0]]])
+    state = torch.tensor([[[PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING]]])
+
+    output = module.fuse(base, prior, candidate, state, rho)
+
+    expected = rho.unsqueeze(-1) * base + (1.0 - rho).unsqueeze(-1) * candidate
+    torch.testing.assert_close(output, expected)
+
+
+def test_fully_missing_replacement_does_not_retain_base_latent() -> None:
+    module = MissingAwareRecovery(
+        c_in=1,
+        patch_num=1,
+        patch_len=4,
+        d_model=8,
+        fusion="replacement_mlp",
+    )
+    first_base = torch.full((1, 1, 1, 8), -100.0)
+    second_base = torch.full_like(first_base, 100.0)
+    candidate = torch.full_like(first_base, 3.0)
+    prior = torch.zeros_like(first_base)
+    rho = torch.zeros(1, 1, 1)
+    state = torch.full((1, 1, 1), PATCH_MISSING, dtype=torch.long)
+
+    first = module.fuse(first_base, prior, candidate, state, rho)
+    second = module.fuse(second_base, prior, candidate, state, rho)
+
+    torch.testing.assert_close(first, candidate)
+    torch.testing.assert_close(second, candidate)
+
+
+def test_replacement_can_apply_identity_initialized_global_refiner() -> None:
+    module = MissingAwareRecovery(
+        c_in=2,
+        patch_num=3,
+        patch_len=4,
+        d_model=8,
+        use_temporal=False,
+        use_variable=False,
+        use_historical=False,
+        fusion="replacement_mlp",
+        global_refiner_enabled=True,
+        global_refiner_heads=2,
+        global_refiner_ff_multiplier=2,
+        global_refiner_dropout=0.0,
+        global_refiner_output_init="zero",
+    )
+    values = torch.zeros(1, 2, 3, 4)
+    mask = torch.ones_like(values, dtype=torch.bool)
+    base = torch.randn(1, 2, 3, 8)
+    rho = torch.tensor([[[1.0, 0.5, 0.0], [0.0, 0.75, 1.0]]])
+    state = torch.tensor(
+        [
+            [
+                [PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING],
+                [PATCH_MISSING, PATCH_PARTIAL, PATCH_OBSERVED],
+            ]
+        ]
+    )
+
+    output = module(values, mask, rho, state, base_latents=base)
+
+    expected = rho.unsqueeze(-1) * base
+    torch.testing.assert_close(output.latents, expected)
+    assert module.global_refiner is not None
+    assert "global_refiner_delta_norm" in output.diagnostics
+    assert "global_refiner_applied_norm" in output.diagnostics
+    assert output.diagnostics["global_refiner_delta_norm"].requires_grad is False
+
+
 def test_residual_mlp_output_gate_opens_before_earlier_layers_learn() -> None:
     module = MissingAwareRecovery(
         c_in=2,
