@@ -30,6 +30,7 @@ def _write_manifest(
     variant: str,
     best_val_mse: float,
     *,
+    best_val_mae: float = 0.30,
     metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     run_id = f"ETTh1-{variant}-fixture"
@@ -38,7 +39,10 @@ def _write_manifest(
         "dataset": "ETTh1",
         "variant": variant,
         "metadata": dict(_PROVENANCE if metadata is None else metadata),
-        "training": {"best_val_mse": best_val_mse},
+        "training": {
+            "best_val_mse": best_val_mse,
+            "best_val_mae": best_val_mae,
+        },
     }
     path = artifacts / "runs" / f"{run_id}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -82,8 +86,8 @@ def test_failed_validation_gate_blocks_before_test_evaluation(
 def test_matching_provenance_and_better_validation_evaluate_missing_then_ours(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    _write_manifest(tmp_path, "missing", 0.40)
-    ours = _write_manifest(tmp_path, "ours", 0.35)
+    _write_manifest(tmp_path, "missing", 0.40, best_val_mae=0.30)
+    ours = _write_manifest(tmp_path, "ours", 0.35, best_val_mae=0.25)
     evaluated: list[tuple[str, bool]] = []
     selected_runs: list[str] = []
 
@@ -108,6 +112,27 @@ def test_matching_provenance_and_better_validation_evaluate_missing_then_ours(
 
     assert evaluated == [("missing", True), ("ours", False)]
     assert selected_runs == ["missing"]
+
+
+def test_better_validation_mse_but_worse_mae_blocks_test_evaluation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write_manifest(tmp_path, "missing", 0.40, best_val_mae=0.30)
+    ours = _write_manifest(tmp_path, "ours", 0.35, best_val_mae=0.31)
+    evaluated: list[str] = []
+
+    def fake_test_evaluation(
+        args: Namespace, manifest: dict[str, Any], *, allow_existing: bool
+    ) -> dict[str, Any]:
+        evaluated.append(str(manifest["variant"]))
+        return {"variant": manifest["variant"]}
+
+    monkeypatch.setattr(cli, "_evaluate_manifest", fake_test_evaluation)
+
+    with pytest.raises(ValueError, match="best_val_mae=0.31.*best_val_mae=0.3.*blocked"):
+        cli._command_evaluate(_args(tmp_path, str(ours["run_id"])))
+
+    assert evaluated == []
 
 
 def test_missing_provenance_field_blocks_before_test_evaluation(
@@ -159,8 +184,8 @@ def test_mismatched_provenance_value_blocks_before_test_evaluation(
 def test_gated_evaluations_require_identical_test_mask_records(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    _write_manifest(tmp_path, "missing", 0.40)
-    ours = _write_manifest(tmp_path, "ours", 0.35)
+    _write_manifest(tmp_path, "missing", 0.40, best_val_mae=0.30)
+    ours = _write_manifest(tmp_path, "ours", 0.35, best_val_mae=0.25)
 
     def fake_test_evaluation(
         args: Namespace, manifest: dict[str, Any], *, allow_existing: bool

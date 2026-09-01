@@ -56,11 +56,18 @@ class PreparedBatch:
 class TrainingResult:
     best_checkpoint: Path
     best_val_mse: float
+    best_val_mae: float
     best_epoch: int
     epochs_completed: int
     training_seconds: float
     trainable_parameters: int
     test_evaluated: bool = False
+
+
+@dataclass(frozen=True)
+class ValidationMetrics:
+    mse: float
+    mae: float
 
 
 def validate_dependency_metadata(
@@ -81,17 +88,19 @@ class BestCheckpointTracker:
         self.path = path
         self.metadata = dict(metadata)
         self.best_metric = float("inf")
+        self.best_mae = float("inf")
         self.best_epoch = -1
 
     def consider(
         self,
         metric: float,
         *,
+        val_mae: float,
         epoch: int,
         model_state: Mapping[str, Any],
     ) -> bool:
-        if not torch.isfinite(torch.tensor(metric)):
-            raise ValueError("validation metric must be finite")
+        if not torch.isfinite(torch.tensor([metric, val_mae])).all():
+            raise ValueError("validation metrics must be finite")
         if metric >= self.best_metric:
             return False
         save_checkpoint(
@@ -100,8 +109,10 @@ class BestCheckpointTracker:
             self.metadata,
             epoch=epoch,
             val_mse=float(metric),
+            val_mae=float(val_mae),
         )
         self.best_metric = float(metric)
+        self.best_mae = float(val_mae)
         self.best_epoch = epoch
         return True
 
@@ -172,9 +183,10 @@ class Trainer:
             raise ValueError("training batch factory produced no batches")
 
     @torch.no_grad()
-    def validation_mse(self, batches: Iterable[PreparedBatch]) -> float:
+    def validation_metrics(self, batches: Iterable[PreparedBatch]) -> ValidationMetrics:
         self.model.eval()
         squared_error = 0.0
+        absolute_error = 0.0
         element_count = 0
         for batch in batches:
             current = batch.to(self.device)
@@ -189,13 +201,20 @@ class Trainer:
                 context_mask=current.context_mask,
                 train_std=current.train_std,
             )
-            squared_error += float(
-                (output.forecast - current.forecast_target).square().sum().cpu()
-            )
+            error = output.forecast - current.forecast_target
+            squared_error += float(error.square().sum().cpu())
+            absolute_error += float(error.abs().sum().cpu())
             element_count += current.forecast_target.numel()
         if element_count == 0:
             raise ValueError("validation batch factory produced no batches")
-        return squared_error / element_count
+        return ValidationMetrics(
+            mse=squared_error / element_count,
+            mae=absolute_error / element_count,
+        )
+
+    @torch.no_grad()
+    def validation_mse(self, batches: Iterable[PreparedBatch]) -> float:
+        return self.validation_metrics(batches).mse
 
     def fit(
         self,
@@ -210,9 +229,10 @@ class Trainer:
             # invoked exactly once when owned by this factory.
             epoch_batches = train_batches_for_epoch(epoch)
             self._train_epoch(epoch_batches)
-            metric = self.validation_mse(validation_batches())
+            validation = self.validation_metrics(validation_batches())
             improved = self.tracker.consider(
-                metric,
+                validation.mse,
+                val_mae=validation.mae,
                 epoch=epoch,
                 model_state=self.model.state_dict(),
             )
@@ -221,7 +241,9 @@ class Trainer:
             current_lr = float(self.optimizer.param_groups[0]["lr"])
             print(
                 f"epoch={epoch + 1}/{self.max_epochs} "
-                f"val_mse={metric:.7f} best_val_mse={self.tracker.best_metric:.7f} "
+                f"val_mse={validation.mse:.7f} val_mae={validation.mae:.7f} "
+                f"best_val_mse={self.tracker.best_metric:.7f} "
+                f"best_val_mae={self.tracker.best_mae:.7f} "
                 f"lr={current_lr:.8g}"
             )
             if epochs_without_improvement >= self.patience:
@@ -244,6 +266,7 @@ class Trainer:
         return TrainingResult(
             best_checkpoint=self.checkpoint_path,
             best_val_mse=self.tracker.best_metric,
+            best_val_mae=self.tracker.best_mae,
             best_epoch=self.tracker.best_epoch,
             epochs_completed=epochs_completed,
             training_seconds=elapsed,

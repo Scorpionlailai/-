@@ -41,6 +41,7 @@ def _skip_expensive_training(
     return TrainingResult(
         best_checkpoint=self.checkpoint_path,
         best_val_mse=0.5,
+        best_val_mae=0.4,
         best_epoch=0,
         epochs_completed=1,
         training_seconds=0.0,

@@ -772,15 +772,22 @@ def _validate_ours_evaluation_gate(
     try:
         ours_val_mse = float(ours_manifest["training"]["best_val_mse"])
         missing_val_mse = float(missing_manifest["training"]["best_val_mse"])
+        ours_val_mae = float(ours_manifest["training"]["best_val_mae"])
+        missing_val_mae = float(missing_manifest["training"]["best_val_mae"])
     except (KeyError, TypeError, ValueError) as exc:
         raise ValueError(
-            "validation comparison requires numeric best_val_mse values; "
+            "validation comparison requires numeric best_val_mse and best_val_mae values; "
             "test evaluation is blocked"
         ) from exc
     if not ours_val_mse < missing_val_mse:
         raise ValueError(
             f"validation gate failed: ours best_val_mse={ours_val_mse} must be lower "
             f"than missing best_val_mse={missing_val_mse}; test evaluation is blocked"
+        )
+    if not ours_val_mae < missing_val_mae:
+        raise ValueError(
+            f"validation gate failed: ours best_val_mae={ours_val_mae} must be lower "
+            f"than missing best_val_mae={missing_val_mae}; test evaluation is blocked"
         )
 
 
