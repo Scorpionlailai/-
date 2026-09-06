@@ -9,6 +9,7 @@ from typing import Any
 import torch
 from torch import Tensor
 
+from malr.data.patching import PATCH_OBSERVED
 from malr.models.stage1 import Stage1Model
 
 from .checkpoints import load_checkpoint, save_checkpoint
@@ -57,6 +58,7 @@ class TrainingResult:
     best_checkpoint: Path
     best_val_mse: float
     best_val_mae: float
+    best_val_diagnostics: dict[str, float]
     best_epoch: int
     epochs_completed: int
     training_seconds: float
@@ -68,6 +70,7 @@ class TrainingResult:
 class ValidationMetrics:
     mse: float
     mae: float
+    diagnostics: dict[str, float]
 
 
 def validate_dependency_metadata(
@@ -89,6 +92,7 @@ class BestCheckpointTracker:
         self.metadata = dict(metadata)
         self.best_metric = float("inf")
         self.best_mae = float("inf")
+        self.best_diagnostics: dict[str, float] = {}
         self.best_epoch = -1
 
     def consider(
@@ -96,6 +100,7 @@ class BestCheckpointTracker:
         metric: float,
         *,
         val_mae: float,
+        val_diagnostics: Mapping[str, float] | None = None,
         epoch: int,
         model_state: Mapping[str, Any],
     ) -> bool:
@@ -103,6 +108,7 @@ class BestCheckpointTracker:
             raise ValueError("validation metrics must be finite")
         if metric >= self.best_metric:
             return False
+        diagnostics = dict(val_diagnostics or {})
         save_checkpoint(
             self.path,
             model_state,
@@ -110,9 +116,11 @@ class BestCheckpointTracker:
             epoch=epoch,
             val_mse=float(metric),
             val_mae=float(val_mae),
+            validation_diagnostics=diagnostics,
         )
         self.best_metric = float(metric)
         self.best_mae = float(val_mae)
+        self.best_diagnostics = diagnostics
         self.best_epoch = epoch
         return True
 
@@ -191,6 +199,14 @@ class Trainer:
         squared_error = 0.0
         absolute_error = 0.0
         element_count = 0
+        filter_totals: dict[str, dict[str, float]] = {}
+        relation_names = ("temporal", "variable", "historical")
+        rho_bands = {
+            "rho_eq_0": lambda rho: rho == 0,
+            "rho_0_025": lambda rho: (rho > 0) & (rho <= 0.25),
+            "rho_025_050": lambda rho: (rho > 0.25) & (rho <= 0.50),
+            "rho_050_100": lambda rho: (rho > 0.50) & (rho < 1.0),
+        }
         for batch in batches:
             current = batch.to(self.device)
             output = self.model(
@@ -208,11 +224,114 @@ class Trainer:
             squared_error += float(error.square().sum().cpu())
             absolute_error += float(error.abs().sum().cpu())
             element_count += current.forecast_target.numel()
+            recovery = getattr(output, "recovery", None)
+            if recovery is None:
+                continue
+            raw_diagnostics = recovery.diagnostics
+            damaged = (
+                (current.state != PATCH_OBSERVED)
+                & current.patch_valid.to(dtype=torch.bool)
+            )
+            for relation in relation_names:
+                candidate_key = f"{relation}_filter_candidate_count"
+                if candidate_key not in raw_diagnostics:
+                    continue
+                retained = raw_diagnostics[
+                    f"{relation}_filter_retained_count"
+                ].to(dtype=torch.float64)
+                candidate = raw_diagnostics[candidate_key].to(dtype=torch.float64)
+                pool = raw_diagnostics[
+                    f"{relation}_filter_pool_count"
+                ].to(dtype=torch.float64)
+                totals = filter_totals.setdefault(
+                    relation,
+                    {
+                        "pool": 0.0,
+                        "candidate": 0.0,
+                        "retained": 0.0,
+                        "candidate_confidence": 0.0,
+                        "retained_confidence": 0.0,
+                        "damaged": 0.0,
+                        "zero_edge": 0.0,
+                        **{
+                            f"{band}_retained": 0.0
+                            for band in rho_bands
+                        },
+                        **{f"{band}_count": 0.0 for band in rho_bands},
+                        "threshold": float("nan"),
+                        "max_edges": float("nan"),
+                    },
+                )
+                totals["pool"] += float(pool.sum().cpu())
+                totals["candidate"] += float(candidate.sum().cpu())
+                totals["retained"] += float(retained.sum().cpu())
+                totals["candidate_confidence"] += float(
+                    raw_diagnostics[
+                        f"{relation}_filter_candidate_confidence_sum"
+                    ].sum().cpu()
+                )
+                totals["retained_confidence"] += float(
+                    raw_diagnostics[
+                        f"{relation}_filter_retained_confidence_sum"
+                    ].sum().cpu()
+                )
+                totals["damaged"] += float(damaged.sum().cpu())
+                totals["zero_edge"] += float(
+                    ((retained == 0) & damaged).sum().cpu()
+                )
+                for band, selector in rho_bands.items():
+                    selected_targets = damaged & selector(current.rho)
+                    totals[f"{band}_retained"] += float(
+                        retained[selected_targets].sum().cpu()
+                    )
+                    totals[f"{band}_count"] += float(
+                        selected_targets.sum().cpu()
+                    )
+                for scalar_name in ("threshold", "max_edges"):
+                    value = float(
+                        raw_diagnostics[
+                            f"{relation}_filter_{scalar_name}"
+                        ].cpu()
+                    )
+                    previous = totals[scalar_name]
+                    if torch.isfinite(torch.tensor(previous)) and previous != value:
+                        raise ValueError(
+                            f"{relation} filter {scalar_name} changed during validation"
+                        )
+                    totals[scalar_name] = value
         if element_count == 0:
             raise ValueError("validation batch factory produced no batches")
+        diagnostics: dict[str, float] = {}
+        for relation, totals in filter_totals.items():
+            candidate = totals["candidate"]
+            retained = totals["retained"]
+            diagnostics.update(
+                {
+                    f"{relation}_candidate_availability": candidate
+                    / max(totals["pool"], 1.0),
+                    f"{relation}_keep_rate": retained / max(candidate, 1.0),
+                    f"{relation}_zero_edge_rate": totals["zero_edge"]
+                    / max(totals["damaged"], 1.0),
+                    f"{relation}_mean_confidence": totals[
+                        "candidate_confidence"
+                    ]
+                    / max(candidate, 1.0),
+                    f"{relation}_mean_retained_confidence": totals[
+                        "retained_confidence"
+                    ]
+                    / max(retained, 1.0),
+                    f"{relation}_threshold": totals["threshold"],
+                    f"{relation}_max_edges": totals["max_edges"],
+                }
+            )
+            for band in rho_bands:
+                diagnostics[f"{relation}_mean_retained_{band}"] = totals[
+                    f"{band}_retained"
+                ] / max(totals[f"{band}_count"], 1.0)
         return ValidationMetrics(
             mse=squared_error / element_count,
             mae=absolute_error / element_count,
+            diagnostics=diagnostics,
         )
 
     @torch.no_grad()
@@ -236,18 +355,27 @@ class Trainer:
             improved = self.tracker.consider(
                 validation.mse,
                 val_mae=validation.mae,
+                val_diagnostics=validation.diagnostics,
                 epoch=epoch,
                 model_state=self.model.state_dict(),
             )
             epochs_completed = epoch + 1
             epochs_without_improvement = 0 if improved else epochs_without_improvement + 1
             current_lr = float(self.optimizer.param_groups[0]["lr"])
+            filter_summary = ""
+            if validation.diagnostics:
+                filter_summary = " " + " ".join(
+                    f"{relation}_keep={validation.diagnostics[f'{relation}_keep_rate']:.3f} "
+                    f"{relation}_zero={validation.diagnostics[f'{relation}_zero_edge_rate']:.3f}"
+                    for relation in ("temporal", "variable", "historical")
+                    if f"{relation}_keep_rate" in validation.diagnostics
+                )
             print(
                 f"epoch={epoch + 1}/{self.max_epochs} "
                 f"val_mse={validation.mse:.7f} val_mae={validation.mae:.7f} "
                 f"best_val_mse={self.tracker.best_metric:.7f} "
                 f"best_val_mae={self.tracker.best_mae:.7f} "
-                f"lr={current_lr:.8g}"
+                f"lr={current_lr:.8g}{filter_summary}"
             )
             if epochs_without_improvement >= self.patience:
                 break
@@ -270,6 +398,7 @@ class Trainer:
             best_checkpoint=self.checkpoint_path,
             best_val_mse=self.tracker.best_metric,
             best_val_mae=self.tracker.best_mae,
+            best_val_diagnostics=dict(self.tracker.best_diagnostics),
             best_epoch=self.tracker.best_epoch,
             epochs_completed=epochs_completed,
             training_seconds=elapsed,

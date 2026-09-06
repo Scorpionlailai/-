@@ -14,15 +14,35 @@ def test_checkpoint_selection_requires_strictly_lower_validation_mse(tmp_path: P
     tracker = BestCheckpointTracker(path, {"dataset": "fixture"})
     state = {"weight": torch.tensor([1.0])}
 
-    assert tracker.consider(1.0, val_mae=0.8, epoch=0, model_state=state)
-    assert not tracker.consider(1.0, val_mae=0.7, epoch=1, model_state=state)
-    assert tracker.consider(0.5, val_mae=0.6, epoch=2, model_state=state)
+    assert tracker.consider(
+        1.0,
+        val_mae=0.8,
+        val_diagnostics={"temporal_keep_rate": 0.75},
+        epoch=0,
+        model_state=state,
+    )
+    assert not tracker.consider(
+        1.0,
+        val_mae=0.7,
+        val_diagnostics={"temporal_keep_rate": 0.5},
+        epoch=1,
+        model_state=state,
+    )
+    assert tracker.consider(
+        0.5,
+        val_mae=0.6,
+        val_diagnostics={"temporal_keep_rate": 0.25},
+        epoch=2,
+        model_state=state,
+    )
 
     payload = load_checkpoint(path, expected_metadata={"dataset": "fixture"})
     assert payload["epoch"] == 2
     assert payload["val_mse"] == 0.5
     assert payload["val_mae"] == 0.6
+    assert payload["validation_diagnostics"] == {"temporal_keep_rate": 0.25}
     assert tracker.best_mae == pytest.approx(0.6)
+    assert tracker.best_diagnostics == {"temporal_keep_rate": 0.25}
 
 
 class _FixedForecastModel(nn.Module):

@@ -63,6 +63,17 @@ def test_epoch_masks_change_but_are_reproducible() -> None:
     )
 
 
+def test_missing_and_ours_receive_identical_dynamic_masks() -> None:
+    missing = EpochMaskManager(8640, 7, 0.10, 5, base_seed=2021)
+    ours = EpochMaskManager(8640, 7, 0.10, 5, base_seed=2021)
+
+    for epoch in (0, 1, 17, 99):
+        np.testing.assert_array_equal(
+            missing.mask_for_epoch(epoch),
+            ours.mask_for_epoch(epoch),
+        )
+
+
 def test_fixed_mask_round_trip_validates_metadata(tmp_path: Path) -> None:
     mask, metadata = generate_variable_missing_mask(
         120,

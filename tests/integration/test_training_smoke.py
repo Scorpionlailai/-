@@ -130,6 +130,27 @@ def test_trainer_forwards_filter_keep_weight(tmp_path: Path):
     assert output_bias.detach() < initial_bias
 
 
+def test_validation_aggregates_filter_diagnostics(tmp_path: Path):
+    model = _tiny_ours(fusion="replacement_mlp", filtered=True)
+    batch = _batch(model)
+    trainer = Trainer(
+        model,
+        checkpoint_path=tmp_path / "diagnostics.pt",
+        checkpoint_metadata={"dataset": "fixture", "variant": "ours"},
+    )
+
+    diagnostics = trainer.validation_metrics([batch]).diagnostics
+
+    assert diagnostics["temporal_candidate_availability"] == pytest.approx(1.0)
+    assert diagnostics["temporal_keep_rate"] == pytest.approx(2.0 / 3.0)
+    assert diagnostics["temporal_zero_edge_rate"] == pytest.approx(0.0)
+    assert diagnostics["temporal_mean_confidence"] == pytest.approx(0.9)
+    assert diagnostics["temporal_mean_retained_confidence"] == pytest.approx(0.9)
+    assert diagnostics["temporal_mean_retained_rho_eq_0"] == pytest.approx(2.0)
+    assert diagnostics["temporal_threshold"] == pytest.approx(0.5)
+    assert diagnostics["temporal_max_edges"] == pytest.approx(2.0)
+
+
 def test_cli_exposes_the_agreed_stage1_workflow():
     parser = build_parser()
     actions = next(
