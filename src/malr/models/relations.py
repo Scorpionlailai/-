@@ -11,6 +11,8 @@ from torch.nn import functional as F
 from malr.data.patching import PATCH_OBSERVED
 from malr.prototypes.bank import PrototypeBank
 
+from .filtering import EdgeConfidenceFilter
+
 
 @dataclass(frozen=True)
 class RelationSelection:
@@ -18,6 +20,11 @@ class RelationSelection:
     weights: Tensor
     selected: Tensor
     candidate_count: Tensor
+    pool_count: Tensor | None = None
+    filter_probabilities: Tensor | None = None
+    hard_gate: Tensor | None = None
+    retained_count: Tensor | None = None
+    keep_loss: Tensor | None = None
 
 
 def stable_masked_topk(
@@ -94,6 +101,9 @@ class TemporalRelation(nn.Module):
         sources: Tensor,
         rho: Tensor,
         target_eligible: Tensor | None = None,
+        *,
+        filter_query: Tensor | None = None,
+        edge_filter: EdgeConfidenceFilter | None = None,
     ) -> RelationSelection:
         if query.shape != sources.shape or query.ndim != 4:
             raise ValueError("query and sources must match [batch, variables, patches, d]")
@@ -110,6 +120,55 @@ class TemporalRelation(nn.Module):
             if target_eligible.shape != rho.shape:
                 raise ValueError("target_eligible must match rho")
             eligible = eligible & target_eligible.unsqueeze(-1)
+        if (filter_query is None) != (edge_filter is None):
+            raise ValueError("filter_query and edge_filter must be supplied together")
+        if edge_filter is not None:
+            assert filter_query is not None
+            if filter_query.shape != query.shape:
+                raise ValueError("filter_query must match temporal query")
+            source_keys = keys.unsqueeze(-3).expand(
+                *keys.shape[:2], patch_count, patch_count, keys.shape[-1]
+            )
+            source_rho = rho.unsqueeze(-2).expand_as(scores)
+            index = torch.arange(patch_count, device=query.device)
+            signed_distance = index.view(1, -1) - index.view(-1, 1)
+            signed_distance = signed_distance.to(query.dtype) / max(
+                patch_count - 1, 1
+            )
+            auxiliary = torch.stack(
+                (
+                    signed_distance.view(1, 1, patch_count, patch_count).expand_as(
+                        scores
+                    ),
+                    source_rho,
+                ),
+                dim=-1,
+            )
+            filtered = edge_filter(
+                filter_query,
+                source_keys,
+                auxiliary,
+                scores,
+                eligible,
+            )
+            message = torch.einsum("bcij,bcjd->bcid", filtered.weights, values)
+            active_target = (
+                target_eligible
+                if target_eligible is not None
+                else torch.ones_like(rho, dtype=torch.bool)
+            )
+            pool_count = active_target.to(torch.long) * max(patch_count - 1, 0)
+            return RelationSelection(
+                message=message,
+                weights=filtered.weights,
+                selected=filtered.selected,
+                candidate_count=filtered.candidate_count,
+                pool_count=pool_count,
+                filter_probabilities=filtered.probabilities,
+                hard_gate=filtered.hard_gate,
+                retained_count=filtered.retained_count,
+                keep_loss=filtered.keep_loss,
+            )
         weights, selected = stable_masked_topk(
             scores, eligible, self.topk, largest=True, normalize="softmax"
         )
@@ -133,6 +192,10 @@ class VariableRelation(nn.Module):
         sources: Tensor,
         rho: Tensor,
         target_eligible: Tensor | None = None,
+        *,
+        filter_query: Tensor | None = None,
+        edge_filter: EdgeConfidenceFilter | None = None,
+        variable_embeddings: Tensor | None = None,
     ) -> RelationSelection:
         if query.shape != sources.shape or query.ndim != 4:
             raise ValueError("query and sources must match [batch, variables, patches, d]")
@@ -150,6 +213,69 @@ class VariableRelation(nn.Module):
             if target_eligible.shape != rho.shape:
                 raise ValueError("target_eligible must match rho")
             eligible = eligible & target_eligible.permute(0, 2, 1).unsqueeze(-1)
+        if (filter_query is None) != (edge_filter is None):
+            raise ValueError("filter_query and edge_filter must be supplied together")
+        if edge_filter is not None:
+            assert filter_query is not None
+            if filter_query.shape != query.shape:
+                raise ValueError("filter_query must match variable query")
+            if variable_embeddings is None or variable_embeddings.shape != (
+                variable_count,
+                query.shape[-1],
+            ):
+                raise ValueError("variable_embeddings must have shape [C,D]")
+            batch_size, _, patch_count, d_model = query.shape
+            query_by_patch = filter_query.permute(0, 2, 1, 3).contiguous()
+            keys_by_patch = keys.permute(0, 2, 1, 3).contiguous()
+            source_keys = keys_by_patch.unsqueeze(-3).expand(
+                batch_size,
+                patch_count,
+                variable_count,
+                variable_count,
+                d_model,
+            )
+            target_identity = variable_embeddings.view(
+                1, 1, variable_count, 1, d_model
+            ).expand_as(source_keys)
+            source_identity = variable_embeddings.view(
+                1, 1, 1, variable_count, d_model
+            ).expand_as(source_keys)
+            source_rho = rho.permute(0, 2, 1).unsqueeze(-2).expand_as(scores)
+            auxiliary = torch.cat(
+                (target_identity, source_identity, source_rho.unsqueeze(-1)),
+                dim=-1,
+            )
+            filtered = edge_filter(
+                query_by_patch,
+                source_keys,
+                auxiliary,
+                scores,
+                eligible,
+            )
+            message = torch.einsum("bncv,bvnd->bcnd", filtered.weights, values)
+            active_target = (
+                target_eligible
+                if target_eligible is not None
+                else torch.ones_like(rho, dtype=torch.bool)
+            )
+            pool_count = active_target.to(torch.long) * max(variable_count - 1, 0)
+            return RelationSelection(
+                message=message,
+                weights=filtered.weights.permute(0, 2, 1, 3).contiguous(),
+                selected=filtered.selected.permute(0, 2, 1, 3).contiguous(),
+                candidate_count=filtered.candidate_count.permute(
+                    0, 2, 1
+                ).contiguous(),
+                pool_count=pool_count,
+                filter_probabilities=filtered.probabilities.permute(
+                    0, 2, 1, 3
+                ).contiguous(),
+                hard_gate=filtered.hard_gate.permute(0, 2, 1, 3).contiguous(),
+                retained_count=filtered.retained_count.permute(
+                    0, 2, 1
+                ).contiguous(),
+                keep_loss=filtered.keep_loss,
+            )
         weights, selected = stable_masked_topk(
             scores, eligible, self.topk, largest=True, normalize="softmax"
         )
@@ -173,6 +299,7 @@ class HistoricalRelation(nn.Module):
         bank: PrototypeBank,
         topk: int = 4,
         *,
+        candidate_pool: int | None = None,
         patch_len: int = 16,
         patch_stride: int = 8,
         d_model: int,
@@ -181,8 +308,11 @@ class HistoricalRelation(nn.Module):
         super().__init__()
         if topk <= 0 or patch_len != 16 or patch_stride != 8 or d_model <= 0:
             raise ValueError("invalid stage-1 historical relation geometry")
+        if candidate_pool is not None and candidate_pool <= 0:
+            raise ValueError("candidate_pool must be positive")
         self.bank = bank
         self.topk = topk
+        self.candidate_pool = topk if candidate_pool is None else candidate_pool
         self.patch_len = patch_len
         self.patch_stride = patch_stride
         self._d_model = d_model
@@ -397,6 +527,8 @@ class HistoricalRelation(nn.Module):
         train_std: Tensor,
         *,
         prototype_projection: nn.Module,
+        filter_query: Tensor | None = None,
+        edge_filter: EdgeConfidenceFilter | None = None,
     ) -> RelationSelection:
         if context.ndim != 3 or context_mask.shape != context.shape:
             raise ValueError("context and mask must match [batch, time, variables]")
@@ -409,27 +541,40 @@ class HistoricalRelation(nn.Module):
             raise ValueError("query normalization statistics have invalid shape")
         if train_std.shape != (variable_count,):
             raise ValueError("train_std must contain one value per variable")
+        if (filter_query is None) != (edge_filter is None):
+            raise ValueError("filter_query and edge_filter must be supplied together")
+        if filter_query is not None and filter_query.shape != (
+            batch_size,
+            variable_count,
+            state.shape[2],
+            self.d_model,
+        ):
+            raise ValueError("filter_query has invalid historical node geometry")
 
         patch_count = state.shape[2]
-        width = self.topk
-        message = context.new_zeros(batch_size, variable_count, patch_count, self.d_model)
+        message = context.new_zeros(
+            batch_size, variable_count, patch_count, self.d_model
+        )
         selected = torch.full(
-            (batch_size, variable_count, patch_count, width),
+            (batch_size, variable_count, patch_count, self.topk),
             -1,
             dtype=torch.long,
             device=context.device,
         )
-        selected_weights = context.new_zeros(batch_size, variable_count, patch_count, width)
-        candidate_count = torch.zeros(
+        selected_weights = context.new_zeros(
+            batch_size, variable_count, patch_count, self.topk
+        )
+        empty_count = torch.zeros(
             (batch_size, variable_count, patch_count),
             dtype=torch.long,
             device=context.device,
         )
+        filtering = edge_filter is not None
 
         with torch.no_grad():
-            if not bool(self.prototype_exists.any()):
+            if not filtering and not bool(self.prototype_exists.any()):
                 return RelationSelection(
-                    message, selected_weights, selected, candidate_count
+                    message, selected_weights, selected, empty_count
                 )
             query_factors, query_available = self._batched_query_factors(
                 context, context_mask, patch_count, train_std
@@ -453,9 +598,9 @@ class HistoricalRelation(nn.Module):
                 - standardized_prototypes.unsqueeze(0).unsqueeze(2)
             )
             distances = torch.sqrt(
-                torch.where(shared, difference.square(), torch.zeros_like(difference)).sum(
-                    dim=-1
-                )
+                torch.where(
+                    shared, difference.square(), torch.zeros_like(difference)
+                ).sum(dim=-1)
                 / shared_count.clamp_min(1).to(context.dtype)
             )
             eligible = (
@@ -463,11 +608,12 @@ class HistoricalRelation(nn.Module):
                 & self.prototype_exists.unsqueeze(0).unsqueeze(2)
                 & (state != PATCH_OBSERVED).unsqueeze(-1)
             )
-            candidate_count = eligible.sum(dim=-1)
+            all_candidate_count = eligible.sum(dim=-1)
+            retrieval_width = self.candidate_pool if filtering else self.topk
             _, chosen = stable_masked_topk(
                 distances,
                 eligible,
-                self.topk,
+                retrieval_width,
                 largest=False,
                 normalize="none",
             )
@@ -475,14 +621,6 @@ class HistoricalRelation(nn.Module):
             safe_chosen = chosen.clamp_min(0)
             chosen_eligible = eligible.gather(-1, safe_chosen) & (chosen >= 0)
             chosen_distances = distances.gather(-1, safe_chosen)
-            inverse = torch.where(
-                chosen_eligible,
-                1.0 / (chosen_distances + self.eps),
-                torch.zeros_like(chosen_distances),
-            )
-            weights = inverse / inverse.sum(dim=-1, keepdim=True).clamp_min(
-                torch.finfo(context.dtype).tiny
-            )
 
             centers = self.prototype_centers.to(dtype=context.dtype)
             centers = centers.unsqueeze(0).unsqueeze(2).expand(
@@ -501,8 +639,26 @@ class HistoricalRelation(nn.Module):
             normalized_centers = (
                 chosen_centers - query_mean[:, :, None, None, None]
             ) / query_std[:, :, None, None, None]
-            selected[..., :actual_width] = chosen
-            selected_weights[..., :actual_width] = weights
+
+            if filtering:
+                chosen_shared_count = shared_count.gather(-1, safe_chosen)
+                available_count = self.prototype_available.sum(dim=-1)
+                available_count = available_count.unsqueeze(0).unsqueeze(2).expand(
+                    batch_size, variable_count, patch_count, -1
+                )
+                chosen_available_count = available_count.gather(-1, safe_chosen)
+            else:
+                inverse = torch.where(
+                    chosen_eligible,
+                    1.0 / (chosen_distances + self.eps),
+                    torch.zeros_like(chosen_distances),
+                )
+                weights = inverse / inverse.sum(dim=-1, keepdim=True).clamp_min(
+                    torch.finfo(context.dtype).tiny
+                )
+                selected[..., :actual_width] = chosen
+                selected_weights[..., :actual_width] = weights
+
         prototype_latents = prototype_projection(
             normalized_centers.reshape(-1, self.patch_len)
         ).reshape(
@@ -512,8 +668,52 @@ class HistoricalRelation(nn.Module):
             actual_width,
             self.d_model,
         )
-        message = (weights.unsqueeze(-1) * prototype_latents).sum(dim=-2)
-        return RelationSelection(message, selected_weights, selected, candidate_count)
+        if not filtering:
+            message = (weights.unsqueeze(-1) * prototype_latents).sum(dim=-2)
+            return RelationSelection(
+                message, selected_weights, selected, all_candidate_count
+            )
+
+        assert edge_filter is not None and filter_query is not None
+        auxiliary = torch.stack(
+            (
+                chosen_distances,
+                chosen_shared_count.to(context.dtype) / 7.0,
+                chosen_available_count.to(context.dtype) / 7.0,
+            ),
+            dim=-1,
+        )
+        base_scores = -torch.log(chosen_distances + self.eps)
+        filtered = edge_filter(
+            filter_query,
+            prototype_latents,
+            auxiliary,
+            base_scores,
+            chosen_eligible,
+        )
+        message = (filtered.weights.unsqueeze(-1) * prototype_latents).sum(dim=-2)
+        safe_selected = filtered.selected.clamp_min(0)
+        mapped_ids = chosen.gather(-1, safe_selected)
+        mapped_ids = torch.where(
+            filtered.selected >= 0, mapped_ids, torch.full_like(mapped_ids, -1)
+        )
+        mapped_weights = filtered.weights.gather(-1, safe_selected)
+        mapped_weights = torch.where(
+            filtered.selected >= 0,
+            mapped_weights,
+            torch.zeros_like(mapped_weights),
+        )
+        return RelationSelection(
+            message=message,
+            weights=mapped_weights,
+            selected=mapped_ids,
+            candidate_count=filtered.candidate_count,
+            pool_count=chosen_eligible.sum(dim=-1),
+            filter_probabilities=filtered.probabilities,
+            hard_gate=filtered.hard_gate,
+            retained_count=filtered.retained_count,
+            keep_loss=filtered.keep_loss,
+        )
 
     def forward(
         self,
