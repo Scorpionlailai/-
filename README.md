@@ -95,6 +95,25 @@ Every checkpoint and run manifest records `metadata.dataset`, `metadata.config_h
 
 If residual `ours` improves validation and test MSE, repeat with Weather before adding complexity. If validation MSE improves but test MSE does not, inspect overfitting and repeat across additional fixed seeds before changing architecture. If validation MSE does not improve, keep the residual MLP fixed and run relation-source ablations in this order: temporal only, variable only, temporal plus variable, then add historical. Do not increase MLP depth first. If residual applied norms stay zero, inspect gradient flow and output-gate learning rate before judging the relation messages. If residual applied norms explode, reduce residual learning rate or add an explicit residual scale; do not reintroduce direct prior addition.
 
+## 缺失感知边筛选：仅验证集优先
+
+这一轮只比较同一套遮挡下的原始 PatchTST 缺失基线 `missing` 与新筛选模型 `ours`。新模型从头联合训练，采用替换式恢复 MLP；三类候选边先按置信度阈值过滤，再分别限制最多保留 6、4、4 条边。第一轮关闭恢复损失和全局重处理层，避免同时引入过多变量。
+
+在仓库根目录的 `malr` 环境中执行：
+
+```powershell
+$CFG="configs/stage1_sr010_replacement_filter_no_recloss.yaml"
+$ART="artifacts/etth1_sr010_replacement_filter_no_recloss"
+
+malr make-eval-masks --config $CFG --dataset ETTh1 --artifacts $ART
+malr train-clean --config $CFG --dataset ETTh1 --artifacts $ART --device cuda
+malr build-bank --config $CFG --dataset ETTh1 --artifacts $ART
+malr train --config $CFG --dataset ETTh1 --artifacts $ART --variant missing --device cuda
+malr train --config $CFG --dataset ETTh1 --artifacts $ART --variant ours --device cuda
+```
+
+先比较最后两条训练结果中的 `best_val_mse` 与 `best_val_mae`。只有当 `ours` 的两项指标都严格低于 `missing` 时，才允许使用 `ours` 的 `run_id` 执行 `malr evaluate`；否则不读取测试集，先依据 checkpoint 中的三类边保留率、零边率和置信度统计继续调整模型。
+
 ## Verification
 
 ```powershell
