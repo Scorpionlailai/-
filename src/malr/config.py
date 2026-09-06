@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -63,6 +63,20 @@ class PrototypeConfig:
 
 
 @dataclass(frozen=True)
+class EdgeFilterConfig:
+    temporal_threshold: float = 0.5
+    variable_threshold: float = 0.5
+    historical_threshold: float = 0.5
+    historical_candidate_pool: int = 16
+    hidden_multiplier: int = 2
+    dropout: float = 0.0
+    temperature: float = 1.0
+    initial_keep_probability: float = 0.9
+    lambda_keep: float = 0.0001
+    straight_through: bool = True
+
+
+@dataclass(frozen=True)
 class RelationConfig:
     selection: str
     temporal_topk: int
@@ -70,6 +84,7 @@ class RelationConfig:
     historical_topk: int
     recovered_nodes_can_be_sources: bool
     num_message_passing_layers: int
+    filter: EdgeFilterConfig = field(default_factory=EdgeFilterConfig)
 
     @property
     def topk(self) -> dict[str, int]:
@@ -186,14 +201,72 @@ class Stage1Config:
             raise ValueError("missing.block_len must be positive")
         if not self.missing.allow_block_overlap:
             raise ValueError("stage1 requires overlapping blocks to be allowed")
-        if self.relations.selection != "hard_topk":
-            raise ValueError("relations.selection must equal hard_topk")
+        if self.relations.selection not in {"hard_topk", "missing_aware_filter"}:
+            raise ValueError(
+                "relations.selection must be hard_topk or missing_aware_filter"
+            )
         if self.relations.num_message_passing_layers != 1:
             raise ValueError("num_message_passing_layers must equal 1")
         if self.relations.recovered_nodes_can_be_sources:
             raise ValueError("recovered nodes cannot be relation sources")
         if any(value <= 0 for value in self.relations.topk.values()):
             raise ValueError("all relation top-k values must be positive")
+        filter_config = self.relations.filter
+        thresholds = (
+            filter_config.temporal_threshold,
+            filter_config.variable_threshold,
+            filter_config.historical_threshold,
+        )
+        if any(
+            type(value) not in {int, float} or not 0.0 < float(value) < 1.0
+            for value in thresholds
+        ):
+            raise ValueError("edge filter thresholds must lie in (0, 1)")
+        if (
+            type(filter_config.historical_candidate_pool) is not int
+            or filter_config.historical_candidate_pool <= 0
+        ):
+            raise ValueError(
+                "edge filter historical_candidate_pool must be a positive integer"
+            )
+        if (
+            type(filter_config.hidden_multiplier) is not int
+            or filter_config.hidden_multiplier <= 0
+        ):
+            raise ValueError(
+                "edge filter hidden_multiplier must be a positive integer"
+            )
+        if (
+            type(filter_config.dropout) not in {int, float}
+            or not 0.0 <= float(filter_config.dropout) < 1.0
+        ):
+            raise ValueError("edge filter dropout must lie in [0, 1)")
+        if (
+            type(filter_config.temperature) not in {int, float}
+            or filter_config.temperature <= 0.0
+        ):
+            raise ValueError("edge filter temperature must be positive")
+        if (
+            type(filter_config.initial_keep_probability) not in {int, float}
+            or not 0.0 < float(filter_config.initial_keep_probability) < 1.0
+        ):
+            raise ValueError(
+                "edge filter initial_keep_probability must lie in (0, 1)"
+            )
+        if (
+            type(filter_config.lambda_keep) not in {int, float}
+            or filter_config.lambda_keep < 0.0
+        ):
+            raise ValueError("edge filter lambda_keep must be non-negative")
+        if type(filter_config.straight_through) is not bool:
+            raise ValueError("edge filter straight_through must be boolean")
+        if (
+            self.relations.selection == "missing_aware_filter"
+            and not filter_config.straight_through
+        ):
+            raise ValueError(
+                "missing_aware_filter requires straight_through to be true"
+            )
         if self.recovery.fusion not in {
             "additive",
             "residual_mlp",
@@ -320,6 +393,8 @@ def load_config(path: Path) -> Stage1Config:
     training_profiles_raw = _require_mapping(
         training_raw["profiles"], "training.profiles"
     )
+    relations_raw = dict(_require_mapping(raw["relations"], "relations"))
+    filter_raw = relations_raw.pop("filter", {})
     config = Stage1Config(
         version=int(raw["version"]),
         data=data,
@@ -329,7 +404,10 @@ def load_config(path: Path) -> Stage1Config:
             **_require_mapping(raw["prototype"], "prototype")
         ),
         relations=RelationConfig(
-            **_require_mapping(raw["relations"], "relations")
+            **relations_raw,
+            filter=EdgeFilterConfig(
+                **_require_mapping(filter_raw, "relations.filter")
+            ),
         ),
         recovery=RecoveryConfig(**_require_mapping(recovery_raw, "recovery")),
         model=ModelConfig(
@@ -364,6 +442,11 @@ def config_sha256(config: Stage1Config) -> str:
     payload_mapping = asdict(config)
     if config.recovery == RecoveryConfig():
         payload_mapping.pop("recovery")
+    if (
+        config.relations.selection == "hard_topk"
+        and config.relations.filter == EdgeFilterConfig()
+    ):
+        payload_mapping["relations"].pop("filter")
     payload = json.dumps(
         payload_mapping,
         ensure_ascii=False,

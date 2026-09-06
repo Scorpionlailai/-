@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from malr.config import RecoveryConfig, config_sha256, load_config
+from malr.config import EdgeFilterConfig, RecoveryConfig, config_sha256, load_config
 
 
 def test_stage1_defaults_are_locked() -> None:
@@ -181,6 +181,7 @@ def test_legacy_config_hash_omits_default_recovery() -> None:
     cfg = load_config(Path("configs/stage1.yaml"))
     payload_mapping = asdict(cfg)
     payload_mapping.pop("recovery")
+    payload_mapping["relations"].pop("filter")
     payload = json.dumps(
         payload_mapping,
         ensure_ascii=False,
@@ -201,3 +202,57 @@ def test_sr010_no_recovery_loss_keeps_historical_relations_enabled() -> None:
     assert cfg.ablations.use_variable is True
     assert cfg.ablations.use_historical is True
     assert cfg.ablations.use_recovery_loss is False
+
+
+def test_missing_aware_filter_experiment_config_is_explicit() -> None:
+    cfg = load_config(
+        Path("configs/stage1_sr010_replacement_filter_no_recloss.yaml")
+    )
+
+    assert cfg.relations.selection == "missing_aware_filter"
+    assert cfg.relations.filter == EdgeFilterConfig(
+        temporal_threshold=0.5,
+        variable_threshold=0.5,
+        historical_threshold=0.5,
+        historical_candidate_pool=16,
+        hidden_multiplier=2,
+        dropout=0.0,
+        temperature=1.0,
+        initial_keep_probability=0.9,
+        lambda_keep=0.0001,
+        straight_through=True,
+    )
+    assert cfg.missing.start_rate == pytest.approx(0.10)
+    assert cfg.recovery.fusion == "replacement_mlp"
+    assert cfg.recovery.refiner_enabled is False
+    assert cfg.ablations.use_recovery_loss is False
+
+
+@pytest.mark.parametrize(
+    ("key", "value", "match"),
+    [
+        ("temporal_threshold", 0.0, "threshold"),
+        ("variable_threshold", 1.0, "threshold"),
+        ("historical_candidate_pool", 0, "candidate_pool"),
+        ("hidden_multiplier", True, "hidden_multiplier"),
+        ("dropout", 1.0, "dropout"),
+        ("temperature", 0.0, "temperature"),
+        ("initial_keep_probability", 1.0, "initial_keep_probability"),
+        ("lambda_keep", -0.1, "lambda_keep"),
+        ("straight_through", False, "straight_through"),
+    ],
+)
+def test_invalid_missing_aware_filter_config_is_rejected(
+    tmp_path: Path, key: str, value: object, match: str
+) -> None:
+    raw = yaml.safe_load(
+        Path("configs/stage1_sr010_replacement_filter_no_recloss.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    raw["relations"]["filter"][key] = value
+    bad = tmp_path / f"bad_filter_{key}.yaml"
+    bad.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=match):
+        load_config(bad)
