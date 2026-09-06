@@ -68,6 +68,36 @@ def test_imputation_supervision_config_sets_both_weights() -> None:
     )
 
 
+def test_wide_strict_filter_config_changes_only_relation_capacity_and_thresholds() -> None:
+    baseline = load_config(
+        Path("configs/stage1_sr010_replacement_filter_imputation.yaml")
+    )
+    tuned = load_config(
+        Path(
+            "configs/"
+            "stage1_sr010_replacement_filter_imputation_wide_strict.yaml"
+        )
+    )
+
+    expected_filter = replace(
+        baseline.relations.filter,
+        temporal_threshold=0.7,
+        variable_threshold=0.7,
+        historical_threshold=0.7,
+        historical_candidate_pool=64,
+    )
+    expected_relations = replace(
+        baseline.relations,
+        temporal_topk=10,
+        variable_topk=6,
+        historical_topk=8,
+        filter=expected_filter,
+    )
+
+    assert tuned == replace(baseline, relations=expected_relations)
+    assert config_sha256(tuned) != config_sha256(baseline)
+
+
 @pytest.mark.parametrize(
     "key",
     ["lambda_imputation_mse", "lambda_imputation_mae"],
