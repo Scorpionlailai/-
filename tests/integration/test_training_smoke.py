@@ -14,7 +14,7 @@ from malr.training.trainer import (
 )
 from malr.cli import build_experiment_model, build_parser
 from malr.config import load_config
-from tests.unit.test_teacher_and_losses import _tiny_ours
+from tests.unit.test_teacher_and_losses import _empty_bank, _tiny_ours
 
 
 def _core() -> PatchTSTCore:
@@ -130,6 +130,109 @@ def test_trainer_forwards_filter_keep_weight(tmp_path: Path):
     assert output_bias.detach() < initial_bias
 
 
+def test_filter_uses_constant_independent_lr_without_moving_patchtst_head(
+    tmp_path: Path,
+) -> None:
+    model = _tiny_ours(fusion="replacement_mlp", filtered=True)
+    batch = _batch(model)
+    trainer = Trainer(
+        model,
+        checkpoint_path=tmp_path / "independent_filter_lr.pt",
+        checkpoint_metadata={"dataset": "fixture", "variant": "ours"},
+        max_epochs=4,
+        patience=4,
+        learning_rate=1.0e-4,
+        filter_learning_rate=1.0e-3,
+        lr_schedule="type3",
+        use_recovery_loss=False,
+    )
+
+    groups = {
+        group["name"]: group for group in trainer.optimizer.param_groups
+    }
+    base_parameter_ids = {id(parameter) for parameter in groups["base"]["params"]}
+    filter_parameter_ids = {
+        id(parameter) for parameter in groups["filter"]["params"]
+    }
+    expected_filter_ids = {
+        id(parameter)
+        for parameter in model.recovery.edge_filter.parameters()
+        if parameter.requires_grad
+    }
+    prediction_head_ids = {
+        id(parameter)
+        for parameter in model.core.head.parameters()
+        if parameter.requires_grad
+    }
+
+    assert filter_parameter_ids == expected_filter_ids
+    assert prediction_head_ids <= base_parameter_ids
+    assert prediction_head_ids.isdisjoint(filter_parameter_ids)
+
+    trainer.fit(lambda epoch: [batch], lambda: [batch])
+
+    assert groups["base"]["lr"] == pytest.approx(9.0e-5)
+    assert groups["filter"]["lr"] == pytest.approx(1.0e-3)
+
+
+def test_training_log_reports_loss_components_and_both_learning_rates(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    model = _tiny_ours(fusion="replacement_mlp", filtered=True)
+    batch = _batch(model)
+    trainer = Trainer(
+        model,
+        checkpoint_path=tmp_path / "filter_log.pt",
+        checkpoint_metadata={"dataset": "fixture", "variant": "ours"},
+        max_epochs=1,
+        patience=1,
+        learning_rate=1.0e-4,
+        filter_learning_rate=1.0e-3,
+        lambda_keep=1.0e-3,
+        use_recovery_loss=False,
+    )
+
+    trainer.fit(lambda epoch: [batch], lambda: [batch])
+    output = capsys.readouterr().out
+
+    assert "train_forecast_mse=" in output
+    assert "train_recovery_mse=" in output
+    assert "train_filter_keep=" in output
+    assert "train_weighted_filter_keep=" in output
+    assert "base_lr=0.0001" in output
+    assert "filter_lr=0.001" in output
+
+
+def test_training_log_reports_imputation_loss_components(tmp_path: Path, capsys):
+    model = _tiny_ours(reconstruction_enabled=True)
+    batch = _batch(model)
+    context_mask = torch.ones(2, 32, 1, dtype=torch.bool)
+    context_mask[:, 8:16] = False
+    batch = replace(
+        batch,
+        context_mask=context_mask,
+        imputation_target=torch.randn(2, 32, 1),
+    )
+    trainer = Trainer(
+        model,
+        checkpoint_path=tmp_path / "imputation_log.pt",
+        checkpoint_metadata={"dataset": "fixture", "variant": "ours"},
+        max_epochs=1,
+        patience=1,
+        lambda_imputation_mse=0.1,
+        lambda_imputation_mae=0.1,
+        use_recovery_loss=False,
+    )
+
+    trainer.fit(lambda epoch: [batch], lambda: [batch])
+    output = capsys.readouterr().out
+
+    assert "train_imputation_mse=" in output
+    assert "train_imputation_mae=" in output
+    assert "train_weighted_imputation_mse=" in output
+    assert "train_weighted_imputation_mae=" in output
+
+
 def test_validation_aggregates_filter_diagnostics(tmp_path: Path):
     model = _tiny_ours(fusion="replacement_mlp", filtered=True)
     batch = _batch(model)
@@ -202,6 +305,21 @@ def test_global_replacement_config_builds_enabled_refiner() -> None:
     assert model.recovery.fusion_mode == "replacement_mlp"
     assert model.recovery.replacement_mlp is not None
     assert model.recovery.global_refiner is not None
+
+
+def test_imputation_config_builds_reconstruction_head_without_clean_initialization():
+    config = load_config(
+        Path("configs/stage1_sr010_replacement_filter_imputation.yaml")
+    )
+    model = build_experiment_model(
+        config,
+        "ETTh1",
+        "ours",
+        bank=_empty_bank(7),
+    )
+
+    assert model.recovery.reconstruction_head is not None
+    assert model._clean_initialized is True
 
 
 def test_patchtst_type3_learning_rate_matches_official_schedule():

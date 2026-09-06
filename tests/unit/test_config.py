@@ -1,4 +1,4 @@
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -51,6 +51,35 @@ def test_stage1_defaults_are_locked() -> None:
         weather_training.lr_schedule,
     ) == (128, 100, 20, "type3")
     assert cfg.training.seed == 2021
+    assert cfg.training.lambda_imputation_mse == pytest.approx(0.0)
+    assert cfg.training.lambda_imputation_mae == pytest.approx(0.0)
+
+
+def test_imputation_supervision_config_sets_both_weights() -> None:
+    cfg = load_config(
+        Path("configs/stage1_sr010_replacement_filter_imputation.yaml")
+    )
+
+    assert cfg.training.lambda_imputation_mse == pytest.approx(0.1)
+    assert cfg.training.lambda_imputation_mae == pytest.approx(0.1)
+    assert cfg.ablations.use_recovery_loss is False
+    assert config_sha256(cfg) != config_sha256(
+        load_config(Path("configs/stage1_sr010_replacement_filter_fast_no_recloss.yaml"))
+    )
+
+
+@pytest.mark.parametrize(
+    "key",
+    ["lambda_imputation_mse", "lambda_imputation_mae"],
+)
+def test_negative_imputation_weight_is_rejected(tmp_path: Path, key: str) -> None:
+    raw = yaml.safe_load(Path("configs/stage1.yaml").read_text(encoding="utf-8"))
+    raw["training"][key] = -0.1
+    bad = tmp_path / f"bad_{key}.yaml"
+    bad.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="imputation"):
+        load_config(bad)
 
 
 def test_legacy_config_defaults_to_additive_recovery() -> None:
@@ -182,6 +211,8 @@ def test_legacy_config_hash_omits_default_recovery() -> None:
     payload_mapping = asdict(cfg)
     payload_mapping.pop("recovery")
     payload_mapping["relations"].pop("filter")
+    payload_mapping["training"].pop("lambda_imputation_mse")
+    payload_mapping["training"].pop("lambda_imputation_mae")
     payload = json.dumps(
         payload_mapping,
         ensure_ascii=False,
@@ -228,6 +259,34 @@ def test_missing_aware_filter_experiment_config_is_explicit() -> None:
     assert cfg.ablations.use_recovery_loss is False
 
 
+def test_fast_filter_experiment_expands_history_and_uses_independent_optimization() -> None:
+    cfg = load_config(
+        Path("configs/stage1_sr010_replacement_filter_fast_no_recloss.yaml")
+    )
+
+    assert cfg.relations.filter.historical_candidate_pool == 32
+    assert cfg.relations.filter.learning_rate == pytest.approx(1.0e-3)
+    assert cfg.relations.filter.lambda_keep == pytest.approx(1.0e-3)
+    assert cfg.relations.filter.initial_keep_probability == pytest.approx(0.9)
+    assert cfg.ablations.use_recovery_loss is False
+
+
+def test_filter_recovery_loss_experiment_changes_only_recovery_supervision() -> None:
+    baseline = load_config(
+        Path("configs/stage1_sr010_replacement_filter_no_recloss.yaml")
+    )
+    supervised = load_config(
+        Path("configs/stage1_sr010_replacement_filter_recloss.yaml")
+    )
+
+    assert baseline.ablations.use_recovery_loss is False
+    assert supervised.ablations.use_recovery_loss is True
+    assert supervised == replace(
+        baseline,
+        ablations=replace(baseline.ablations, use_recovery_loss=True),
+    )
+
+
 @pytest.mark.parametrize(
     ("key", "value", "match"),
     [
@@ -238,6 +297,7 @@ def test_missing_aware_filter_experiment_config_is_explicit() -> None:
         ("dropout", 1.0, "dropout"),
         ("temperature", 0.0, "temperature"),
         ("initial_keep_probability", 1.0, "initial_keep_probability"),
+        ("learning_rate", 0.0, "learning_rate"),
         ("lambda_keep", -0.1, "lambda_keep"),
         ("straight_through", False, "straight_through"),
     ],

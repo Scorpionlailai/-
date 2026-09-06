@@ -15,7 +15,13 @@ from malr.models.relations import HistoricalRelation
 from malr.models.stage1 import ModelVariant, Stage1Model, initialize_from_clean_checkpoint
 from malr.prototypes.bank import PrototypeBank, source_checksum
 from malr.training.checkpoints import load_checkpoint, save_checkpoint
-from malr.training.losses import Stage1Loss, forecast_mse, latent_recovery_mse
+from malr.training.losses import (
+    Stage1Loss,
+    forecast_mse,
+    imputation_mae,
+    imputation_mse,
+    latent_recovery_mse,
+)
 
 
 def test_recovery_loss_covers_only_damaged_nonpadding_patches():
@@ -73,6 +79,56 @@ def test_stage1_total_adds_filter_keep_penalty():
     assert result.detached_metrics()["filter_keep"] == pytest.approx(0.25)
 
 
+def test_imputation_losses_cover_only_missing_time_points() -> None:
+    reconstruction = torch.tensor([[[10.0], [1.0], [-2.0]]])
+    target = torch.zeros_like(reconstruction)
+    observed = torch.tensor([[[True], [False], [False]]])
+
+    assert imputation_mse(reconstruction, target, observed).item() == pytest.approx(2.5)
+    assert imputation_mae(reconstruction, target, observed).item() == pytest.approx(1.5)
+
+    changed_observed = reconstruction.clone()
+    changed_observed[:, 0] = 999.0
+    assert imputation_mse(changed_observed, target, observed).item() == pytest.approx(2.5)
+    assert imputation_mae(changed_observed, target, observed).item() == pytest.approx(1.5)
+
+
+def test_empty_imputation_region_is_a_differentiable_zero() -> None:
+    reconstruction = torch.randn(1, 3, 1, requires_grad=True)
+    target = torch.zeros_like(reconstruction)
+    observed = torch.ones_like(reconstruction, dtype=torch.bool)
+
+    loss = imputation_mse(reconstruction, target, observed)
+    loss.backward()
+
+    assert loss.item() == 0.0
+    torch.testing.assert_close(reconstruction.grad, torch.zeros_like(reconstruction))
+
+
+def test_stage1_total_adds_weighted_imputation_mse_and_mae() -> None:
+    prediction = torch.tensor([0.0, 2.0])
+    target = torch.zeros_like(prediction)
+    recovery = prediction.sum() * 0 + 3.0
+    keep = prediction.sum() * 0 + 0.25
+    result = Stage1Loss.create(
+        prediction,
+        target,
+        recovery,
+        keep,
+        damaged_patch_count=1,
+        lambda_rec=0.0,
+        lambda_keep=0.5,
+        imputation_mse=prediction.sum() * 0 + 3.0,
+        imputation_mae=prediction.sum() * 0 + 4.0,
+        lambda_imputation_mse=0.1,
+        lambda_imputation_mae=0.2,
+    )
+
+    assert result.total.item() == pytest.approx(3.225)
+    assert result.weighted_imputation_mse.item() == pytest.approx(0.3)
+    assert result.weighted_imputation_mae.item() == pytest.approx(0.8)
+
+
 def _empty_bank(variable_count: int = 1) -> PrototypeBank:
     source = np.zeros((64, variable_count), dtype=np.float64)
     return PrototypeBank(
@@ -92,6 +148,7 @@ def _tiny_ours(
     fusion: str = "additive",
     global_refiner_enabled: bool = False,
     filtered: bool = False,
+    reconstruction_enabled: bool = False,
 ) -> Stage1Model:
     core = PatchTSTCore(
         c_in=1,
@@ -137,6 +194,7 @@ def _tiny_ours(
         global_refiner_heads=2,
         edge_filter=edge_filter,
         relation_selection=relation_selection,
+        reconstruction_enabled=reconstruction_enabled,
     )
     model = Stage1Model(core, ModelVariant.OURS, recovery=recovery)
     if clean_initialized:

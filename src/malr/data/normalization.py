@@ -23,6 +23,7 @@ class TrainVariableStats:
 @dataclass(frozen=True)
 class MaskedNormalization:
     student: Tensor
+    target: Tensor
     mean: Tensor
     std: Tensor
     effective_mask: Tensor
@@ -112,8 +113,10 @@ def masked_window_normalize(
     std = std.detach()
     normalized = (clean - mean.unsqueeze(1)) / std.unsqueeze(1)
     student = torch.where(effective, normalized, torch.zeros_like(normalized))
+    target = normalized.detach()
     return MaskedNormalization(
         student=student,
+        target=target,
         mean=mean,
         std=std,
         effective_mask=effective,

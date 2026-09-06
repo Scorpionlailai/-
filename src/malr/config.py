@@ -72,6 +72,7 @@ class EdgeFilterConfig:
     dropout: float = 0.0
     temperature: float = 1.0
     initial_keep_probability: float = 0.9
+    learning_rate: float | None = None
     lambda_keep: float = 0.0001
     straight_through: bool = True
 
@@ -151,6 +152,8 @@ class TrainingConfig:
     lambda_rec: float
     seed: int
     profiles: dict[str, TrainingProfile]
+    lambda_imputation_mse: float = 0.0
+    lambda_imputation_mae: float = 0.0
 
     def for_dataset(self, dataset: str) -> TrainingProfile:
         try:
@@ -254,6 +257,14 @@ class Stage1Config:
                 "edge filter initial_keep_probability must lie in (0, 1)"
             )
         if (
+            filter_config.learning_rate is not None
+            and (
+                type(filter_config.learning_rate) not in {int, float}
+                or float(filter_config.learning_rate) <= 0.0
+            )
+        ):
+            raise ValueError("edge filter learning_rate must be positive")
+        if (
             type(filter_config.lambda_keep) not in {int, float}
             or filter_config.lambda_keep < 0.0
         ):
@@ -352,6 +363,16 @@ class Stage1Config:
             raise ValueError("stage1 optimizer must equal adam")
         if self.training.checkpoint_metric != "val_mse":
             raise ValueError("checkpoint_metric must equal val_mse")
+        if (
+            type(self.training.lambda_imputation_mse) not in {int, float}
+            or self.training.lambda_imputation_mse < 0.0
+        ):
+            raise ValueError("imputation MSE weight must be non-negative")
+        if (
+            type(self.training.lambda_imputation_mae) not in {int, float}
+            or self.training.lambda_imputation_mae < 0.0
+        ):
+            raise ValueError("imputation MAE weight must be non-negative")
         for name, profile in self.training.profiles.items():
             if profile.learning_rate <= 0 or profile.batch_size <= 0:
                 raise ValueError(f"training profile {name!r} has invalid optimizer values")
@@ -423,6 +444,12 @@ def load_config(path: Path) -> Stage1Config:
             checkpoint_metric=str(training_raw["checkpoint_metric"]),
             lambda_rec=float(training_raw["lambda_rec"]),
             seed=int(training_raw["seed"]),
+            lambda_imputation_mse=float(
+                training_raw.get("lambda_imputation_mse", 0.0)
+            ),
+            lambda_imputation_mae=float(
+                training_raw.get("lambda_imputation_mae", 0.0)
+            ),
             profiles={
                 name: TrainingProfile(
                     **_require_mapping(value, f"training profile {name}")
@@ -440,6 +467,11 @@ def load_config(path: Path) -> Stage1Config:
 
 def config_sha256(config: Stage1Config) -> str:
     payload_mapping = asdict(config)
+    training_payload = payload_mapping["training"]
+    if config.training.lambda_imputation_mse == 0.0:
+        training_payload.pop("lambda_imputation_mse")
+    if config.training.lambda_imputation_mae == 0.0:
+        training_payload.pop("lambda_imputation_mae")
     if config.recovery == RecoveryConfig():
         payload_mapping.pop("recovery")
     if (
@@ -447,6 +479,10 @@ def config_sha256(config: Stage1Config) -> str:
         and config.relations.filter == EdgeFilterConfig()
     ):
         payload_mapping["relations"].pop("filter")
+    elif config.relations.filter.learning_rate is None:
+        # Preserve hashes for configurations created before an independent
+        # filter learning rate was introduced.
+        payload_mapping["relations"]["filter"].pop("learning_rate")
     payload = json.dumps(
         payload_mapping,
         ensure_ascii=False,

@@ -43,11 +43,16 @@ class PreparedBatch:
     raw_context: Tensor
     context_mask: Tensor
     train_std: Tensor
+    imputation_target: Tensor | None = None
 
     def to(self, device: torch.device | str) -> "PreparedBatch":
         return PreparedBatch(
             **{
-                field.name: getattr(self, field.name).to(device)
+                field.name: (
+                    None
+                    if getattr(self, field.name) is None
+                    else getattr(self, field.name).to(device)
+                )
                 for field in fields(self)
             }
         )
@@ -135,17 +140,24 @@ class Trainer:
         max_epochs: int = 50,
         patience: int = 5,
         learning_rate: float = 1e-4,
+        filter_learning_rate: float | None = None,
         weight_decay: float = 0.0,
         lr_schedule: str = "constant",
         lambda_rec: float = 1.0,
         lambda_keep: float = 0.0,
         use_recovery_loss: bool = True,
+        lambda_imputation_mse: float = 0.0,
+        lambda_imputation_mae: float = 0.0,
         device: str | torch.device = "cpu",
     ) -> None:
         if max_epochs <= 0 or patience <= 0:
             raise ValueError("max_epochs and patience must be positive")
         if lr_schedule not in {"constant", "type3"}:
             raise ValueError("lr_schedule must be 'constant' or 'type3'")
+        if filter_learning_rate is not None and filter_learning_rate <= 0.0:
+            raise ValueError("filter_learning_rate must be positive")
+        if lambda_imputation_mse < 0.0 or lambda_imputation_mae < 0.0:
+            raise ValueError("imputation loss weights cannot be negative")
         self.device = torch.device(device)
         self.model = model.to(self.device)
         self.checkpoint_path = checkpoint_path
@@ -156,19 +168,53 @@ class Trainer:
         self.lambda_rec = lambda_rec
         self.lambda_keep = lambda_keep
         self.use_recovery_loss = use_recovery_loss
+        self.lambda_imputation_mse = float(lambda_imputation_mse)
+        self.lambda_imputation_mae = float(lambda_imputation_mae)
         trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
         if not trainable:
             raise ValueError("model has no trainable parameters")
+        parameter_groups: list[dict[str, Any]] = [
+            {"params": trainable, "lr": learning_rate, "name": "base"}
+        ]
+        if filter_learning_rate is not None:
+            recovery = model.recovery
+            edge_filter = None if recovery is None else recovery.edge_filter
+            if edge_filter is None:
+                raise ValueError(
+                    "filter_learning_rate requires a missing-aware edge filter"
+                )
+            filter_parameters = [
+                parameter
+                for parameter in edge_filter.parameters()
+                if parameter.requires_grad
+            ]
+            filter_parameter_ids = {id(parameter) for parameter in filter_parameters}
+            base_parameters = [
+                parameter
+                for parameter in trainable
+                if id(parameter) not in filter_parameter_ids
+            ]
+            parameter_groups = [
+                {"params": base_parameters, "lr": learning_rate, "name": "base"},
+                {
+                    "params": filter_parameters,
+                    "lr": float(filter_learning_rate),
+                    "name": "filter",
+                },
+            ]
         self.optimizer = torch.optim.Adam(
-            trainable, lr=learning_rate, weight_decay=weight_decay
+            parameter_groups, lr=learning_rate, weight_decay=weight_decay
         )
         self.tracker = BestCheckpointTracker(checkpoint_path, checkpoint_metadata)
 
-    def _train_epoch(self, batches: Iterable[PreparedBatch]) -> None:
+    def _train_epoch(self, batches: Iterable[PreparedBatch]) -> dict[str, float]:
         self.model.train()
         saw_batch = False
+        batch_count = 0
+        loss_totals: dict[str, Tensor] = {}
         for batch in batches:
             saw_batch = True
+            batch_count += 1
             current = batch.to(self.device)
             self.optimizer.zero_grad(set_to_none=True)
             result = self.model.training_objective(
@@ -187,11 +233,33 @@ class Trainer:
                 lambda_rec=self.lambda_rec,
                 lambda_keep=self.lambda_keep,
                 use_recovery_loss=self.use_recovery_loss,
+                imputation_target=current.imputation_target,
+                lambda_imputation_mse=self.lambda_imputation_mse,
+                lambda_imputation_mae=self.lambda_imputation_mae,
             )
             result.loss.total.backward()
             self.optimizer.step()
+            current_losses = {
+                "total": result.loss.total,
+                "forecast_mse": result.loss.forecast_mse,
+                "recovery_mse": result.loss.recovery_mse,
+                "filter_keep": result.loss.filter_keep,
+                "weighted_filter_keep": self.lambda_keep
+                * result.loss.filter_keep,
+                "imputation_mse": result.loss.imputation_mse,
+                "imputation_mae": result.loss.imputation_mae,
+                "weighted_imputation_mse": result.loss.weighted_imputation_mse,
+                "weighted_imputation_mae": result.loss.weighted_imputation_mae,
+            }
+            for name, value in current_losses.items():
+                detached = value.detach()
+                loss_totals[name] = loss_totals.get(name, torch.zeros_like(detached)) + detached
         if not saw_batch:
             raise ValueError("training batch factory produced no batches")
+        return {
+            name: float((total / batch_count).cpu())
+            for name, total in loss_totals.items()
+        }
 
     @torch.no_grad()
     def validation_metrics(self, batches: Iterable[PreparedBatch]) -> ValidationMetrics:
@@ -350,7 +418,7 @@ class Trainer:
             # This is the only call per epoch, so a timeline mask manager is also
             # invoked exactly once when owned by this factory.
             epoch_batches = train_batches_for_epoch(epoch)
-            self._train_epoch(epoch_batches)
+            train_metrics = self._train_epoch(epoch_batches)
             validation = self.validation_metrics(validation_batches())
             improved = self.tracker.consider(
                 validation.mse,
@@ -361,7 +429,12 @@ class Trainer:
             )
             epochs_completed = epoch + 1
             epochs_without_improvement = 0 if improved else epochs_without_improvement + 1
-            current_lr = float(self.optimizer.param_groups[0]["lr"])
+            learning_rates = {
+                str(group["name"]): float(group["lr"])
+                for group in self.optimizer.param_groups
+            }
+            base_lr = learning_rates["base"]
+            filter_lr = learning_rates.get("filter")
             filter_summary = ""
             if validation.diagnostics:
                 filter_summary = " " + " ".join(
@@ -375,7 +448,17 @@ class Trainer:
                 f"val_mse={validation.mse:.7f} val_mae={validation.mae:.7f} "
                 f"best_val_mse={self.tracker.best_metric:.7f} "
                 f"best_val_mae={self.tracker.best_mae:.7f} "
-                f"lr={current_lr:.8g}{filter_summary}"
+                f"train_forecast_mse={train_metrics['forecast_mse']:.7f} "
+                f"train_recovery_mse={train_metrics['recovery_mse']:.7f} "
+                f"train_filter_keep={train_metrics['filter_keep']:.7f} "
+                f"train_weighted_filter_keep={train_metrics['weighted_filter_keep']:.7g} "
+                f"train_imputation_mse={train_metrics['imputation_mse']:.7f} "
+                f"train_imputation_mae={train_metrics['imputation_mae']:.7f} "
+                f"train_weighted_imputation_mse={train_metrics['weighted_imputation_mse']:.7g} "
+                f"train_weighted_imputation_mae={train_metrics['weighted_imputation_mae']:.7g} "
+                f"base_lr={base_lr:.8g} "
+                f"filter_lr={('none' if filter_lr is None else format(filter_lr, '.8g'))}"
+                f"{filter_summary}"
             )
             if epochs_without_improvement >= self.patience:
                 break
@@ -384,7 +467,8 @@ class Trainer:
                     self.base_learning_rate, epoch + 1
                 )
                 for parameter_group in self.optimizer.param_groups:
-                    parameter_group["lr"] = next_lr
+                    if parameter_group["name"] == "base":
+                        parameter_group["lr"] = next_lr
 
         elapsed = perf_counter() - start_time
         best = load_checkpoint(self.checkpoint_path, map_location=self.device)

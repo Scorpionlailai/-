@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from typing import Any
 
@@ -10,7 +10,12 @@ from torch import Tensor, nn
 
 from malr.data.normalization import denormalize_forecast
 from malr.data.patching import PATCH_OBSERVED
-from malr.training.losses import Stage1Loss, latent_recovery_mse
+from malr.training.losses import (
+    Stage1Loss,
+    imputation_mae,
+    imputation_mse,
+    latent_recovery_mse,
+)
 
 from .patchtst import PatchTSTCore
 from .recovery import MissingAwareRecovery, RecoveryOutput
@@ -30,6 +35,8 @@ class Stage1Forward:
     latents: Tensor
     recovery: RecoveryOutput | None
     teacher_target: Tensor | None
+    reconstruction: Tensor | None = None
+    reconstruction_coverage: Tensor | None = None
 
 
 @dataclass(frozen=True)
@@ -158,9 +165,22 @@ class Stage1Model(nn.Module):
         lambda_rec: float = 1.0,
         lambda_keep: float = 0.0,
         use_recovery_loss: bool = True,
+        imputation_target: Tensor | None = None,
+        lambda_imputation_mse: float = 0.0,
+        lambda_imputation_mae: float = 0.0,
     ) -> Stage1TrainingResult:
         if self.variant is ModelVariant.OURS and use_recovery_loss and clean_raw_patches is None:
             raise ValueError("ours recovery loss requires clean raw patches")
+        imputation_enabled = (
+            float(lambda_imputation_mse) > 0.0
+            or float(lambda_imputation_mae) > 0.0
+        )
+        if imputation_enabled and self.variant is not ModelVariant.OURS:
+            raise ValueError("imputation supervision is only defined for ours")
+        if imputation_enabled and imputation_target is None:
+            raise ValueError("imputation supervision requires an imputation target")
+        if imputation_enabled and context_mask is None:
+            raise ValueError("imputation supervision requires a context mask")
         output = self(
             patch_values,
             patch_mask,
@@ -185,6 +205,33 @@ class Stage1Model(nn.Module):
         else:
             recovery_loss = output.latents.sum() * 0.0
             teacher_target = torch.empty(0, device=output.latents.device)
+        if imputation_enabled:
+            assert self.recovery is not None
+            assert imputation_target is not None
+            assert context_mask is not None
+            reconstruction, reconstruction_coverage = self.recovery.reconstruct(
+                output.latents
+            )
+            reconstruction_loss_mse = imputation_mse(
+                reconstruction,
+                imputation_target,
+                context_mask,
+                reconstruction_coverage,
+            )
+            reconstruction_loss_mae = imputation_mae(
+                reconstruction,
+                imputation_target,
+                context_mask,
+                reconstruction_coverage,
+            )
+            output = replace(
+                output,
+                reconstruction=reconstruction,
+                reconstruction_coverage=reconstruction_coverage,
+            )
+        else:
+            reconstruction_loss_mse = output.latents.sum() * 0.0
+            reconstruction_loss_mae = output.latents.sum() * 0.0
         damaged_count = int(
             ((state != PATCH_OBSERVED) & patch_valid.to(dtype=torch.bool)).sum().item()
         )
@@ -200,6 +247,14 @@ class Stage1Model(nn.Module):
             damaged_patch_count=damaged_count,
             lambda_rec=lambda_rec if use_recovery_loss else 0.0,
             lambda_keep=lambda_keep,
+            imputation_mse=reconstruction_loss_mse,
+            imputation_mae=reconstruction_loss_mae,
+            lambda_imputation_mse=(
+                float(lambda_imputation_mse) if imputation_enabled else 0.0
+            ),
+            lambda_imputation_mae=(
+                float(lambda_imputation_mae) if imputation_enabled else 0.0
+            ),
         )
         if output.recovery is None:
             prototype_latents = torch.empty(0, device=output.latents.device)

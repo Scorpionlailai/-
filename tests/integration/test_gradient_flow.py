@@ -1,4 +1,5 @@
 import torch
+import pytest
 
 from malr.data.patching import PATCH_MISSING, PATCH_OBSERVED
 from tests.unit.test_teacher_and_losses import _tiny_ours
@@ -181,3 +182,122 @@ def test_keep_penalty_reaches_filter_while_forecast_trains_patchtst() -> None:
     assert torch.count_nonzero(filter_gradient) > 0
     assert model.core.encoder.layers[0].self_attn.W_Q.weight.grad is not None
     assert model.core.head.linear.weight.grad is not None
+
+
+def _imputation_batch(model):
+    batch_size = 2
+    patch_count = model.core.patch_num
+    values = torch.randn(batch_size, 1, patch_count, 16)
+    patch_mask = torch.ones_like(values, dtype=torch.bool)
+    patch_mask[:, :, 1, :8] = False
+    values = torch.where(patch_mask, values, torch.zeros_like(values))
+    rho = patch_mask.float().mean(dim=-1)
+    state = torch.zeros(batch_size, 1, patch_count, dtype=torch.long)
+    state[:, :, 1] = 1
+    context_mask = torch.ones(batch_size, 32, 1, dtype=torch.bool)
+    context_mask[:, 8:16] = False
+    target = torch.randn(batch_size, 32, 1)
+    return (
+        values,
+        patch_mask,
+        rho,
+        state,
+        context_mask,
+        target,
+    )
+
+
+def test_imputation_supervision_reaches_recovery_and_filter_but_not_forecast_head():
+    torch.manual_seed(31)
+    model = _tiny_ours(
+        fusion="replacement_mlp",
+        filtered=True,
+        reconstruction_enabled=True,
+    ).train()
+    with torch.no_grad():
+        model.recovery.replacement_mlp[-1].weight.fill_(0.01)
+    values, patch_mask, rho, state, context_mask, target = _imputation_batch(model)
+
+    result = model.training_objective(
+        values,
+        patch_mask,
+        rho,
+        state,
+        torch.zeros(2, 1),
+        torch.ones(2, 1),
+        torch.randn(2, 1, 4),
+        None,
+        torch.ones_like(state, dtype=torch.bool),
+        context_mask=context_mask,
+        imputation_target=target,
+        use_recovery_loss=False,
+        lambda_imputation_mse=1.0,
+        lambda_imputation_mae=1.0,
+    )
+
+    assert result.output.reconstruction is not None
+    assert result.output.reconstruction.shape == target.shape
+    model.zero_grad(set_to_none=True)
+    (
+        result.loss.weighted_imputation_mse + result.loss.weighted_imputation_mae
+    ).backward()
+
+    reconstruction_projection = model.recovery.reconstruction_head.projection
+    replacement_projection = model.recovery.replacement_mlp[-1]
+    filter_projection = model.recovery.edge_filter.temporal.network[-1]
+    assert reconstruction_projection.weight.grad is not None
+    assert torch.count_nonzero(reconstruction_projection.weight.grad) > 0
+    assert replacement_projection.weight.grad is not None
+    assert torch.count_nonzero(replacement_projection.weight.grad) > 0
+    assert filter_projection.bias.grad is not None
+    assert torch.count_nonzero(filter_projection.bias.grad) > 0
+    assert model.core.head.linear.weight.grad is None
+
+
+def test_complete_target_changes_only_imputation_loss_not_forward_path():
+    torch.manual_seed(37)
+    model = _tiny_ours(reconstruction_enabled=True).train()
+    values, patch_mask, rho, state, context_mask, target = _imputation_batch(model)
+    common = dict(
+        patch_values=values,
+        patch_mask=patch_mask,
+        rho=rho,
+        state=state,
+        query_mean=torch.zeros(2, 1),
+        query_std=torch.ones(2, 1),
+        forecast_target=torch.randn(2, 1, 4),
+        clean_raw_patches=None,
+        patch_valid=torch.ones_like(state, dtype=torch.bool),
+        context_mask=context_mask,
+        use_recovery_loss=False,
+        lambda_imputation_mse=1.0,
+    )
+    first = model.training_objective(imputation_target=target, **common)
+    changed_target = target.clone()
+    changed_target[:, 8:16] += 10.0
+    second = model.training_objective(imputation_target=changed_target, **common)
+
+    torch.testing.assert_close(first.output.forecast, second.output.forecast)
+    torch.testing.assert_close(first.output.latents, second.output.latents)
+    assert first.loss.imputation_mse.item() != second.loss.imputation_mse.item()
+
+
+def test_imputation_supervision_requires_complete_target():
+    model = _tiny_ours(reconstruction_enabled=True).train()
+    values, patch_mask, rho, state, context_mask, _ = _imputation_batch(model)
+
+    with pytest.raises(ValueError, match="imputation target"):
+        model.training_objective(
+            values,
+            patch_mask,
+            rho,
+            state,
+            torch.zeros(2, 1),
+            torch.ones(2, 1),
+            torch.randn(2, 1, 4),
+            None,
+            torch.ones_like(state, dtype=torch.bool),
+            context_mask=context_mask,
+            use_recovery_loss=False,
+            lambda_imputation_mse=0.1,
+        )

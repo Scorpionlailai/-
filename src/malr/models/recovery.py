@@ -9,6 +9,7 @@ from malr.data.patching import PATCH_MISSING, PATCH_OBSERVED, PATCH_PARTIAL
 
 from .filtering import EdgeConfidenceFilter, MissingAwareEdgeFilter
 from .refinement import GlobalLatentRefiner
+from .reconstruction import LatentReconstructionHead, aggregate_patch_predictions
 from .relations import (
     HistoricalRelation,
     RelationSelection,
@@ -61,6 +62,9 @@ class MissingAwareRecovery(nn.Module):
         global_refiner_output_init: str = "zero",
         edge_filter: MissingAwareEdgeFilter | None = None,
         relation_selection: str = "hard_topk",
+        reconstruction_enabled: bool = False,
+        reconstruction_window_len: int | None = None,
+        reconstruction_patch_stride: int | None = None,
     ) -> None:
         super().__init__()
         if min(c_in, patch_num, patch_len, d_model) <= 0:
@@ -103,6 +107,25 @@ class MissingAwareRecovery(nn.Module):
         self.damage_scaling = damage_scaling
         self.relation_selection = relation_selection
         self.edge_filter = edge_filter
+        self.reconstruction_patch_stride = (
+            patch_len // 2
+            if reconstruction_patch_stride is None
+            else reconstruction_patch_stride
+        )
+        self.reconstruction_window_len = (
+            patch_num * self.reconstruction_patch_stride
+            if reconstruction_window_len is None
+            else reconstruction_window_len
+        )
+        if self.reconstruction_patch_stride <= 0:
+            raise ValueError("reconstruction patch stride must be positive")
+        if self.reconstruction_window_len <= 0:
+            raise ValueError("reconstruction window length must be positive")
+        self.reconstruction_head = (
+            LatentReconstructionHead(d_model=d_model, patch_len=patch_len)
+            if reconstruction_enabled
+            else None
+        )
 
         self.W_m = nn.Linear(patch_len, d_model)
         self.variable_embedding = nn.Parameter(torch.empty(c_in, d_model))
@@ -149,6 +172,18 @@ class MissingAwareRecovery(nn.Module):
         nn.init.normal_(self.variable_embedding, std=0.02)
         nn.init.normal_(self.position_embedding, std=0.02)
         nn.init.normal_(self.state_embedding, std=0.02)
+
+    def reconstruct(self, latents: Tensor) -> tuple[Tensor, Tensor]:
+        if self.reconstruction_head is None:
+            raise ValueError("reconstruction head is not enabled")
+        patches = self.reconstruction_head(latents)
+        return aggregate_patch_predictions(
+            patches,
+            window_len=self.reconstruction_window_len,
+            patch_len=self.patch_len,
+            stride=self.reconstruction_patch_stride,
+            validity=None,
+        )
 
     def fuse(
         self,

@@ -27,6 +27,7 @@ def iter_prepared_batches(
     shuffle_seed: int | None = None,
     normalization_eps: float = 1e-5,
     drop_last: bool = False,
+    include_imputation_target: bool = False,
 ) -> Iterable[PreparedBatch]:
     values = np.asarray(series, dtype=np.float32)
     observed_timeline = np.asarray(timeline_mask, dtype=bool)
@@ -99,4 +100,5 @@ def iter_prepared_batches(
             raw_context=raw_context,
             context_mask=normalized.effective_mask,
             train_std=train_stats.std,
+            imputation_target=(normalized.target if include_imputation_target else None),
         )

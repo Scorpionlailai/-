@@ -181,6 +181,10 @@ def build_experiment_model(
     selected = ModelVariant(variant)
     core = _build_core(config, dataset, config.data.datasets[dataset].n_vars)
     if selected is ModelVariant.OURS:
+        imputation_enabled = (
+            config.training.lambda_imputation_mse > 0.0
+            or config.training.lambda_imputation_mae > 0.0
+        )
         edge_filter = None
         if config.relations.selection == "missing_aware_filter":
             filter_config = config.relations.filter
@@ -236,6 +240,9 @@ def build_experiment_model(
             global_refiner_output_init=config.recovery.refiner_output_init,
             edge_filter=edge_filter,
             relation_selection=config.relations.selection,
+            reconstruction_enabled=imputation_enabled,
+            reconstruction_window_len=core.seq_len,
+            reconstruction_patch_stride=core.stride,
         )
         model = Stage1Model(core, selected, recovery=recovery)
         return model
@@ -353,6 +360,13 @@ def run_training(
             shuffle_seed=config.training.seed + epoch,
             normalization_eps=config.model.normalization_eps,
             drop_last=training_profile.drop_last,
+            include_imputation_target=(
+                selected is ModelVariant.OURS
+                and (
+                    config.training.lambda_imputation_mse > 0.0
+                    or config.training.lambda_imputation_mae > 0.0
+                )
+            ),
         )
 
     def validation_batches():
@@ -387,6 +401,10 @@ def run_training(
             if validation_mask_metadata is None
             else validation_mask_metadata.final_rate
         ),
+        "imputation_loss_weights": {
+            "mse": float(config.training.lambda_imputation_mse),
+            "mae": float(config.training.lambda_imputation_mae),
+        },
     }
     trainer = Trainer(
         model,
@@ -395,6 +413,12 @@ def run_training(
         max_epochs=training_profile.max_epochs,
         patience=training_profile.early_stopping_patience,
         learning_rate=training_profile.learning_rate,
+        filter_learning_rate=(
+            config.relations.filter.learning_rate
+            if selected is ModelVariant.OURS
+            and config.relations.selection == "missing_aware_filter"
+            else None
+        ),
         weight_decay=config.training.weight_decay,
         lr_schedule=training_profile.lr_schedule,
         lambda_rec=config.training.lambda_rec,
@@ -402,6 +426,16 @@ def run_training(
             config.relations.filter.lambda_keep
             if selected is ModelVariant.OURS
             and config.relations.selection == "missing_aware_filter"
+            else 0.0
+        ),
+        lambda_imputation_mse=(
+            config.training.lambda_imputation_mse
+            if selected is ModelVariant.OURS
+            else 0.0
+        ),
+        lambda_imputation_mae=(
+            config.training.lambda_imputation_mae
+            if selected is ModelVariant.OURS
             else 0.0
         ),
         use_recovery_loss=(
@@ -685,7 +719,7 @@ def _evaluate_manifest(
         patch_stride=config.patch.stride,
         normalization_eps=config.model.normalization_eps,
         drop_last=training_profile.drop_last,
-    )
+        )
     metrics = evaluate_model(model, batches, device=args.device)
 
     clean_result = _find_variant_result(
