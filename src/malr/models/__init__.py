@@ -5,6 +5,7 @@ from .filtering import (
     BilateralContextOutput,
     EdgeConfidenceFilter,
     FilteredEdgeSelection,
+    MissingAwareEdgeFilter,
     hard_threshold_topk,
 )
 from .patchtst import PatchTSTCore, load_clean_initialization
@@ -18,6 +19,7 @@ __all__ = [
     "BilateralContextOutput",
     "EdgeConfidenceFilter",
     "FilteredEdgeSelection",
+    "MissingAwareEdgeFilter",
     "HistoricalRelation",
     "GlobalLatentRefiner",
     "GlobalRefinementOutput",

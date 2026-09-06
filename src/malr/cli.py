@@ -35,6 +35,7 @@ from malr.evaluation.report import (
     write_json_atomic,
     write_result_record,
 )
+from malr.models.filtering import MissingAwareEdgeFilter
 from malr.models.patchtst import PatchTSTCore
 from malr.models.recovery import MissingAwareRecovery
 from malr.models.relations import HistoricalRelation
@@ -180,6 +181,22 @@ def build_experiment_model(
     selected = ModelVariant(variant)
     core = _build_core(config, dataset, config.data.datasets[dataset].n_vars)
     if selected is ModelVariant.OURS:
+        edge_filter = None
+        if config.relations.selection == "missing_aware_filter":
+            filter_config = config.relations.filter
+            edge_filter = MissingAwareEdgeFilter(
+                d_model=core.d_model,
+                temporal_topk=config.relations.temporal_topk,
+                variable_topk=config.relations.variable_topk,
+                historical_topk=config.relations.historical_topk,
+                temporal_threshold=filter_config.temporal_threshold,
+                variable_threshold=filter_config.variable_threshold,
+                historical_threshold=filter_config.historical_threshold,
+                hidden_multiplier=filter_config.hidden_multiplier,
+                dropout=filter_config.dropout,
+                temperature=filter_config.temperature,
+                initial_keep_probability=filter_config.initial_keep_probability,
+            )
         historical = None
         if config.ablations.use_historical:
             if bank is None:
@@ -187,6 +204,11 @@ def build_experiment_model(
             historical = HistoricalRelation(
                 bank,
                 topk=config.relations.historical_topk,
+                candidate_pool=(
+                    config.relations.filter.historical_candidate_pool
+                    if edge_filter is not None
+                    else None
+                ),
                 patch_len=config.patch.length,
                 patch_stride=config.patch.stride,
                 d_model=core.d_model,
@@ -212,6 +234,8 @@ def build_experiment_model(
             global_refiner_ff_multiplier=config.recovery.refiner_ff_multiplier,
             global_refiner_dropout=config.recovery.refiner_dropout,
             global_refiner_output_init=config.recovery.refiner_output_init,
+            edge_filter=edge_filter,
+            relation_selection=config.relations.selection,
         )
         model = Stage1Model(core, selected, recovery=recovery)
         return model
@@ -374,6 +398,12 @@ def run_training(
         weight_decay=config.training.weight_decay,
         lr_schedule=training_profile.lr_schedule,
         lambda_rec=config.training.lambda_rec,
+        lambda_keep=(
+            config.relations.filter.lambda_keep
+            if selected is ModelVariant.OURS
+            and config.relations.selection == "missing_aware_filter"
+            else 0.0
+        ),
         use_recovery_loss=(
             selected is ModelVariant.OURS and config.ablations.use_recovery_loss
         ),

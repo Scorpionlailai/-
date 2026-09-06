@@ -1,5 +1,6 @@
 import torch
 
+from malr.data.patching import PATCH_MISSING, PATCH_OBSERVED
 from tests.unit.test_teacher_and_losses import _tiny_ours
 
 
@@ -145,3 +146,38 @@ def test_forecast_loss_reaches_replacement_and_global_refiner_output_gates() -> 
     assert replacement_gate.weight.grad.abs().sum() > 0
     assert refiner_gate.weight.grad is not None
     assert refiner_gate.weight.grad.abs().sum() > 0
+
+
+def test_keep_penalty_reaches_filter_while_forecast_trains_patchtst() -> None:
+    torch.manual_seed(23)
+    model = _tiny_ours(fusion="replacement_mlp", filtered=True).train()
+    patch_count = model.core.patch_num
+    values = torch.randn(2, 1, patch_count, 16)
+    mask = torch.ones_like(values, dtype=torch.bool)
+    mask[:, :, 1] = False
+    values = torch.where(mask, values, torch.zeros_like(values))
+    rho = mask.float().mean(dim=-1)
+    state = torch.full((2, 1, patch_count), PATCH_OBSERVED, dtype=torch.long)
+    state[:, :, 1] = PATCH_MISSING
+
+    result = model.training_objective(
+        values,
+        mask,
+        rho,
+        state,
+        torch.zeros(2, 1),
+        torch.ones(2, 1),
+        torch.randn(2, 1, 4),
+        None,
+        torch.ones_like(state, dtype=torch.bool),
+        use_recovery_loss=False,
+        lambda_keep=1e-4,
+    )
+    result.loss.total.backward()
+
+    filter_gradient = model.recovery.edge_filter.temporal.network[-1].bias.grad
+    assert filter_gradient is not None
+    assert torch.isfinite(filter_gradient).all()
+    assert torch.count_nonzero(filter_gradient) > 0
+    assert model.core.encoder.layers[0].self_attn.W_Q.weight.grad is not None
+    assert model.core.head.linear.weight.grad is not None

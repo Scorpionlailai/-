@@ -340,3 +340,64 @@ class EdgeConfidenceFilter(nn.Module):
             retained_count=retained_count,
             keep_loss=keep_loss,
         )
+
+
+class MissingAwareEdgeFilter(nn.Module):
+    def __init__(
+        self,
+        *,
+        d_model: int,
+        temporal_topk: int,
+        variable_topk: int,
+        historical_topk: int,
+        temporal_threshold: float,
+        variable_threshold: float,
+        historical_threshold: float,
+        hidden_multiplier: int,
+        dropout: float,
+        temperature: float,
+        initial_keep_probability: float,
+    ) -> None:
+        super().__init__()
+        common = {
+            "d_model": d_model,
+            "hidden_multiplier": hidden_multiplier,
+            "dropout": dropout,
+            "temperature": temperature,
+            "initial_keep_probability": initial_keep_probability,
+        }
+        self.context = BilateralContextEncoder(d_model, hidden_multiplier)
+        self.temporal = EdgeConfidenceFilter(
+            auxiliary_dim=2,
+            max_edges=temporal_topk,
+            threshold=temporal_threshold,
+            **common,
+        )
+        self.variable = EdgeConfidenceFilter(
+            auxiliary_dim=2 * d_model + 1,
+            max_edges=variable_topk,
+            threshold=variable_threshold,
+            **common,
+        )
+        self.historical = EdgeConfidenceFilter(
+            auxiliary_dim=3,
+            max_edges=historical_topk,
+            threshold=historical_threshold,
+            **common,
+        )
+
+    def context_query(
+        self,
+        visible: Tensor,
+        mask_embedding: Tensor,
+        prior: Tensor,
+        rho: Tensor,
+        target_eligible: Tensor,
+    ) -> BilateralContextOutput:
+        return self.context(
+            visible,
+            mask_embedding,
+            prior,
+            rho,
+            target_eligible,
+        )

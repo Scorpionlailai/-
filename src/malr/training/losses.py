@@ -36,6 +36,7 @@ class Stage1Loss:
     total: Tensor
     forecast_mse: Tensor
     recovery_mse: Tensor
+    filter_keep: Tensor
     damaged_patch_count: int
 
     @classmethod
@@ -44,19 +45,34 @@ class Stage1Loss:
         prediction: Tensor,
         target: Tensor,
         recovery_mse: Tensor,
+        filter_keep: Tensor | None = None,
         *,
         damaged_patch_count: int,
         lambda_rec: float,
+        lambda_keep: float = 0.0,
     ) -> "Stage1Loss":
-        if lambda_rec < 0:
-            raise ValueError("lambda_rec cannot be negative")
+        if lambda_rec < 0 or lambda_keep < 0:
+            raise ValueError("loss weights cannot be negative")
         prediction_loss = forecast_mse(prediction, target)
-        total = prediction_loss + float(lambda_rec) * recovery_mse
-        return cls(total, prediction_loss, recovery_mse, damaged_patch_count)
+        if filter_keep is None:
+            filter_keep = prediction_loss * 0.0
+        total = (
+            prediction_loss
+            + float(lambda_rec) * recovery_mse
+            + float(lambda_keep) * filter_keep
+        )
+        return cls(
+            total,
+            prediction_loss,
+            recovery_mse,
+            filter_keep,
+            damaged_patch_count,
+        )
 
     def detached_metrics(self) -> dict[str, float | int]:
         return {
             "forecast_mse": float(self.forecast_mse.detach()),
             "recovery_mse": float(self.recovery_mse.detach()),
+            "filter_keep": float(self.filter_keep.detach()),
             "damaged_patch_count": self.damaged_patch_count,
         }

@@ -2,7 +2,143 @@ import pytest
 import torch
 
 from malr.data.patching import PATCH_MISSING, PATCH_OBSERVED, PATCH_PARTIAL
+from malr.models.filtering import MissingAwareEdgeFilter
 from malr.models.recovery import MissingAwareRecovery
+
+
+def _filtered_replacement_recovery() -> MissingAwareRecovery:
+    edge_filter = MissingAwareEdgeFilter(
+        d_model=4,
+        temporal_topk=2,
+        variable_topk=1,
+        historical_topk=1,
+        temporal_threshold=0.5,
+        variable_threshold=0.5,
+        historical_threshold=0.5,
+        hidden_multiplier=2,
+        dropout=0.0,
+        temperature=1.0,
+        initial_keep_probability=0.9,
+    )
+    return MissingAwareRecovery(
+        c_in=2,
+        patch_num=3,
+        patch_len=4,
+        d_model=4,
+        temporal_topk=2,
+        variable_topk=1,
+        use_historical=False,
+        fusion="replacement_mlp",
+        edge_filter=edge_filter,
+        relation_selection="missing_aware_filter",
+    )
+
+
+def _force_all_filter_logits(module: MissingAwareRecovery, value: float) -> None:
+    assert module.edge_filter is not None
+    with torch.no_grad():
+        for head in (
+            module.edge_filter.temporal,
+            module.edge_filter.variable,
+            module.edge_filter.historical,
+        ):
+            head.network[-1].weight.zero_()
+            head.network[-1].bias.fill_(value)
+
+
+def _mixed_state_recovery_inputs() -> tuple[
+    torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor
+]:
+    values = torch.tensor(
+        [
+            [
+                [
+                    [1.0, 2.0, 3.0, 4.0],
+                    [5.0, 0.0, 0.0, 0.0],
+                    [0.0, 0.0, 0.0, 0.0],
+                ],
+                [
+                    [2.0, 3.0, 4.0, 5.0],
+                    [3.0, 4.0, 5.0, 6.0],
+                    [4.0, 5.0, 6.0, 7.0],
+                ],
+            ]
+        ]
+    )
+    mask = torch.tensor(
+        [
+            [
+                [
+                    [True, True, True, True],
+                    [True, False, False, False],
+                    [False, False, False, False],
+                ],
+                [
+                    [True, True, True, True],
+                    [True, True, True, True],
+                    [True, True, True, True],
+                ],
+            ]
+        ]
+    )
+    rho = mask.to(torch.float32).mean(dim=-1)
+    state = torch.tensor(
+        [
+            [
+                [PATCH_OBSERVED, PATCH_PARTIAL, PATCH_MISSING],
+                [PATCH_OBSERVED, PATCH_OBSERVED, PATCH_OBSERVED],
+            ]
+        ]
+    )
+    return values, mask, rho, state, torch.randn(1, 2, 3, 4)
+
+
+def test_all_rejected_relations_fall_back_without_changing_observed_nodes() -> None:
+    module = _filtered_replacement_recovery()
+    _force_all_filter_logits(module, value=-20.0)
+    values, mask, rho, state, base = _mixed_state_recovery_inputs()
+
+    result = module(values, mask, rho, state, base_latents=base)
+
+    assert torch.equal(
+        result.latents[state == PATCH_OBSERVED],
+        base[state == PATCH_OBSERVED],
+    )
+    assert torch.isfinite(result.latents).all()
+    assert torch.isfinite(result.filter_keep_loss)
+    assert result.diagnostics["temporal_filter_retained_count"].sum() == 0
+    assert result.diagnostics["variable_filter_retained_count"].sum() == 0
+
+
+def test_recovery_ignores_raw_values_at_masked_positions() -> None:
+    module = _filtered_replacement_recovery()
+    values, mask, rho, state, base = _mixed_state_recovery_inputs()
+    changed = values.clone()
+    changed[~mask] = 1e6
+
+    first = module(values, mask, rho, state, base_latents=base)
+    second = module(changed, mask, rho, state, base_latents=base)
+
+    torch.testing.assert_close(first.messages.temporal, second.messages.temporal)
+    torch.testing.assert_close(first.messages.variable, second.messages.variable)
+    torch.testing.assert_close(first.latents, second.latents)
+
+
+def test_filter_keep_loss_averages_nonempty_relation_types_equally() -> None:
+    module = _filtered_replacement_recovery()
+    assert module.edge_filter is not None
+    with torch.no_grad():
+        for head, probability in (
+            (module.edge_filter.temporal, 0.8),
+            (module.edge_filter.variable, 0.4),
+        ):
+            head.network[-1].weight.zero_()
+            head.network[-1].bias.copy_(torch.logit(torch.tensor(probability)))
+    values, mask, rho, state, base = _mixed_state_recovery_inputs()
+
+    result = module(values, mask, rho, state, base_latents=base)
+
+    assert result.filter_keep_loss.item() == pytest.approx(0.6)
 
 
 @pytest.mark.parametrize("hidden_multiplier", [1.5, True])

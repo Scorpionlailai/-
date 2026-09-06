@@ -156,6 +156,7 @@ class Stage1Model(nn.Module):
         context_mask: Tensor | None = None,
         train_std: Tensor | None = None,
         lambda_rec: float = 1.0,
+        lambda_keep: float = 0.0,
         use_recovery_loss: bool = True,
     ) -> Stage1TrainingResult:
         if self.variant is ModelVariant.OURS and use_recovery_loss and clean_raw_patches is None:
@@ -191,8 +192,14 @@ class Stage1Model(nn.Module):
             output.forecast,
             forecast_target,
             recovery_loss,
+            (
+                output.recovery.filter_keep_loss
+                if output.recovery is not None
+                else output.latents.sum() * 0.0
+            ),
             damaged_patch_count=damaged_count,
             lambda_rec=lambda_rec if use_recovery_loss else 0.0,
+            lambda_keep=lambda_keep,
         )
         if output.recovery is None:
             prototype_latents = torch.empty(0, device=output.latents.device)

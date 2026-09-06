@@ -7,8 +7,14 @@ from torch import Tensor, nn
 
 from malr.data.patching import PATCH_MISSING, PATCH_OBSERVED, PATCH_PARTIAL
 
+from .filtering import EdgeConfidenceFilter, MissingAwareEdgeFilter
 from .refinement import GlobalLatentRefiner
-from .relations import HistoricalRelation, TemporalRelation, VariableRelation
+from .relations import (
+    HistoricalRelation,
+    RelationSelection,
+    TemporalRelation,
+    VariableRelation,
+)
 
 
 @dataclass(frozen=True)
@@ -26,6 +32,7 @@ class RecoveryOutput:
     recovered: Tensor
     messages: RelationMessages
     diagnostics: dict[str, Tensor]
+    filter_keep_loss: Tensor
 
 
 class MissingAwareRecovery(nn.Module):
@@ -52,6 +59,8 @@ class MissingAwareRecovery(nn.Module):
         global_refiner_ff_multiplier: int = 2,
         global_refiner_dropout: float = 0.0,
         global_refiner_output_init: str = "zero",
+        edge_filter: MissingAwareEdgeFilter | None = None,
+        relation_selection: str = "hard_topk",
     ) -> None:
         super().__init__()
         if min(c_in, patch_num, patch_len, d_model) <= 0:
@@ -75,6 +84,14 @@ class MissingAwareRecovery(nn.Module):
             raise ValueError("recovery.damage_scaling must be missing_fraction")
         if global_refiner_enabled and fusion != "replacement_mlp":
             raise ValueError("global refiner requires replacement_mlp fusion")
+        if relation_selection not in {"hard_topk", "missing_aware_filter"}:
+            raise ValueError("unknown relation selection")
+        if (relation_selection == "missing_aware_filter") != (
+            edge_filter is not None
+        ):
+            raise ValueError(
+                "missing_aware_filter selection requires exactly one edge filter"
+            )
         self.c_in = c_in
         self.patch_num = patch_num
         self.patch_len = patch_len
@@ -84,6 +101,8 @@ class MissingAwareRecovery(nn.Module):
         self.use_historical = use_historical and historical_relation is not None
         self.fusion_mode = fusion
         self.damage_scaling = damage_scaling
+        self.relation_selection = relation_selection
+        self.edge_filter = edge_filter
 
         self.W_m = nn.Linear(patch_len, d_model)
         self.variable_embedding = nn.Parameter(torch.empty(c_in, d_model))
@@ -204,7 +223,8 @@ class MissingAwareRecovery(nn.Module):
     ) -> RecoveryOutput:
         self._validate(values, mask, rho, state, base_latents)
         visible = base_latents
-        query_visible = visible + self.W_m(mask.to(dtype=values.dtype))
+        mask_embedding = self.W_m(mask.to(dtype=values.dtype))
+        query_visible = visible + mask_embedding
         prior = (
             self.variable_embedding.view(1, self.c_in, 1, self.d_model)
             + self.position_embedding.view(1, 1, self.patch_num, self.d_model)
@@ -214,9 +234,70 @@ class MissingAwareRecovery(nn.Module):
         damaged = state != PATCH_OBSERVED
         zeros = torch.zeros_like(visible)
         diagnostics: dict[str, Tensor] = {}
+        filter_keep_terms: list[Tensor] = []
+        filter_query = None
+        if self.edge_filter is not None:
+            filter_query = self.edge_filter.context_query(
+                visible,
+                mask_embedding,
+                prior,
+                rho,
+                damaged,
+            ).query
+
+        def record_filter_diagnostics(
+            name: str,
+            selection: RelationSelection,
+            head: EdgeConfidenceFilter,
+        ) -> None:
+            if selection.filter_probabilities is None:
+                raise RuntimeError(f"{name} relation omitted filter probabilities")
+            if selection.hard_gate is None or selection.retained_count is None:
+                raise RuntimeError(f"{name} relation omitted hard filter outputs")
+            if selection.pool_count is None or selection.keep_loss is None:
+                raise RuntimeError(f"{name} relation omitted filter statistics")
+            probabilities = selection.filter_probabilities
+            hard_gate = selection.hard_gate
+            diagnostics[f"{name}_filter_candidate_count"] = (
+                selection.candidate_count.detach()
+            )
+            diagnostics[f"{name}_filter_pool_count"] = selection.pool_count.detach()
+            diagnostics[f"{name}_filter_retained_count"] = (
+                selection.retained_count.detach()
+            )
+            diagnostics[f"{name}_filter_candidate_confidence_sum"] = (
+                probabilities.sum(dim=-1).detach()
+            )
+            diagnostics[f"{name}_filter_retained_confidence_sum"] = (
+                (probabilities * hard_gate.to(probabilities.dtype))
+                .sum(dim=-1)
+                .detach()
+            )
+            diagnostics[f"{name}_filter_threshold"] = visible.new_tensor(
+                head.threshold
+            )
+            diagnostics[f"{name}_filter_max_edges"] = visible.new_tensor(
+                head.max_edges
+            )
+            if bool(selection.candidate_count.sum() > 0):
+                filter_keep_terms.append(selection.keep_loss)
 
         if self.use_temporal:
-            temporal = self.temporal.select(query, visible, rho, damaged)
+            if self.edge_filter is None:
+                temporal = self.temporal.select(query, visible, rho, damaged)
+            else:
+                assert filter_query is not None
+                temporal = self.temporal.select(
+                    query,
+                    visible,
+                    rho,
+                    damaged,
+                    filter_query=filter_query,
+                    edge_filter=self.edge_filter.temporal,
+                )
+                record_filter_diagnostics(
+                    "temporal", temporal, self.edge_filter.temporal
+                )
             temporal_message = temporal.message
             diagnostics["temporal_selected"] = temporal.selected
             diagnostics["temporal_weights"] = temporal.weights
@@ -226,7 +307,22 @@ class MissingAwareRecovery(nn.Module):
             diagnostics["temporal_candidate_count"] = torch.zeros_like(state)
 
         if self.use_variable:
-            variable = self.variable.select(query, visible, rho, damaged)
+            if self.edge_filter is None:
+                variable = self.variable.select(query, visible, rho, damaged)
+            else:
+                assert filter_query is not None
+                variable = self.variable.select(
+                    query,
+                    visible,
+                    rho,
+                    damaged,
+                    filter_query=filter_query,
+                    edge_filter=self.edge_filter.variable,
+                    variable_embeddings=self.variable_embedding,
+                )
+                record_filter_diagnostics(
+                    "variable", variable, self.edge_filter.variable
+                )
             variable_message = variable.message
             diagnostics["variable_selected"] = variable.selected
             diagnostics["variable_weights"] = variable.weights
@@ -249,15 +345,32 @@ class MissingAwareRecovery(nn.Module):
             ):
                 raise ValueError("historical recovery requires context and normalization inputs")
             assert self.historical is not None
-            historical = self.historical.select(
-                raw_context,
-                context_mask,
-                state,
-                query_mean,
-                query_std,
-                train_std,
-                prototype_projection=prototype_projection,
-            )
+            if self.edge_filter is None:
+                historical = self.historical.select(
+                    raw_context,
+                    context_mask,
+                    state,
+                    query_mean,
+                    query_std,
+                    train_std,
+                    prototype_projection=prototype_projection,
+                )
+            else:
+                assert filter_query is not None
+                historical = self.historical.select(
+                    raw_context,
+                    context_mask,
+                    state,
+                    query_mean,
+                    query_std,
+                    train_std,
+                    prototype_projection=prototype_projection,
+                    filter_query=filter_query,
+                    edge_filter=self.edge_filter.historical,
+                )
+                record_filter_diagnostics(
+                    "historical", historical, self.edge_filter.historical
+                )
             historical_message = historical.message
             diagnostics["historical_selected"] = historical.selected
             diagnostics["historical_weights"] = historical.weights
@@ -322,4 +435,17 @@ class MissingAwareRecovery(nn.Module):
             diagnostics["global_refiner_applied_norm"] = (
                 refinement.applied_delta.norm(dim=-1).detach()
             )
-        return RecoveryOutput(latents, visible, prior, recovered, messages, diagnostics)
+        filter_keep_loss = (
+            torch.stack(filter_keep_terms).mean()
+            if filter_keep_terms
+            else latents.sum() * 0.0
+        )
+        return RecoveryOutput(
+            latents,
+            visible,
+            prior,
+            recovered,
+            messages,
+            diagnostics,
+            filter_keep_loss,
+        )

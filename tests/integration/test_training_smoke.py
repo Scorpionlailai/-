@@ -109,6 +109,27 @@ def test_ablation_switch_can_disable_recovery_loss(tmp_path: Path):
     assert result.best_checkpoint.exists()
 
 
+def test_trainer_forwards_filter_keep_weight(tmp_path: Path):
+    model = _tiny_ours(fusion="replacement_mlp", filtered=True)
+    batch = _batch(model)
+    output_bias = model.recovery.edge_filter.temporal.network[-1].bias
+    initial_bias = output_bias.detach().clone()
+    trainer = Trainer(
+        model,
+        checkpoint_path=tmp_path / "filtered.pt",
+        checkpoint_metadata={"dataset": "fixture", "variant": "ours"},
+        max_epochs=1,
+        patience=1,
+        learning_rate=1e-3,
+        lambda_keep=1e-4,
+        use_recovery_loss=False,
+    )
+
+    trainer.fit(lambda epoch: [batch], lambda: [batch])
+
+    assert output_bias.detach() < initial_bias
+
+
 def test_cli_exposes_the_agreed_stage1_workflow():
     parser = build_parser()
     actions = next(

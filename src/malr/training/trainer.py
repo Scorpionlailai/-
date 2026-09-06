@@ -130,6 +130,7 @@ class Trainer:
         weight_decay: float = 0.0,
         lr_schedule: str = "constant",
         lambda_rec: float = 1.0,
+        lambda_keep: float = 0.0,
         use_recovery_loss: bool = True,
         device: str | torch.device = "cpu",
     ) -> None:
@@ -145,6 +146,7 @@ class Trainer:
         self.base_learning_rate = float(learning_rate)
         self.lr_schedule = lr_schedule
         self.lambda_rec = lambda_rec
+        self.lambda_keep = lambda_keep
         self.use_recovery_loss = use_recovery_loss
         trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
         if not trainable:
@@ -175,6 +177,7 @@ class Trainer:
                 context_mask=current.context_mask,
                 train_std=current.train_std,
                 lambda_rec=self.lambda_rec,
+                lambda_keep=self.lambda_keep,
                 use_recovery_loss=self.use_recovery_loss,
             )
             result.loss.total.backward()
