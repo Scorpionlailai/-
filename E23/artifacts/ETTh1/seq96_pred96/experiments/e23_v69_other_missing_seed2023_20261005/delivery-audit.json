@@ -1,0 +1,59 @@
+{
+  "status": "verified",
+  "created_utc": "2026-10-05T10:00:31.189265+00:00",
+  "training_complete": true,
+  "stage1_runs": 3,
+  "stage2_runs": 3,
+  "new_t1_training_runs": 0,
+  "report_audit_sha256": "c7ac4620c86bd33f14348d2e888946ce8c809315ca3cdfea335b49639a387445",
+  "candidate_index": "/home/xyw/paper/E23/docs/experiments/E23_v69_missing_scenarios_candidates_20261005.json",
+  "candidate_index_sha256": "e02ec59094333059fd264fd944e176e7fee36bf3cf8e7cf77c51215ed38e5fa8",
+  "source_and_reference_unchanged": true,
+  "all_new_repairs_bitwise_frozen": {
+    "sr010_bl8/mae": 214,
+    "sr010_bl8/mse": 214,
+    "sr020_bl8/mae": 214,
+    "sr020_bl8/mse": 214,
+    "sr010_bl16/mae": 214,
+    "sr010_bl16/mse": 214
+  },
+  "expansion_training_seconds": 2538.616308326833,
+  "verdicts": [
+    {
+      "scene": "sr010_bl8",
+      "delta": {
+        "mse": -0.0027407834859662084,
+        "mae": -0.017928898091218913
+      },
+      "wins": {
+        "mse": 11,
+        "mae": 20
+      },
+      "both_better": true
+    },
+    {
+      "scene": "sr020_bl8",
+      "delta": {
+        "mse": 0.01700627155044452,
+        "mae": 0.004988604229864346
+      },
+      "wins": {
+        "mse": 1,
+        "mae": 3
+      },
+      "both_better": false
+    },
+    {
+      "scene": "sr010_bl16",
+      "delta": {
+        "mse": 0.03425678693248031,
+        "mae": 0.025175131745889878
+      },
+      "wins": {
+        "mse": 0,
+        "mae": 0
+      },
+      "both_better": false
+    }
+  ]
+}

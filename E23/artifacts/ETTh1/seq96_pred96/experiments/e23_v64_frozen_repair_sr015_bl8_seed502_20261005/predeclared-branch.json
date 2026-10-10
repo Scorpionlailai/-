@@ -1,0 +1,21 @@
+{
+  "parent": "v63 validation-retained parent, selected before its tests",
+  "only_change": "existing repair_update_policy frozen_v1, no forecast head or objective changes",
+  "conditions": [
+    "retained parent original Stage1, complete frozen repair during Stage2",
+    "v62 small-batch Stage1, complete frozen repair during Stage2",
+    "v63 plain-signature Stage1, if its checkpoint differs from retained parent Stage1"
+  ],
+  "evidence": "v62 repair last32 MSE .292488 Stage1 to .621727 Stage2; parent v58 .334354 to .567811",
+  "stage1": "reuse already completed 100-epoch checkpoints and include their original measured resource cost",
+  "stage2_epochs": 100,
+  "stage2_batch_size": 128,
+  "forecast_loss": "parent legacy MSE+0.2MAE with unchanged uniform retention",
+  "note": "uniform retention is constant with all repair parameters frozen; objective expression remains unchanged",
+  "selection": "one Stage2 per condition, MAE primary and MSE secondary; predeclared priority MAE then MSE and validation gate",
+  "promotion": "forecast validation MSE lower and MAE no worse, both conditions decisions locked before any tests",
+  "test_draws": 20,
+  "training_seed": 502,
+  "source_isolation": "/home/xyw/paper/.e23-v64-frozen-repair/E23",
+  "addition_basis": "v63 Stage1 completed with repair MSE 0.27595195; declare additional freeze control before seeing any v63 test metrics and before v64 training"
+}

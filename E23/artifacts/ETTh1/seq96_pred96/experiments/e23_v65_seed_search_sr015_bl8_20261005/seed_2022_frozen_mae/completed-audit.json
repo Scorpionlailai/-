@@ -1,0 +1,116 @@
+{
+  "label": "E23-v65-seed2022-frozen-MAE",
+  "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2022_frozen_mae",
+  "trial": {
+    "label": "E23-v65-seed2022-frozen-MAE",
+    "training_seed": 2022,
+    "config": "/home/xyw/paper/.e23-v65-seed-search/E23/configs/e23_v65_seed_2022.yaml",
+    "config_key": "2022",
+    "parent": {
+      "label": "E23-v63-plain-signature-MAE",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+      "validation": {
+        "mse": 0.7425686723791283,
+        "mae": 0.5820202103007137
+      },
+      "selection_metric": "mae",
+      "stage1_training_batch_size": 128,
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "recent_mean_v2",
+      "point_candidate_readout": "eight_head_v1",
+      "variable_calibration": "none",
+      "front_variable_context": "signature_plain_v2",
+      "repair_coordinates": "robust_local_v1",
+      "point_variable_readout": "none",
+      "historical_key_policy": "legacy_v1",
+      "recent_mean_projection": "mean_v1",
+      "temporal_evidence_readout": "none",
+      "forecast_padding": "zero_invalid_v1",
+      "repair_input_scaling": "legacy_v1"
+    },
+    "architecture_parent": "E23-v63-plain-signature-MAE",
+    "only_change": "training_seed_and_frozen_repair_control",
+    "repair_update_policy": "frozen_v1",
+    "stage2_policy_name": "frozen",
+    "cached_stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2022_shared/stage1/runs/e23-stage1.json",
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "signature_plain_v2",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  },
+  "validation_lock": {
+    "parent": {
+      "label": "E23-v63-plain-signature-MAE",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+      "validation": {
+        "mse": 0.7425686723791283,
+        "mae": 0.5820202103007137
+      },
+      "selection_metric": "mae",
+      "stage1_training_batch_size": 128,
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "recent_mean_v2",
+      "point_candidate_readout": "eight_head_v1",
+      "variable_calibration": "none",
+      "front_variable_context": "signature_plain_v2",
+      "repair_coordinates": "robust_local_v1",
+      "point_variable_readout": "none",
+      "historical_key_policy": "legacy_v1",
+      "recent_mean_projection": "mean_v1",
+      "temporal_evidence_readout": "none",
+      "forecast_padding": "zero_invalid_v1",
+      "repair_input_scaling": "legacy_v1"
+    },
+    "validation": {
+      "mse": 0.7751413710803943,
+      "mae": 0.5881005555323733
+    },
+    "selected_epoch": 95,
+    "selection_metric": "mae",
+    "checkpoint_sha256": "3696c68269ef45142fcac332eaa72b4ea0169c1c002437642233eaf63dc3018b",
+    "accepted_on_validation": false,
+    "test_metrics_seen": false
+  },
+  "test_mean": {
+    "mae": 0.4197462059202649,
+    "mse": 0.41867917259804505
+  },
+  "test_std": {
+    "mae": 0.00470707397722156,
+    "mse": 0.014099927654523866
+  },
+  "next_parent": {
+    "label": "E23-v63-plain-signature-MAE",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+    "validation": {
+      "mse": 0.7425686723791283,
+      "mae": 0.5820202103007137
+    },
+    "selection_metric": "mae",
+    "stage1_training_batch_size": 128,
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "signature_plain_v2",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  }
+}

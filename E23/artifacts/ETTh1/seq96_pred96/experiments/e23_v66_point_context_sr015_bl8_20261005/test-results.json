@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "tests_passed": 13,
+  "command": "pytest point_context plain_signature dual_legacy_checkpoint",
+  "current_path_tests_passed": 51,
+  "full_suite": {
+    "passed": 1128,
+    "failed": 21,
+    "skipped": 1,
+    "log": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v66_point_context_sr015_bl8_20261005/full-suite.log"
+  },
+  "inherited_full_suite": {
+    "passed": 1129,
+    "failed": 21,
+    "skipped": 1,
+    "log": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v66_point_context_sr015_bl8_20261005/inherited-suite.log"
+  },
+  "new_failure_names": [],
+  "inherited_failure_names": [
+    "FAILED tests/integration/test_e23_aligned_stage2.py::test_common_stage2_saves_pure_mse_protocol_and_rejects_relabelling",
+    "FAILED tests/integration/test_e23_padding_alignment.py::test_loss_epoch_loop_and_head_sources_unchanged",
+    "FAILED tests/integration/test_e23_profile_reference.py::test_profile_rejects_wrong_mask_and_preserves_memory",
+    "FAILED tests/integration/test_e23_profile_reference.py::test_profile_rejects_stage1_reference_before_execution",
+    "FAILED tests/integration/test_e23_pure_mse_front.py::test_pure_legacy_mode_rejected_without_explicit_supported_front_recipe[frozen_v1]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_summary_rejects_resources_from_another_model",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[test_mask_bank_sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[selection_sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[source_csv_sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[validation_mask_sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[metric_space-window_normalized]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[group_sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[group_split-validation]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_other_masks_selection_or_metric_space[group_id-wrong]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_nonfinite_headline_summary[test_mean-mse]",
+    "FAILED tests/integration/test_e23_v30_reporting.py::test_test_result_rejects_nonfinite_headline_summary[test_std-mae]",
+    "FAILED tests/integration/test_e23_v31_reporting.py::test_test_summary_rejects_nan",
+    "FAILED tests/s4m/test_s4m_provenance.py::test_verify_checkout_rejects_wrong_commit",
+    "FAILED tests/s4m/test_s4m_provenance.py::test_verify_checkout_rejects_modified_protected_core",
+    "FAILED tests/s4m/test_s4m_provenance.py::test_verify_checkout_allows_only_declared_patch_paths",
+    "FAILED tests/s4m/test_s4m_provenance.py::test_verify_checkout_rejects_unrelated_dirty_path"
+  ]
+}

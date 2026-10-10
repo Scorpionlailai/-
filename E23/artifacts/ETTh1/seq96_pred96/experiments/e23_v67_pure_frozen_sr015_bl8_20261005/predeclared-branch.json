@@ -1,0 +1,16 @@
+{
+  "parent": "v65 validation-retained architecture; prioritize this control before v66 new readout if still below T1",
+  "stage1_choice": "existing same-architecture frozen-MAE control with lowest fixed validation forecast MAE, tie by validation MSE then predeclared seed order; reuse its Stage1 and training seed",
+  "only_change": "fully frozen repair with forecast loss MSE instead of MSE+.2MAE, legacy padding/RNG setup unchanged",
+  "forecast_head": "same original architecture/config/35427 parameters and chosen seed initial weights",
+  "repair_update_policy": "frozen_v1",
+  "repair_retention": "none; previous uniform retention has zero gradient when whole repair frozen",
+  "user_authorization": "previous explicit request to use all-MSE forecast loss",
+  "stage1": "reuse complete 100-epoch selected checkpoint and include original resource cost",
+  "stage2_epochs": 100,
+  "stage2_batch_size": 128,
+  "checkpoint_selection": "MAE primary and MSE secondary in same run; validation gate before tests",
+  "comparison": "match available same-seed same-Stage1 frozen mixed-loss run; if none exists train that control first",
+  "no_new_future_labels": true,
+  "selection_change_basis": "average repair MSE alone has repeatedly failed to order forecast quality; choose the frozen forecasting control using fixed validation, not development tests"
+}

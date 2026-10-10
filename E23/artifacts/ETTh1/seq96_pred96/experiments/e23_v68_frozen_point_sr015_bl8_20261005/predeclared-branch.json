@@ -1,0 +1,12 @@
+{
+  "parent": "v66 validation-retained parent; matched control is v66 MAE trial, regardless of promotion",
+  "run_if": "no completed candidate exceeds T1 on both old20 metrics",
+  "only_change": "frozen_v1 instead of freeze_front_v1; same mixed forecast loss and uniform repair retention",
+  "stage1": "reuse v66 100-epoch repair selection",
+  "training_seed": 502,
+  "stage2_epochs": 100,
+  "selection": "MAE primary and MSE secondary; validation gate before tests",
+  "head": "unchanged original35427 architecture/config/same-seed initialization",
+  "cost": "original Stage1 plus new Stage2 full cost; incremental Stage2 only",
+  "confirmation": "lock candidate and evaluate fresh missing positions if exceeds T1"
+}

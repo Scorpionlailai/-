@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_T1_fresh20_confirmation_20261005/evaluate_independent_positions.py",
+    "--model",
+    "E23-v31-B",
+    "--model-label",
+    "E23-v69-seed2023-frozen-MAE",
+    "--training-seed",
+    "2023",
+    "--selection",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_frozen_mae/stage2/runs/e23-stage2.json",
+    "--e23-config",
+    "/home/xyw/paper/.e23-v69-signature-position/E23/configs/e23_v69_signature_position_seed2023.yaml",
+    "--test-mask-bank",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_T1_fresh20_confirmation_20261005/test_masks/manifest.json",
+    "--output",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_T1_fresh20_confirmation_20261005/E23",
+    "--device",
+    "cuda:0"
+  ]
+}
