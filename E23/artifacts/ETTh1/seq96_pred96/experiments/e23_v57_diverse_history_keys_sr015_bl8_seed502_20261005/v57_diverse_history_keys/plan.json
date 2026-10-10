@@ -1,0 +1,32 @@
+{
+  "label": "E23-v57-diverse-history-keys",
+  "config": "/home/xyw/paper/.e23-v57-diverse-history-keys/E23/configs/e23_v57_diverse_history_keys_seed502.yaml",
+  "config_key": "p1o1s0c1v0f0",
+  "parent": {
+    "label": "E23-v54-local-coordinates",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+    "validation": {
+      "mse": 0.7578881516748545,
+      "mae": 0.5871681204728799
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1"
+  },
+  "only_change": "historical_key_policy",
+  "point_router": "pointwise_v1",
+  "overlap_fusion": "confidence_v1",
+  "stage1_structure": "none",
+  "point_candidate_readout": "eight_head_v1",
+  "variable_calibration": "none",
+  "front_variable_context": "none",
+  "repair_coordinates": "robust_local_v1",
+  "point_variable_readout": "none",
+  "historical_key_policy": "global_diverse_v1"
+}

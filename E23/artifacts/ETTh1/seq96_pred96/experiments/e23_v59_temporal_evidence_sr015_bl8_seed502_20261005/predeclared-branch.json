@@ -1,0 +1,27 @@
+{
+  "parent": "v58 if fixed validation gate passes, else v54; decision before tests",
+  "change": "two-layer eight-head temporal cross-attention residual in repair module",
+  "read": "original truly visible points across same-variable 96-point window",
+  "queries": "recent32 points, current repaired states and original expert/CNN features",
+  "scope": "only true hidden recent32 positions",
+  "head_width": 64,
+  "heads": 8,
+  "layers": 2,
+  "relative_position_prior_scales": [
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64,
+    96
+  ],
+  "source_null_value": 0,
+  "output_relative_bound": 2,
+  "initial_output": "zero preserving previous function",
+  "forecast_head_unchanged": true,
+  "stage2_recipe": "parent unchanged",
+  "stage1_recipe": "parent unchanged",
+  "forecast_loss_or_future_labels_added": false
+}

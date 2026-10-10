@@ -1,0 +1,33 @@
+{
+  "parent": {
+    "label": "E23-v58-recent-mean",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean",
+    "validation": {
+      "mse": 0.750384486451441,
+      "mae": 0.5869973619508635
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  },
+  "validation": {
+    "mse": 0.7639008757749112,
+    "mae": 0.5906731893145849
+  },
+  "selected_epoch": 98,
+  "selection_metric": "mae",
+  "checkpoint_sha256": "0e609b0bb03df34fda55fb4dcfda366009d620b33d0852996add2274c1ce44df",
+  "accepted_on_validation": false,
+  "matched_v41_validation_gate": true,
+  "test_metrics_seen": false
+}

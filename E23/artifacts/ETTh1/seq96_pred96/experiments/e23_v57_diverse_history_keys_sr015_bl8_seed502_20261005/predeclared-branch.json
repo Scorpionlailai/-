@@ -1,0 +1,16 @@
+{
+  "parent": "Inherited from validation-only v56 choice, otherwise v54/v55 retained; no new test selection.",
+  "key_policy": "global_diverse_v1",
+  "bundle": [
+    "global train-standardized raw key train/query coordinates",
+    "contrastive temperature 0.1",
+    "within-variable clean-key variance target0.1 weight0.5 and off-diagonal covariance weight0.05",
+    "exclude empty and partially padded patches from key alignment loss",
+    "EMA0.99 updated each optimizer step, epoch frozen query/library publication unchanged"
+  ],
+  "new_parameters": 0,
+  "predictor_unchanged": true,
+  "full_stage1_epochs": 100,
+  "full_stage2_epochs": 100,
+  "forecast_recipe": "inherit validated parent"
+}

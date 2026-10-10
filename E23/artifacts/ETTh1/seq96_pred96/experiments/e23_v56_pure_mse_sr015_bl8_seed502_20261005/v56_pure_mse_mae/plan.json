@@ -1,0 +1,31 @@
+{
+  "label": "E23-v56-pure-mse-MAE",
+  "config": "/home/xyw/paper/.e23-v54-local-coordinates/E23/configs/e23_v54_local_coordinates_seed502.yaml",
+  "config_key": "parent_architecture",
+  "parent": {
+    "label": "E23-v54-local-coordinates",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+    "validation": {
+      "mse": 0.7578881516748545,
+      "mae": 0.5871681204728799
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none"
+  },
+  "only_change": "stage2_pure_mse_without_retention",
+  "cached_stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates/stage1/runs/e23-stage1.json",
+  "point_router": "pointwise_v1",
+  "overlap_fusion": "confidence_v1",
+  "stage1_structure": "none",
+  "point_candidate_readout": "eight_head_v1",
+  "variable_calibration": "none",
+  "front_variable_context": "none",
+  "repair_coordinates": "robust_local_v1",
+  "point_variable_readout": "none"
+}

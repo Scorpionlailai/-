@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v60_padding_sr015_bl8_seed502_20261005/evaluate_padding_replay.py",
+    "--model",
+    "E23-v31-B",
+    "--model-label",
+    "E23-v60-padding",
+    "--training-seed",
+    "502",
+    "--e23-config",
+    "/home/xyw/paper/.e23-v58-recent-mean/E23/configs/e23_v58_recent_mean_seed502.yaml",
+    "--selection",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v60_padding_sr015_bl8_seed502_20261005/v60_padding/stage2/runs/e23-stage2.json",
+    "--test-mask-bank",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/test_masks/manifest.json",
+    "--output",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v60_padding_sr015_bl8_seed502_20261005/v60_padding/evaluation",
+    "--device",
+    "cuda:1"
+  ]
+}

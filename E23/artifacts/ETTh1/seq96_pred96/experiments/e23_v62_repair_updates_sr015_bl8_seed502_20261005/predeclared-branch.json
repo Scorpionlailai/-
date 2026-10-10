@@ -1,0 +1,23 @@
+{
+  "parent": "v61 validation-retained parent; execute if still below T1",
+  "only_change": "Stage1 training_batch_size128 to32 using existing supported override",
+  "same_architecture": true,
+  "stage1_epochs": 100,
+  "stage1_training_windows_per_epoch": 8448,
+  "stage1_optimizer_updates": 26400,
+  "parent_stage1_optimizer_updates": 6600,
+  "stage1_validation_batch_size": 128,
+  "training_seed": 502,
+  "forecast_head_unchanged": true,
+  "stage2": "parent recipe unchanged, 100 epochs batch128",
+  "limitations": "batch change also alters contrastive negative count and stochastic gradient variance; cannot attribute effect only to update count",
+  "reference": "T1 selected Stage1 epoch41 at batch16 corresponds21648 updates; completed71 means37488 updates",
+  "selection": "MAE forecast checkpoint, fixed validation MSE lower and MAE no worse promotion before old20tests",
+  "extra_checkpoint_tracking": "MAE primary, MSE secondary from same Stage2 run; both validation-lock and parent choice before either test",
+  "promotion_priority": [
+    "MAE if fixed validation gate passes",
+    "otherwise MSE if same gate passes",
+    "otherwise retain original parent"
+  ],
+  "no_extra_stage2_training": true
+}

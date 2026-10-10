@@ -1,0 +1,28 @@
+{
+  "label": "E23-v54-local-coordinates",
+  "config": "/home/xyw/paper/.e23-v54-local-coordinates/E23/configs/e23_v54_local_coordinates_seed502.yaml",
+  "config_key": "p1o1s0c1v0f0",
+  "parent": {
+    "label": "E23-v51-candidate-readout",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout",
+    "validation": {
+      "mse": 0.7830920143732949,
+      "mae": 0.5975814719859704
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "global_v1"
+  },
+  "only_change": "repair_coordinates",
+  "point_router": "pointwise_v1",
+  "overlap_fusion": "confidence_v1",
+  "stage1_structure": "none",
+  "point_candidate_readout": "eight_head_v1",
+  "variable_calibration": "none",
+  "front_variable_context": "none",
+  "repair_coordinates": "robust_local_v1"
+}

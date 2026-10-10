@@ -1,0 +1,109 @@
+{
+  "status": "complete",
+  "conditions": [
+    {
+      "label": "E23-v55-variable-readout",
+      "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v55_variable_readout_sr015_bl8_seed502_20261005/v55_variable_readout",
+      "trial": {
+        "label": "E23-v55-variable-readout",
+        "config": "/home/xyw/paper/.e23-v55-variable-readout/E23/configs/e23_v55_variable_readout_seed502.yaml",
+        "config_key": "p1o1s0c1v0f0",
+        "parent": {
+          "label": "E23-v54-local-coordinates",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+          "validation": {
+            "mse": 0.7578881516748545,
+            "mae": 0.5871681204728799
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "robust_local_v1",
+          "point_variable_readout": "none"
+        },
+        "only_change": "point_variable_readout",
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1",
+        "point_variable_readout": "variable_conditioned_v1"
+      },
+      "validation_lock": {
+        "parent": {
+          "label": "E23-v54-local-coordinates",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+          "validation": {
+            "mse": 0.7578881516748545,
+            "mae": 0.5871681204728799
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "robust_local_v1",
+          "point_variable_readout": "none"
+        },
+        "validation": {
+          "mse": 0.7595910712434591,
+          "mae": 0.5887384933679283
+        },
+        "selected_epoch": 88,
+        "checkpoint_sha256": "962b0a01e37fba69d58cbdf5547a6038695bff6441859bb7ee697bb57680b743",
+        "accepted_on_validation": false,
+        "matched_v41_validation_gate": true,
+        "test_metrics_seen": false
+      },
+      "test_mean": {
+        "mae": 0.43555710153514837,
+        "mse": 0.42795798370357013
+      },
+      "test_std": {
+        "mae": 0.005225107536398804,
+        "mse": 0.014703520793718833
+      },
+      "next_parent": {
+        "label": "E23-v54-local-coordinates",
+        "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+        "validation": {
+          "mse": 0.7578881516748545,
+          "mae": 0.5871681204728799
+        },
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1",
+        "point_variable_readout": "none"
+      }
+    }
+  ],
+  "retained_parent": {
+    "label": "E23-v54-local-coordinates",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+    "validation": {
+      "mse": 0.7578881516748545,
+      "mae": 0.5871681204728799
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none"
+  },
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "source_unchanged": true,
+  "protected_files_unchanged": true
+}

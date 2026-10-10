@@ -1,0 +1,106 @@
+[
+  {
+    "stage": "stage1",
+    "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v59_temporal_evidence_sr015_bl8_seed502_20261005/v59_temporal_evidence/stage1/runs/e23-stage1.json",
+    "selection_sha256": "594a5faf9342f526b3de8e24abdeefeb9ae2642ec78226ebc0fe36b8c41be5d4",
+    "checkpoint_sha256": "1dbd6c758796991d706f524c4fb7b2881e51ea83c36b129158379583d9c3e1f7",
+    "selected_epoch": 95,
+    "metric_space": "train_standardized",
+    "metrics": {
+      "all96": {
+        "mse": 0.33756229868050114,
+        "mae": 0.3778104486220721,
+        "hidden_coordinates": 1325353
+      },
+      "before64": {
+        "mse": 0.34627589214084253,
+        "mae": 0.38154970540991834,
+        "hidden_coordinates": 884130
+      },
+      "last32": {
+        "mse": 0.3201018549001643,
+        "mae": 0.3703176635591025,
+        "hidden_coordinates": 441223
+      },
+      "block_boundaries": {
+        "mse": 0.32172283298568427,
+        "mae": 0.3702897222786149,
+        "hidden_coordinates": 138031
+      }
+    },
+    "repair_stride": 8,
+    "repair_patch_count": 12,
+    "repair_parameters": 356846,
+    "history_sampling_stride": 8,
+    "historical_query_length": 16,
+    "repair_patch_length": 16,
+    "last32_level_mse": 0.06434975596978632,
+    "last32_slope_mse": 0.00034178469142984185,
+    "h_available_damaged_patches": 165463,
+    "damaged_patches": 220757,
+    "h_available_fully_hidden_patches": 0,
+    "point_weight_absolute_deviation": 0.11039365020284203,
+    "point_weight_within_patch_variance": 0.0027750436954226123,
+    "overlap_weight_absolute_deviation": 1.5207602189869087,
+    "point_candidate_entropy": 1.7396970446659186,
+    "point_candidate_null_mass": 0.3340065761695218,
+    "point_candidate_within_patch_variance": 0.05510929034032793,
+    "temporal_evidence_entropy": 2.2381791298828664,
+    "temporal_evidence_null_mass": 0.12914330111223618,
+    "temporal_evidence_visible_mean_distance": 28.465065301001104,
+    "bank_state_unchanged": true,
+    "diagnostic_seconds": 1.5794855849817395
+  },
+  {
+    "stage": "stage2_mae",
+    "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v59_temporal_evidence_sr015_bl8_seed502_20261005/v59_temporal_evidence/stage2/runs/e23-stage2.json",
+    "selection_sha256": "2b902a67768f0c295b1b47262aac4d55f502e08a8604664fa598f66b8662c6b4",
+    "checkpoint_sha256": "3bd3651d34510c6269f1483d7bbfcd7e6fb585b1cb314e2bc6e785915017215d",
+    "selected_epoch": 98,
+    "metric_space": "train_standardized",
+    "metrics": {
+      "all96": {
+        "mse": 0.47817667290378457,
+        "mae": 0.4494870014961438,
+        "hidden_coordinates": 1325353
+      },
+      "before64": {
+        "mse": 0.41655790846056984,
+        "mae": 0.4211035679081706,
+        "hidden_coordinates": 884130
+      },
+      "last32": {
+        "mse": 0.6016493799185583,
+        "mae": 0.5063621987051165,
+        "hidden_coordinates": 441223
+      },
+      "block_boundaries": {
+        "mse": 0.4617964047642833,
+        "mae": 0.4412150639526923,
+        "hidden_coordinates": 138031
+      }
+    },
+    "repair_stride": 8,
+    "repair_patch_count": 12,
+    "repair_parameters": 356846,
+    "history_sampling_stride": 8,
+    "historical_query_length": 16,
+    "repair_patch_length": 16,
+    "last32_level_mse": 0.1664286609912334,
+    "last32_slope_mse": 0.0005736067261019779,
+    "h_available_damaged_patches": 165463,
+    "damaged_patches": 220757,
+    "h_available_fully_hidden_patches": 0,
+    "point_weight_absolute_deviation": 0.10592850108392214,
+    "point_weight_within_patch_variance": 0.003005756588309091,
+    "overlap_weight_absolute_deviation": 1.5228481286982036,
+    "point_candidate_entropy": 1.8766933786147058,
+    "point_candidate_null_mass": 0.2591423010039259,
+    "point_candidate_within_patch_variance": 0.05212151822735417,
+    "temporal_evidence_entropy": 2.238386543650206,
+    "temporal_evidence_null_mass": 0.1269977202159995,
+    "temporal_evidence_visible_mean_distance": 28.305665449177727,
+    "bank_state_unchanged": true,
+    "diagnostic_seconds": 1.0215386534109712
+  }
+]
