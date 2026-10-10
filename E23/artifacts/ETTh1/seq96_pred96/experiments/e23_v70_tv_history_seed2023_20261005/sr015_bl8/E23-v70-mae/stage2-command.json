@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "-m",
+    "integrations.e23.run",
+    "train-forecast",
+    "--protocol-config",
+    "/home/xyw/paper/.e23-v70-tv-history/E23/configs/stage1_seq96_dynamic_temporal_repair.yaml",
+    "--migration-catalog",
+    "/home/xyw/paper/.e23-v70-tv-history/E22/migration/paper_catalog.jsonl",
+    "--mask-artifacts",
+    "/home/xyw/paper/.e23-v70-tv-history/E22/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/two_stage_v5_dynamic_temporal_context",
+    "--e23-config",
+    "/home/xyw/paper/.e23-v70-tv-history/E23/configs/e23_v70_tv_history_seed2023.yaml",
+    "--training-seed",
+    "2023",
+    "--device",
+    "cuda:1",
+    "--stage1-manifest",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v70_tv_history_seed2023_20261005/sr015_bl8/E23-v70-mae/stage1/runs/e23-stage1.json",
+    "--selection-metric",
+    "mae",
+    "--forecast-loss",
+    "mse_plus_0p2_mae",
+    "--repair-retention",
+    "uniform_v1",
+    "--repair-update-policy",
+    "frozen_v1",
+    "--forecast-padding",
+    "zero_invalid_v1",
+    "--extra-mse-checkpoint",
+    "--output",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v70_tv_history_seed2023_20261005/sr015_bl8/E23-v70-mae/stage2"
+  ],
+  "environment": {
+    "PYTHONPATH": "src:.",
+    "MALR_MISSING_SCENARIO": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  }
+}

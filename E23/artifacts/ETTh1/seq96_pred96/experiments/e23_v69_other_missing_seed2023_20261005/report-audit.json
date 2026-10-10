@@ -1,0 +1,93 @@
+{
+  "completed_scenarios": [
+    "sr010_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "verdicts": [
+    {
+      "scene": "sr010_bl8",
+      "delta": {
+        "mse": -0.0027407834859662084,
+        "mae": -0.017928898091218913
+      },
+      "wins": {
+        "mse": 11,
+        "mae": 20
+      },
+      "both_better": true
+    },
+    {
+      "scene": "sr020_bl8",
+      "delta": {
+        "mse": 0.01700627155044452,
+        "mae": 0.004988604229864346
+      },
+      "wins": {
+        "mse": 1,
+        "mae": 3
+      },
+      "both_better": false
+    },
+    {
+      "scene": "sr010_bl16",
+      "delta": {
+        "mse": 0.03425678693248031,
+        "mae": 0.025175131745889878
+      },
+      "wins": {
+        "mse": 0,
+        "mae": 0
+      },
+      "both_better": false
+    }
+  ],
+  "repair_tensors_bitwise_frozen": {
+    "sr010_bl8/mae": 214,
+    "sr010_bl8/mse": 214,
+    "sr020_bl8/mae": 214,
+    "sr020_bl8/mse": 214,
+    "sr010_bl16/mae": 214,
+    "sr010_bl16/mse": 214
+  },
+  "source_files_verified": 517,
+  "protected_files_verified": 612,
+  "main_rows": 9,
+  "draw_rows": 180,
+  "paired_rows": 60,
+  "selection_rows": 6,
+  "csv": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v69_T1_other_missing_seed2023_20261005.csv",
+  "csv_sha256": "e1fe1afb0da94104472d1d23b79a756d141a8148bdf6419c937db6bf9c6f6978",
+  "all_three_complete": true,
+  "main_selection": "mae",
+  "new_t1_training_runs": 0,
+  "all_scenarios_rows": 12,
+  "all_scenarios_draw_rows": 240,
+  "all_scenarios_csv_sha256": "3f2c4fcf0d8bcc7bd909859f130fb4ffae1f165ba12cefdcf50c1f4db428a03c",
+  "cached_T1_provenance_verified": [
+    {
+      "scene": "sr010_bl8",
+      "author_profile_verified": true,
+      "repair_parent_and_checkpoint_verified": true,
+      "official_source_verified": true,
+      "forecast_extension": "original shared PatchTST,pureMSE100epochs,MAE selection",
+      "cached_adapter_sha256": "ff93a6304a92058d4ac698c98063662105ffb97f4490e833b42fec6c73ae3a00"
+    },
+    {
+      "scene": "sr020_bl8",
+      "author_profile_verified": true,
+      "repair_parent_and_checkpoint_verified": true,
+      "official_source_verified": true,
+      "forecast_extension": "original shared PatchTST,pureMSE100epochs,MAE selection",
+      "cached_adapter_sha256": "065ad6a8edd8091a3b77b31b0d3b4d51c711ca6aacd14d3f21f2fe03cb2d80dc"
+    },
+    {
+      "scene": "sr010_bl16",
+      "author_profile_verified": true,
+      "repair_parent_and_checkpoint_verified": true,
+      "official_source_verified": true,
+      "forecast_extension": "original shared PatchTST,pureMSE100epochs,MAE selection",
+      "cached_adapter_sha256": "065ad6a8edd8091a3b77b31b0d3b4d51c711ca6aacd14d3f21f2fe03cb2d80dc"
+    }
+  ]
+}

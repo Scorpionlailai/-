@@ -1,0 +1,28 @@
+{
+  "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v79_toward_clean_20261007/clean_reference/head-mae-selected.pt",
+  "checkpoint_sha256": "835776325c5db6553b9ea428788e0029ab826469de90bb3d0570c9ab6623af04",
+  "best_epoch": 83,
+  "best_validation": {
+    "mse": 0.7069110453168626,
+    "mae": 0.55668732223035,
+    "windows": 2688,
+    "target_elements": 1806336
+  },
+  "selection_metric": "mae",
+  "seed": 2023,
+  "epochs_completed": 100,
+  "optimizer_updates": 6600,
+  "loss": "forecast_mse_only",
+  "predictor_parameters": 35427,
+  "predictor_trainable_parameters": 35424,
+  "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "forecast_padding": "zero_invalid_v1",
+  "history_mask": "fully_observed",
+  "window_statistics": "all_true_history",
+  "stage1": "none",
+  "batch_size": 128,
+  "learning_rate": 0.0001,
+  "weight_decay": 0.0,
+  "test_metrics_seen": false
+}

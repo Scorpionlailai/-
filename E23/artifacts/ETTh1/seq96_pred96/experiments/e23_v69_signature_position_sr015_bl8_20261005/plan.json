@@ -1,0 +1,204 @@
+{
+  "label": "E23-v69-signature-position",
+  "work": "/home/xyw/paper/.e23-v69-signature-position/E23",
+  "training_seed": 502,
+  "device": "cuda:1",
+  "scenario_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json",
+  "test_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/test_masks/manifest.json",
+  "actual_test_missing_fraction": 0.729251839081987,
+  "stage1_epochs": 100,
+  "stage2_epochs": 100,
+  "primary_selection": "mae",
+  "forecast_loss": "mse_plus_0p2_mae",
+  "repair_retention": "uniform_v1",
+  "repair_update_policy": "frozen_v1",
+  "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+  "reference_validation": {
+    "mse": 0.8163889443793264,
+    "mae": 0.607866615935518
+  },
+  "cached_references": {
+    "E23-v41-slow": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/E23-v41-slow/evaluation/twenty-test-draws.json",
+    "T1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/T1/evaluation/twenty-test-draws.json",
+    "E23-v46-front-context": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v46_front_context_sr015_bl8_seed502_20261005/evaluation/twenty-test-draws.json",
+    "E23-v47-frozen-front": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v47_frozen_front_sr015_bl8_seed502_20261005/evaluation/twenty-test-draws.json",
+    "E23-v48-point-router": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v48_point_router/evaluation/twenty-test-draws.json",
+    "E23-v49-overlap": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v49_overlap/evaluation/twenty-test-draws.json",
+    "E23-v50-recent-state": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v50_recent_state/evaluation/twenty-test-draws.json",
+    "E23-v51-candidate-readout": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout/evaluation/twenty-test-draws.json",
+    "E23-v52-variable-calibration": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v52_variable_calibration_sr015_bl8_seed502_20261005/v52_variable_calibration/evaluation/twenty-test-draws.json",
+    "E23-v53-window-signature": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v53_window_signature_sr015_bl8_seed502_20261005/v53_window_signature/evaluation/twenty-test-draws.json",
+    "E23-v54-local-coordinates": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates/evaluation/twenty-test-draws.json",
+    "E23-v55-variable-readout": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v55_variable_readout_sr015_bl8_seed502_20261005/v55_variable_readout/evaluation/twenty-test-draws.json",
+    "E23-v56-pure-mse-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v56_pure_mse_sr015_bl8_seed502_20261005/v56_pure_mse_mae/evaluation/twenty-test-draws.json",
+    "E23-v56-pure-mse-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v56_pure_mse_sr015_bl8_seed502_20261005/v56_pure_mse_mse/evaluation/twenty-test-draws.json",
+    "E23-v57-diverse-history-keys": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v57_diverse_history_keys_sr015_bl8_seed502_20261005/v57_diverse_history_keys/evaluation/twenty-test-draws.json",
+    "E23-v58-recent-mean": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean/evaluation/twenty-test-draws.json",
+    "E23-v59-temporal-evidence": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v59_temporal_evidence_sr015_bl8_seed502_20261005/v59_temporal_evidence/evaluation/twenty-test-draws.json",
+    "E23-v60-padding": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v60_padding_sr015_bl8_seed502_20261005/v60_padding/evaluation/twenty-test-draws.json",
+    "E23-v61-core-floor": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v61_core_floor_sr015_bl8_seed502_20261005/v61_core_floor/evaluation/twenty-test-draws.json",
+    "E23-v62-repair-updates-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v62_repair_updates_sr015_bl8_seed502_20261005/v62_repair_updates_mae/evaluation/twenty-test-draws.json",
+    "E23-v62-repair-updates-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v62_repair_updates_sr015_bl8_seed502_20261005/v62_repair_updates_mse/evaluation/twenty-test-draws.json",
+    "E23-v63-plain-signature-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae/evaluation/twenty-test-draws.json",
+    "E23-v63-plain-signature-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mse/evaluation/twenty-test-draws.json",
+    "E23-v64-retained-frozen-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v64_frozen_repair_sr015_bl8_seed502_20261005/v64_retained_frozen_mae/evaluation/twenty-test-draws.json",
+    "E23-v64-retained-frozen-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v64_frozen_repair_sr015_bl8_seed502_20261005/v64_retained_frozen_mse/evaluation/twenty-test-draws.json",
+    "E23-v64-updates-frozen-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v64_frozen_repair_sr015_bl8_seed502_20261005/v64_updates_frozen_mae/evaluation/twenty-test-draws.json",
+    "E23-v64-updates-frozen-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v64_frozen_repair_sr015_bl8_seed502_20261005/v64_updates_frozen_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2021-legacy-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2021_legacy_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2021-legacy-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2021_legacy_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2021-frozen-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2021_frozen_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2021-frozen-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2021_frozen_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2022-legacy-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2022_legacy_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2022-legacy-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2022_legacy_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2022-frozen-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2022_frozen_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2022-frozen-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2022_frozen_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2023-legacy-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2023_legacy_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2023-legacy-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2023_legacy_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2023-frozen-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2023_frozen_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2023-frozen-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2023_frozen_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2024-legacy-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2024_legacy_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2024-legacy-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2024_legacy_mse/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2024-frozen-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2024_frozen_mae/evaluation/twenty-test-draws.json",
+    "E23-v65-seed2024-frozen-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v65_seed_search_sr015_bl8_20261005/seed_2024_frozen_mse/evaluation/twenty-test-draws.json",
+    "E23-v67-pure-frozen-seed2023-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v67_pure_frozen_sr015_bl8_20261005/v67_pure_frozen_mae/evaluation/twenty-test-draws.json",
+    "E23-v67-pure-frozen-seed2023-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v67_pure_frozen_sr015_bl8_20261005/v67_pure_frozen_mse/evaluation/twenty-test-draws.json",
+    "E23-v66-seed502-point_context-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v66_point_context_sr015_bl8_20261005/seed_502_point_context_mae/evaluation/twenty-test-draws.json",
+    "E23-v66-seed502-point_context-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v66_point_context_sr015_bl8_20261005/seed_502_point_context_mse/evaluation/twenty-test-draws.json",
+    "E23-v68-frozen-point-seed502-MAE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v68_frozen_point_sr015_bl8_20261005/v68_frozen_point_mae/evaluation/twenty-test-draws.json",
+    "E23-v68-frozen-point-seed502-MSE": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v68_frozen_point_sr015_bl8_20261005/v68_frozen_point_mse/evaluation/twenty-test-draws.json"
+  },
+  "test_used_for_selection": false,
+  "front_context": {
+    "version": "window_cnn_v1",
+    "width": 64,
+    "blocks": 2,
+    "kernels": [
+      7,
+      31
+    ],
+    "dilations": [
+      1,
+      2
+    ],
+    "block_residual_scale": 0.1,
+    "features": [
+      "visible_global_standardized",
+      "observed_mask",
+      "position",
+      "previous_visible_gap",
+      "next_visible_gap"
+    ],
+    "cross_variable": false,
+    "output": "zero_initialized_latent_delta",
+    "patch_pool": "valid_mean",
+    "receptive_field_points": 91
+  },
+  "validation_acceptance": "MSE lower and MAE no worse than current parent",
+  "source_isolation": "/home/xyw/paper/.e23-v69-signature-position/E23",
+  "reference_v41_validation": {
+    "mse": 0.7947543159363761,
+    "mae": 0.6070569604973134
+  },
+  "development_parent_chosen_after_test_by_user": true,
+  "checkpoint_selection_uses_validation_only": true,
+  "diagnostic_evidence": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/validation-v54-visible-evidence-diagnostic.json",
+  "base_config": "/home/xyw/paper/.e23-v65-seed-search/E23/configs/e23_v65_seed_2023.yaml",
+  "initial_parent": {
+    "label": "E23-v63-plain-signature-MAE",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+    "validation": {
+      "mse": 0.7425686723791283,
+      "mae": 0.5820202103007137
+    },
+    "selection_metric": "mae",
+    "stage1_training_batch_size": 128,
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "signature_plain_v2",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  },
+  "sequence": [
+    {
+      "name": "seed_2023_legacy_mae",
+      "label": "E23-v69-seed2023-legacy-MAE"
+    },
+    {
+      "name": "seed_2023_legacy_mse",
+      "label": "E23-v69-seed2023-legacy-MSE"
+    },
+    {
+      "name": "seed_2023_frozen_mae",
+      "label": "E23-v69-seed2023-frozen-MAE"
+    },
+    {
+      "name": "seed_2023_frozen_mse",
+      "label": "E23-v69-seed2023-frozen-MSE"
+    }
+  ],
+  "acceptance": "forecast validation MSE lower and MAE no worse than current parent",
+  "recent_state_weights": {
+    "level": 1.0,
+    "trend_amplitude": 0.0
+  },
+  "recovery_rounds": 1,
+  "fresh_training_each_condition": false,
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "configs": {
+    "2023": "/home/xyw/paper/.e23-v69-signature-position/E23/configs/e23_v69_signature_position_seed2023.yaml"
+  },
+  "reference_t1_validation": {
+    "mse": 0.7744047787724709,
+    "mae": 0.5948318591734179
+  },
+  "objective": "Improve numerical recovery and forecast error, then exceed T1 with original predictor unchanged.",
+  "predeclared_promotion": "Fixed validation MSE lower and MAE no worse than retained parent; original MAE selection.",
+  "predeclared_branch_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/predeclared-branch.json",
+  "predeclared_branch_sha256": "10e0cd3f39392ff457c9cf97fffb03afbedde4b8fc456d16ab4bf4ba207ca1c5",
+  "parent_choice_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v68_frozen_point_sr015_bl8_20261005/completed-audit.json",
+  "parent_choice_sha256": "40a1271af72c2dbbd22b89fc29a8584e9b0bad95cc2a0286e38d15189048df17",
+  "repair_coordinates": {
+    "policy": "robust_local_v1",
+    "floor": 0.1,
+    "loss_space": "global_train_standardized",
+    "head_statistics": "original_unchanged",
+    "extra_parameters": 0
+  },
+  "stage1_reused": false,
+  "new_stage1_runs": 1,
+  "new_stage2_runs": 2,
+  "stage1_training_batch_size": 128,
+  "stage1_optimizer_updates": 6600,
+  "secondary_selection": "mse",
+  "promotion_priority": [
+    "mae",
+    "mse"
+  ],
+  "seeds": [
+    2023
+  ],
+  "validation_mask_sha256": "914aaff4e3de6aacce2323fab477f37af48b65bd2934cee31be6fc4debe47bb6",
+  "stage2_policies": [
+    {
+      "name": "legacy",
+      "policy": "freeze_front_v1"
+    },
+    {
+      "name": "frozen",
+      "policy": "frozen_v1"
+    }
+  ],
+  "predictor_initial_sha256_by_seed": {
+    "2023": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561"
+  },
+  "matched_control": "E23-v65-seed2023-frozen-MAE"
+}

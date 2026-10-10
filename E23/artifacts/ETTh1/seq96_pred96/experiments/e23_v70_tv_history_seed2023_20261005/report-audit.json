@@ -1,0 +1,43 @@
+{
+  "completed_scenarios": [
+    "sr010_bl16",
+    "sr015_bl8"
+  ],
+  "main_rows": 6,
+  "draw_rows": 120,
+  "paired_rows": 80,
+  "selection_rows": 4,
+  "repair_tensors_bitwise_frozen": {
+    "sr010_bl16/mae": 217,
+    "sr010_bl16/mse": 217,
+    "sr015_bl8/mae": 217,
+    "sr015_bl8/mse": 217
+  },
+  "source_files_verified": 522,
+  "protected_files_verified": 574,
+  "verdicts": [
+    {
+      "scene": "sr010_bl16",
+      "validation_upgrade_vs_v69": false,
+      "validation_delta": {
+        "mse": 0.002795547044196045,
+        "mae": 0.004889603915398277
+      },
+      "test_used_for_promotion": false,
+      "retained_candidate": "E23-v69"
+    },
+    {
+      "scene": "sr015_bl8",
+      "validation_upgrade_vs_v69": false,
+      "validation_delta": {
+        "mse": -0.0011745894036324644,
+        "mae": 0.0007525571619843019
+      },
+      "test_used_for_promotion": false,
+      "retained_candidate": "E23-v69"
+    }
+  ],
+  "csv_sha256": "d6edf90d330937a3c2fb7c4f185e5e4f71d9529d309553d378b61af8390fe1cc",
+  "all_two_complete": true,
+  "reference_locks_verified": 129
+}
