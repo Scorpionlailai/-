@@ -1,0 +1,115 @@
+{
+  "label": "E23-v64-retained-frozen-MAE",
+  "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v64_frozen_repair_sr015_bl8_seed502_20261005/v64_retained_frozen_mae",
+  "trial": {
+    "label": "E23-v64-retained-frozen-MAE",
+    "config": "/home/xyw/paper/.e23-v63-plain-signature/E23/configs/e23_v63_plain_signature_seed502.yaml",
+    "config_key": "v64_retained_frozen",
+    "parent": {
+      "label": "E23-v63-plain-signature-MAE",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+      "validation": {
+        "mse": 0.7425686723791283,
+        "mae": 0.5820202103007137
+      },
+      "selection_metric": "mae",
+      "stage1_training_batch_size": 128,
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "recent_mean_v2",
+      "point_candidate_readout": "eight_head_v1",
+      "variable_calibration": "none",
+      "front_variable_context": "signature_plain_v2",
+      "repair_coordinates": "robust_local_v1",
+      "point_variable_readout": "none",
+      "historical_key_policy": "legacy_v1",
+      "recent_mean_projection": "mean_v1",
+      "temporal_evidence_readout": "none",
+      "forecast_padding": "zero_invalid_v1",
+      "repair_input_scaling": "legacy_v1"
+    },
+    "only_change": "freeze_all_repair_from_retained_stage1",
+    "cached_stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae/stage1/runs/e23-stage1.json",
+    "repair_update_policy": "frozen_v1",
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "signature_plain_v2",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  },
+  "validation_lock": {
+    "parent": {
+      "label": "E23-v63-plain-signature-MAE",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+      "validation": {
+        "mse": 0.7425686723791283,
+        "mae": 0.5820202103007137
+      },
+      "selection_metric": "mae",
+      "stage1_training_batch_size": 128,
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "recent_mean_v2",
+      "point_candidate_readout": "eight_head_v1",
+      "variable_calibration": "none",
+      "front_variable_context": "signature_plain_v2",
+      "repair_coordinates": "robust_local_v1",
+      "point_variable_readout": "none",
+      "historical_key_policy": "legacy_v1",
+      "recent_mean_projection": "mean_v1",
+      "temporal_evidence_readout": "none",
+      "forecast_padding": "zero_invalid_v1",
+      "repair_input_scaling": "legacy_v1"
+    },
+    "validation": {
+      "mse": 0.7740050886764007,
+      "mae": 0.5874972689449112
+    },
+    "selected_epoch": 95,
+    "selection_metric": "mae",
+    "checkpoint_sha256": "0258c7138522ca47b9808dab92a697039b82c6c4327f46cf7029df356df2e65d",
+    "accepted_on_validation": false,
+    "matched_v41_validation_gate": true,
+    "test_metrics_seen": false
+  },
+  "test_mean": {
+    "mae": 0.4193018335333757,
+    "mse": 0.41737957779242063
+  },
+  "test_std": {
+    "mae": 0.0043683331657341385,
+    "mse": 0.01281160878166759
+  },
+  "next_parent": {
+    "label": "E23-v63-plain-signature-MAE",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+    "validation": {
+      "mse": 0.7425686723791283,
+      "mae": 0.5820202103007137
+    },
+    "selection_metric": "mae",
+    "stage1_training_batch_size": 128,
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "signature_plain_v2",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  },
+  "frozen_repair_state_and_output_verified": true
+}

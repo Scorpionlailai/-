@@ -1,0 +1,97 @@
+{
+  "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage2/checkpoints/e23-stage2.pt",
+  "checkpoint_selection": "original fixed validation only; same selected weights in every test group",
+  "checkpoint_sha256": "85180b9f49b4c141edc656b23497bbebd2c2c673fc2d81c1f37441d304875ea5",
+  "dataset": "ETTh1",
+  "e23_config_sha256": "477de4a7632a6ddfa9485ab8949297c6ed9c07a43da5426e8a39f02296043138",
+  "h_state_unchanged": true,
+  "metric_space": "train_standardized",
+  "model": "E23_v29_r3",
+  "profile_version": "locked width64/window_context_topk_v1/global_mse_v1/iterative_tv_h_v1/r3",
+  "recovery_rounds": 3,
+  "recovery_schedule": "iterative_tv_h_v1",
+  "scenario": "P4",
+  "schema_version": 1,
+  "selection_sha256": "05f71a3df1fd5d8b619c67867456f2eae8fa8b0aaf6ec9c496cc8d35f2e5745b",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage1_objective": "global_mse_v1",
+  "std_definition": "population standard deviation across three test missing-position draws (ddof=0)",
+  "test_draws": 3,
+  "test_groups": [
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_0",
+      "mae": 0.43907941550083984,
+      "missing_evaluation_fraction": 0.5667107337726758,
+      "missing_timeline_fraction": 0.5672043010752689,
+      "mse": 0.421281459920801,
+      "path": "test_group_0.npz",
+      "seed": 2021,
+      "sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_1",
+      "mae": 0.43830834170317706,
+      "missing_evaluation_fraction": 0.5668004180839002,
+      "missing_timeline_fraction": 0.5658122119815668,
+      "mse": 0.4195589208278526,
+      "path": "test_group_1.npz",
+      "seed": 2026100201,
+      "sha256": "a9009133109fab0b94011a7007b7e880071344a5ac7a42f58d5fa0944ecd4ede",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_2",
+      "mae": 0.4409846556700276,
+      "missing_evaluation_fraction": 0.5695579338506236,
+      "missing_timeline_fraction": 0.5679723502304147,
+      "mse": 0.43237525373359387,
+      "path": "test_group_2.npz",
+      "seed": 2026100202,
+      "sha256": "737c1710fe4dda249b310e482a1d70b9d560eed31c6f4711a97c038c835f96b4",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    }
+  ],
+  "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/test_mask_bank_20261002/manifest.json",
+  "test_mask_bank_sha256": "95fe49c78c6b884477e70c05f18a6c6c06f009e75d3afa01946275207b70e3a9",
+  "test_mean": {
+    "mae": 0.43945747095801485,
+    "mse": 0.42440521149408256
+  },
+  "test_std": {
+    "mae": 0.0011248284487910879,
+    "mse": 0.005679375858101568
+  },
+  "training_resources": {
+    "batch_size": "128",
+    "full_workflow_seconds": 638.4126820424572,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 634.9555778112262,
+    "peak_allocated_gib": 3.0166983604431152,
+    "peak_reserved_gib": 6.591796875,
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage1/resources/6f32b7c3b6da4f1bb00d0c832bb94724.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage2/resources/b78fa90e64644692bf803a176d86f500.json"
+    ],
+    "resource_status": "measured_all_stages",
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage1/runs/e23-stage1.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage2/runs/e23-stage2.json"
+    ],
+    "stage1_legacy_loop_seconds": 350.72476195916533,
+    "stage2_legacy_loop_seconds": 284.2308158520609,
+    "training_stages_seconds": 636.1358051020652
+  },
+  "training_runs": 1,
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

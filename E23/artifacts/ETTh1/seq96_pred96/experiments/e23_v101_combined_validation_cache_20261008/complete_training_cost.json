@@ -1,0 +1,43 @@
+{
+  "stages": [
+    {
+      "model": "v101_execution_same_as_v97",
+      "scene": "sr015_bl8",
+      "phase": "coarse",
+      "epochs": 100,
+      "full_workflow_seconds": 571.6902629649267,
+      "peak_allocated_gib": 4.6231160163879395,
+      "peak_reserved_gib": 6.404296875,
+      "measured_training_record_reused": true,
+      "source": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v79_v69_global_level_four_pureMSE_20261007/sr015_bl8/E23-v79/stage1/resources/81494d70e1b64d9fb407beb362c2944c.json"
+    },
+    {
+      "model": "v101_execution_same_as_v97",
+      "scene": "sr015_bl8",
+      "phase": "refinement",
+      "epochs": 100,
+      "full_workflow_seconds": 263.9693329371512,
+      "peak_allocated_gib": 1.346846580505371,
+      "peak_reserved_gib": 1.73828125,
+      "measured_training_record_reused": true,
+      "source": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v100_stage1_validation_cache_20261008/E23-v100/sr015_bl8/stage1/resources/01d1ffd3cacb449da14ecbe27db5e381.json"
+    },
+    {
+      "model": "v101_execution_same_as_v97",
+      "scene": "sr015_bl8",
+      "phase": "forecast",
+      "epochs": 100,
+      "full_workflow_seconds": 242.56198724545538,
+      "peak_allocated_gib": 1.358140468597412,
+      "peak_reserved_gib": 1.837890625,
+      "measured_training_record_reused": false,
+      "source": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v101_combined_validation_cache_20261008/sr015_bl8/stage2/resources/845b6d1a66984a26936612ac7d8b9b09.json"
+    }
+  ],
+  "full_workflow_seconds": 1078.2215831475332,
+  "peak_allocated_gib": 4.6231160163879395,
+  "peak_reserved_gib": 6.404296875,
+  "reduction_vs_v97_percent": 7.762129419102526,
+  "stage2_reduction_percent": 16.54310113013261,
+  "scope": "sum of separately measured coarse+v100 refinement+this Stage2; not a new uninterrupted cold run; excludes tests"
+}

@@ -1,0 +1,143 @@
+version: 1
+
+data:
+  seq_len: 336
+  pred_len: 96
+  datasets:
+    ETTh1:
+      path: data/raw/ETTh1.csv
+      n_vars: 7
+      expected_length: 17420
+      train_start: 0
+      train_end: 8640
+      validation_end: 11520
+      test_end: 14400
+      allow_length_override: true
+    Weather:
+      path: data/raw/weather.csv
+      n_vars: 21
+      expected_length: 52696
+      train_start: 0
+      train_end: 36887
+      validation_end: 42157
+      test_end: 52696
+      allow_length_override: false
+
+patch:
+  length: 16
+  stride: 8
+  padding: end_replication
+
+missing:
+  type: variable_missing
+  start_rate: 0.10
+  block_len: 5
+  allow_block_overlap: true
+
+prototype:
+  context_left: 3
+  target_span: 1
+  context_right: 3
+  scan_stride: 4
+  matrix_profile_window: 64
+  matrix_profile_exclusion: 32
+  motif_percentile: 0.20
+  min_occurrences: 2
+  max_per_variable: 256
+  retrieval_epochs: 20
+  retrieval_hidden_multiplier: 2
+  retrieval_dim: 0
+  scan_stride_absolute: 1
+  group_similarity_threshold: 0.8
+  group_capacity: 16
+  max_groups_per_variable: 128
+  history_similarity_threshold: 0.7
+  min_visible_points: 4
+  retrieval_temperature: 1.0
+  overlap_exclusion: 16
+
+relations:
+  selection: missing_aware_filter
+  temporal_topk: 6
+  variable_topk: 4
+  historical_topk: 4
+  recovered_nodes_can_be_sources: false
+  num_message_passing_layers: 1
+  filter:
+    temporal_threshold: 0.5
+    variable_threshold: 0.5
+    historical_threshold: 0.5
+    historical_candidate_pool: 32
+    hidden_multiplier: 2
+    dropout: 0.0
+    temperature: 1.0
+    initial_keep_probability: 0.9
+    learning_rate: 1.0e-3
+    lambda_keep: 0.0
+    straight_through: true
+
+recovery:
+  fusion: replacement_mlp
+  hidden_multiplier: 2
+  dropout: 0.0
+  output_init: zero
+  damage_scaling: missing_fraction
+  refiner_enabled: false
+  refiner_heads: 4
+  refiner_ff_multiplier: 2
+  refiner_dropout: 0.0
+  refiner_output_init: zero
+
+model:
+  normalization_eps: 1.0e-5
+  profiles:
+    ETTh1:
+      d_model: 16
+      n_heads: 4
+      d_ff: 128
+      encoder_layers: 3
+      dropout: 0.3
+      fc_dropout: 0.3
+      head_dropout: 0.0
+      attn_dropout: 0.0
+    Weather:
+      d_model: 128
+      n_heads: 16
+      d_ff: 256
+      encoder_layers: 3
+      dropout: 0.2
+      fc_dropout: 0.2
+      head_dropout: 0.0
+      attn_dropout: 0.0
+
+training:
+  optimizer: adam
+  weight_decay: 0.0
+  checkpoint_metric: val_mse
+  lambda_rec: 1.0
+  lambda_imputation_mse: 0.0
+  lambda_imputation_mae: 0.0
+  lambda_imputation_huber: 0.1
+  imputation_huber_delta: 1.0
+  seed: 2021
+  profiles:
+    ETTh1:
+      learning_rate: 1.0e-4
+      batch_size: 128
+      max_epochs: 100
+      early_stopping_patience: 100
+      lr_schedule: type3
+      drop_last: true
+    Weather:
+      learning_rate: 1.0e-4
+      batch_size: 128
+      max_epochs: 100
+      early_stopping_patience: 20
+      lr_schedule: type3
+      drop_last: true
+
+ablations:
+  use_temporal: true
+  use_variable: true
+  use_historical: true
+  use_recovery_loss: false

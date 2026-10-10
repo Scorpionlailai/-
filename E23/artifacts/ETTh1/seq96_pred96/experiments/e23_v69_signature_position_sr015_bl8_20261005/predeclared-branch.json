@@ -1,0 +1,21 @@
+{
+  "run_if": "v68 still below T1",
+  "architecture": "v63 plain signatures; direct point context disabled",
+  "training_seed": "choose same-architecture frozen MAE control using fixed validation MAE, MSE tie break, then predefined seed order, before new training",
+  "only_change": "zero-initialized learnable position[1,C,64,96] before existing signature blocks",
+  "front_variable_context": "signature_plain_pos_v3",
+  "new_parameters_per_variable": 6144,
+  "new_parameters_ETTh1": 43008,
+  "initial_function": "identical to same-seed v63; no RNG consumed by zero parameter",
+  "validity": "position cannot write invalid locations; source reliability mask preserved; no hidden payload or future labels",
+  "stage1_epochs": 100,
+  "stage2_epochs": 100,
+  "stage2_policies": [
+    "freeze_front_v1",
+    "frozen_v1"
+  ],
+  "loss": "original MSE+.2MAE and uniform retention",
+  "forecaster": "unchanged original PatchTST35427 params/config/same-seed initial weights",
+  "selection": "MAE primary and MSE secondary, decisions based on fixed validation before tests",
+  "comparison": "old20 development positions; lock then fresh missing positions if exceeding T1"
+}

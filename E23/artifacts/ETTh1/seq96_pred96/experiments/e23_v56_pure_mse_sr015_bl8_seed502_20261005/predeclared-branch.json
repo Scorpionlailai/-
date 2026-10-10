@@ -1,0 +1,10 @@
+{
+  "parent_policy": "Retain v55 only if its validation gate passes, else v54; decision before new tests.",
+  "change": "Stage2 pure forecast MSE without repair retention; no change to predictor, padding or training RNG",
+  "stage1": "reuse same validation-parent Stage1 snapshot",
+  "stage2_epochs": 100,
+  "stage2_optimizer": "original freeze_front_v1: repair 1e-5, predictor 1e-4",
+  "checkpoint_selection": "MAE primary, MSE secondary saved",
+  "promotion": "forecast validation MSE lower and MAE no worse",
+  "full_cost": "include original measured Stage1 + new measured Stage2; report actual incremental cost separately"
+}

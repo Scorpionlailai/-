@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "mse": 0.37530333418130185,
+    "mae": 0.39439000007740505,
+    "windows": 2688,
+    "target_elements": 1806336
+  },
+  "validation_replay": {
+    "mse": 0.7069110453168626,
+    "mae": 0.55668732223035,
+    "windows": 2688,
+    "target_elements": 1806336
+  },
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v79_toward_clean_20261007/clean_reference/head-mae-selection.json",
+  "selection_sha256": "f612527fd00c0d1f73f0f8dd38b6dfe2ddde2a387385498aebd57474339c925d",
+  "checkpoint_sha256": "835776325c5db6553b9ea428788e0029ab826469de90bb3d0570c9ab6623af04",
+  "windows_file": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v79_toward_clean_20261007/clean_reference/test-mae-windows.npz",
+  "windows_sha256": "5f27859e39e22d1f166f1b2632dad662357bcbfcd6c9c497fdc5ac9ff52368a0",
+  "missing_mask_groups": "not applicable; fully observed history",
+  "training_resources": {
+    "full_workflow_seconds": 86.61143440101296,
+    "training_stages_seconds": 85.15219060797244,
+    "peak_allocated_gib": 0.09100484848022461,
+    "peak_reserved_gib": 0.119140625,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "batch_size": "128",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": null,
+    "stage1_legacy_loop_seconds": null,
+    "stage2_legacy_loop_seconds": null,
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v79_toward_clean_20261007/clean_reference/head-mae-selection.json"
+    ],
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v79_toward_clean_20261007/clean_reference/resources/a0b67af2162e422ba9dbd8292d0ab646.json"
+    ],
+    "resource_status": "measured_all_stages"
+  },
+  "role": "clean reference; not a guaranteed theoretical lower bound"
+}

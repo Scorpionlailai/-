@@ -1,0 +1,80 @@
+{
+  "adapter_sha256": "2fd79ffcc08d22c99f0011fd0b9d76652e44bd30e1bc5f3c3bed1793489c6342",
+  "author_profiles_sha256": "b6cb42742fda9fc20b65604383b8a6c8523e5e5971000c3e2969dac3de859c8a",
+  "best_epoch": 44,
+  "best_validation": {
+    "mae": 0.25727535866661133,
+    "mse": 0.15400135768774972,
+    "target_elements": 1023670,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_20261002/T1/repair-selected.pt",
+  "checkpoint_sha256": "30f2543cedd97982dca044b4c9b145264e05db39cbb74658ce09cbe3c1c99441",
+  "epochs_completed": 74,
+  "model": "T1",
+  "original_test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "profile": {
+    "kind": "imputer",
+    "model": {
+      "downsample_ratio": 2,
+      "ffn_ratio": 1.0,
+      "imputation_use_mask_embedding": false,
+      "kernel_size_large": [
+        71,
+        31
+      ],
+      "kernel_size_small": 5,
+      "n_blocks": [
+        2,
+        2
+      ],
+      "n_heads": 128,
+      "patch_size": 2,
+      "patch_stride": 1
+    },
+    "notes": "Official type3 means constant LR. Mask embedding false is the released script/default, despite the paper's mask-aware description. Stage 2 uses the common P4 forecast interface.",
+    "revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+    "root": "artifacts/upstream/T1",
+    "sources": [
+      "https://arxiv.org/html/2602.21043",
+      "scripts/imputation/T1_ETTh1.sh",
+      "exp/exp_imputation.py",
+      "utils/tools.py"
+    ],
+    "training": {
+      "batch_size": 16,
+      "epochs": 300,
+      "learning_rate": 0.001,
+      "loss": "hidden_reconstruction_mse",
+      "lradj": "constant",
+      "patience": 30,
+      "precision": "bfloat16",
+      "selection_metric": "mse",
+      "weight_decay": 0.0
+    },
+    "version": "official T1_ETTh1.sh and run.py defaults"
+  },
+  "profile_version": "official T1_ETTh1.sh and run.py defaults",
+  "protocol_config_sha256": "6805b1c785e884411e85895104b927c815a75dea96d09a53728c916bcf61c9e5",
+  "seed": 2021,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "repair",
+  "status": "validation_finalized",
+  "test_metrics_seen": false,
+  "trainable_parameters": 536521,
+  "training": {
+    "batch_size": 16,
+    "epochs": 300,
+    "learning_rate": 0.001,
+    "loss": "hidden_reconstruction_mse",
+    "lradj": "constant",
+    "patience": 30,
+    "precision": "bfloat16",
+    "selection_metric": "mse",
+    "weight_decay": 0.0
+  },
+  "training_seconds": 315.429862793535,
+  "upstream_revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+  "upstream_source_sha256": "283c1e8cabcd0598bde064d5629a77ad70ae23346924190a4d2d488391c6f798",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

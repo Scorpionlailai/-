@@ -1,0 +1,39 @@
+{
+  "model": "E23-v69-seed2023-frozen-MAE",
+  "training_seed": 2023,
+  "E23_mean": {
+    "mae": 0.4141945339384533,
+    "mse": 0.40962308066772496
+  },
+  "T1_mean": {
+    "mae": 0.4305408036627737,
+    "mse": 0.41652992247453896
+  },
+  "E23_mask_std": {
+    "mae": 0.0032878959792764276,
+    "mse": 0.007616400232590476
+  },
+  "T1_mask_std": {
+    "mae": 0.004269493051966246,
+    "mse": 0.011084423551764968
+  },
+  "paired_delta": {
+    "mse": {
+      "mean": -0.006906841806813974,
+      "mask_std_ddof1": 0.009753151654395805,
+      "wins": 14,
+      "draws": 20
+    },
+    "mae": {
+      "mean": -0.0163462697243204,
+      "mask_std_ddof1": 0.003593121403644202,
+      "wins": 20,
+      "draws": 20
+    }
+  },
+  "exceeds_T1_on_both": true,
+  "all_locked_files_unchanged": true,
+  "new_mask_bank_sha256": "466d75aa0de2c8096015358636ac8399190a64770cbe67b26c201440bd0a9520",
+  "actual_missing_fraction": 0.7277096564537273,
+  "scope": "missing-position robustness on same future targets, single E23 training seed"
+}

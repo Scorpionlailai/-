@@ -1,0 +1,20 @@
+model:
+  d_model: 64
+  historical_topk: 4
+  historical_threshold: 0.7
+  variable_topk: 4
+  variable_selection: window_context_topk_v1
+  variable_offsets: [-1, 0, 1]
+  temporal_local_radius: 2
+  temporal_boundaries: [2, 4, 8, 16]
+  residual_scale: 0.1
+training:
+  retrieval_loss_weight: 0.1
+  specialist_exposure: 0.2
+  batch_size: 128
+  seed: 2021
+  stage1_epochs: 100
+  stage2_epochs: 100
+  stage1_lr: 0.001
+  stage2_lr: 0.0001
+  weight_decay: 0.0

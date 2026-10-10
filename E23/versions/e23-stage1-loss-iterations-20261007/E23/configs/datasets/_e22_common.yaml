@@ -1,0 +1,69 @@
+# Shared E22/W02 architecture for the six-dataset transfer suite.
+# Dataset-specific files inherit this config and add exactly one data/model/training profile.
+version: 1
+data:
+  seq_len: 96
+  pred_len: 96
+  datasets: {}
+patch: {length: 16, stride: 8, padding: end_replication}
+missing: {type: variable_missing, start_rate: 0.10, block_len: 8, allow_block_overlap: true}
+prototype:
+  context_left: 3
+  target_span: 1
+  context_right: 3
+  scan_stride: 4
+  matrix_profile_window: 64
+  matrix_profile_exclusion: 32
+  motif_percentile: 0.20
+  min_occurrences: 2
+  max_per_variable: 256
+  retrieval_epochs: 20
+  retrieval_hidden_multiplier: 2
+  retrieval_dim: 0
+  scan_stride_absolute: 1
+  group_similarity_threshold: 0.8
+  group_capacity: 16
+  max_groups_per_variable: 128
+  history_similarity_threshold: 0.7
+  min_visible_points: 4
+  retrieval_temperature: 1.0
+  overlap_exclusion: 16
+  storage_mode: online_grouped
+  online_observed_only: true
+relations:
+  selection: hard_topk
+  temporal_topk: 6
+  variable_topk: 4
+  historical_topk: 4
+  recovered_nodes_can_be_sources: false
+  num_message_passing_layers: 1
+  online:
+    protocol: dynamic_context_v3
+    temporal_distance_boundaries: [2, 4, 8, 16]
+    candidate_gain_threshold: 0.0
+    route_improvement_threshold: 0.10
+    route_stability_min_targets: 128
+    bootstrap_epochs: 20
+    joint_end_epoch: 80
+    calibration_relation_lr_scale: 0.10
+    stage1_repair_epochs: 100
+    repair_loss_weight: 1.0
+    gain_loss_weight: 0.20
+    memory_loss_weight: 0.05
+    temporal_residual_limit: 2.0
+    stage2_repair_lr_scale: 0.25
+  filter: {temporal_threshold: 0.5, variable_threshold: 0.5, historical_threshold: 0.5, historical_candidate_pool: 16, hidden_multiplier: 2, dropout: 0.0, temperature: 1.0, initial_keep_probability: 0.9, learning_rate: null, lambda_keep: 0.0, straight_through: true}
+recovery: {fusion: additive, hidden_multiplier: 2, dropout: 0.0, output_init: zero, damage_scaling: missing_fraction, refiner_enabled: false, refiner_heads: 4, refiner_ff_multiplier: 2, refiner_dropout: 0.0, refiner_output_init: zero, node_gate_enabled: false}
+model:
+  normalization_eps: 1.0e-5
+  profiles: {}
+training:
+  optimizer: adam
+  weight_decay: 0.0
+  checkpoint_metric: val_mse
+  lambda_rec: 1.0
+  lambda_imputation_mse: 0.0
+  lambda_imputation_mae: 0.0
+  seed: 2021
+  profiles: {}
+ablations: {use_temporal: true, use_variable: true, use_historical: true, use_recovery_loss: false}

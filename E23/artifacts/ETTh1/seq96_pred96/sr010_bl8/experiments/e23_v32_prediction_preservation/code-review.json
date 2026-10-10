@@ -1,0 +1,40 @@
+{
+  "type": "executor_self_review",
+  "independent_review_status": "not_completed_usage_limit",
+  "reviewer_attempt": "/root/v32_preservation_review",
+  "scope": [
+    "integrations/e23/prediction_preservation.py",
+    "integrations/e23/run.py",
+    "integrations/e23/train.py",
+    "scripts/evaluate_e23_three_test_draws.py",
+    "scripts/diagnose_e23_v32.py",
+    "scripts/report_e23_v32_trial.py",
+    "scripts/run_e23_v32_trial.py",
+    "configs/e23_multi_expert_p4_width64_prediction_preservation_v32.yaml",
+    "tests/integration/test_e23_v32_reporting.py",
+    "tests/integration/test_e23_prediction_preservation.py",
+    "tests/integration/test_e23_profile_reference.py"
+  ],
+  "checks": [
+    "teacher no gradients; input gradients pass",
+    "identical raw mask/stats and patch validity",
+    "teacher warmup training isolated RNG and train only",
+    "selected repair and teacher hashes explicit",
+    "Stage2 fresh predictor/optimizer and pureMSE",
+    "validation-only candidate selection",
+    "all teacher work included in measured stage1; forward-only consistency subtime correctly labelled",
+    "test bank and ownership validated"
+  ],
+  "important_fixed": [
+    {
+      "issue": "two reference tests used worktree parent instead of migration catalog paper_root",
+      "repro": "test_profile_rejects_wrong_mask_and_preserves_memory;test_profile_rejects_stage1_reference_before_execution",
+      "resolution": "use canonical catalog root in test fixtures; production catalog security unchanged"
+    }
+  ],
+  "limitations": [
+    "independent review unavailable",
+    "formal results not yet produced"
+  ],
+  "deferred_minors": []
+}

@@ -1,0 +1,78 @@
+{
+  "scope": "read-only data/optimizer audit; no training/test",
+  "original_seed": 2021,
+  "development_seed": 502,
+  "train_partition": [
+    0,
+    8640
+  ],
+  "p4_reference_windows": 8449,
+  "history_union": [
+    0,
+    8544
+  ],
+  "forecast_union": [
+    96,
+    8640
+  ],
+  "reconstruction_tail_not_covered": [
+    8544,
+    8640
+  ],
+  "shared_standardizer_fit": [
+    0,
+    8640
+  ],
+  "checks": [
+    {
+      "epoch": 0,
+      "checks": [
+        {
+          "batch_size": 16,
+          "windows": 8448,
+          "batches": 528,
+          "hidden_coordinates": 3362757,
+          "ordered_target_starts_sha256": "54d47fb464743733d0c5e5b7753d51b37c5f3fe8cd1fa4aa5f22238e42033a17",
+          "ordered_masks_sha256": "8c5488a7980b1d3f472799dc96b8e45bc67768adaaafc7882d69bdfeabc74697"
+        },
+        {
+          "batch_size": 128,
+          "windows": 8448,
+          "batches": 66,
+          "hidden_coordinates": 3362757,
+          "ordered_target_starts_sha256": "54d47fb464743733d0c5e5b7753d51b37c5f3fe8cd1fa4aa5f22238e42033a17",
+          "ordered_masks_sha256": "8c5488a7980b1d3f472799dc96b8e45bc67768adaaafc7882d69bdfeabc74697"
+        }
+      ]
+    },
+    {
+      "epoch": 1,
+      "checks": [
+        {
+          "batch_size": 16,
+          "windows": 8448,
+          "batches": 528,
+          "hidden_coordinates": 3362744,
+          "ordered_target_starts_sha256": "f980606771baf4ff07883bffacb0b263b11cd6967c61d00a0993e9ee0b66e30c",
+          "ordered_masks_sha256": "f0c3be230db8a0f7a8801d68a8072a9bd65d30f3d3043adb7b45dbc8da8a1641"
+        },
+        {
+          "batch_size": 128,
+          "windows": 8448,
+          "batches": 66,
+          "hidden_coordinates": 3362744,
+          "ordered_target_starts_sha256": "f980606771baf4ff07883bffacb0b263b11cd6967c61d00a0993e9ee0b66e30c",
+          "ordered_masks_sha256": "f0c3be230db8a0f7a8801d68a8072a9bd65d30f3d3043adb7b45dbc8da8a1641"
+        }
+      ]
+    }
+  ],
+  "stage1_training_seed502": {
+    "E23_epochs": 100,
+    "T1_epochs": 136,
+    "E23_updates": 6600,
+    "T1_updates": 71808,
+    "E23_presentations": 844800,
+    "T1_presentations": 1148928
+  }
+}

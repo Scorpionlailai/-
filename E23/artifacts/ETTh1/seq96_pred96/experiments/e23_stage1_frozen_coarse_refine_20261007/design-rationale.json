@@ -1,0 +1,23 @@
+{
+  "finding": "joint Stage1 coarse/refiner training degraded v79 coarse repair; weakening mean loss insufficient",
+  "diagnostic_scope": "same selected v85 checkpoint, fixed validation only; no checkpoint selection",
+  "dense_on_validation_mse": 0.33121803105922937,
+  "dense_off_validation_mse": 0.43939863607114993,
+  "parent_v79_validation_mse": 0.24728711642618212,
+  "next_hypothesis": "freeze coarse/history and fit a pointwise residual in Stage1",
+  "refinement_learning_rate": 0.0001,
+  "refinement_epochs": 100,
+  "preflight": {
+    "initial_parent_mse": 0.2472792710549331,
+    "saved_gpu_parent_mse": 0.2472871179473035,
+    "initial_candidate_mse": 0.2472792710549331,
+    "zero_residual_reproduces_parent": true,
+    "frozen_parameter_gradients_none": true,
+    "nonzero_refiner_output_gradient": true,
+    "coarse_weights_unchanged_after_update": true,
+    "history_contents_unchanged_after_paired_epoch_advance": true,
+    "trainable_parameters": 79751
+  },
+  "stage2_training": false,
+  "original_trials_root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_repair_focus_gpu0_20261007"
+}

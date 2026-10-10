@@ -1,0 +1,3 @@
+| run_id | dataset | variant | mse | mae | degradation_mse_absolute | degradation_mae_absolute | degradation_mse_relative_percent | degradation_mae_relative_percent | drr_mse | drr_mae | final_rate | trainable_parameters | training_seconds |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ETTm2-missing-8d7dede90bec | ETTm2 | missing | 0.2557957582833488 | 0.3198440351736233 | 0.07776748135869296 | 0.060110291291711915 | 43.68265688017938 | 23.143042714943196 | 0.0 | 0.0 | 0.8311934277843369 | 548704 | 511.17240800801665 |

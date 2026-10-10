@@ -1,0 +1,56 @@
+{
+  "amp": true,
+  "batch_size": 16,
+  "checkpoint_sha256": "efab259e4cb7924cab81f98072f720edbb4cf6d370b00ee4f920d2fa84ec3caa",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 1,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:1",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b"
+  },
+  "epochs_completed": 100,
+  "finished_utc": "2026-10-04T03:32:32.078336+00:00",
+  "full_workflow_seconds": 766.0876836385578,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "T1",
+  "peak_allocated_bytes": 1910624768,
+  "peak_reserved_bytes": 2898264064,
+  "precision": "bfloat16",
+  "preparation_and_reporting_seconds": 0.9575081653892994,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_202/T1/training/forecast-selection.json",
+  "selection_manifest_sha256": "60e3a0d8b6dda6559996eb361493163c009dbdfa6bd179d4551050e1cbc0cae5",
+  "stages": {
+    "forecast": {
+      "batch_size": 128,
+      "peak_allocated_bytes": 1910624768,
+      "peak_reserved_bytes": 2898264064,
+      "precision": "float32",
+      "status": "completed",
+      "wall_seconds": 332.3642613282427
+    },
+    "repair": {
+      "batch_size": 16,
+      "peak_allocated_bytes": 404230144,
+      "peak_reserved_bytes": 618659840,
+      "precision": "bfloat16",
+      "status": "completed",
+      "wall_seconds": 432.7659141449258
+    }
+  },
+  "started_utc": "2026-10-04T03:19:46.897111+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 765.1301754731685
+}

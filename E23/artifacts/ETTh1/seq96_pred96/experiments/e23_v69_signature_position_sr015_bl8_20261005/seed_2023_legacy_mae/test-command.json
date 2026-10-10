@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "scripts/evaluate_e23_t1_replicate.py",
+    "--model",
+    "E23-v31-B",
+    "--model-label",
+    "E23-v69-seed2023-legacy-MAE",
+    "--training-seed",
+    "2023",
+    "--e23-config",
+    "/home/xyw/paper/.e23-v69-signature-position/E23/configs/e23_v69_signature_position_seed2023.yaml",
+    "--selection",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_legacy_mae/stage2/runs/e23-stage2.json",
+    "--test-mask-bank",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/test_masks/manifest.json",
+    "--output",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_legacy_mae/evaluation",
+    "--device",
+    "cuda:1"
+  ],
+  "environment": {
+    "MALR_MISSING_SCENARIO": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json"
+  }
+}

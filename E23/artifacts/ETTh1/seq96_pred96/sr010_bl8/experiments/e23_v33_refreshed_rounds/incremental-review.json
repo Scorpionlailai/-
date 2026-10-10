@@ -1,0 +1,32 @@
+{
+  "reviewer": "local implementation review",
+  "independent_agent": false,
+  "changed_files": [
+    "src/malr/models/e23/iterative.py",
+    "src/malr/models/e23/historical_candidates.py",
+    "src/malr/models/e23/model.py",
+    "src/malr/models/e23/variable.py",
+    "integrations/e23/round_supervision.py",
+    "integrations/e23/config.py",
+    "integrations/e23/train.py",
+    "configs/e23_multi_expert_p4_round_supervision_v33.yaml",
+    "configs/e23_multi_expert_p4_refreshed_rounds_v33.yaml",
+    "scripts/run_e23_v33_trial.py",
+    "scripts/preflight_e23_v33.py",
+    "scripts/report_e23_v33_trial.py",
+    "scripts/diagnose_e23_v33.py",
+    "tests/integration/test_e23_v33.py",
+    "tests/integration/test_e23_v33_runner.py",
+    "tests/unit/test_e23_v33_refresh.py"
+  ],
+  "whitespace_issues": [],
+  "review_focus": [
+    "original masks and observed clamp",
+    "no noncausal H member",
+    "singleton specialist source isolation",
+    "all-round repair gradients",
+    "head RNG isolation and unchanged Stage2 source",
+    "measured resources and reused Stage1 ownership"
+  ],
+  "test_basis": "982 full-suite passed; final focused10 passed"
+}

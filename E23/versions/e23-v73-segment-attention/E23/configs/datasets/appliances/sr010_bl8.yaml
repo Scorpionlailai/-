@@ -1,0 +1,10 @@
+extends: ../_e22_common.yaml
+data:
+  datasets:
+    Appliances: {path: data/processed/appliances_energy.csv, n_vars: 26, expected_length: 19735, train_start: 0, train_end: 13814, validation_end: 15788, test_end: 19735, allow_length_override: false}
+model:
+  profiles:
+    Appliances: {d_model: 128, n_heads: 16, d_ff: 256, encoder_layers: 3, dropout: 0.2, fc_dropout: 0.2, head_dropout: 0.0, attn_dropout: 0.0}
+training:
+  profiles:
+    Appliances: {learning_rate: 1.0e-4, batch_size: 16, max_epochs: 100, early_stopping_patience: 100, lr_schedule: type3, drop_last: true}

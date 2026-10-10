@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "-m",
+    "integrations.e23.run",
+    "train-repair",
+    "--protocol-config",
+    "/home/xyw/paper/E23/configs/stage1_seq96_dynamic_temporal_repair.yaml",
+    "--migration-catalog",
+    "/home/xyw/paper/E22/migration/paper_catalog.jsonl",
+    "--mask-artifacts",
+    "/home/xyw/paper/E22/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/two_stage_v5_dynamic_temporal_context",
+    "--e23-config",
+    "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23/configs/e23_v82_stage1_loss_seed2023.yaml",
+    "--training-seed",
+    "2023",
+    "--device",
+    "cuda:1",
+    "--auxiliary-forecast",
+    "none",
+    "--repair-batch-size",
+    "128",
+    "--output",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v82/sr010_bl16/E23-v82/stage1"
+  ],
+  "scene": "sr010_bl16"
+}

@@ -1,0 +1,46 @@
+{
+  "amp": false,
+  "batch_size": 128,
+  "checkpoint_sha256": "163a773a595b693a9c41415ae64298f2aa5d1874169b4d069efc1a99373bea8c",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 1,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:1",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b"
+  },
+  "epochs_completed": 100,
+  "finished_utc": "2026-10-04T17:53:53.353493+00:00",
+  "full_workflow_seconds": 255.83934069518,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "E23",
+  "peak_allocated_bytes": 1355422720,
+  "peak_reserved_bytes": 1574961152,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 1.159118245355785,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v47_frozen_front_sr015_bl8_seed502_20261005/stage2/runs/e23-stage2.json",
+  "selection_manifest_sha256": "9c3e0704b487d810080c2470b6c39a28fcaeaf760ec8848aab506ece290201ce",
+  "stages": {
+    "forecast": {
+      "peak_allocated_bytes": 1355422720,
+      "peak_reserved_bytes": 1574961152,
+      "status": "completed",
+      "wall_seconds": 254.6802224498242
+    }
+  },
+  "started_utc": "2026-10-04T17:49:38.624350+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 254.6802224498242
+}

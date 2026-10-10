@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "scripts/evaluate_e23_t1_replicate.py",
+    "--model",
+    "E23-v31-B",
+    "--model-label",
+    "E23-v69-seed2023-frozen-MSE",
+    "--training-seed",
+    "2023",
+    "--e23-config",
+    "/home/xyw/paper/.e23-v69-other-missing/E23/configs/e23_v69_signature_position_seed2023.yaml",
+    "--selection",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mse/stage2/runs/e23-stage2.json",
+    "--test-mask-bank",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+    "--output",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mse/evaluation",
+    "--device",
+    "cuda:1"
+  ],
+  "environment": {
+    "PYTHONPATH": "src:.",
+    "MALR_MISSING_SCENARIO": null,
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  }
+}

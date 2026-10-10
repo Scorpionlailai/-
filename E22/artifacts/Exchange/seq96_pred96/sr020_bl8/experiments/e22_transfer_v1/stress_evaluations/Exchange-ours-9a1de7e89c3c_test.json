@@ -1,0 +1,76 @@
+{
+  "dataset": "Exchange",
+  "final_missing_rate": 0.8371822690638562,
+  "imputation_mae": 0.10012770928756654,
+  "imputation_mse": 0.03438827435288018,
+  "inference_ablations": {
+    "historical_only": {
+      "mae": 0.27452702323595685,
+      "mse": 0.15149533556717815
+    },
+    "without_historical": {
+      "mae": 0.24448487388365198,
+      "mse": 0.1217254815679608
+    },
+    "without_temporal": {
+      "mae": 0.2698747488585385,
+      "mse": 0.1468213184764891
+    },
+    "without_variable": {
+      "mae": 0.24742504277012564,
+      "mse": 0.12372584381338322
+    }
+  },
+  "kind": "zero_shot_missing_stress",
+  "mae": 0.24484992930383392,
+  "metric_space": "train_standardized",
+  "mse": 0.12207920747724446,
+  "online_diagnostics": {
+    "historical_actual_gain": 0.0,
+    "historical_candidate_rate": 0.4890085131421166,
+    "historical_predicted_gain": -0.2351419011616997,
+    "historical_selected_rate": 0.13586766272167314,
+    "historical_zero_rate": 0.7221568560255576,
+    "route_historical_actual_gain": 0.0,
+    "route_historical_rate": 0.1310338663667578,
+    "route_historical_temporal_actual_gain": 0.0,
+    "route_historical_temporal_rate": 0.0,
+    "route_historical_temporal_variable_actual_gain": 0.0,
+    "route_historical_temporal_variable_rate": 0.0,
+    "route_historical_variable_actual_gain": 0.0,
+    "route_historical_variable_rate": 0.0,
+    "route_none_actual_gain": 0.0,
+    "route_none_rate": 0.42762339587228054,
+    "route_repair_regret": 0.0,
+    "route_repair_regret_positive_rate": 0.0,
+    "route_selection_error_rate": 0.0,
+    "route_temporal_actual_gain": 0.0,
+    "route_temporal_rate": 0.0,
+    "route_temporal_variable_actual_gain": 0.0,
+    "route_temporal_variable_rate": 0.0,
+    "route_variable_actual_gain": 0.0,
+    "route_variable_rate": 0.44134273776096167,
+    "temporal_actual_gain": 0.0,
+    "temporal_candidate_rate": 0.588228801951123,
+    "temporal_global_use_rate": 0.470573697620613,
+    "temporal_local_use_rate": 0.11765510433051006,
+    "temporal_predicted_gain": 0.0,
+    "temporal_selected_rate": 0.588228801951123,
+    "temporal_zero_rate": 0.0,
+    "variable_actual_gain": 0.0,
+    "variable_candidate_rate": 0.5892259967377461,
+    "variable_predicted_gain": -0.8726063295998928,
+    "variable_selected_rate": 0.01255451720024983,
+    "variable_zero_rate": 0.9786932055446331
+  },
+  "source_checkpoint_sha256": "af5142f21ab0204870dd8c2b790fed915778156d55891fc85176a79a0f17e4e0",
+  "source_config_hash": "fcc27aeeccd0ba5c9c7e3721322f5aa594e16785cea4661d32ce06484d020978",
+  "source_run_id": "Exchange-ours-9a1de7e89c3c",
+  "source_validation_mask_sha256": "5289e26bbcc54f0a03fc566416f1323bece3dd186be39fd7b3bda8844c3d2887",
+  "split": "test",
+  "target_config_hash": "25cdb63b035c992de7282c96bb193d05f09b42aca085484dd4684c71a3d5a91e",
+  "target_mask_sha256": "4ba70e7b3d012165f6f68b2f035865ff2fb198a9269a951146b65f09a963584d",
+  "target_missing_block_len": 8,
+  "target_missing_start_rate": 0.2,
+  "timestamp_utc": "2026-09-28T13:56:03.418121+00:00"
+}

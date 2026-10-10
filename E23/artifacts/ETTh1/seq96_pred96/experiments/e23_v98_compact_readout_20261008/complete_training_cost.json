@@ -1,0 +1,56 @@
+{
+  "v97": {
+    "full_workflow_seconds": 1168.9575836444274,
+    "stage1_full_workflow_seconds": 878.3141610752791,
+    "peak_allocated_gib": 4.6231160163879395,
+    "peak_reserved_gib": 6.404296875,
+    "stages": [
+      {
+        "resource_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v79_v69_global_level_four_pureMSE_20261007/sr015_bl8/E23-v79/stage1/resources/81494d70e1b64d9fb407beb362c2944c.json",
+        "full_workflow_seconds": 571.6902629649267,
+        "peak_allocated_gib": 4.6231160163879395,
+        "peak_reserved_gib": 6.404296875
+      },
+      {
+        "resource_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_mean_and_dense_20261008/E23-v97/sr015_bl8/stage1/resources/2d1060c349fa446d83bd0e28bae166a6.json",
+        "full_workflow_seconds": 306.62389811035246,
+        "peak_allocated_gib": 1.361462116241455,
+        "peak_reserved_gib": 1.744140625
+      },
+      {
+        "resource_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v97_frozen_prediction_20261008/sr015_bl8/stage2/resources/77c1bbb3cec34b78bcc9015775cb90c3.json",
+        "full_workflow_seconds": 290.64342256914824,
+        "peak_allocated_gib": 1.6136326789855957,
+        "peak_reserved_gib": 1.9765625
+      }
+    ]
+  },
+  "v98": {
+    "full_workflow_seconds": 1068.9371696887538,
+    "stage1_full_workflow_seconds": 834.2475300198421,
+    "peak_allocated_gib": 4.371334552764893,
+    "peak_reserved_gib": 6.162109375,
+    "stages": [
+      {
+        "resource_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v98_compact_readout_20261008/coarse/sr015_bl8/E23-v98-coarse/stage1/resources/f30eab0ba88b40e8acf242dbbac1c225.json",
+        "full_workflow_seconds": 547.3903601588681,
+        "peak_allocated_gib": 4.371334552764893,
+        "peak_reserved_gib": 6.162109375
+      },
+      {
+        "resource_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v98_compact_readout_20261008/E23-v98/sr015_bl8/stage1/resources/fddacb3b4a264af8b1e7f860cbc6023c.json",
+        "full_workflow_seconds": 286.85716986097395,
+        "peak_allocated_gib": 1.1670880317687988,
+        "peak_reserved_gib": 1.533203125
+      },
+      {
+        "resource_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v98_compact_readout_20261008/E23-v98/sr015_bl8/stage2/resources/49c952e5f6df47cba7a945b68a423b8d.json",
+        "full_workflow_seconds": 234.6896396689117,
+        "peak_allocated_gib": 1.1637377738952637,
+        "peak_reserved_gib": 1.544921875
+      }
+    ]
+  },
+  "scope": "Includes cold coarse Stage1 + refined Stage1 + Stage2; each 100 epochs. Excludes final tests and audit/benchmark jobs.",
+  "display_correction": "evaluation_mae/training_resources reports refinement+Stage2 only; the cold parent must additionally be counted. Use this complete cost record for full-pipeline reporting."
+}

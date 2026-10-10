@@ -1,0 +1,76 @@
+{
+  "dataset": "Weather",
+  "final_missing_rate": 0.7285288323305469,
+  "imputation_mae": 0.2414765816775357,
+  "imputation_mse": 0.45901860838377806,
+  "inference_ablations": {
+    "historical_only": {
+      "mae": 0.417396478907436,
+      "mse": 0.624513980615777
+    },
+    "without_historical": {
+      "mae": 0.31442027413245766,
+      "mse": 0.4659212419773368
+    },
+    "without_temporal": {
+      "mae": 0.35318642097513264,
+      "mse": 0.5125233988673091
+    },
+    "without_variable": {
+      "mae": 0.38619618294215496,
+      "mse": 0.5735293866680133
+    }
+  },
+  "kind": "zero_shot_missing_stress",
+  "mae": 0.3126111620620367,
+  "metric_space": "train_standardized",
+  "mse": 0.4528174776311319,
+  "online_diagnostics": {
+    "historical_actual_gain": 0.0,
+    "historical_candidate_rate": 0.3180363928398829,
+    "historical_predicted_gain": -0.7090308931851135,
+    "historical_selected_rate": 0.0346901088800235,
+    "historical_zero_rate": 0.8909240902581598,
+    "route_historical_actual_gain": 0.0,
+    "route_historical_rate": 0.028932015528117073,
+    "route_historical_temporal_actual_gain": 0.0,
+    "route_historical_temporal_rate": 0.0,
+    "route_historical_temporal_variable_actual_gain": 0.0,
+    "route_historical_temporal_variable_rate": 0.0,
+    "route_historical_variable_actual_gain": 0.0,
+    "route_historical_variable_rate": 0.0,
+    "route_none_actual_gain": 0.0,
+    "route_none_rate": 0.4912338472520982,
+    "route_repair_regret": 0.0,
+    "route_repair_regret_positive_rate": 0.0,
+    "route_selection_error_rate": 0.0,
+    "route_temporal_actual_gain": 0.0,
+    "route_temporal_rate": 0.0,
+    "route_temporal_variable_actual_gain": 0.0,
+    "route_temporal_variable_rate": 0.0,
+    "route_variable_actual_gain": 0.0,
+    "route_variable_rate": 0.47983413721978474,
+    "temporal_actual_gain": 0.0,
+    "temporal_candidate_rate": 0.7483813152610356,
+    "temporal_global_use_rate": 0.6064828654022146,
+    "temporal_local_use_rate": 0.14189844985882094,
+    "temporal_predicted_gain": 0.0,
+    "temporal_selected_rate": 0.7483813152610356,
+    "temporal_zero_rate": 0.0,
+    "variable_actual_gain": 0.0,
+    "variable_candidate_rate": 0.7502814030319207,
+    "variable_predicted_gain": -0.7192238858136231,
+    "variable_selected_rate": 0.006703344315043469,
+    "variable_zero_rate": 0.9910655598180164
+  },
+  "source_checkpoint_sha256": "19fc71573c69017cfe6f07c96f48ac9678f41949c28df281368100ce0695aa28",
+  "source_config_hash": "a1452ca1defb171a6fe04bae64355b9a7c4be0cd8cbe99c307d1fc3af706b557",
+  "source_run_id": "Weather-ours-6df17cd6b981",
+  "source_validation_mask_sha256": "49aa35e9bc9e8cc71424a92792d92ff5b2bb2066bb46c28efbcd5f8264a6ad0c",
+  "split": "validation",
+  "target_config_hash": "5cc3114e10363b3b91da5396013fe92afcf45e339c5bd25e34412017abba93d5",
+  "target_mask_sha256": "a4d4ac751a1c69a4f8815991fa6fd734a1d0633d5ff4bbef8956825d0a8f1e86",
+  "target_missing_block_len": 8,
+  "target_missing_start_rate": 0.15,
+  "timestamp_utc": "2026-09-23T12:55:47.487663+00:00"
+}

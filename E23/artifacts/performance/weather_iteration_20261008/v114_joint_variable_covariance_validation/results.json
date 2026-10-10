@@ -1,0 +1,64 @@
+{
+  "scope": "validation-only Gaussian conditional diagnostic; v97 fallback; no forecast/test; covariance fitted only to union of Stage1 training histories",
+  "results": [
+    {
+      "mean": "train_mean",
+      "posterior_variance_ratio_threshold": 0.001,
+      "full_mse": 0.1893453617367006,
+      "full_mae": 0.0909819479925205,
+      "tail_mse": 0.18525683114379055,
+      "tail_mae": 0.09450185064731069,
+      "used_hidden_fraction": 0.18695752941565993
+    },
+    {
+      "mean": "train_mean",
+      "posterior_variance_ratio_threshold": 0.01,
+      "full_mse": 0.18885822265501526,
+      "full_mae": 0.08958905732036922,
+      "tail_mse": 0.1846435768385665,
+      "tail_mae": 0.09287267106343211,
+      "used_hidden_fraction": 0.28220344381163154
+    },
+    {
+      "mean": "train_mean",
+      "posterior_variance_ratio_threshold": 0.05,
+      "full_mse": 0.19221948369245032,
+      "full_mae": 0.1033733709571593,
+      "tail_mse": 0.18809958137287405,
+      "tail_mae": 0.10673910392604002,
+      "used_hidden_fraction": 0.45360024080765354
+    },
+    {
+      "mean": "visible_window_mean",
+      "posterior_variance_ratio_threshold": 0.001,
+      "full_mse": 0.195645168201549,
+      "full_mae": 0.10996983466698722,
+      "tail_mse": 0.19164893909999833,
+      "tail_mae": 0.11370797720110537,
+      "used_hidden_fraction": 0.18695752941565993
+    },
+    {
+      "mean": "visible_window_mean",
+      "posterior_variance_ratio_threshold": 0.01,
+      "full_mse": 0.206079563719354,
+      "full_mae": 0.12621215612674308,
+      "tail_mse": 0.20227297736910219,
+      "tail_mae": 0.1301912044237104,
+      "used_hidden_fraction": 0.28220344381163154
+    },
+    {
+      "mean": "visible_window_mean",
+      "posterior_variance_ratio_threshold": 0.05,
+      "full_mse": 0.24385332496470635,
+      "full_mae": 0.16090912532632118,
+      "tail_mse": 0.24393664772171889,
+      "tail_mae": 0.16569659010037283,
+      "used_hidden_fraction": 0.45360024080765354
+    }
+  ],
+  "noise": 0.0001,
+  "train_history_rows": 36791,
+  "hidden_nan_payload_has_no_effect_verified": true,
+  "seconds": 4.3482794016599655,
+  "caveat": "covariance alone is not a learned full repair model or causal effect estimate"
+}

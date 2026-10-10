@@ -1,0 +1,20 @@
+[
+  "/home/xyw/miniforge3/envs/malr/bin/python",
+  "scripts/evaluate_e23_t1_replicate.py",
+  "--model",
+  "E23-v31-B",
+  "--model-label",
+  "E23-v43-N-select-mae",
+  "--training-seed",
+  "502",
+  "--e23-config",
+  "/home/xyw/paper/.e23-v43-nonoverlap/E23/configs/e23_v43_nonoverlap_slow_seed502.yaml",
+  "--selection",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v43_nonoverlap_seed502_20261004/nonoverlap_slow/stage2/runs/e23-stage2.json",
+  "--test-mask-bank",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+  "--output",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v43_nonoverlap_seed502_20261004/nonoverlap_slow/evaluation_mae",
+  "--device",
+  "cuda:1"
+]

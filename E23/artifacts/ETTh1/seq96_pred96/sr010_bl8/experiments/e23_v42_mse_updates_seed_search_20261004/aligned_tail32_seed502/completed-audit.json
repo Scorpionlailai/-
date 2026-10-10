@@ -1,0 +1,54 @@
+{
+  "status": "complete",
+  "trial": "E23-v42-aligned-tail32",
+  "test_mean_by_selection": {
+    "mae": {
+      "mae": 0.43260005223237474,
+      "mse": 0.41829429900024484
+    },
+    "mse": {
+      "mae": 0.4443169375395829,
+      "mse": 0.4269412631620896
+    }
+  },
+  "validation": {
+    "choices": {
+      "mae": {
+        "mse": 0.75267664158966,
+        "mae": 0.5864464744688973,
+        "checkpoint_sha256": "77d3ca4a759428563dad98b0dcbdb270da36a4cb265c1a691d6fc648a07dbbcd",
+        "checkpoint_epoch": 87
+      },
+      "mse": {
+        "mse": 0.746325294987685,
+        "mae": 0.5899178392492455,
+        "checkpoint_sha256": "0adc1e5f1f3bd79a45d84952afe78740aa60ce5cecabb53dc62ba82e16a5b8f0",
+        "checkpoint_epoch": 11
+      }
+    },
+    "test_metrics_seen": false
+  },
+  "training_resources": {
+    "batch_size": "128",
+    "full_workflow_seconds": 522.390728016384,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 519.1710088560358,
+    "peak_allocated_gib": 2.19956111907959,
+    "peak_reserved_gib": 5.9296875,
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage1/resources/914d9bdaba114fbc987526948670b398.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/aligned_tail32_seed502/stage2/resources/d641874a9a124a3ca606c7fe2b293219.json"
+    ],
+    "resource_status": "measured_all_stages",
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage1/runs/e23-stage1.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/aligned_tail32_seed502/stage2/runs/e23-stage2.json"
+    ],
+    "stage1_legacy_loop_seconds": 288.1490684505552,
+    "stage2_legacy_loop_seconds": 231.02194040548056,
+    "training_stages_seconds": 520.1112980386242
+  },
+  "downstream_protocol": "t1_mse_v1",
+  "new_T1_stage1_training": false
+}

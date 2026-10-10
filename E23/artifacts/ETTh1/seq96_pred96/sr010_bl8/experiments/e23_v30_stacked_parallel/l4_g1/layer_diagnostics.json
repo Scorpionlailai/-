@@ -1,0 +1,323 @@
+{
+  "split": "original_fixed_validation",
+  "metric_space": "train_standardized",
+  "diagnostic_only": true,
+  "model": "E23_v30_l4_g1",
+  "e23_config_sha256": "7abe8847e71bf446d52924e7bea11bee6ada1102b88d26a6537796f68f7b9a31",
+  "recovery_layers": 4,
+  "expert_groups": 1,
+  "routes_are_descriptive_not_calibrated_confidence": true,
+  "stage1": {
+    "windows": 2688,
+    "hidden_coordinates": 1023670,
+    "damaged_patch_targets": 203715,
+    "layers": [
+      {
+        "layer_index": 1,
+        "global_mse": 0.6886406807506936,
+        "global_mae": 0.5594600226696592,
+        "mean_update_rms": 0.5513241226828842,
+        "mean_route_weights": [
+          [
+            0.14425950188008804,
+            0.20983092519012989,
+            0.48570382520133,
+            0.16020574771048224
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.5491372042482984,
+            0.7227117300204184
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0
+      },
+      {
+        "layer_index": 2,
+        "global_mse": 0.615099912226047,
+        "global_mae": 0.5325298380688479,
+        "mean_update_rms": 0.1976127525452992,
+        "mean_route_weights": [
+          [
+            0.06282267892930302,
+            0.21258003247298876,
+            0.6100123240524371,
+            0.1145849645884014
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.6779991063159475,
+            0.9039548719150425
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0
+      },
+      {
+        "layer_index": 3,
+        "global_mse": 0.4136673464486236,
+        "global_mae": 0.441353164731432,
+        "mean_update_rms": 0.24509355182562034,
+        "mean_route_weights": [
+          [
+            0.17229605979931475,
+            0.1526396542675538,
+            0.4518580313292444,
+            0.22320625455784948
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.5895977889733308,
+            0.679024410169342
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0
+      },
+      {
+        "layer_index": 4,
+        "global_mse": 0.23088280288386395,
+        "global_mae": 0.3152471440457496,
+        "mean_update_rms": 0.2866965722303908,
+        "mean_route_weights": [
+          [
+            0.01808767732078556,
+            0.32207713976010593,
+            0.4829822586752402,
+            0.17685292425703664
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.9229367150682983,
+            0.8257681605068542
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0
+      }
+    ],
+    "group_ablation_scope": "all fixed validation batches; no selection",
+    "group_ablation_windows": 2688,
+    "group_ablation_reference": {
+      "mse": 0.23088280288386395,
+      "mae": 0.3152471440457496,
+      "coordinates": 1023670
+    },
+    "group_ablations": [
+      {
+        "disabled_layer": 0,
+        "disabled_group": 0,
+        "mse": 0.36618951250082427,
+        "mae": 0.4034216864168873,
+        "coordinates": 1023670
+      },
+      {
+        "disabled_layer": 1,
+        "disabled_group": 0,
+        "mse": 0.3309710476268903,
+        "mae": 0.37328300074731113,
+        "coordinates": 1023670
+      },
+      {
+        "disabled_layer": 2,
+        "disabled_group": 0,
+        "mse": 0.3372389858227627,
+        "mae": 0.39074720792436773,
+        "coordinates": 1023670
+      },
+      {
+        "disabled_layer": 3,
+        "disabled_group": 0,
+        "mse": 0.4136673464486236,
+        "mae": 0.441353164731432,
+        "coordinates": 1023670
+      }
+    ],
+    "checkpoint_sha256": "845ba11e9b9771a8280aaef7be08d75d1578160bf88ea47ecf6ddbc8bf19ad53",
+    "selected_epoch": 84,
+    "h_key_sha256_before": "916efaab36e368344a9f4ec1899f9b091b7bfa77cc2968c7f1c707c528c65d1c",
+    "h_key_sha256_after": "916efaab36e368344a9f4ec1899f9b091b7bfa77cc2968c7f1c707c528c65d1c",
+    "h_bank_sha256_before": "369371bff675af841b1c3edca83ce98a073539afd679f840ad6bc47039e3fff2",
+    "h_bank_sha256_after": "369371bff675af841b1c3edca83ce98a073539afd679f840ad6bc47039e3fff2"
+  },
+  "repair_parameters": 513012,
+  "stage2": {
+    "windows": 2688,
+    "hidden_coordinates": 1023670,
+    "damaged_patch_targets": 203715,
+    "layers": [
+      {
+        "layer_index": 1,
+        "global_mse": 0.7228346474495565,
+        "global_mae": 0.5761931507010316,
+        "mean_update_rms": 1.729686143363584,
+        "mean_route_weights": [
+          [
+            0.12158779947067251,
+            0.2814552325213658,
+            0.44014910340815777,
+            0.15680786461136006
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.595890637641422,
+            0.748909635154794
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0,
+        "forecast_mse": 1.007813675333313,
+        "forecast_mae": 0.6935535828813133
+      },
+      {
+        "layer_index": 2,
+        "global_mse": 0.6543243811558535,
+        "global_mae": 0.5511969685360029,
+        "mean_update_rms": 0.28413580534539673,
+        "mean_route_weights": [
+          [
+            0.04237056045238885,
+            0.2759557654898044,
+            0.5907390511362164,
+            0.09093462284706896
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.7361508904868025,
+            0.9254776075042088
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0,
+        "forecast_mse": 0.9741388329572959,
+        "forecast_mae": 0.6805589853230517
+      },
+      {
+        "layer_index": 3,
+        "global_mse": 0.444580389600042,
+        "global_mae": 0.45678183910281145,
+        "mean_update_rms": 0.32511949545972624,
+        "mean_route_weights": [
+          [
+            0.14816176545989393,
+            0.23809378868331835,
+            0.4239583012121025,
+            0.18978614451949005
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.5877601988355946,
+            0.648356083457449
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0,
+        "forecast_mse": 0.8815822449941484,
+        "forecast_mae": 0.6427127293178013
+      },
+      {
+        "layer_index": 4,
+        "global_mse": 0.6512320349972404,
+        "global_mae": 0.5437232369959313,
+        "mean_update_rms": 1.5066581018806144,
+        "mean_route_weights": [
+          [
+            0.009575454011206689,
+            0.4163927626459141,
+            0.4020761734828412,
+            0.17195561003766055
+          ]
+        ],
+        "mean_group_weights": [
+          0.0,
+          1.0
+        ],
+        "mean_preview_gates": [
+          [
+            0.940269855315446,
+            0.8202764439665607
+          ]
+        ],
+        "mean_weighted_projected_group_pairwise_rms": 0.0,
+        "forecast_mse": 0.7960519877150486,
+        "forecast_mae": 0.6010893607626155
+      }
+    ],
+    "group_ablation_scope": "all fixed validation batches; no selection",
+    "group_ablation_windows": 2688,
+    "group_ablation_reference": {
+      "mse": 0.7960519877150486,
+      "mae": 0.6010893607626155,
+      "coordinates": 1806336
+    },
+    "group_ablations": [
+      {
+        "disabled_layer": 0,
+        "disabled_group": 0,
+        "mse": 0.8154095295064844,
+        "mae": 0.6216563378331883,
+        "coordinates": 1806336
+      },
+      {
+        "disabled_layer": 1,
+        "disabled_group": 0,
+        "mse": 0.8545780917143876,
+        "mae": 0.6292679585567137,
+        "coordinates": 1806336
+      },
+      {
+        "disabled_layer": 2,
+        "disabled_group": 0,
+        "mse": 0.9323908758271579,
+        "mae": 0.6684029572675018,
+        "coordinates": 1806336
+      },
+      {
+        "disabled_layer": 3,
+        "disabled_group": 0,
+        "mse": 0.8815822449941484,
+        "mae": 0.6427127293178013,
+        "coordinates": 1806336
+      }
+    ],
+    "checkpoint_sha256": "59e0c2729683903e442b3de71cf28d2a003dd46fce21419b05af04a14ecc7553",
+    "selected_epoch": 7,
+    "h_key_sha256_before": "916efaab36e368344a9f4ec1899f9b091b7bfa77cc2968c7f1c707c528c65d1c",
+    "h_key_sha256_after": "916efaab36e368344a9f4ec1899f9b091b7bfa77cc2968c7f1c707c528c65d1c",
+    "h_bank_sha256_before": "369371bff675af841b1c3edca83ce98a073539afd679f840ad6bc47039e3fff2",
+    "h_bank_sha256_after": "369371bff675af841b1c3edca83ce98a073539afd679f840ad6bc47039e3fff2"
+  },
+  "predictor_parameters": 35427,
+  "total_parameters": 548439,
+  "stage1_trainable_parameters": 513012,
+  "stage2_trainable_parameters": 542167
+}

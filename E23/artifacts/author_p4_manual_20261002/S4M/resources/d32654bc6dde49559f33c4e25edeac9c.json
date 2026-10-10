@@ -1,0 +1,46 @@
+{
+  "amp": false,
+  "batch_size": 16,
+  "checkpoint_sha256": "3830639f3d83601b4090421c064cc23f845394c7425890b6317b8616f47cdc1c",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": "0",
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:0",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "382ce2ea-81a9-82ea-073f-729eaefd0268"
+  },
+  "epochs_completed": 9,
+  "finished_utc": "2026-10-03T04:26:07.890175+00:00",
+  "full_workflow_seconds": 155.68782432284206,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "S4M",
+  "peak_allocated_bytes": 1509487616,
+  "peak_reserved_bytes": 2103443456,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 1.2007276276126504,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/author_p4_manual_20261002/S4M/forecast-selection.json",
+  "selection_manifest_sha256": "d71de0718831caead32485d237567305d2bee5c2cda9c583b33b96bcefee6c58",
+  "stages": {
+    "forecast": {
+      "peak_allocated_bytes": 1509487616,
+      "peak_reserved_bytes": 2103443456,
+      "status": "completed",
+      "wall_seconds": 154.4870966952294
+    }
+  },
+  "started_utc": "2026-10-03T04:23:33.363257+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 154.4870966952294
+}

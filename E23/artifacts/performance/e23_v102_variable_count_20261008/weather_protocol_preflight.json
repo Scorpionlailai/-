@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "rows": [
+    {
+      "dataset": "Weather",
+      "variables": 21,
+      "variable_topk": 4,
+      "prediction_shape": [
+        4,
+        21,
+        96
+      ],
+      "repair_parameters": 605251,
+      "dense_features": 105,
+      "dense_parameters": 86037,
+      "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+      "config": "/home/xyw/paper/E23/artifacts/performance/e23_v102_variable_count_20261008/weather_v102_V4.yaml",
+      "observations_unchanged": true,
+      "finite_forecast": true
+    },
+    {
+      "dataset": "Weather",
+      "variables": 21,
+      "variable_topk": 8,
+      "prediction_shape": [
+        4,
+        21,
+        96
+      ],
+      "repair_parameters": 605251,
+      "dense_features": 105,
+      "dense_parameters": 86037,
+      "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+      "config": "/home/xyw/paper/E23/artifacts/performance/e23_v102_variable_count_20261008/weather_v102_V8.yaml",
+      "observations_unchanged": true,
+      "finite_forecast": true
+    }
+  ],
+  "head_unchanged_between_V4_and_V8": true,
+  "scope": "four real fixed validation inputs; no optimizer, no tests, no trained accuracy claims",
+  "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json"
+}

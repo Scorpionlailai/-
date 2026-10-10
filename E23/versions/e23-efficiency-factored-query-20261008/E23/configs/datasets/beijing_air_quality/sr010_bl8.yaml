@@ -1,0 +1,10 @@
+extends: ../_e22_common.yaml
+data:
+  datasets:
+    BeijingAirQuality: {path: data/processed/beijing_pm25_12stations.csv, n_vars: 12, expected_length: 35064, train_start: 0, train_end: 24544, validation_end: 28052, test_end: 35064, allow_length_override: false}
+model:
+  profiles:
+    BeijingAirQuality: {d_model: 128, n_heads: 16, d_ff: 256, encoder_layers: 3, dropout: 0.2, fc_dropout: 0.2, head_dropout: 0.0, attn_dropout: 0.0}
+training:
+  profiles:
+    BeijingAirQuality: {learning_rate: 1.0e-4, batch_size: 32, max_epochs: 100, early_stopping_patience: 100, lr_schedule: type3, drop_last: true}

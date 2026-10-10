@@ -1,0 +1,60 @@
+{
+  "adapter_sha256": "caedd05e5bd401e5195fe071a26afc1e7069d6bb1b121ed85b4958b3a730c8b8",
+  "batch_size": 128,
+  "best_epoch": 99,
+  "best_validation": {
+    "hidden_elements": 1023670,
+    "mae": 0.26081034758821203,
+    "mse": 0.16250008681233943
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/t1_etth1_p4/t1-stage1-selected.pt",
+  "checkpoint_sha256": "86e899b2fbe27a0afcd0d17bcc31dc669cc711bff4e564387622a7d3629b16c5",
+  "dataset": "ETTh1",
+  "epochs_completed": 100,
+  "learning_rate": 0.001,
+  "loss": "hidden_coordinate_MSE",
+  "model": "T1",
+  "official_source_sha256": "3f87aac66745029a88907b7ce65766d3ce5f785a6d4190f6343f9649d4ad3de8",
+  "scenario": "P4",
+  "seed": 2021,
+  "selection": "earliest minimum fixed-validation hidden-coordinate MAE",
+  "settings": {
+    "SACA": false,
+    "cosine_attention": false,
+    "downsample_ratio": 2,
+    "drop_attn": 0.1,
+    "drop_ffn": 0.0,
+    "drop_head": 0.0,
+    "drop_path": 0.1,
+    "drop_proj": 0.0,
+    "enc_in": 7,
+    "ffn_ratio": 1.0,
+    "head_params_shared": true,
+    "imputation_use_mask_embedding": false,
+    "kernel_size_large": [
+      71,
+      31
+    ],
+    "kernel_size_small": 5,
+    "n_blocks": [
+      2,
+      2
+    ],
+    "n_heads": 128,
+    "patch_size": 2,
+    "patch_stride": 1,
+    "positional_encoding": true,
+    "pred_len": 96,
+    "qkv_bias": true,
+    "seq_len": 96,
+    "task_name": "imputation",
+    "use_head_reconstruction": true
+  },
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "imputation",
+  "test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "trainable_parameters": 536521,
+  "training_seconds": 308.0901195080951,
+  "upstream_revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

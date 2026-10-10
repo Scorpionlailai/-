@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "completed_utc": "2026-10-03T10:15:54.147020+00:00",
+  "tasks_completed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "formal_trials_completed": 3,
+  "formal_stages_completed": 6,
+  "three_draw_tests_completed": 3,
+  "total_new_test_groups": 9,
+  "results": [
+    {
+      "model": "E23_v30_l1_g8",
+      "stage1_epochs_completed": 100,
+      "stage2_epochs_completed": 100,
+      "stage1_selected_epoch": 91,
+      "stage2_selected_epoch": 24,
+      "validation_mse": 0.765941565809877,
+      "validation_mae": 0.5865420916723827,
+      "test_mean": {
+        "mae": 0.4356703167149089,
+        "mse": 0.42714004235473074
+      },
+      "test_std": {
+        "mae": 0.000514133429132353,
+        "mse": 0.005430581611803539
+      },
+      "test_result_sha256": "b3d35061e19390aec69aea22369cf110cb983583f2b1ed8495f863a3b46291c5",
+      "training_resources": {
+        "full_workflow_seconds": 1338.8173494264483,
+        "training_stages_seconds": 1336.6218791939318,
+        "peak_allocated_gib": 6.466129779815674,
+        "peak_reserved_gib": 8.5703125,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "batch_size": "128",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 1335.6188857629895,
+        "stage1_legacy_loop_seconds": 718.2059525344521,
+        "stage2_legacy_loop_seconds": 617.4129332285374,
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l1_g8/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l1_g8/stage2/runs/e23-stage2.json"
+        ],
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l1_g8/stage1/resources/6113594383aa4ef68dde0e675bda8af3.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l1_g8/stage2/resources/eb8bc8ae84634950b573ee0358c77337.json"
+        ],
+        "resource_status": "measured_all_stages"
+      },
+      "test_runtime": {
+        "seconds": 3.8140039443969727,
+        "scope": "authorization record and device check through test output write",
+        "training_time_included": false,
+        "evaluation_device": "cuda:0",
+        "training_concurrent_on": "cuda:1"
+      }
+    },
+    {
+      "model": "E23_v30_l4_g1",
+      "stage1_epochs_completed": 100,
+      "stage2_epochs_completed": 100,
+      "stage1_selected_epoch": 84,
+      "stage2_selected_epoch": 7,
+      "validation_mse": 0.7960519877150486,
+      "validation_mae": 0.6010893607626155,
+      "test_mean": {
+        "mae": 0.4668232037637239,
+        "mse": 0.4692442134214186
+      },
+      "test_std": {
+        "mae": 0.0007080677859981432,
+        "mse": 0.004288898123970472
+      },
+      "test_result_sha256": "69e16f7219111b95ada70167f4077b7794e60e70d0597cdcf63c4ea40b4edf2e",
+      "training_resources": {
+        "full_workflow_seconds": 931.2839815290645,
+        "training_stages_seconds": 929.1692980974913,
+        "peak_allocated_gib": 3.7139668464660645,
+        "peak_reserved_gib": 7.560546875,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "batch_size": "128",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 928.2157858842984,
+        "stage1_legacy_loop_seconds": 481.15259252488613,
+        "stage2_legacy_loop_seconds": 447.06319335941225,
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g1/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g1/stage2/runs/e23-stage2.json"
+        ],
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g1/stage1/resources/f149b34594184967bb81517313040763.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g1/stage2/resources/d4d52d3507b24c6995972df4f545f371.json"
+        ],
+        "resource_status": "measured_all_stages"
+      },
+      "test_runtime": {
+        "seconds": 3.5389838311821222,
+        "scope": "complete evaluator subprocess",
+        "training_time_included": false,
+        "evaluation_device": "cuda:0",
+        "training_concurrent_on": "cuda:1"
+      }
+    },
+    {
+      "model": "E23_v30_l4_g8",
+      "stage1_epochs_completed": 100,
+      "stage2_epochs_completed": 100,
+      "stage1_selected_epoch": 88,
+      "stage2_selected_epoch": 5,
+      "validation_mse": 0.8485302416916066,
+      "validation_mae": 0.6225527300585966,
+      "test_mean": {
+        "mae": 0.5213515201663754,
+        "mse": 0.5327816802447977
+      },
+      "test_std": {
+        "mae": 0.003997685044466796,
+        "mse": 0.00472278014185434
+      },
+      "test_result_sha256": "7726ae550be04d0168d06a793d1a76054a588309aeae6d274c6618687d570bbb",
+      "training_resources": {
+        "full_workflow_seconds": 4692.229676225223,
+        "training_stages_seconds": 4690.145221027546,
+        "peak_allocated_gib": 21.94371795654297,
+        "peak_reserved_gib": 24.51953125,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "batch_size": "128",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 4688.84272725787,
+        "stage1_legacy_loop_seconds": 2431.25208315067,
+        "stage2_legacy_loop_seconds": 2257.5906441072,
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g8/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g8/stage2/runs/e23-stage2.json"
+        ],
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g8/stage1/resources/469f69a9e71e485ea478ab8aea634716.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/l4_g8/stage2/resources/69d180bc9491447cb0a3545c3012c9e9.json"
+        ],
+        "resource_status": "measured_all_stages"
+      },
+      "test_runtime": {
+        "seconds": 9.095793252810836,
+        "scope": "complete evaluator subprocess",
+        "training_time_included": false,
+        "evaluation_device": "cuda:0",
+        "training_concurrent_on": null
+      }
+    }
+  ],
+  "decision": {
+    "selected_model": "E23_v29_r1",
+    "new_candidate_promoted": false,
+    "selection_source": "original fixed validation only; test metrics never consumed",
+    "test_metrics_used_for_training_or_selection": false
+  },
+  "audit_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/final-audit.json",
+  "audit_sha256": "0e75ab0914cfe8b6ba8ef188937598f595716a4fde82b035a88b56fe041b73f6",
+  "all_final_checks_passed": true,
+  "code_freeze_sha256": "45ad3a8dd6260e8ea6126a9d3d565a255619865c0706e56ac832daad46540578",
+  "frozen_source_files_verified": 359,
+  "user_csv_sha256": "530947f4a58aaba96f23d7a254cc0b279bc94fc78b70c228869fcef484721fa2",
+  "test_mask_bank_sha256": "95fe49c78c6b884477e70c05f18a6c6c06f009e75d3afa01946275207b70e3a9",
+  "reports": {
+    "docs/experiments/ETTh1_P4_E23_v30_T1_comparison_2026-10-03.csv": "0e3b0f9bf65839dbfb08ec2898753b911b92859f9aa2bad553ea06d765c8592f",
+    "docs/experiments/ETTh1_P4_E23_v30_test_groups_2026-10-03.csv": "57f4e983fb40c3b61fd9c1678c9b179ca3f14aadef64386678446d4dee2504bf",
+    "docs/experiments/ETTh1_P4_E23_v30_layer_diagnostics_2026-10-03.csv": "be01ffe3c6fc0ad9b27f94085c0112e6322cae80ce815e0a8e0e3358c8bea34d",
+    "docs/experiments/E23_v30_stacked_parallel_P4_trial.md": "019fd1cfa73d866222e2f96ac9bacf6e1cbcc0aa6f451375c68f0cfcb4af63b4"
+  },
+  "implementation_revision": "1eee2829be14b44d3d6118c9afc8fc459744b02a",
+  "final_report_commit": "dd014b4d1dd0c5f41dde79ed46265f4078fd1113",
+  "implementation_tests": {
+    "full_suite_passed": 947,
+    "full_suite_existing_skipped": 1,
+    "full_suite_existing_warnings": 8,
+    "last_focused_passed": 47,
+    "retested_after_training": false,
+    "reason": "all source/config/test/script hashes unchanged"
+  },
+  "review": {
+    "important_findings_fixed": 3,
+    "deferred_findings": [],
+    "evidence": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/code-review.json"
+  },
+  "execution_ledger_archive": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v30_stacked_parallel/implementation-evidence/execution-ledger",
+  "execution_ledger_archive_hash_verified": true,
+  "owned_scratch_removed": true,
+  "whitespace_check": {
+    "passed": true,
+    "csv_crlf_accepted": true,
+    "reason": "Python csv writer emits standard CRLF; git diff --check passes with cr-at-eol; no cell or metric changes"
+  },
+  "protocol_notes": [
+    "one training seed; population standard deviation over three test missing-position draws",
+    "fresh training GPU1; per-model testing GPU0; earlier tests overlap later fixed-config training",
+    "existing baseline training settings preserved; baseline results not retrained",
+    "all new training Stage1/Stage2 100/100 batch128 FP32",
+    "full training time excludes replay, diagnostics and tests"
+  ]
+}

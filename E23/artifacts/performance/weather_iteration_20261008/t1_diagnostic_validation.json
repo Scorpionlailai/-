@@ -1,0 +1,34 @@
+{
+  "summary": {
+    "repaired": {
+      "forecast_mse": 0.45173496028200494,
+      "forecast_mae": 0.3090103606112991,
+      "repair96_mse": 0.16605044374492411,
+      "repair96_mae": 0.09850824900486271,
+      "repair32_mse": 0.16667133843289833,
+      "repair32_mae": 0.10034813683544277
+    },
+    "oracle_all_hidden": {
+      "forecast_mse": 0.44825842048291503,
+      "forecast_mae": 0.30144929766864603,
+      "repair96_mse": 0.0,
+      "repair96_mae": 0.0,
+      "repair32_mse": 0.0,
+      "repair32_mae": 0.0
+    }
+  },
+  "seconds": 109.01952947769314,
+  "device": "cpu",
+  "checkpoint": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/weather_author_comparison_20261008/T1/stage2/selected.pt",
+  "checkpoint_sha256": "2a77ca3d172f1f66867eef12c87066adf37bf3e6587ff38aeb194e327194c9c5",
+  "validation_mask_sha256": "49aa35e9bc9e8cc71424a92792d92ff5b2bb2066bb46c28efbcd5f8264a6ad0c",
+  "weights_unchanged": true,
+  "cpu_minus_official_cuda_validation": {
+    "forecast_mse": 4.6746081139303897e-07,
+    "forecast_mae": -1.7960422238338936e-07,
+    "repair96_mse": -1.0835031673761542e-05,
+    "repair96_mae": 6.551396553172717e-07
+  },
+  "scope": "fixed validation only; original trained head; oracle historical truth is diagnosis, not deployable accuracy or a causal/irreducible ceiling",
+  "test_used": false
+}

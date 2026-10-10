@@ -1,0 +1,335 @@
+{
+  "models": {
+    "BRITS": {
+      "kind": "imputer",
+      "model": {
+        "hidden_size": 108,
+        "impute_weight": 0.3,
+        "label_weight": 0.0
+      },
+      "notes": "No ETTh1-specific configuration: README example supplies hidden size, weight and batch omitted from default parser. Necessary adaptations are 48->96, 35->7, device-safe tensors, unused legacy import removal, and classification label_weight=0 because P4 has no labels. Preserve original summed ORT and consistency weights; do not use the SAITS-repository BRITS normalization. Validation checkpoint selection and shared forecast head are P4 extensions.",
+      "revision": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+      "root": "artifacts/upstream/BRITS",
+      "sources": [
+        "https://github.com/caow13/BRITS",
+        "README.md",
+        "main.py",
+        "models/rits.py",
+        "models/brits.py"
+      ],
+      "training": {
+        "batch_size": 64,
+        "epochs": 1000,
+        "learning_rate": 0.001,
+        "loss": "0.3*(forward_ORT_sum + backward_ORT_sum) + 0.1*consistency_mae",
+        "lradj": "constant",
+        "patience": null,
+        "precision": "float32",
+        "selection_metric": "mae",
+        "weight_decay": 0.0
+      },
+      "version": "original caow13/BRITS; README RITS_I example hyperparameters applied to BRITS"
+    },
+    "BiTGraph": {
+      "kind": "forecast",
+      "model": {
+        "conv_channels": 8,
+        "dropout": 0.3,
+        "effective_topk": 7,
+        "end_channels": 32,
+        "layers": 3,
+        "node_dim": 3,
+        "paper_topk": 10,
+        "residual_channels": 8,
+        "skip_channels": 16
+      },
+      "notes": "Paper blocks 3 override ETTh1 code layers 2. Both graph construction and nconv selection use min(10,7)=7; release nconv hardcodes 5. This necessary change is isolated in the adapter. Validation selection uses P4 standardized MAE rather than the release inverse-scaled MAE. CUDA device 0 required.",
+      "revision": "4f1d05bcc20bb3f5084bd1facc995478f84a40ed",
+      "root": "artifacts/upstream/BiTGraph",
+      "sources": [
+        "https://proceedings.iclr.cc/paper_files/paper/2024/file/7f3b25e39e0f0330435d1ffc1d6fa193-Paper-Conference.pdf",
+        "main.py",
+        "README.md"
+      ],
+      "training": {
+        "batch_size": 32,
+        "epochs": 200,
+        "learning_rate": 0.001,
+        "loss": "forecast_mae",
+        "lradj": "constant",
+        "patience": null,
+        "precision": "float32",
+        "selection_metric": "mae",
+        "weight_decay": 0.0
+      },
+      "version": "paper section 5.1 + released ETTh1 channels + README epoch limit"
+    },
+    "CRIB": {
+      "kind": "forecast",
+      "model": {
+        "dropout": 0.1,
+        "enc_num": 2,
+        "heads_num": 4,
+        "model_dim": 32,
+        "patch_len": 8
+      },
+      "notes": "Paper specifies 2 attention layers; release default is 3, overridden by paper. The expanded rebuttal script excludes ETTh1, so global batch 256 is used. Fixed-validation MAE checkpoint selection is a P4 extension.",
+      "revision": "a457672c7b0152f74c929858dba2a9c886405519",
+      "root": "artifacts/upstream/CRIB",
+      "sources": [
+        "https://arxiv.org/html/2509.23494#A4",
+        "utils/args.py"
+      ],
+      "training": {
+        "batch_size": 256,
+        "epochs": 10,
+        "learning_rate": 0.001,
+        "loss": "forecast_mae + consistency_mse + 1e-6*kl",
+        "lradj": "constant",
+        "patience": null,
+        "precision": "float16",
+        "selection_metric": "mae",
+        "weight_decay": 0.0
+      },
+      "version": "paper Appendix D.1 + released global defaults"
+    },
+    "ChannelTokenFormer": {
+      "kind": "forecast",
+      "model": {
+        "d_ff": 1024,
+        "d_model": 256,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "keep_prob": 1.0,
+        "n_heads": 8,
+        "num_global_tokens": 2,
+        "patch_len": 24
+      },
+      "notes": "Use ChannelTokenFormer_missing for P4. Group samples by full-patch visibility to preserve per-sample mask correctness; include this overhead in resources. Epoch-end LR becomes base*0.5**(epoch-1).",
+      "revision": "b1c100effb9c27cd25de07e91de7f9005d18d5e7",
+      "root": "artifacts/upstream/ChannelTokenFormer",
+      "sources": [
+        "https://arxiv.org/html/2506.08660",
+        "scripts_regular/CTF_ETTh1.sh",
+        "run.py",
+        "utils/tools.py"
+      ],
+      "training": {
+        "batch_size": 32,
+        "epochs": 10,
+        "learning_rate": 0.0001,
+        "loss": "forecast_mse",
+        "lradj": "ctf_type1",
+        "patience": 3,
+        "precision": "float32",
+        "selection_metric": "mse",
+        "weight_decay": 0.0
+      },
+      "version": "regular ETTh1 script + run.py defaults; missing-aware model"
+    },
+    "CoIFNet": {
+      "kind": "forecast",
+      "model": {
+        "dropout": 0.1,
+        "hidden": 256,
+        "loss_lambda": 0.2,
+        "temp_dim_tid": 8,
+        "temp_dim_tiw": 8
+      },
+      "notes": "Paper Table III lambda 0.2 takes precedence over release 0.1 and sensitivity paragraph 0.3. Preserve author day-of-month modulo 7 time feature.",
+      "revision": "114c964945cbd1a1b1791ca403d08f827e3c9fe4",
+      "root": "artifacts/upstream/CoIFNet",
+      "sources": [
+        "https://arxiv.org/html/2506.13064v2#S5.SS1",
+        "conf/conf.yaml",
+        "conf/model/CoIFNet.yaml"
+      ],
+      "training": {
+        "batch_size": 512,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "loss": "0.2*forecast_mae + 0.8*observed_reconstruction_mae",
+        "lradj": "constant",
+        "patience": 10,
+        "precision": "float32",
+        "selection_metric": "mae",
+        "weight_decay": 0.0
+      },
+      "version": "paper Table III + official conf/conf.yaml"
+    },
+    "S4M": {
+      "kind": "s4m",
+      "model": {
+        "M": 50,
+        "d_ff": 256,
+        "d_model": 256,
+        "dropout": 0.1,
+        "e_layers": 8,
+        "en_conv_hidden_size": 256,
+        "encoder_type": 3,
+        "mem_type": 3,
+        "memnet": 13,
+        "memory_size": 200,
+        "momentum": 0.99,
+        "num_dG": 1,
+        "num_pattn": 30,
+        "per_mem_size": 5,
+        "short_len": 32,
+        "thres1": 0.95,
+        "thres2": 0.6,
+        "topK": 20
+      },
+      "notes": "Paper publishes ETTh1 LR .005, batch 16, hidden 256 and depth search {2,4,8}, not a unique selected depth. Use example depth 8 and max 10 epochs, not another search. Requires the existing dedicated S4M environment and protected-core bridge.",
+      "revision": "7c384fb7cc9ebd21b1e6eeed9ee9cc3a2039b8b8",
+      "root": "../S4M",
+      "sources": [
+        "https://arxiv.org/html/2503.00900",
+        "s4m/scripts.sh",
+        "s4m/run.py"
+      ],
+      "training": {
+        "batch_size": 16,
+        "epochs": 10,
+        "learning_rate": 0.005,
+        "loss": "forecast_mse",
+        "lradj": "s4m_type1",
+        "patience": 3,
+        "precision": "float32",
+        "selection_metric": "mse",
+        "weight_decay": 0.0
+      },
+      "upstream_commit": "a718823addd3606e763dfc261174e0135b2535f4",
+      "version": "paper ETTh1 LR/batch/width + published scripts.sh architecture"
+    },
+    "SAITS": {
+      "kind": "imputer",
+      "model": {
+        "d_inner": 128,
+        "d_k": 64,
+        "d_model": 256,
+        "d_v": 64,
+        "dropout": 0.1,
+        "n_group_inner_layers": 1,
+        "n_groups": 2,
+        "n_head": 4
+      },
+      "notes": "No unique ETTh1 paper configuration found: use publicly specified SAITS-base, not the Electricity best model. Epoch-level fixed P4 validation replaces the original step validation frequency; no extra test-derived tuning. Global train standardization feeds the imputer.",
+      "revision": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+      "root": "../SAITS",
+      "sources": [
+        "https://arxiv.org/html/2202.08516",
+        "configs/Electricity_SAITS_base.ini"
+      ],
+      "training": {
+        "batch_size": 128,
+        "epochs": 10000,
+        "learning_rate": 0.001,
+        "loss": "observed_reconstruction_mae + hidden_imputation_mae",
+        "lradj": "constant",
+        "patience": 30,
+        "precision": "float32",
+        "selection_metric": "mae",
+        "weight_decay": 0.0
+      },
+      "version": "SAITS-base (not an ETTh1-specific optimum); pinned core 660b87f19c1277065f314f24134f646229e89ca9"
+    },
+    "T1": {
+      "kind": "imputer",
+      "model": {
+        "downsample_ratio": 2,
+        "ffn_ratio": 1.0,
+        "imputation_use_mask_embedding": false,
+        "kernel_size_large": [
+          71,
+          31
+        ],
+        "kernel_size_small": 5,
+        "n_blocks": [
+          2,
+          2
+        ],
+        "n_heads": 128,
+        "patch_size": 2,
+        "patch_stride": 1
+      },
+      "notes": "Official type3 means constant LR. Mask embedding false is the released script/default, despite the paper's mask-aware description. Stage 2 uses the common P4 forecast interface.",
+      "revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+      "root": "artifacts/upstream/T1",
+      "sources": [
+        "https://arxiv.org/html/2602.21043",
+        "scripts/imputation/T1_ETTh1.sh",
+        "exp/exp_imputation.py",
+        "utils/tools.py"
+      ],
+      "training": {
+        "batch_size": 16,
+        "epochs": 300,
+        "learning_rate": 0.001,
+        "loss": "hidden_reconstruction_mse",
+        "lradj": "constant",
+        "patience": 30,
+        "precision": "bfloat16",
+        "selection_metric": "mse",
+        "weight_decay": 0.0
+      },
+      "version": "official T1_ETTh1.sh and run.py defaults"
+    }
+  },
+  "protocol": {
+    "allow_block_overlap": true,
+    "block_len": 8,
+    "boundaries": [
+      0,
+      8640,
+      11520,
+      14400
+    ],
+    "control_notes": "Author paper five seeds; P4 forecasting extension; fixed original validation only.",
+    "dataset": "ETTh1",
+    "evaluation_windows": 2688,
+    "extra_test_seeds": [
+      2026100401,
+      2026100402,
+      2026100403,
+      2026100404,
+      2026100405,
+      2026100406,
+      2026100407,
+      2026100408,
+      2026100409,
+      2026100410,
+      2026100411,
+      2026100412,
+      2026100413,
+      2026100414,
+      2026100415,
+      2026100416,
+      2026100417,
+      2026100418,
+      2026100419,
+      2026100420
+    ],
+    "mask_seed": 2021,
+    "metric_space": "train_standardized",
+    "model_seed": 502,
+    "n_vars": 7,
+    "pred_len": 96,
+    "seq_len": 96,
+    "start_rate": 0.1,
+    "test": "twenty new frozen test masks",
+    "validation": "original fixed mask only"
+  },
+  "schema_version": 1,
+  "shared_forecast_stage": {
+    "batch_size": 128,
+    "epochs": 100,
+    "learning_rate": 0.0001,
+    "loss": "forecast_mse",
+    "patience": null,
+    "precision": "float32",
+    "selection_metric": "mae",
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "weight_decay": 0.0
+  }
+}

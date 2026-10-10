@@ -1,0 +1,99 @@
+{
+  "status": "complete",
+  "conditions": [
+    {
+      "label": "E23-v53-window-signature",
+      "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v53_window_signature_sr015_bl8_seed502_20261005/v53_window_signature",
+      "trial": {
+        "label": "E23-v53-window-signature",
+        "config": "/home/xyw/paper/.e23-v53-window-signature/E23/configs/e23_v53_signature_v0_seed502.yaml",
+        "config_key": "p1o1s0c1v0f1",
+        "parent": {
+          "label": "E23-v51-candidate-readout",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout",
+          "validation": {
+            "mse": 0.7830920143732949,
+            "mae": 0.5975814719859704
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none"
+        },
+        "only_change": "front_variable_context",
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "signature_attention_v1"
+      },
+      "validation_lock": {
+        "parent": {
+          "label": "E23-v51-candidate-readout",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout",
+          "validation": {
+            "mse": 0.7830920143732949,
+            "mae": 0.5975814719859704
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none"
+        },
+        "validation": {
+          "mse": 0.8390933910465024,
+          "mae": 0.616592201786517
+        },
+        "selected_epoch": 47,
+        "checkpoint_sha256": "048e3b0262d7d097f67f6b6c8efdfdd119111c86192020cbee47f47061276588",
+        "accepted_on_validation": false,
+        "matched_v41_validation_gate": false,
+        "test_metrics_seen": false
+      },
+      "test_mean": {
+        "mae": 0.47691807827981963,
+        "mse": 0.49756091397906105
+      },
+      "test_std": {
+        "mae": 0.0062383022733947064,
+        "mse": 0.010939034199150615
+      },
+      "next_parent": {
+        "label": "E23-v51-candidate-readout",
+        "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout",
+        "validation": {
+          "mse": 0.7830920143732949,
+          "mae": 0.5975814719859704
+        },
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none"
+      }
+    }
+  ],
+  "retained_parent": {
+    "label": "E23-v51-candidate-readout",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout",
+    "validation": {
+      "mse": 0.7830920143732949,
+      "mae": 0.5975814719859704
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none"
+  },
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "source_unchanged": true,
+  "protected_files_unchanged": true
+}

@@ -1,0 +1,49 @@
+{
+  "summary": {
+    "repaired": {
+      "forecast_mse": 0.4934908796760601,
+      "forecast_mae": 0.3507649983687284,
+      "repair96_mse": 0.17864497580099978,
+      "repair96_mae": 0.09653066628554023,
+      "repair32_mse": 0.1790489799063084,
+      "repair32_mae": 0.10181803447742294
+    },
+    "oracle_all_hidden": {
+      "forecast_mse": 0.49991658072143597,
+      "forecast_mae": 0.3482750528732366,
+      "repair96_mse": 0.0,
+      "repair96_mae": 0.0,
+      "repair32_mse": 0.0,
+      "repair32_mae": 0.0
+    },
+    "oracle_last32_hidden": {
+      "forecast_mse": 0.49320146546143095,
+      "forecast_mae": 0.3481232390330266,
+      "repair96_mse": 0.11890940107700415,
+      "repair96_mae": 0.06256142049615292,
+      "repair32_mse": 0.0,
+      "repair32_mae": 0.0
+    },
+    "oracle_first64_hidden": {
+      "forecast_mse": 0.5000077606874966,
+      "forecast_mae": 0.35076039767392214,
+      "repair96_mse": 0.059735574723995634,
+      "repair96_mae": 0.033969245789387315,
+      "repair32_mse": 0.1790489799063084,
+      "repair32_mae": 0.10181803447742294
+    },
+    "visible_boundary_guide": {
+      "forecast_mse": 0.5254840490019592,
+      "forecast_mae": 0.36340113454652057,
+      "repair96_mse": 0.16922052684152009,
+      "repair96_mae": 0.11217570809755997,
+      "repair32_mse": 0.1694072154525953,
+      "repair32_mae": 0.11559032184218229
+    }
+  },
+  "validation_windows": 5175,
+  "seconds": 4.162687826901674,
+  "weights_unchanged": true,
+  "scope": "fixed validation only; original frozen trained predictor; oracle historical truth used only to diagnose sensitivity, not deployable accuracy; no causal identification",
+  "test_used": false
+}

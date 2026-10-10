@@ -1,0 +1,73 @@
+{
+  "adapter_sha256": "2fd79ffcc08d22c99f0011fd0b9d76652e44bd30e1bc5f3c3bed1793489c6342",
+  "author_profiles_sha256": "b6cb42742fda9fc20b65604383b8a6c8523e5e5971000c3e2969dac3de859c8a",
+  "best_epoch": 10,
+  "best_validation": {
+    "mae": 0.6260129816137474,
+    "mse": 0.8543987576923673,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_20261002/BiTGraph/forecast-selected.pt",
+  "checkpoint_sha256": "b66a80446ca98de97a3137b7f9b23e7f6e58520fe39d1bec6fcf14c374d723d2",
+  "epochs_completed": 200,
+  "model": "BiTGraph",
+  "original_test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "profile": {
+    "kind": "forecast",
+    "model": {
+      "conv_channels": 8,
+      "dropout": 0.3,
+      "effective_topk": 7,
+      "end_channels": 32,
+      "layers": 3,
+      "node_dim": 3,
+      "paper_topk": 10,
+      "residual_channels": 8,
+      "skip_channels": 16
+    },
+    "notes": "Paper blocks 3 override ETTh1 code layers 2. Both graph construction and nconv selection use min(10,7)=7; release nconv hardcodes 5. This necessary change is isolated in the adapter. Validation selection uses P4 standardized MAE rather than the release inverse-scaled MAE. CUDA device 0 required.",
+    "revision": "4f1d05bcc20bb3f5084bd1facc995478f84a40ed",
+    "root": "artifacts/upstream/BiTGraph",
+    "sources": [
+      "https://proceedings.iclr.cc/paper_files/paper/2024/file/7f3b25e39e0f0330435d1ffc1d6fa193-Paper-Conference.pdf",
+      "main.py",
+      "README.md"
+    ],
+    "training": {
+      "batch_size": 32,
+      "epochs": 200,
+      "learning_rate": 0.001,
+      "loss": "forecast_mae",
+      "lradj": "constant",
+      "patience": null,
+      "precision": "float32",
+      "selection_metric": "mae",
+      "weight_decay": 0.0
+    },
+    "version": "paper section 5.1 + released ETTh1 channels + README epoch limit"
+  },
+  "profile_version": "paper section 5.1 + released ETTh1 channels + README epoch limit",
+  "protocol_config_sha256": "6805b1c785e884411e85895104b927c815a75dea96d09a53728c916bcf61c9e5",
+  "seed": 2021,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "forecast",
+  "status": "validation_finalized",
+  "test_metrics_seen": false,
+  "trainable_parameters": 94712,
+  "training": {
+    "batch_size": 32,
+    "epochs": 200,
+    "learning_rate": 0.001,
+    "loss": "forecast_mae",
+    "lradj": "constant",
+    "patience": null,
+    "precision": "float32",
+    "selection_metric": "mae",
+    "weight_decay": 0.0
+  },
+  "training_seconds": 805.7528889644891,
+  "upstream_revision": "4f1d05bcc20bb3f5084bd1facc995478f84a40ed",
+  "upstream_source_sha256": "6f5fd1d61df767fcfbea7ba10201c979b8e2b1016664fe54ab6e94506110d7ff",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

@@ -1,0 +1,114 @@
+{
+  "status": "complete",
+  "conditions": [
+    {
+      "label": "E23-v57-diverse-history-keys",
+      "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v57_diverse_history_keys_sr015_bl8_seed502_20261005/v57_diverse_history_keys",
+      "trial": {
+        "label": "E23-v57-diverse-history-keys",
+        "config": "/home/xyw/paper/.e23-v57-diverse-history-keys/E23/configs/e23_v57_diverse_history_keys_seed502.yaml",
+        "config_key": "p1o1s0c1v0f0",
+        "parent": {
+          "label": "E23-v54-local-coordinates",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+          "validation": {
+            "mse": 0.7578881516748545,
+            "mae": 0.5871681204728799
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "robust_local_v1",
+          "point_variable_readout": "none",
+          "historical_key_policy": "legacy_v1"
+        },
+        "only_change": "historical_key_policy",
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1",
+        "point_variable_readout": "none",
+        "historical_key_policy": "global_diverse_v1"
+      },
+      "validation_lock": {
+        "parent": {
+          "label": "E23-v54-local-coordinates",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+          "validation": {
+            "mse": 0.7578881516748545,
+            "mae": 0.5871681204728799
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "robust_local_v1",
+          "point_variable_readout": "none",
+          "historical_key_policy": "legacy_v1"
+        },
+        "validation": {
+          "mse": 0.7968230279935461,
+          "mae": 0.5973923298236734
+        },
+        "selected_epoch": 98,
+        "checkpoint_sha256": "42b56f7ae7ea4a94ebaaf6736392d613b7321c44177aab7d1d9ef891cfd24e9d",
+        "accepted_on_validation": false,
+        "matched_v41_validation_gate": false,
+        "test_metrics_seen": false
+      },
+      "test_mean": {
+        "mae": 0.44056568513381505,
+        "mse": 0.4361849895680573
+      },
+      "test_std": {
+        "mae": 0.004844904763405669,
+        "mse": 0.014303390839752258
+      },
+      "next_parent": {
+        "label": "E23-v54-local-coordinates",
+        "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+        "validation": {
+          "mse": 0.7578881516748545,
+          "mae": 0.5871681204728799
+        },
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1",
+        "point_variable_readout": "none",
+        "historical_key_policy": "legacy_v1"
+      }
+    }
+  ],
+  "retained_parent": {
+    "label": "E23-v54-local-coordinates",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+    "validation": {
+      "mse": 0.7578881516748545,
+      "mae": 0.5871681204728799
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1"
+  },
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "source_unchanged": true,
+  "protected_files_unchanged": true
+}

@@ -1,0 +1,15 @@
+# E23 Bounded Historical-Variable Adapter Validation Trial
+
+Date: 2026-09-30. The flat v3 parent and the zero-gated historical adapter v6 remain immutable. The full 100-epoch v6 trial selected epoch 0, exactly v3 (`0.7647695325` validation MSE, `0.5904396656` MAE); no v6 test was run. Trained v6 epochs showed severe validation outliers. In a read-only inspection of the selected v6 model's historical-variable inputs, the first 21 training batches had maximum absolute normalized source value `62.33` and 0% above 100; all 21 validation batches had maximum `2559.74` and 0.718% above 100. Minimum query-window source standard deviations were `0.06117` train and `0.003162` validation. The validated source normalization can therefore amplify historical archive values far beyond the range seen during training.
+
+## Single change
+
+Introduce an optional adapter variant `aligned_bounded_v2`. After source and target historical patches have been normalized by their respective current-query variable statistics, transform **each scalar** with `8*tanh(value/8)` before the historical-variable message projector and consistency score. This smooth, monotone function is near identity for small values and limits each input magnitude to at most 8 in floating-point arithmetic. The H candidate selection, strict pre-window cutoff, train-only archive, source/target alignment check, directed relation prior, flat H/V/T route, zero-initialized per-variable gates, adapter-only optimizer, selected v3 parent, source/masks and forecast loss remain exactly as v6. The transform is fixed, with no tuned threshold or learned clamp. The v6 `aligned_v1` path remains available and bitwise unchanged.
+
+The new variant identifier is paired through training records, checkpoint, loader, selected evaluation and profile. Missing identifier still means legacy `none`; v6 records still mean `aligned_v1`. A v7 record cannot be loaded as v6 and vice versa. The new ignored artifact root is `e23_flat_history_adapter_width64_v7`.
+
+## Decision rule
+
+Train for all 100 epochs with fresh adapter-only Adam LR `0.001`, seed 2021, batch 128, forecast-MSE-only objective, and choose the earliest fixed-validation MAE minimum over epochs 0..100. Epoch 0 must exactly reproduce the selected v3 validation result. Run one selected ETTh1 test and fixed test-input speed profile **only if** selected validation MAE `<0.5904396656148828` and MSE `<=0.7647695325129157`. If the gate fails, report validation and do not access the test split. Any later test improvement is exploratory because ETTh1 has already informed architecture choices.
+
+Unit tests must demonstrate bounded and near-identity behavior, unchanged v6 outputs, exact zero-gate v3 equivalence, no current-window source dependence, causal/archive guards and gradient flow. Integration tests must demonstrate paired variant reconstruction, parent/H-state immutability, and legacy checkpoint loading. Validation-only diagnostics should report selected gates and historical-variable availability. The existing v3 remains the active best version unless the gate and later selected test establish a genuine improvement.

@@ -1,0 +1,32 @@
+{
+  "dataset": "Weather",
+  "variables": 21,
+  "batch_size": 128,
+  "mode": "fixed validation forward/backward; eval dropout; no optimizer updates; no tests",
+  "original": {
+    "step_ms_median": 174.13683980703354,
+    "step_ms_samples": [
+      174.16440322995186,
+      174.12722948938608,
+      174.0156849846244,
+      174.146450124681
+    ],
+    "peak_allocated_gib": 10.296221733093262
+  },
+  "sparse": {
+    "step_ms_median": 156.1879706569016,
+    "step_ms_samples": [
+      156.15114197134972,
+      156.22479934245348,
+      156.33111353963614,
+      156.04009851813316
+    ],
+    "peak_allocated_gib": 10.188311100006104
+  },
+  "output_max_abs_difference": 0.0025730133056640625,
+  "loss_difference": 0.0,
+  "gradient_max_abs_difference": 9.313225746154785e-08,
+  "gradient_relative_l2_difference": 3.6767220232830935e-06,
+  "optimization": "compile only unchanged eight-head PointCandidateReadout; original model/predictor/parameters unchanged",
+  "compilation_and_first_step_seconds": 12.344624077901244
+}

@@ -1,0 +1,130 @@
+{
+  "scenarios": [
+    {
+      "name": "sr010_bl8",
+      "start_rate": 0.1,
+      "block_len": 8,
+      "scenario_manifest": null,
+      "test_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+      "test_bank_sha256": "cac4fd4cfe18b7b1b200010e9d32b45bc9791b97209502f206e482a9e4eee9a9",
+      "actual_test_missing_fraction": 0.5727573109321853,
+      "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c",
+      "t1_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/T1_seed502/training/forecast-selection.json",
+      "t1_evaluation": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/T1_seed502/evaluation_mae/twenty-test-draws.json",
+      "t1_checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/T1_seed502/training/forecast-selected.pt",
+      "t1_checkpoint_sha256": "9fbb95c8d0dc48aa408326a133ff67bba4e0cde271ee2314094888cb73ce8832",
+      "v41_evaluation": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v41_repair_drift_seed502_20261004/tail_slow/evaluation/twenty-test-draws.json",
+      "t1_training_seed": 502,
+      "t1_repair_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_502/T1/training/repair-selection.json",
+      "t1_repair_selection_sha256": "0c37b33fac1005c372a8751d1910d0e2a7798fd3c5fcb84b187567558df3713e",
+      "e23_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage2/runs/e23-stage2.json",
+      "e23_evaluation": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/evaluation/twenty-test-draws.json",
+      "e23_stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage1/runs/e23-stage1.json",
+      "t1_mixed_evaluation": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_frozen_stage2_shared_E23_seed2023_20261007/sr010_bl8/evaluation_mae/twenty-test-draws.json",
+      "t1_pure_evaluation": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_t1_pure_mse_frozen_four_scenarios_20261007/T1/sr010_bl8/evaluation_mae/twenty-test-draws.json",
+      "v69_pure_evaluation": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_t1_pure_mse_frozen_four_scenarios_20261007/E23-v69/sr010_bl8/evaluation_mae/twenty-test-draws.json"
+    }
+  ],
+  "stage1_training_seed": 2023,
+  "stage2_training_seed": 2023,
+  "epochs": 100,
+  "batch_size": 128,
+  "learning_rate": 0.0001,
+  "weight_decay": 0.0,
+  "precision": "float32",
+  "forecast_loss": "mse",
+  "selection_metric": "mae",
+  "secondary_selection_metric": "mse",
+  "forecast_padding": "zero_invalid_v1",
+  "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+  "predictor_parameters": 35427,
+  "device": "cuda:0",
+  "cpu_threads": 4,
+  "repair_update_policy": "frozen_v1",
+  "test_groups": 20,
+  "physical_gpu_uuid": "GPU-382ce2ea-81a9-82ea-073f-729eaefd0268",
+  "actual_refinement_learning_rate": 0.001,
+  "refinement_epochs": 100,
+  "parent_settings": "/home/xyw/paper/E24/configs/e24_v79.yaml",
+  "refinement_loss_tail_weight": 0.0,
+  "refinement_loss_tail_mae_weight": 0.25,
+  "stage1_parent_mean_trainable_parameters": 16514,
+  "parent_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v125_fixed_four_scene_transfer_20261009/sr010_bl8/coarse/stage1/runs/e23-stage1.json",
+  "label": "E23-v125 shared coarse repair, 64/256 calibration outputs",
+  "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v125_fixed_four_scene_transfer_20261009/sr010_bl8/ensemble",
+  "work": "/home/xyw/.cache/codex-worktrees/e23-v125-shared-calibration-20261009",
+  "dataset": "ETTh1",
+  "n_vars": 7,
+  "seq_len": 96,
+  "pred_len": 96,
+  "stage1_aux_forecast": "none",
+  "stage1_coarse_reused": false,
+  "stage1_total_epochs": 300,
+  "stage2_epochs": 100,
+  "test_role": "sealed Weather20 development masks; test does not select",
+  "checkpoint_selection": "Stage1 fixed validation hidden-coordinate global MAE primary, MSE secondary; both saved; forecast deferred",
+  "source_lineage": "Same-scenario Weather-v79 parent trained from scratch; new independent100-epoch C64/C256 calibration; fixed1:1",
+  "parent_refinement_model": "E23-v97",
+  "changes_from_etth1": "variables7->21; Stage1 zero-init guide gate, pureglobalMAE+0.25tailMAE, dense256; original frozen pureMSE head protocol",
+  "training_masks": "original deterministic epoch-varying masks, not cached",
+  "monitor_interval_seconds": 300,
+  "report_interval_seconds": 600,
+  "authorization": "User requests fixed v125 ETTh1 four scenes after Weather completes",
+  "created_at": "2026-10-09T04:23:37.217613+00:00",
+  "models": [
+    {
+      "label": "E23-v125",
+      "config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v125_fixed_four_scene_transfer_20261009/sr010_bl8/ensemble/v125_weather_base.yaml",
+      "trainable_parameters": 0,
+      "calibration_parameters": 1274080
+    }
+  ],
+  "refinement_loss_full_mae_weight": 1.0,
+  "only_changes": "dataset21->7 variables and sealed ETTh1 scene; same structure, objective and fixed1:1",
+  "screen_weights_reused": false,
+  "stage1_extra_training_epochs": 0,
+  "stage1_primary_selection": "mae",
+  "stage1_secondary_selection": "mse",
+  "stage2_automatic": false,
+  "refinement_objective_weights": {
+    "full_mse": 0.0,
+    "full_mae": 1.0,
+    "tail_mse": 0.0,
+    "tail_mae": 0.25
+  },
+  "workflow_updated_at": "2026-10-08T17:43:57.711202+00:00",
+  "repair_baselines": [],
+  "physical_gpu_index": 0,
+  "calibration_ensemble_spec": {
+    "kind": "shared_prefix_calibration_v1",
+    "member_widths": [
+      64,
+      256
+    ],
+    "weights": [
+      0.5,
+      0.5
+    ],
+    "patch_len": 16,
+    "stride": 8,
+    "no_source_policy": "preserve_coarse"
+  },
+  "calibration_sources": [
+    {
+      "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v125_fixed_four_scene_transfer_20261009/sr010_bl8/calibration64/E23-v125-C64/sr010_bl8/stage1/runs/e23-stage1-mae.json",
+      "config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v125_fixed_four_scene_transfer_20261009/sr010_bl8/calibration64/calibration.yaml"
+    },
+    {
+      "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v125_fixed_four_scene_transfer_20261009/sr010_bl8/calibration256/E23-v125-C256/sr010_bl8/stage1/runs/e23-stage1-mae.json",
+      "config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v125_fixed_four_scene_transfer_20261009/sr010_bl8/calibration256/calibration.yaml"
+    }
+  ],
+  "calibration_alphas": [
+    0.5
+  ],
+  "calibration_selection": "fixed original ratio 0.5/0.5; validation selects source epochs only",
+  "zero_new_optimizer_updates": true,
+  "protocol_config": "/home/xyw/paper/E23/configs/stage1_seq96_dynamic_temporal_repair.yaml",
+  "mask_artifacts": "/home/xyw/paper/E22/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/two_stage_v5_dynamic_temporal_context",
+  "t1_repair_audit": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_mean_and_dense_20261008/T1/sr010_bl8/repair-audit.json"
+}

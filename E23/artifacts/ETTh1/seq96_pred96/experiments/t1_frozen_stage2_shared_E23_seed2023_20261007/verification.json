@@ -1,0 +1,72 @@
+{
+  "status": "verified",
+  "scenes": 4,
+  "epochs_each": 100,
+  "unit_tests": 3,
+  "frozen_state_verified": true,
+  "validation_replayed": true,
+  "shared_test_draws": 20,
+  "comparisons": [
+    {
+      "scene": "sr010_bl8",
+      "actual_missing": 0.5727573109321853,
+      "e23_mse": 0.3862432559060942,
+      "t1_mse": 0.38595947232646466,
+      "e23_mae": 0.39974427525959316,
+      "t1_mae": 0.3989093329090109,
+      "e23_mse_reduction_percent": -0.07352678194914031,
+      "e23_mae_reduction_percent": -0.2093062963690162,
+      "e23_mse_mask_wins": 10,
+      "e23_mae_mask_wins": 4
+    },
+    {
+      "scene": "sr015_bl8",
+      "actual_missing": 0.729251839081987,
+      "e23_mse": 0.4085089773007261,
+      "t1_mse": 0.407664995561111,
+      "e23_mae": 0.41315055082714747,
+      "t1_mae": 0.4130809760688384,
+      "e23_mse_reduction_percent": -0.2070282582033789,
+      "e23_mae_reduction_percent": -0.016842886102175214,
+      "e23_mse_mask_wins": 10,
+      "e23_mae_mask_wins": 11
+    },
+    {
+      "scene": "sr020_bl8",
+      "actual_missing": 0.8350602268902352,
+      "e23_mse": 0.47535029063149115,
+      "t1_mse": 0.49184048873226666,
+      "e23_mae": 0.45185223388023116,
+      "t1_mae": 0.4563996472866898,
+      "e23_mse_reduction_percent": 3.35275327642901,
+      "e23_mae_reduction_percent": 0.9963665470587357,
+      "e23_mse_mask_wins": 20,
+      "e23_mae_mask_wins": 20
+    },
+    {
+      "scene": "sr010_bl16",
+      "actual_missing": 0.8193881149464994,
+      "e23_mse": 0.5616161965999474,
+      "t1_mse": 0.578976407829596,
+      "e23_mae": 0.5012299596587547,
+      "t1_mae": 0.49870254793405,
+      "e23_mse_reduction_percent": 2.998431541403679,
+      "e23_mae_reduction_percent": -0.5067974357008787,
+      "e23_mse_mask_wins": 19,
+      "e23_mae_mask_wins": 6
+    }
+  ],
+  "long_gap_current_best": {
+    "model": "E23-v77",
+    "e23": {
+      "mae": 0.4930973239496451,
+      "mse": 0.5511669487639619
+    },
+    "t1_frozen": {
+      "mae": 0.49870254793405,
+      "mse": 0.578976407829596
+    }
+  },
+  "report": "/home/xyw/paper/E23/docs/experiments/ETTh1_T1_frozen_stage2_E23_v69_four_scenarios_20261007.md",
+  "csv": "/home/xyw/paper/E23/docs/experiments/ETTh1_T1_frozen_stage2_E23_v69_four_scenarios_20261007.csv"
+}

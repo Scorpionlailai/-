@@ -1,0 +1,202 @@
+{
+  "scope": "fixed validation only; no test or optimization; alpha not chosen from test",
+  "candidates": [
+    {
+      "model": "E23-v121",
+      "source_selection_paths": [
+        "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v115_weather_dense256_20261009/E23-v115/sr010_bl8/stage1/runs/e23-stage1.json",
+        "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v115_weather_dense256_20261009/E23-v115/sr010_bl8/stage1/runs/e23-stage1-mae.json"
+      ],
+      "source_selection_sha256": [
+        "e99fd9e94d483255006a38442660d687b8e52e766807fe73c87e28c33e76a2cd",
+        "cf1fc10323a2055e33190499ffd8d0f588fcab5204e6a362969d310e37a348e6"
+      ],
+      "source_epochs": [
+        80,
+        103
+      ],
+      "rows": [
+        {
+          "alpha_later": 0.0,
+          "global_mse": 0.1669895111220571,
+          "global_mae": 0.08335074959817006,
+          "global_last32_mse": 0.15126117957004176,
+          "global_last32_mae": 0.08263125137695136
+        },
+        {
+          "alpha_later": 0.05,
+          "global_mse": 0.16898141647470308,
+          "global_mae": 0.08297911137802577,
+          "global_last32_mse": 0.15323131251528427,
+          "global_last32_mae": 0.08216676744323564
+        },
+        {
+          "alpha_later": 0.1,
+          "global_mse": 0.17066040172849778,
+          "global_mae": 0.08282076339616629,
+          "global_last32_mse": 0.15507393044515919,
+          "global_last32_mae": 0.08197773028886428
+        },
+        {
+          "alpha_later": 0.25,
+          "global_mse": 0.1749117177682249,
+          "global_mae": 0.08236290886328815,
+          "global_last32_mse": 0.16064917733616624,
+          "global_last32_mae": 0.08162314130202417
+        },
+        {
+          "alpha_later": 0.5,
+          "global_mse": 0.17985263073065014,
+          "global_mae": 0.07936406866963687,
+          "global_last32_mse": 0.16924529271890706,
+          "global_last32_mae": 0.07894206576282069
+        },
+        {
+          "alpha_later": 0.75,
+          "global_mse": 0.18292759643863055,
+          "global_mae": 0.07189027868844652,
+          "global_last32_mse": 0.17403792404754767,
+          "global_last32_mae": 0.07142552597591245
+        },
+        {
+          "alpha_later": 0.9,
+          "global_mse": 0.18829554412995486,
+          "global_mae": 0.0650155868872764,
+          "global_last32_mse": 0.18040725629582668,
+          "global_last32_mae": 0.06463938448760877
+        },
+        {
+          "alpha_later": 0.95,
+          "global_mse": 0.19088813137587338,
+          "global_mae": 0.06282241471408866,
+          "global_last32_mse": 0.18328540935364734,
+          "global_last32_mae": 0.06251692252711101
+        },
+        {
+          "alpha_later": 1.0,
+          "global_mse": 0.19375451200782753,
+          "global_mae": 0.06170612428101201,
+          "global_last32_mse": 0.18636817882281484,
+          "global_last32_mae": 0.06149475036614392
+        }
+      ],
+      "selected": {
+        "alpha_later": 1.0,
+        "global_mse": 0.19375451200782753,
+        "global_mae": 0.06170612428101201,
+        "global_last32_mse": 0.18636817882281484,
+        "global_last32_mae": 0.06149475036614392
+      },
+      "best_parent": {
+        "alpha_later": 1.0,
+        "global_mse": 0.19375451200782753,
+        "global_mae": 0.06170612428101201,
+        "global_last32_mse": 0.18636817882281484,
+        "global_last32_mae": 0.06149475036614392
+      },
+      "improved_both": false,
+      "zero_new_optimizer_updates": true,
+      "bank_and_experts_unchanged": true,
+      "settings_path": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v115_weather_dense256_20261009/v115_weather.yaml"
+    },
+    {
+      "model": "E23-v122",
+      "source_selection_paths": [
+        "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v107_weather_context_gate_20261009/E23-v107/sr010_bl8/stage1/runs/e23-stage1-mae.json",
+        "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v108_weather_mae_repair_20261009/E23-v108/sr010_bl8/stage1/runs/e23-stage1-mae.json"
+      ],
+      "source_selection_sha256": [
+        "ebf60dd66fede0dc7602d834ae6e80e3ee603eb5e048749a811f64cd9843dd60",
+        "b9b2f239977507920454e40f50727ed43ffc7b6e8bed6e4478f05c59b38c5aa0"
+      ],
+      "source_epochs": [
+        177,
+        176
+      ],
+      "rows": [
+        {
+          "alpha_later": 0.0,
+          "global_mse": 0.1938419282139192,
+          "global_mae": 0.08017957191821133,
+          "global_last32_mse": 0.18839910544414962,
+          "global_last32_mae": 0.08027748224828385
+        },
+        {
+          "alpha_later": 0.05,
+          "global_mse": 0.19976401337437621,
+          "global_mae": 0.08516617098299847,
+          "global_last32_mse": 0.19570439555024569,
+          "global_last32_mae": 0.08469920296027399
+        },
+        {
+          "alpha_later": 0.1,
+          "global_mse": 0.2068696898994246,
+          "global_mae": 0.09357794592793238,
+          "global_last32_mse": 0.20422915332464067,
+          "global_last32_mae": 0.0927002167763402
+        },
+        {
+          "alpha_later": 0.25,
+          "global_mse": 0.22629447289214225,
+          "global_mae": 0.11046035329618706,
+          "global_last32_mse": 0.2276949581992659,
+          "global_last32_mae": 0.10958715531776088
+        },
+        {
+          "alpha_later": 0.5,
+          "global_mse": 0.2313352630219369,
+          "global_mae": 0.11375106142635287,
+          "global_last32_mse": 0.23646649584260096,
+          "global_last32_mae": 0.11508321222585187
+        },
+        {
+          "alpha_later": 0.75,
+          "global_mse": 0.21704162857532258,
+          "global_mae": 0.09677757332138122,
+          "global_last32_mse": 0.21521328663412226,
+          "global_last32_mae": 0.09700674044616138
+        },
+        {
+          "alpha_later": 0.9,
+          "global_mse": 0.2046229745016305,
+          "global_mae": 0.07623135176232097,
+          "global_last32_mse": 0.19828603038231382,
+          "global_last32_mae": 0.07586822692910075
+        },
+        {
+          "alpha_later": 0.95,
+          "global_mse": 0.19960469744716777,
+          "global_mae": 0.06800532862864725,
+          "global_last32_mse": 0.19269037165155076,
+          "global_last32_mae": 0.06786785011620453
+        },
+        {
+          "alpha_later": 1.0,
+          "global_mse": 0.1944977312568654,
+          "global_mae": 0.061963278108498505,
+          "global_last32_mse": 0.18721693017918242,
+          "global_last32_mae": 0.06222911542350891
+        }
+      ],
+      "selected": {
+        "alpha_later": 1.0,
+        "global_mse": 0.1944977312568654,
+        "global_mae": 0.061963278108498505,
+        "global_last32_mse": 0.18721693017918242,
+        "global_last32_mae": 0.06222911542350891
+      },
+      "best_parent": {
+        "alpha_later": 1.0,
+        "global_mse": 0.1944977312568654,
+        "global_mae": 0.061963278108498505,
+        "global_last32_mse": 0.18721693017918242,
+        "global_last32_mae": 0.06222911542350891
+      },
+      "improved_both": false,
+      "zero_new_optimizer_updates": true,
+      "bank_and_experts_unchanged": true,
+      "settings_path": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v108_weather_mae_repair_20261009/v108_weather.yaml"
+    }
+  ],
+  "seconds": 30.47003946080804
+}

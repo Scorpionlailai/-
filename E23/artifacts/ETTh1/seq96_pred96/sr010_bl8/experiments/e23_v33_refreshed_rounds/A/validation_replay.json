@@ -1,0 +1,25 @@
+{
+  "split": "validation",
+  "windows": 2688,
+  "coordinates": 1806336,
+  "mse": 0.7612695802096067,
+  "mae": 0.5904320221639274,
+  "h_key_sha256_before": "f813e8aeccb5ad6bfb495982b18dd8faa5a88b9570ef8093a70b35ef1795ba73",
+  "h_key_sha256_after": "f813e8aeccb5ad6bfb495982b18dd8faa5a88b9570ef8093a70b35ef1795ba73",
+  "stage2_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v33_refreshed_rounds/A/stage2/runs/e23-stage2.json",
+  "stage2_checkpoint_sha256": "aefbfc5b87c5d2170d179c99260659ede5ceab00864545fde97e8d92943850bd",
+  "h_bank_sha256_before": "94b21d2dd398aec094539a1bab37f7d370e6f791db9871a64a985b95e65fcd7c",
+  "h_bank_sha256_after": "94b21d2dd398aec094539a1bab37f7d370e6f791db9871a64a985b95e65fcd7c",
+  "recovery_schedule": "iterative_tv_h_v1",
+  "recovery_rounds": 3,
+  "repair_width": 64,
+  "candidate_selection": "top_k",
+  "variable_selection": "window_context_topk_v1",
+  "stage1_objective": "global_round_mse_v1",
+  "stage1_selection_metric_space": "train_standardized",
+  "stage1_round_weights": [
+    0.2,
+    0.3,
+    0.5
+  ]
+}

@@ -1,0 +1,291 @@
+"""Sparse directed cross-variable evidence from visible local source patches."""
+
+from __future__ import annotations
+
+from math import sqrt
+
+import torch
+from torch import Tensor, nn
+
+from .contracts import CandidateEvidence, ExpertEvidence, ExpertInputs
+from .nucleus import nucleus_prefix
+
+
+class SparseVariableExpert(nn.Module):
+    """Select source variables first, then gather at most three patches per edge."""
+
+    def __init__(
+        self, variable_count: int, patch_length: int, d_model: int,
+        *, topk: int = 4, offsets: tuple[int, ...] = (-1, 0, 1),
+        top_p: float | None = None, selection: str = "global_topk",
+        aggregation: str = "scalar_v1",
+    ) -> None:
+        super().__init__()
+        if min(variable_count, patch_length, d_model, topk) < 1:
+            raise ValueError("variable count, patch length, width and topk must be positive")
+        if not offsets or len(set(offsets)) != len(offsets):
+            raise ValueError("offsets must be nonempty and distinct")
+        if top_p is not None and not 0 < top_p <= 1:
+            raise ValueError("variable top-p must lie in (0, 1]")
+        if selection not in ("global_topk", "window_context_topk_v1",
+                             "window_context_topk_v2", "window_affine_v1"):
+            raise ValueError("unsupported variable selection")
+        if selection != "global_topk" and (top_p is not None or 0 not in offsets):
+            raise ValueError("contextual variable selection requires top-k and zero offset")
+        if aggregation not in ("scalar_v1", "channelwise_v1", "channelwise_bounded_v1"):
+            raise ValueError("unsupported variable aggregation")
+        self.variable_count = variable_count
+        self.patch_length = patch_length
+        self.d_model = d_model
+        self.topk = min(topk, variable_count - 1) if top_p is None else variable_count - 1
+        self.top_p = top_p
+        self.selection = selection
+        self.aggregation = aggregation
+        self.offsets = offsets
+        self.source_embedding = nn.Embedding(variable_count, d_model)
+        self.target_embedding = nn.Embedding(variable_count, d_model)
+        if selection == "window_affine_v1":
+            self.register_buffer("pair_slope", torch.ones(variable_count, variable_count))
+            self.register_buffer("pair_intercept", torch.zeros(variable_count, variable_count))
+        self.message_projector = nn.Sequential(
+            nn.Linear(2 * patch_length + d_model + 3, d_model),
+            nn.GELU(),
+            nn.Linear(d_model, d_model),
+        )
+        self.quality_projector = nn.Sequential(nn.Linear(4, d_model), nn.Tanh())
+        if aggregation in ("channelwise_v1", "channelwise_bounded_v1"):
+            self.channel_projector = nn.Linear(d_model, d_model, bias=False)
+            nn.init.zeros_(self.channel_projector.weight)
+
+    @torch.no_grad()
+    def set_affine_map(self, slope: Tensor, intercept: Tensor) -> None:
+        if self.selection != "window_affine_v1":
+            raise ValueError("affine map is only valid for window_affine_v1")
+        shape = (self.variable_count, self.variable_count)
+        if slope.shape != shape or intercept.shape != shape:
+            raise ValueError("V affine map shape mismatch")
+        if not torch.isfinite(slope).all() or not torch.isfinite(intercept).all():
+            raise ValueError("V affine map must be finite")
+        self.pair_slope.copy_(slope)
+        self.pair_intercept.copy_(intercept)
+
+    def _selected_sources(self, *, epoch: int, explore: bool) -> tuple[Tensor, Tensor, Tensor]:
+        # Only the tiny C-by-C training prior is dense. Sample values are gathered
+        # after this selection, so the candidate MLP never sees rejected edges.
+        relation = self.source_embedding.weight @ self.target_embedding.weight.T
+        relation = relation / sqrt(self.d_model)
+        targets = torch.arange(self.variable_count, device=relation.device)
+        ranked = torch.argsort(
+            relation.T.masked_fill(torch.eye(self.variable_count, device=relation.device, dtype=torch.bool), -torch.inf),
+            dim=-1, descending=True, stable=True,
+        )
+        if self.top_p is not None:
+            selected = ranked[:, :self.topk]
+            prior = relation.T.gather(1, selected)
+            keep = nucleus_prefix(prior, torch.ones_like(prior, dtype=torch.bool), p=self.top_p)
+            if explore:
+                others = ~keep
+                count = others.sum(-1)
+                rank = others.long().cumsum(-1) - 1
+                choice = (epoch + targets) % count.clamp_min(1)
+                keep = keep | (others & (rank == choice[:, None]) & (count[:, None] > 0))
+            return selected, prior, keep
+        selected = ranked[:, :self.topk].clone()
+        if explore and self.variable_count - 1 > self.topk:
+            choices = ranked[:, self.topk:self.variable_count - 1]
+            rotation = (epoch + targets) % choices.shape[1]
+            selected[:, -1] = choices.gather(1, rotation[:, None]).squeeze(1)
+        prior = relation.T.gather(1, selected)
+        return selected, prior, torch.ones_like(selected, dtype=torch.bool)
+
+    def _contextual_sources(
+        self, inputs: ExpertInputs, *, epoch: int, explore: bool,
+    ) -> tuple[Tensor, Tensor, Tensor]:
+        """Rank directed sources using only observed local coordinates."""
+        values, mask, validity = inputs.patch_values, inputs.patch_mask, inputs.patch_validity
+        batch, variables, patches, _ = values.shape
+        o = len(self.offsets)
+        relation = self.source_embedding.weight @ self.target_embedding.weight.T
+        prior_all = (relation / sqrt(self.d_model)).T
+        target_ix = torch.arange(variables, device=values.device)
+        patch_ix = torch.arange(patches, device=values.device)
+        offsets = torch.tensor(self.offsets, device=values.device)
+        raw = patch_ix[:, None] + offsets[None, :]
+        in_range = (raw >= 0) & (raw < patches)
+        local = raw.clamp(0, patches - 1)
+        # [B,N,S,O,P] is gathered once; the candidate MLP only sees selected edges.
+        local_values = values[:, :, local].permute(0, 2, 1, 3, 4)
+        local_valid = validity[:, :, local].permute(0, 2, 1, 3, 4)
+        local_observed = (mask & validity)[:, :, local].permute(0, 2, 1, 3, 4)
+        local_valid = local_valid & in_range[None, :, None, :, None]
+        local_observed = local_observed & local_valid
+        visible_fraction = (local_observed.sum(dim=(-1, -2)).float()
+                            / local_valid.sum(dim=(-1, -2)).clamp_min(1))
+        aligned = self.offsets.index(0)
+        aligned_observed = local_observed[..., aligned, :]
+        target_observed = (mask & validity).permute(0, 2, 1, 3)
+        common = target_observed[:, :, :, None, :] & aligned_observed[:, :, None, :, :]
+        target_values = values.permute(0, 2, 1, 3)[:, :, :, None, :]
+        source_values = local_values[..., aligned, :][:, :, None, :, :]
+        # Mask operands before subtraction so hidden/padded values never enter scores.
+        if self.selection == "window_affine_v1":
+            source_values = (self.pair_slope[None, None, :, :, None] * source_values
+                             + self.pair_intercept[None, None, :, :, None])
+        difference = (source_values.masked_fill(~common, 0)
+                      - target_values.masked_fill(~common, 0)).abs()
+        error = difference.sum(-1) / common.sum(-1).clamp_min(1)
+        consistency = torch.exp(-error) * common.any(-1)
+        context_scale = 0.5 if self.selection == "window_context_topk_v1" else 1.0
+        scores = (prior_all[None, None, :, :] + context_scale * visible_fraction[:, :, None, :]
+                  + context_scale * consistency).permute(0, 2, 1, 3)
+        has_source = local_observed.any(dim=(-1, -2))[:, None, :, :]
+        scores = scores.masked_fill(~has_source, -1e9)
+        scores = scores.masked_fill(
+            torch.eye(variables, device=values.device, dtype=torch.bool)[None, :, None, :],
+            -torch.inf,
+        )
+        ranked = torch.argsort(scores, dim=-1, descending=True, stable=True)
+        selected = ranked[..., :self.topk].clone()
+        if explore and variables - 1 > self.topk:
+            choices = ranked[..., self.topk:variables - 1]
+            rotation = ((epoch + target_ix[None, :, None]) % choices.shape[-1])
+            rotation = rotation.expand(batch, variables, patches)
+            selected[..., -1] = choices.gather(-1, rotation[..., None]).squeeze(-1)
+        prior = prior_all[None, :, None, :].expand(batch, variables, patches, variables)
+        selected_prior = prior.gather(-1, selected)
+        return selected, selected_prior, torch.ones_like(selected, dtype=torch.bool)
+
+    def forward(self, inputs: ExpertInputs, *, epoch: int, explore: bool) -> ExpertEvidence:
+        values, mask, validity = inputs.patch_values, inputs.patch_mask, inputs.patch_validity
+        base = inputs.base_latents
+        if values.ndim != 4:
+            raise ValueError("patch values must have shape [B,C,N,P]")
+        batch, variables, patches, length = values.shape
+        if variables != self.variable_count or length != self.patch_length:
+            raise ValueError("variable count or patch length does not match expert")
+        if mask.shape != values.shape or validity.shape != values.shape:
+            raise ValueError("patch mask/validity shape mismatch")
+        if base.shape != (batch, variables, patches, self.d_model):
+            raise ValueError("base latent shape mismatch")
+        if inputs.damaged.shape != (batch, variables, patches):
+            raise ValueError("damaged shape mismatch")
+        if epoch < 0:
+            raise ValueError("epoch must be nonnegative")
+        empty_message = base.new_zeros(base.shape)
+        empty_available = torch.zeros_like(inputs.damaged, dtype=torch.bool)
+        if self.topk == 0:
+            return ExpertEvidence(
+                empty_message, empty_message, empty_available,
+                {"source_variables": torch.empty((1, 0), device=values.device, dtype=torch.long),
+                 "candidate_count": torch.zeros_like(inputs.damaged, dtype=torch.long)},
+                CandidateEvidence(
+                    base.new_zeros(batch, variables, patches, 1, self.d_model),
+                    base.new_zeros(batch, variables, patches, 1, 4),
+                    base.new_zeros(batch, variables, patches, 1),
+                    torch.zeros((batch, variables, patches, 1), dtype=torch.bool, device=base.device),
+                ),
+            )
+
+        if self.selection != "global_topk":
+            source, prior, source_selected = self._contextual_sources(
+                inputs, epoch=epoch, explore=explore,
+            )
+        else:
+            source, prior, source_selected = self._selected_sources(epoch=epoch, explore=explore)
+        k, o = self.topk, len(self.offsets)
+        target_patch = torch.arange(patches, device=values.device)
+        offsets = torch.tensor(self.offsets, device=values.device)
+        raw_patch = target_patch[:, None] + offsets[None, :]
+        in_range = (raw_patch >= 0) & (raw_patch < patches)
+        if self.selection != "global_topk":
+            source_ix = source[..., None].expand(batch, variables, patches, k, o)
+            patch_ix = raw_patch.clamp(0, patches - 1)[None, None, :, None, :].expand_as(source_ix)
+            batch_ix = torch.arange(batch, device=values.device)[:, None, None, None, None]
+            source_values = values[batch_ix, source_ix, patch_ix]
+            source_observed = (mask & validity)[batch_ix, source_ix, patch_ix]
+            selected_mask = source_selected[..., None]
+            selected_prior = prior[..., None].expand(batch, variables, patches, k, o)
+        else:
+            source_ix = source[:, None, :, None].expand(variables, patches, k, o)
+            patch_ix = raw_patch.clamp(0, patches - 1)[None, :, None, :].expand_as(source_ix)
+            source_values = values[:, source_ix, patch_ix]
+            source_observed = (mask & validity)[:, source_ix, patch_ix]
+            selected_mask = source_selected[None, :, None, :, None]
+            selected_prior = prior[None, :, None, :, None].expand(batch, variables, patches, k, o)
+        target_observed = (mask & validity)[:, :, :, None, None, :]
+        target_values = values[:, :, :, None, None, :]
+        if self.selection == "window_affine_v1":
+            target_ix = torch.arange(variables, device=values.device)[None, :, None, None, None]
+            source_values = (self.pair_slope[target_ix, source_ix][..., None] * source_values
+                             + self.pair_intercept[target_ix, source_ix][..., None])
+        visible_values = source_values * source_observed
+
+        candidate_valid = (
+            source_observed.any(dim=-1)
+            & in_range[None, None, :, None, :]
+            & inputs.damaged[..., None, None]
+            & selected_mask
+        )
+        available = candidate_valid.any(dim=(-1, -2))
+        source_fraction = source_observed.float().mean(dim=-1)
+        common = source_observed & target_observed
+        overlap = common.float().mean(dim=-1)
+        error = ((source_values - target_values).abs() * common).sum(-1)
+        error = error / common.sum(-1).clamp_min(1)
+        consistency = torch.exp(-error) * common.any(dim=-1)
+        signed_lag = offsets.to(values.dtype).view(1, 1, 1, 1, o)
+        lag = signed_lag.expand(batch, variables, patches, k, o)
+        candidate_score = (
+            selected_prior + 0.5 * source_fraction + 0.5 * consistency
+            - 0.1 * lag.abs()
+        )
+        candidate_score = candidate_score.masked_fill(~candidate_valid, -1e9)
+        weights = torch.softmax(candidate_score.flatten(-2), dim=-1).reshape_as(candidate_score)
+        weights = weights * candidate_valid
+        weights = weights / weights.sum(dim=(-1, -2), keepdim=True).clamp_min(1e-8)
+
+        expanded_base = base[:, :, :, None, None, :].expand(
+            batch, variables, patches, k, o, self.d_model
+        )
+        features = torch.cat((
+            visible_values, source_observed.to(values.dtype), expanded_base,
+            lag[..., None], source_fraction[..., None], consistency[..., None],
+        ), dim=-1)
+        candidate_messages = self.message_projector(features)
+        provenance = {"source_variables": source.detach(), "source_patch_indices": patch_ix.detach(),
+                      "source_selected": source_selected.detach(),
+                      "candidate_valid": candidate_valid.detach(),
+                      "candidate_count": candidate_valid.sum(dim=(-1, -2)).detach(),
+                      "weights": weights.detach()}
+        if self.aggregation in ("channelwise_v1", "channelwise_bounded_v1"):
+            # Every output channel scores the same sparse visible candidates.
+            # Zero initialization exactly reproduces scalar v12 weights at startup.
+            channel_delta = self.channel_projector(candidate_messages)
+            if self.aggregation == "channelwise_bounded_v1":
+                channel_delta = 0.5 * torch.tanh(channel_delta)
+            channel_logits = candidate_score[..., None] + channel_delta
+            channel_weights = torch.softmax(channel_logits.flatten(-3, -2), dim=-2).reshape_as(channel_logits)
+            channel_weights = channel_weights * candidate_valid[..., None]
+            channel_weights = channel_weights / channel_weights.sum(dim=(-3, -2), keepdim=True).clamp_min(1e-8)
+            message = (channel_weights * candidate_messages).sum(dim=(-3, -2))
+            provenance["channel_weights"] = channel_weights.detach()
+        else:
+            message = (weights[..., None] * candidate_messages).sum(dim=(-3, -2))
+        raw_quality = torch.stack((selected_prior, source_fraction, overlap * consistency, lag), dim=-1)
+        quality = self.quality_projector(
+            (weights[..., None] * raw_quality).sum(dim=(-3, -2))
+        )
+        message = torch.where(available[..., None], message, empty_message)
+        quality = torch.where(available[..., None], quality, empty_message)
+        return ExpertEvidence(
+            message, quality, available,
+            provenance,
+            CandidateEvidence(
+                candidate_messages.flatten(-3, -2),
+                raw_quality.flatten(-3, -2),
+                weights.flatten(-2), candidate_valid.flatten(-2),
+            ),
+        )
+
+
+__all__ = ["SparseVariableExpert"]

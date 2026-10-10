@@ -1,0 +1,29 @@
+{
+  "created_utc": "2026-10-07T10:35:32.327712+00:00",
+  "models": [
+    {
+      "version": 85,
+      "label": "E23-v85",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_global_dense_stage1_iterations_20261007/v85",
+      "work": "/home/xyw/paper/.e23-global-dense-stage1-20261007/E23",
+      "stage1_structure": "recent_mean_v2",
+      "projection": "global_dense_time_v4"
+    },
+    {
+      "version": 86,
+      "label": "E23-v86",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_global_dense_stage1_iterations_20261007/v86",
+      "work": "/home/xyw/paper/.e23-global-dense-stage1-20261007/E23",
+      "stage1_structure": "recent_mean_weak_v3",
+      "projection": "global_dense_time_v4"
+    }
+  ],
+  "stage2_policy": "pure MSE, fully frozen repair, original predictor, unchanged 100 epochs/seed2023/batch128/lr1e-4",
+  "stage1_only_changes": true,
+  "training_seed_search": false,
+  "monitor_interval_seconds": 300,
+  "early_stop": "All three scenes repair MSE/MAE below T1 AND forecast MSE/MAE below v79 (old20 development only).",
+  "test_role": "development, never checkpoint selection",
+  "parent_queue": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007",
+  "depends_on": "Start after parent queue finishes, unless it already passes development criteria or stops with an error."
+}

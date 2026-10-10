@@ -1,0 +1,10 @@
+extends: ../_e22_common.yaml
+data:
+  datasets:
+    ETTh2: {path: data/raw/ETTh2.csv, n_vars: 7, expected_length: 17420, train_start: 0, train_end: 8640, validation_end: 11520, test_end: 14400, allow_length_override: false}
+model:
+  profiles:
+    ETTh2: {d_model: 16, n_heads: 4, d_ff: 128, encoder_layers: 3, dropout: 0.3, fc_dropout: 0.3, head_dropout: 0.0, attn_dropout: 0.0}
+training:
+  profiles:
+    ETTh2: {learning_rate: 1.0e-4, batch_size: 128, max_epochs: 100, early_stopping_patience: 100, lr_schedule: type3, drop_last: true}

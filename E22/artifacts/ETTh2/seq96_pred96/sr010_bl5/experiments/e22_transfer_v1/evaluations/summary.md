@@ -1,0 +1,3 @@
+| run_id | dataset | variant | mse | mae | degradation_mse_absolute | degradation_mae_absolute | degradation_mse_relative_percent | degradation_mae_relative_percent | drr_mse | drr_mae | final_rate | trainable_parameters | training_seconds |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ETTh2-missing-7892e180c5b8 | ETTh2 | missing | 0.31285355826354083 | 0.3567245574224563 | 0.01925384809100439 | 0.014189694744118742 | 6.557856640829003 | 4.142554901760112 | 0.0 | 0.0 | 0.4091301843317972 | 35168 | 110.7168325278908 |

@@ -1,0 +1,48 @@
+{
+  "status": "complete",
+  "label": "E23-v40-tail32",
+  "source_unchanged": true,
+  "original_head_initialization_matched": true,
+  "repair_epochs": 100,
+  "repair_batch": 128,
+  "optimizer_updates": 6600,
+  "repair_validation_mse": 0.2774709515418482,
+  "decision": {
+    "validation": {
+      "mse": 0.7480057577967915,
+      "mae": 0.5823716079296709
+    },
+    "parent": {
+      "mae": 0.5852035470560294,
+      "mse": 0.7445468891775257
+    },
+    "passed": false,
+    "test_metrics_seen": false
+  },
+  "test_mean": {
+    "mae": 0.4287907613918624,
+    "mse": 0.41437518861558703
+  },
+  "training_resources": {
+    "batch_size": "128",
+    "full_workflow_seconds": 525.5378640722483,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 522.3153509274125,
+    "peak_allocated_gib": 2.19956111907959,
+    "peak_reserved_gib": 5.9296875,
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage1/resources/914d9bdaba114fbc987526948670b398.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage2/resources/48152668db6f437b9b03e3f11fe073f5.json"
+    ],
+    "resource_status": "measured_all_stages",
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage1/runs/e23-stage1.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage2/runs/e23-stage2.json"
+    ],
+    "stage1_legacy_loop_seconds": 288.1490684505552,
+    "stage2_legacy_loop_seconds": 234.1662824768573,
+    "training_stages_seconds": 523.2496004570276
+  },
+  "source_archive_sha256": "ad6ea2dcf2652a8a1b6f8595d34fe68aa7389eeaff2542c8e6ddf9f311170ce7"
+}

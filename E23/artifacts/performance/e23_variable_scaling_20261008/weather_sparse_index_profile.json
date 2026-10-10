@@ -1,0 +1,31 @@
+{
+  "dataset": "Weather",
+  "variables": 21,
+  "batch_size": 128,
+  "mode": "fixed validation forward/backward; eval dropout; no optimizer updates; no tests",
+  "original": {
+    "step_ms_median": 174.3236668407917,
+    "step_ms_samples": [
+      174.29211270064116,
+      174.4085131213069,
+      174.35522098094225,
+      174.23811554908752
+    ],
+    "peak_allocated_gib": 10.296221733093262
+  },
+  "sparse": {
+    "step_ms_median": 171.92515125498176,
+    "step_ms_samples": [
+      172.07231651991606,
+      173.1766564771533,
+      171.77798599004745,
+      171.40641529113054
+    ],
+    "peak_allocated_gib": 9.486753940582275
+  },
+  "output_max_abs_difference": 0.0,
+  "loss_difference": 0.0,
+  "gradient_max_abs_difference": 5.587935447692871e-09,
+  "gradient_relative_l2_difference": 1.5724418247113206e-07,
+  "optimization": "query/output/point-route/overlap MLPs only evaluate hidden valid positions; eight heads/candidates/weights unchanged; observed attention diagnostics can differ"
+}

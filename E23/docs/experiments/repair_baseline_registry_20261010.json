@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-10",
+  "scope": "source registry; new adapters and experiments not completed",
+  "baselines": [
+    {
+      "model": "T1",
+      "route": "existing",
+      "source_directory": "/home/xyw/paper/T1",
+      "official_repository": "https://github.com/Oppenheimerdinger/T1.git",
+      "commit": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+      "status": "existing_adapter",
+      "execution_server": "remote_baseline_servers",
+      "priority": 0
+    },
+    {
+      "model": "SAITS",
+      "route": "existing",
+      "source_directory": "/home/xyw/paper/SAITS",
+      "official_repository": "/home/xyw/missing_aware_latent_recovery/external/SAITS",
+      "commit": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+      "status": "existing_adapter",
+      "execution_server": "remote_baseline_servers",
+      "priority": 0
+    },
+    {
+      "model": "BRITS",
+      "route": "bidirectional_RNN",
+      "source_directory": "/home/xyw/paper/BRITS",
+      "official_repository": "https://github.com/caow13/BRITS",
+      "commit": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+      "status": "source_present_adapter_audit_pending",
+      "execution_server": "remote_baseline_servers",
+      "priority": 3
+    },
+    {
+      "model": "ImputeFormer",
+      "route": "low_rank_attention",
+      "source_directory": "/home/xyw/paper/ImputeFormer",
+      "official_repository": "https://github.com/tongnie/ImputeFormer",
+      "commit": "1c3868cf499951ac43b4fc7280593fbb745f58c7",
+      "status": "source_acquired_adapter_pending",
+      "execution_server": "remote_baseline_servers",
+      "priority": 2
+    },
+    {
+      "model": "TimesNet",
+      "route": "periodic_2D_CNN",
+      "source_directory": "/home/xyw/paper/TimesNet",
+      "official_repository": "https://github.com/thuml/Time-Series-Library",
+      "commit": "4e938a1767106324dd753b2a44832bf870a0252e",
+      "status": "source_acquired_adapter_pending",
+      "execution_server": "remote_baseline_servers",
+      "priority": 1
+    },
+    {
+      "model": "CSDI",
+      "route": "conditional_diffusion",
+      "source_directory": "/home/xyw/paper/CSDI",
+      "official_repository": "https://github.com/ermongroup/CSDI",
+      "commit": "7f24a436f08d98853a6b43d4f7f04e5a65ecdf27",
+      "status": "source_acquired_adapter_pending",
+      "execution_server": "remote_baseline_servers",
+      "priority": 4
+    }
+  ]
+}

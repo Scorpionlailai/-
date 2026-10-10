@@ -1,0 +1,48 @@
+{
+  "status": "complete",
+  "finished_utc": "2026-10-04T05:52:56.389912+00:00",
+  "completed_trials": 3,
+  "completed_training_stages": 6,
+  "new_test_draws": 60,
+  "new_window_metric_arrays_verified": 60,
+  "all_stages_100_epochs": true,
+  "original_head_initialization_matched": true,
+  "source_config_parent_and_checkpoint_hashes_verified": true,
+  "protected_existing_files_verified": 430,
+  "max_array_report_metric_difference": 1.0606154066117313e-08,
+  "selected_model": "E23-v31-B",
+  "selection_scope": "incumbent retained; none of the three exploratory seed502 candidates passed fixed validation",
+  "training_seeds_tested": [
+    502
+  ],
+  "formal_five_seed_comparison_unchanged": true,
+  "candidates": [
+    {
+      "model": "E23-v37-batch32",
+      "validation_passed": false,
+      "test_mean": {
+        "mae": 0.43264617125193283,
+        "mse": 0.41705664274643883
+      },
+      "full_training_seconds": 632.8172125816345
+    },
+    {
+      "model": "E23-v38-shared-features",
+      "validation_passed": false,
+      "test_mean": {
+        "mae": 0.4246263012594106,
+        "mse": 0.4086659887210041
+      },
+      "full_training_seconds": 826.4891646625474
+    },
+    {
+      "model": "E23-v39-two-feature-layers",
+      "validation_passed": false,
+      "test_mean": {
+        "mae": 0.45430459808600465,
+        "mse": 0.4428621650012442
+      },
+      "full_training_seconds": 1391.8948764251545
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/v30_stack_review",
+  "model": "gpt-6-astra",
+  "read_only": true,
+  "verdict": "changes required before formal training",
+  "critical": [],
+  "important": [
+    "Test masks, selection, source and metric-space provenance insufficiently validated"
+  ],
+  "minor": [
+    "Nonfinite headline summaries accepted",
+    "Validation-gate field conflated with winner"
+  ],
+  "regrading": {
+    "Nonfinite headline summaries accepted": "Important: can corrupt reported paper accuracy",
+    "Validation-gate field conflated with winner": "Important: can falsely report a qualifying architecture as failing"
+  },
+  "fix_pass": "all three findings fixed in one pass; RED11fail\u2192GREEN47focused; complete suite947passed/1skipped",
+  "deferred_minors": [],
+  "declined_to_judge": [
+    "Independent CUDA capacity/performance/resources (review excluded GPU)",
+    "Pending full validation compatibility gate",
+    "Future full training/results/artifacts",
+    "Unrelated preexisting dirty work"
+  ]
+}

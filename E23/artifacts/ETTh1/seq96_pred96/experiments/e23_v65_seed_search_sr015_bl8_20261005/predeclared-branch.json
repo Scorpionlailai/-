@@ -1,0 +1,33 @@
+{
+  "parent": "v64 validation-retained parent before any seed search tests",
+  "trigger": "retained model still below T1",
+  "seeds": [
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "seed502": "cached parent control",
+  "authorization": "user previously explicitly requested search for E23 favorable training seeds with T1 author seed held fixed",
+  "model_architecture": "validation retained parent, frozen before first seed",
+  "stage1_epochs": 100,
+  "stage2_epochs": 100,
+  "stage1_batch": "inherit retained parent",
+  "stage2_recipe": "loss/retention/padding/head unchanged; run both parent update policy and existing frozen_v1",
+  "forecast_head": "same original architecture/config/35427 params, initial weights naturally vary with training seed",
+  "training_seed_effects": [
+    "model initialization",
+    "batch shuffle",
+    "epoch dynamic training missing masks"
+  ],
+  "validation_and_test_masks": "unchanged and identical for all seeds and T1",
+  "selection": "same-run MAE primary, MSE secondary; validation gate, MAE priority; sequential decisions saved before each seed tests",
+  "report": "all prespecified seeds and both policies, each policy MAE and MSE checkpoint; Stage1 resource shared, report full cost per model and deduplicate search cost",
+  "confirmation": "any candidate beating T1 on old20 is locked before new-position evaluation; do not modify T1",
+  "stage2_policies": [
+    "retained parent policy",
+    "frozen_v1"
+  ],
+  "stage1_shared_between_stage2_policies": true,
+  "stage2_policy_addition_basis": "v64 frozen current Stage1 test .41737958/.41930183; MAE below T1, MSE gap1.55%; declare both Stage2 policies before any v65 training or test"
+}

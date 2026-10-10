@@ -1,0 +1,68 @@
+{
+  "stages": [
+    {
+      "directory": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage1",
+      "resource": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage1/resources/d73087ed81944bcda82d74326f8fb914.json",
+      "seconds": 7692.58904686477,
+      "allocated_gib": 20.0620174407959,
+      "reserved_gib": 30.041015625,
+      "device": {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 5090",
+        "requested": "cuda:1",
+        "total_memory_bytes": 33671348224,
+        "type": "cuda",
+        "uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b"
+      }
+    },
+    {
+      "directory": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v97_weather_cached_20261008/E23-v97/sr010_bl8/stage1",
+      "resource": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v97_weather_cached_20261008/E23-v97/sr010_bl8/stage1/resources/4bdf47420eda4f14a827648b1c3e7339.json",
+      "seconds": 2721.278198229149,
+      "allocated_gib": 4.005917549133301,
+      "reserved_gib": 5.09765625,
+      "device": {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "requested": "cuda:0",
+        "total_memory_bytes": 33671348224,
+        "type": "cuda",
+        "uuid": "382ce2ea-81a9-82ea-073f-729eaefd0268"
+      }
+    },
+    {
+      "directory": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v105_weather_scale_guard_20261009/E23-v105/sr010_bl8/stage1",
+      "resource": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v105_weather_scale_guard_20261009/E23-v105/sr010_bl8/stage1/resources/564ba96c82fe4069b46634c9d06eb19d.json",
+      "seconds": 139.14151748269796,
+      "allocated_gib": null,
+      "reserved_gib": null,
+      "device": {
+        "name": "x86_64",
+        "requested": "cpu",
+        "type": "cpu"
+      }
+    },
+    {
+      "directory": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v105_weather_scale_guard_20261009/E23-v105/sr010_bl8/stage2",
+      "resource": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v105_weather_scale_guard_20261009/E23-v105/sr010_bl8/stage2/resources/5f07269f1f984e849a5304557cb60ac2.json",
+      "seconds": 2569.0198360886425,
+      "allocated_gib": 4.019913196563721,
+      "reserved_gib": 5.099609375,
+      "device": {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "requested": "cuda:0",
+        "total_memory_bytes": 33671348224,
+        "type": "cuda",
+        "uuid": "382ce2ea-81a9-82ea-073f-729eaefd0268"
+      }
+    }
+  ],
+  "full_training_seconds": 13122.02859866526,
+  "peak_allocated_gib": 20.0620174407959,
+  "peak_reserved_gib": 30.041015625,
+  "training_seed": 2023,
+  "scope": "reused coarse/refinement plus new CPU projection verification plus frozen Stage2; excludes test and search; not one uninterrupted cold run",
+  "cpu_gpu_memory_handling": "CPU stages retain null memory; measured GPU stages define GPU peak",
+  "baseline_control_stage2_is_search_cost_not_production_cost": true
+}

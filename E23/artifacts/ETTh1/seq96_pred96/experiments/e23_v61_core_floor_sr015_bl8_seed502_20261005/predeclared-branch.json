@@ -1,0 +1,12 @@
+{
+  "parent": "v60 validation-retained parent; branch only if T1 not yet exceeded",
+  "only_change": "repair_input_scaling all_floor_v1",
+  "scale": "sqrt(original_visible_std_squared+0.1_squared) for entire repair path and its paired key training",
+  "repair_inputs": "original truly visible centered global values divided by robust scale; original window mean unchanged",
+  "output": "convert repaired original time sequence back to original visible std coordinates, preserve true observations bitwise, repatch identical geometry",
+  "loss": "parent unchanged global hidden objective and any inherited mean objective",
+  "forecast_head": "original structure parameters initialization and window stats unchanged",
+  "stage2_recipe": "parent inherited including declared padding if retained",
+  "extra_parameters": 0,
+  "scale_mismatch_limit": "legacy bank raw key space unchanged; no claim this solves all H key issues"
+}

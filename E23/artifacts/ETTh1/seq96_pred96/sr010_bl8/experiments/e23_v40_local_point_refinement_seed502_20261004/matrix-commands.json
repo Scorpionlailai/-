@@ -1,0 +1,30 @@
+[
+  [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "scripts/run_e23_learning_trial.py",
+    "--root",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32",
+    "--config",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/e23_seed502.yaml",
+    "--label",
+    "E23-v40-tail32",
+    "--repair-batch-size",
+    "128",
+    "--parent",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_502/E23-v31-B/evaluation/validation-lock.json"
+  ],
+  [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "scripts/run_e23_learning_trial.py",
+    "--root",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/full96",
+    "--config",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/full96/e23_seed502.yaml",
+    "--label",
+    "E23-v40-full96",
+    "--repair-batch-size",
+    "128",
+    "--parent",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_502/E23-v31-B/evaluation/validation-lock.json"
+  ]
+]

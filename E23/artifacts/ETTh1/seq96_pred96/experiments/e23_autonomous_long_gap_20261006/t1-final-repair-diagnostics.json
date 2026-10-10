@@ -1,0 +1,30 @@
+{
+  "model": "T1",
+  "stage": "selected_stage2",
+  "split": "fixed_validation",
+  "metric_space": "global_train_standardized",
+  "precision": "float32",
+  "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/T1/training/forecast-selection.json",
+  "checkpoint_sha256": "3049f4d7a5d272201b98df279e3914b88425abcd39c0c399cb81825b55d07692",
+  "validation_mask_sha256": "3ef60101b0071b8afb6a884be21d7bfde12fa832e24ba526f0cd9e7c9204e950",
+  "source_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "metrics": {
+    "all96": {
+      "mse": 0.6038259847864277,
+      "mae": 0.5093013707223772,
+      "hidden_coordinates": 1473201
+    },
+    "before64": {
+      "mse": 0.617520982267384,
+      "mae": 0.5097871795874133,
+      "hidden_coordinates": 982971
+    },
+    "last32": {
+      "mse": 0.5763658428757872,
+      "mae": 0.508327264637737,
+      "hidden_coordinates": 490230
+    }
+  },
+  "no_training": true,
+  "no_test_scoring": true
+}

@@ -1,0 +1,102 @@
+{
+  "label": "E23-point-series",
+  "work": "/home/xyw/paper/.e23-v51-candidate-readout/E23",
+  "training_seed": 502,
+  "device": "cuda:1",
+  "scenario_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json",
+  "test_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/test_masks/manifest.json",
+  "actual_test_missing_fraction": 0.729251839081987,
+  "stage1_epochs": 100,
+  "stage2_epochs": 100,
+  "primary_selection": "mae",
+  "forecast_loss": "mse_plus_0p2_mae",
+  "repair_retention": "uniform_v1",
+  "repair_update_policy": "freeze_front_v1",
+  "predictor_initial_sha256": "26cee63e94dc41607f346f09a29e01cf7d02e75e513b1d9b631ce270ec3e0b7c",
+  "reference_validation": {
+    "mse": 0.8163889443793264,
+    "mae": 0.607866615935518
+  },
+  "cached_references": {
+    "E23-v41-slow": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/E23-v41-slow/evaluation/twenty-test-draws.json",
+    "T1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/T1/evaluation/twenty-test-draws.json",
+    "E23-v46-front-context": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v46_front_context_sr015_bl8_seed502_20261005/evaluation/twenty-test-draws.json",
+    "E23-v47-frozen-front": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v47_frozen_front_sr015_bl8_seed502_20261005/evaluation/twenty-test-draws.json",
+    "E23-v48-point-router": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v48_point_router/evaluation/twenty-test-draws.json",
+    "E23-v49-overlap": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v49_overlap/evaluation/twenty-test-draws.json",
+    "E23-v50-recent-state": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v50_recent_state/evaluation/twenty-test-draws.json"
+  },
+  "test_used_for_selection": false,
+  "front_context": {
+    "version": "window_cnn_v1",
+    "width": 64,
+    "blocks": 2,
+    "kernels": [
+      7,
+      31
+    ],
+    "dilations": [
+      1,
+      2
+    ],
+    "block_residual_scale": 0.1,
+    "features": [
+      "visible_global_standardized",
+      "observed_mask",
+      "position",
+      "previous_visible_gap",
+      "next_visible_gap"
+    ],
+    "cross_variable": false,
+    "output": "zero_initialized_latent_delta",
+    "patch_pool": "valid_mean",
+    "receptive_field_points": 91
+  },
+  "validation_acceptance": "MSE lower and MAE no worse than matched v46; track original v41 separately",
+  "source_isolation": "/home/xyw/paper/.e23-v47-front-freeze/E23",
+  "reference_v41_validation": {
+    "mse": 0.7947543159363761,
+    "mae": 0.6070569604973134
+  },
+  "development_parent_chosen_after_test_by_user": true,
+  "checkpoint_selection_uses_validation_only": true,
+  "diagnostic_evidence": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v46_front_context_sr015_bl8_seed502_20261005/validation_component_interventions_20261005/results.json",
+  "base_config": "/home/xyw/paper/.e23-point-series/E23/configs/e23_point_series_p1o1s0_seed502.yaml",
+  "initial_parent": {
+    "label": "E23-v49-overlap",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v49_overlap",
+    "validation": {
+      "mse": 0.7967074441801664,
+      "mae": 0.6010208778640851
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "none"
+  },
+  "sequence": [
+    {
+      "name": "v51_candidate_readout",
+      "label": "E23-v51-candidate-readout",
+      "change": "point_candidate_readout",
+      "value": "eight_head_v1"
+    }
+  ],
+  "acceptance": "forecast validation MSE lower and MAE no worse than current parent",
+  "recent_state_weights": {
+    "level": 0.2,
+    "trend_amplitude": 0.2
+  },
+  "recovery_rounds": 1,
+  "fresh_training_each_condition": true,
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "configs": {
+    "p1o1s0c1": "/home/xyw/paper/.e23-v51-candidate-readout/E23/configs/e23_v51_point_candidate_readout_seed502.yaml"
+  },
+  "reference_t1_validation": {
+    "mse": 0.7744047787724709,
+    "mae": 0.5948318591734179
+  },
+  "objective": "Improve numerical recovery and forecast error, then exceed T1 with original predictor unchanged.",
+  "predeclared_promotion": "Fixed validation MSE lower and MAE no worse than retained v49; stage2 checkpoint chosen by validation MAE; 20 test masks only after lock."
+}

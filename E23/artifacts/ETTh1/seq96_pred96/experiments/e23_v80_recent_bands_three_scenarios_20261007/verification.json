@@ -1,0 +1,159 @@
+{
+  "status": "verified",
+  "scenarios": [
+    {
+      "scene": "sr015_bl8",
+      "repair": {
+        "scene": "sr015_bl8",
+        "split": "fixed_validation",
+        "metric_space": "train_standardized",
+        "hidden_coordinates": 1325353,
+        "selected_epoch": 89,
+        "v80_mse": 0.2539707927989279,
+        "v80_mae": 0.325926009635499,
+        "v79_mse": 0.24728711642618212,
+        "v79_mae": 0.3244929291042942,
+        "t1_mse": 0.24136392279322594,
+        "t1_mae": 0.3229203299245951,
+        "repair_beats_t1_mse": false,
+        "repair_beats_t1_mae": false
+      },
+      "selections": {
+        "mae": {
+          "E23-v80": {
+            "mae": 0.41129108978236883,
+            "mse": 0.4058913535812274
+          },
+          "E23-v79": {
+            "mae": 0.4113107711009157,
+            "mse": 0.40538046378937975
+          },
+          "T1": {
+            "mae": 0.41407521657662605,
+            "mse": 0.4085892064771414
+          }
+        },
+        "mse": {
+          "E23-v80": {
+            "mae": 0.41129108978236883,
+            "mse": 0.4058913535812274
+          },
+          "E23-v79": {
+            "mae": 0.4112640001876554,
+            "mse": 0.40539401680433834
+          },
+          "T1": {
+            "mae": 0.41395283502245706,
+            "mse": 0.4084776889169567
+          }
+        }
+      }
+    },
+    {
+      "scene": "sr020_bl8",
+      "repair": {
+        "scene": "sr020_bl8",
+        "split": "fixed_validation",
+        "metric_space": "train_standardized",
+        "hidden_coordinates": 1503581,
+        "selected_epoch": 86,
+        "v80_mse": 0.3939581786591893,
+        "v80_mae": 0.4082022001246524,
+        "v79_mse": 0.385081571444731,
+        "v79_mae": 0.403593115806713,
+        "t1_mse": 0.37037484076365856,
+        "t1_mae": 0.3980053209406721,
+        "repair_beats_t1_mse": false,
+        "repair_beats_t1_mae": false
+      },
+      "selections": {
+        "mae": {
+          "E23-v80": {
+            "mae": 0.45455188513342754,
+            "mse": 0.4798492791701336
+          },
+          "E23-v79": {
+            "mae": 0.4497960602615426,
+            "mse": 0.47554189785808115
+          },
+          "T1": {
+            "mae": 0.45664971815485533,
+            "mse": 0.4917372922778401
+          }
+        },
+        "mse": {
+          "E23-v80": {
+            "mae": 0.45455188513342754,
+            "mse": 0.4798492791701336
+          },
+          "E23-v79": {
+            "mae": 0.4497960602615426,
+            "mse": 0.47554189785808115
+          },
+          "T1": {
+            "mae": 0.45664971815485533,
+            "mse": 0.4917372922778401
+          }
+        }
+      }
+    },
+    {
+      "scene": "sr010_bl16",
+      "repair": {
+        "scene": "sr010_bl16",
+        "split": "fixed_validation",
+        "metric_space": "train_standardized",
+        "hidden_coordinates": 1473201,
+        "selected_epoch": 91,
+        "v80_mse": 0.5156507789256608,
+        "v80_mae": 0.4684044328684613,
+        "v79_mse": 0.5046764761593413,
+        "v79_mae": 0.47139713208731715,
+        "t1_mse": 0.5066557099613594,
+        "t1_mae": 0.46100767087052,
+        "repair_beats_t1_mse": false,
+        "repair_beats_t1_mae": false
+      },
+      "selections": {
+        "mae": {
+          "E23-v80": {
+            "mae": 0.4951065483006761,
+            "mse": 0.5554535908493595
+          },
+          "E23-v79": {
+            "mae": 0.4917346778099769,
+            "mse": 0.5550732599634702
+          },
+          "T1": {
+            "mae": 0.5000676641118229,
+            "mse": 0.579435015805995
+          }
+        },
+        "mse": {
+          "E23-v80": {
+            "mae": 0.4951065483006761,
+            "mse": 0.5554535908493595
+          },
+          "E23-v79": {
+            "mae": 0.4917346778099769,
+            "mse": 0.5550732599634702
+          },
+          "T1": {
+            "mae": 0.5000676641118229,
+            "mse": 0.579435015805995
+          }
+        }
+      }
+    }
+  ],
+  "clean": {
+    "mse": 0.37530333418130185,
+    "mae": 0.39439000007740505,
+    "windows": 2688,
+    "target_elements": 1806336
+  },
+  "repair_beats_t1_all_metrics_all_scenes": false,
+  "forecast_better_than_v79_all_metrics_all_scenes": false,
+  "report": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v80_v79_T1_pureMSE_frozen_three_scenarios_20261007.md",
+  "csv": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v80_v79_T1_pureMSE_frozen_three_scenarios_20261007.csv"
+}

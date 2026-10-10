@@ -1,0 +1,10 @@
+extends: ../_e22_common.yaml
+data:
+  datasets:
+    Exchange: {path: data/processed/exchange_rate.csv, n_vars: 8, expected_length: 7588, train_start: 0, train_end: 5311, validation_end: 6071, test_end: 7588, allow_length_override: false}
+model:
+  profiles:
+    Exchange: {d_model: 128, n_heads: 16, d_ff: 256, encoder_layers: 3, dropout: 0.2, fc_dropout: 0.2, head_dropout: 0.0, attn_dropout: 0.0}
+training:
+  profiles:
+    Exchange: {learning_rate: 1.0e-4, batch_size: 64, max_epochs: 100, early_stopping_patience: 100, lr_schedule: type3, drop_last: true}

@@ -1,0 +1,62 @@
+{
+  "version": "E23-v42",
+  "worktree": "/home/xyw/paper/.e23-v42-mse/E23",
+  "scope": "development search; prior formal test outcomes already seen",
+  "task": "pure MSE forecast loss; aligned Stage2; increased Stage1 update budget; select favorable E23 seed using validation only",
+  "dataset": "ETTh1 P4",
+  "seq_len": 96,
+  "pred_len": 96,
+  "mask": "unchanged sr.1 block8 overlap; original validation; same frozen20 tests",
+  "stage2": {
+    "epochs": 100,
+    "batch_size": 128,
+    "precision": "float32",
+    "optimizer": "Adam",
+    "weight_decay": 0,
+    "predictor_lr": 0.0001,
+    "repair_lr": 0.0001,
+    "loss": "forecast_mse_only",
+    "repair_retention": "none",
+    "selection": "one training trajectory; save lowest validation MAE and lowest validation MSE",
+    "forecast_padding": "replicate_last_value_same_as_T1",
+    "training_rng": "reset all RNG to training seed after construction, same as T1",
+    "head": "original PatchTST D16 35427 parameters",
+    "exceptions": "E23 H memory/key encoder remain frozen as intrinsic retrieval state"
+  },
+  "stage1_control": {
+    "batch_size": 128,
+    "epochs": 100,
+    "updates": 6600
+  },
+  "stage1_increased": {
+    "batch_size": 32,
+    "epochs": 200,
+    "updates": 52800,
+    "loss": "global hidden MSE + .1 retrieval",
+    "learning_rate": 0.001
+  },
+  "phase1": "cached original v31-B and v40-tail32 Stage1 seed502; fresh matched Stage2 for both; choose geometry by validation MSE of MSE-selected checkpoint (tie MAE)",
+  "phase2": "fresh Stage1 for chosen geometry batch32 x200 seed502; matched Stage2; choose increased budget if MSE-selected validation MSE improves (tie MAE)",
+  "phase3": {
+    "seeds": [
+      2021,
+      102,
+      202,
+      302,
+      402,
+      502
+    ],
+    "geometry": "phase1 validation choice",
+    "budget": "phase2 validation choice",
+    "selection": "report two validation-selected seeds: MAE rule and MSE rule; no test-based ranking",
+    "test": "lock all six validation choices before scoring any new seed-search tests"
+  },
+  "T1": {
+    "seed": 502,
+    "reason": "best already saved reproduction test MSE; paper specifies 5 seeds and no best seed",
+    "author_configuration": "unchanged frozen author ETTh1 profile and model; same P4 mask/seq/pred; exact saved Stage1; fresh Stage2 once with both checkpoint selectors; same frozen20 tests",
+    "new_T1_training": "Stage2 only, once, dual checkpoints from exact cached Stage1; author repair config unchanged",
+    "new_T1_stage1_training": false
+  },
+  "resources": "same GPU1 sequential; measured full workflow and peak allocated/reserved; cached Stage1 cost counted once per candidate and actual new total separately"
+}

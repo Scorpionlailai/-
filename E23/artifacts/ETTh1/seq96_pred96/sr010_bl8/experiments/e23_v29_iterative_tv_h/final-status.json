@@ -1,0 +1,166 @@
+{
+  "status": "complete_with_user_requested_additional_test_diagnostics",
+  "retained_model": "E23_v28",
+  "reason": "both candidates fail predefined validation dual gate; no new tests run",
+  "formal_training_runs": 2,
+  "total_stage_epochs_completed": 400,
+  "code_freeze_verified": true,
+  "frozen_files": 335,
+  "user_csv_unchanged": true,
+  "test_mask_bank_unchanged": true,
+  "validation_selection_sha256": "59f93af98db579abed05292d8a41fdb8bf0fb8097ec258b3fd9e97b4b36460a9",
+  "models": [
+    {
+      "model": "E23_v29_r1",
+      "validation_mse": 0.7499365438950035,
+      "validation_mae": 0.5840456761470457,
+      "mse_gate_passed": false,
+      "mae_gate_passed": true,
+      "stage1_epochs": 100,
+      "stage2_epochs": 100,
+      "stage1_selected_epoch": 100,
+      "stage2_selected_epoch": 85,
+      "checkpoint_sha256": "5484f4d2f7eb9380eb9bc7c011b078685dd41a431688bcfa2e063815e2f5ee2f",
+      "training_resources": {
+        "full_workflow_seconds": 401.08082363475114,
+        "training_stages_seconds": 398.8267523134127,
+        "peak_allocated_gib": 1.8027100563049316,
+        "peak_reserved_gib": 5.478515625,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "batch_size": "128",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 397.6736267320812,
+        "stage1_legacy_loop_seconds": 217.47822372987866,
+        "stage2_legacy_loop_seconds": 180.1954030022025,
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r1/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r1/stage2/runs/e23-stage2.json"
+        ],
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r1/stage1/resources/229dd9c87bf742c38b1cdd516ca09342.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r1/stage2/resources/41af9db869d844e3bb01e261e16b2227.json"
+        ],
+        "resource_status": "measured_all_stages"
+      },
+      "test_draws": 0,
+      "historical_state_unchanged": true
+    },
+    {
+      "model": "E23_v29_r3",
+      "validation_mse": 0.7751666737251541,
+      "validation_mae": 0.5958350931976387,
+      "mse_gate_passed": false,
+      "mae_gate_passed": false,
+      "stage1_epochs": 100,
+      "stage2_epochs": 100,
+      "stage1_selected_epoch": 98,
+      "stage2_selected_epoch": 12,
+      "checkpoint_sha256": "85180b9f49b4c141edc656b23497bbebd2c2c673fc2d81c1f37441d304875ea5",
+      "training_resources": {
+        "full_workflow_seconds": 638.4126820424572,
+        "training_stages_seconds": 636.1358051020652,
+        "peak_allocated_gib": 3.0166983604431152,
+        "peak_reserved_gib": 6.591796875,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "batch_size": "128",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 634.9555778112262,
+        "stage1_legacy_loop_seconds": 350.72476195916533,
+        "stage2_legacy_loop_seconds": 284.2308158520609,
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage2/runs/e23-stage2.json"
+        ],
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage1/resources/6f32b7c3b6da4f1bb00d0c832bb94724.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/stage2/resources/b78fa90e64644692bf803a176d86f500.json"
+        ],
+        "resource_status": "measured_all_stages"
+      },
+      "test_draws": 0,
+      "historical_state_unchanged": true
+    }
+  ],
+  "reports": {
+    "docs/experiments/E23_v29_iterative_TV_H_P4_trial.md": "ee13bf8fc5dbe139dee8db611e5aff192b465a5f833eb07ad8e83a674ed5bc23",
+    "docs/experiments/ETTh1_P4_E23_v28_v29_T1_comparison_2026-10-03.csv": "39aa0301892df8258d4ebbe3024b32aca0b8b6d6489a8bbff79842b9e25610ce",
+    "docs/experiments/ETTh1_P4_E23_v28_v29_T1_test_groups_2026-10-03.csv": "0956b2dd50df32f459600f3cc7fcd76fa477674ea883c43fd606298c5fa66468",
+    "docs/experiments/ETTh1_P4_E23_v29_round_diagnostics_2026-10-03.csv": "bca0a3529043138b4a77068e7c7aeeca62dc958778b21450391712a80696d5d7",
+    "docs/experiments/ETTh1_P4_E23_v29_r3_prefix_forecast_validation_2026-10-03.csv": "02c36ebcdaf4d55e945d2fbd16523579fb2907eab563c7922eb488ce69156cc1"
+  },
+  "comparison_rows": 4,
+  "test_group_rows": 12,
+  "diagnostic_rows": 8,
+  "original_validation_retained_model": "E23_v28",
+  "additional_test_draws": 6,
+  "additional_test_models": [
+    {
+      "model": "E23_v29_r1",
+      "result_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r1/diagnostic_three_test_draws.json",
+      "result_sha256": "11f133c230a827deda73bfcdf2884a476bd29eedc0ebe953711b06413c7cd7a1",
+      "test_mean": {
+        "mae": 0.4238632206473491,
+        "mse": 0.4101210382970462
+      },
+      "test_std": {
+        "mae": 0.0007938590265095639,
+        "mse": 0.0032864379095225394
+      },
+      "checkpoint_sha256": "5484f4d2f7eb9380eb9bc7c011b078685dd41a431688bcfa2e063815e2f5ee2f",
+      "h_state_unchanged": true,
+      "additional_test_seconds": 2.82
+    },
+    {
+      "model": "E23_v29_r3",
+      "result_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/diagnostic_three_test_draws.json",
+      "result_sha256": "7710e36f167f01bbcd4e1e86be7e4873e5186b6ba2ceb7924acf1e6ad3518b08",
+      "test_mean": {
+        "mae": 0.43945747095801485,
+        "mse": 0.42440521149408256
+      },
+      "test_std": {
+        "mae": 0.0011248284487910879,
+        "mse": 0.005679375858101568
+      },
+      "checkpoint_sha256": "85180b9f49b4c141edc656b23497bbebd2c2c673fc2d81c1f37441d304875ea5",
+      "h_state_unchanged": true,
+      "additional_test_seconds": 3.1
+    }
+  ],
+  "prefix_validation_diagnostic": {
+    "path": "artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v29_iterative_tv_h_r3/prefix_forecast_validation.json",
+    "checkpoint_sha256": "85180b9f49b4c141edc656b23497bbebd2c2c673fc2d81c1f37441d304875ea5",
+    "results": [
+      {
+        "prefix_rounds": 1,
+        "forecast_mse": 0.9129028277061965,
+        "forecast_mae": 0.6559289793849262
+      },
+      {
+        "prefix_rounds": 2,
+        "forecast_mse": 0.816339088405341,
+        "forecast_mae": 0.6159463934346933
+      },
+      {
+        "prefix_rounds": 3,
+        "forecast_mse": 0.7751666737251541,
+        "forecast_mae": 0.5958350931976387
+      }
+    ],
+    "third_round_predictions_reproduced": true
+  },
+  "final_verification": {
+    "source_freeze_unchanged": true,
+    "user_csv_unchanged": true,
+    "test_mask_bank_unchanged": true,
+    "mean_std_recomputed": true,
+    "comparison_rows": 4,
+    "test_group_rows": 12,
+    "prefix_validation_reproduced": true,
+    "tests_passed": 856,
+    "tests_skipped": 1,
+    "tests_warnings": 8,
+    "tests_seconds": 25.82
+  },
+  "additional_user_request_complete": true
+}

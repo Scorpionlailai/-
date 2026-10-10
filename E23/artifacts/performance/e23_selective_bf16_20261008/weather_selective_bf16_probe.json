@@ -1,0 +1,31 @@
+{
+  "dataset": "Weather",
+  "variables": 21,
+  "batch_size": 128,
+  "mode": "eval dropout, fixed validation inputs, no optimizer/no tests",
+  "original": {
+    "step_ms_median": 174.3209888227284,
+    "step_ms_samples": [
+      174.45839568972588,
+      174.3234023451805,
+      174.00959134101868,
+      174.31857530027628
+    ],
+    "peak_allocated_gib": 10.296221733093262
+  },
+  "selective_bf16": {
+    "step_ms_median": 153.16392807289958,
+    "step_ms_samples": [
+      153.53005472570658,
+      152.921830303967,
+      153.25367636978626,
+      153.0741797760129
+    ],
+    "peak_allocated_gib": 9.025663375854492
+  },
+  "global_max_diff": 0.11710864305496216,
+  "loss_original": 0.04273052141070366,
+  "loss_bf16": 0.04277355223894119,
+  "gradient_relative_l2_difference": 0.030068225120359136,
+  "observed_unchanged": true
+}

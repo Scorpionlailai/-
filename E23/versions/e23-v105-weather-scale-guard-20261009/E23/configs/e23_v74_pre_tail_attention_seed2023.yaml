@@ -1,0 +1,46 @@
+model:
+  d_model: 64
+  front_context: window_cnn_v1
+  historical_threshold: 0.7
+  historical_topk: 4
+  point_refiner_span: 32
+  recovery_rounds: 1
+  recovery_schedule: iterative_tv_h_v1
+  residual_scale: 0.1
+  temporal_boundaries:
+  - 2
+  - 4
+  - 8
+  - 16
+  temporal_local_radius: 2
+  variable_offsets:
+  - -1
+  - 0
+  - 1
+  variable_selection: window_context_topk_v1
+  variable_topk: 4
+  point_router: pointwise_v1
+  overlap_fusion: confidence_v1
+  point_candidate_readout: eight_head_v1
+  variable_calibration: none
+  front_variable_context: signature_plain_pos_v3
+  repair_coordinates: robust_local_v1
+  historical_key_policy: legacy_v1
+  recent_mean_projection: mean_v1
+  point_variable_readout: none
+  point_context_readout: segment_attention_pre_tail_v2
+  temporal_evidence_readout: none
+  repair_input_scaling: legacy_v1
+training:
+  batch_size: 128
+  retrieval_loss_weight: 0.1
+  seed: 2023
+  specialist_exposure: 0.2
+  stage1_epochs: 100
+  stage1_lr: 0.001
+  stage1_objective: global_mse_v1
+  stage2_epochs: 100
+  stage2_lr: 0.0001
+  weight_decay: 0.0
+  stage1_structure: recent_mean_v2
+  stage1_gap_structure: long_gap_moments_v1

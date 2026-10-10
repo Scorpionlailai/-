@@ -1,0 +1,11 @@
+{
+  "parent": "v57 if its fixed validation gate passes, otherwise retain v54, before test selection.",
+  "change": "repair recent_mean_projection mean_v1 plus Stage1 recent_mean_v2 auxiliary level MSE weight1.0",
+  "scope": "only true missing points in last32; original observations unchanged",
+  "features": "visible-only window CNN, original routed expert states, current repaired/visible statistics and fixed channel identity; no future labels",
+  "extra_parameters": 13249,
+  "bound_relative_mean_delta": 2,
+  "missing_share_factor_cap": 4,
+  "forecast_head_unchanged": true,
+  "stage2_recipe": "inherited unchanged"
+}

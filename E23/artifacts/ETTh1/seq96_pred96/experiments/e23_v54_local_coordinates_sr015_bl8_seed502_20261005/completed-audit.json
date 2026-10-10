@@ -1,0 +1,104 @@
+{
+  "status": "complete",
+  "conditions": [
+    {
+      "label": "E23-v54-local-coordinates",
+      "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+      "trial": {
+        "label": "E23-v54-local-coordinates",
+        "config": "/home/xyw/paper/.e23-v54-local-coordinates/E23/configs/e23_v54_local_coordinates_seed502.yaml",
+        "config_key": "p1o1s0c1v0f0",
+        "parent": {
+          "label": "E23-v51-candidate-readout",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout",
+          "validation": {
+            "mse": 0.7830920143732949,
+            "mae": 0.5975814719859704
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "global_v1"
+        },
+        "only_change": "repair_coordinates",
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1"
+      },
+      "validation_lock": {
+        "parent": {
+          "label": "E23-v51-candidate-readout",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v51_candidate_readout_sr015_bl8_seed502_20261005/v51_candidate_readout",
+          "validation": {
+            "mse": 0.7830920143732949,
+            "mae": 0.5975814719859704
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "none",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "global_v1"
+        },
+        "validation": {
+          "mse": 0.7578881516748545,
+          "mae": 0.5871681204728799
+        },
+        "selected_epoch": 45,
+        "checkpoint_sha256": "56e45ef2add3cf6a9d0ce6b53f2bcdbdfb094ba88dc487ec0f3d92d03fbaff1d",
+        "accepted_on_validation": true,
+        "matched_v41_validation_gate": true,
+        "test_metrics_seen": false
+      },
+      "test_mean": {
+        "mae": 0.435215360237087,
+        "mse": 0.4316081964510098
+      },
+      "test_std": {
+        "mae": 0.0055397777066434496,
+        "mse": 0.01656838069784138
+      },
+      "next_parent": {
+        "label": "E23-v54-local-coordinates",
+        "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+        "validation": {
+          "mse": 0.7578881516748545,
+          "mae": 0.5871681204728799
+        },
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "none",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1"
+      }
+    }
+  ],
+  "retained_parent": {
+    "label": "E23-v54-local-coordinates",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+    "validation": {
+      "mse": 0.7578881516748545,
+      "mae": 0.5871681204728799
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1"
+  },
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "source_unchanged": true,
+  "protected_files_unchanged": true
+}

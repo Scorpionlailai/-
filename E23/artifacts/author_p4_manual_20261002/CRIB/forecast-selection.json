@@ -1,0 +1,68 @@
+{
+  "adapter_sha256": "2fd79ffcc08d22c99f0011fd0b9d76652e44bd30e1bc5f3c3bed1793489c6342",
+  "author_profiles_sha256": "b6cb42742fda9fc20b65604383b8a6c8523e5e5971000c3e2969dac3de859c8a",
+  "best_epoch": 10,
+  "best_validation": {
+    "mae": 0.6518710216427066,
+    "mse": 0.8744733782311956,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_manual_20261002/CRIB/forecast-selected.pt",
+  "checkpoint_sha256": "7c360b8fbe955ccc7e364c36df06e6972b4d95a1edc606f600d4292528b204d6",
+  "epochs_completed": 10,
+  "model": "CRIB",
+  "original_test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "profile": {
+    "kind": "forecast",
+    "model": {
+      "dropout": 0.1,
+      "enc_num": 2,
+      "heads_num": 4,
+      "model_dim": 32,
+      "patch_len": 8
+    },
+    "notes": "Paper specifies 2 attention layers; release default is 3, overridden by paper. The expanded rebuttal script excludes ETTh1, so global batch 256 is used. Fixed-validation MAE checkpoint selection is a P4 extension.",
+    "revision": "a457672c7b0152f74c929858dba2a9c886405519",
+    "root": "artifacts/upstream/CRIB",
+    "sources": [
+      "https://arxiv.org/html/2509.23494#A4",
+      "utils/args.py"
+    ],
+    "training": {
+      "batch_size": 256,
+      "epochs": 10,
+      "learning_rate": 0.001,
+      "loss": "forecast_mae + consistency_mse + 1e-6*kl",
+      "lradj": "constant",
+      "patience": null,
+      "precision": "float16",
+      "selection_metric": "mae",
+      "weight_decay": 0.0
+    },
+    "version": "paper Appendix D.1 + released global defaults"
+  },
+  "profile_version": "paper Appendix D.1 + released global defaults",
+  "protocol_config_sha256": "6805b1c785e884411e85895104b927c815a75dea96d09a53728c916bcf61c9e5",
+  "seed": 2021,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "forecast",
+  "status": "validation_finalized",
+  "test_metrics_seen": false,
+  "trainable_parameters": 96658,
+  "training": {
+    "batch_size": 256,
+    "epochs": 10,
+    "learning_rate": 0.001,
+    "loss": "forecast_mae + consistency_mse + 1e-6*kl",
+    "lradj": "constant",
+    "patience": null,
+    "precision": "float16",
+    "selection_metric": "mae",
+    "weight_decay": 0.0
+  },
+  "training_seconds": 14.102788673713803,
+  "upstream_revision": "a457672c7b0152f74c929858dba2a9c886405519",
+  "upstream_source_sha256": "b5dd5155f2606199129e1ff80f032563685be03e4bd9f5bb247aad2c49c9bc72",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

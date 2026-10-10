@@ -1,0 +1,94 @@
+{
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_20261002/S4M/checkpoints/S4M-ETTh1-missing-el8-lr0p005-do0p1-adam/checkpoint.pth",
+  "checkpoint_selection": "original fixed validation only; same selected weights in every test group",
+  "checkpoint_sha256": "5ec0469e6a5f35d43d2d3a07deab86f3d47d90d4004b7a20e6fda418efdc2a36",
+  "dataset": "ETTh1",
+  "metric_space": "train_standardized",
+  "model": "S4M",
+  "profile_version": "paper ETTh1 LR/batch/width + published scripts.sh architecture",
+  "scenario": "P4",
+  "schema_version": 1,
+  "selection_sha256": "9e99e15a9b01bef9a27fb35ea6f8f7d3ff1e739c0e1bf3184759d312849bd1d0",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "std_definition": "population standard deviation across three test missing-position draws (ddof=0)",
+  "test_draws": 3,
+  "test_groups": [
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_0",
+      "mae": 0.8036092350567314,
+      "missing_evaluation_fraction": 0.5667107337726758,
+      "missing_timeline_fraction": 0.5672043010752689,
+      "mse": 1.1199659765304821,
+      "path": "test_group_0.npz",
+      "seed": 2021,
+      "sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_1",
+      "mae": 0.8036092350512366,
+      "missing_evaluation_fraction": 0.5668004180839002,
+      "missing_timeline_fraction": 0.5658122119815668,
+      "mse": 1.1199659765286367,
+      "path": "test_group_1.npz",
+      "seed": 2026100201,
+      "sha256": "a9009133109fab0b94011a7007b7e880071344a5ac7a42f58d5fa0944ecd4ede",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_2",
+      "mae": 0.8036092350532553,
+      "missing_evaluation_fraction": 0.5695579338506236,
+      "missing_timeline_fraction": 0.5679723502304147,
+      "mse": 1.119965976529388,
+      "path": "test_group_2.npz",
+      "seed": 2026100202,
+      "sha256": "737c1710fe4dda249b310e482a1d70b9d560eed31c6f4711a97c038c835f96b4",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    }
+  ],
+  "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/test_mask_bank_20261002/manifest.json",
+  "test_mask_bank_sha256": "95fe49c78c6b884477e70c05f18a6c6c06f009e75d3afa01946275207b70e3a9",
+  "test_mean": {
+    "mae": 0.8036092350537412,
+    "mse": 1.1199659765295022
+  },
+  "test_std": {
+    "mae": 2.269402150301306e-12,
+    "mse": 7.577134333177745e-13
+  },
+  "training_resources": {
+    "batch_size": "16",
+    "full_workflow_seconds": 175.37540957704186,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 172.88714356068522,
+    "peak_allocated_gib": 1.3832330703735352,
+    "peak_reserved_gib": 1.958984375,
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/author_p4_20261002/S4M/resources/9c1be0b24d324d19b1fdb8b3c3c1025e.json"
+    ],
+    "resource_status": "measured_all_stages",
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/author_p4_20261002/S4M/forecast-selection.json"
+    ],
+    "stage1_legacy_loop_seconds": null,
+    "stage2_legacy_loop_seconds": null,
+    "training_stages_seconds": 174.5173940639943
+  },
+  "training_runs": 1,
+  "validation": {
+    "mae": 0.8826939933050726,
+    "mse": 1.5203051143011916
+  },
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

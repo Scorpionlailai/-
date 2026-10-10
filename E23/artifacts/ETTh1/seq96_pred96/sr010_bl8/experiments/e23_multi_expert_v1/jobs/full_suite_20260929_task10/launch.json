@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/usr/bin/env",
+    "PYTHONPATH=.:src",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "-m",
+    "pytest",
+    "tests/unit",
+    "tests/integration",
+    "tests/forecast_compare/test_protocol.py::test_hidden_history_does_not_change_student_or_query_stats",
+    "-q",
+    "--disable-warnings"
+  ],
+  "cwd": "/home/xyw/paper/E23",
+  "created_at": "2026-09-29T14:00:42.963076+00:00"
+}

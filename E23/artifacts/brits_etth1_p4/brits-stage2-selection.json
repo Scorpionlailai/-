@@ -1,0 +1,48 @@
+{
+  "adapter_sha256": "e25629f9d1158e6c1c04d396b2568caace657e4849d36e69ff3bea81307fd1ec",
+  "batch_size": 128,
+  "best_epoch": 8,
+  "best_validation": {
+    "mae": 0.6271854052467952,
+    "mse": 0.8428846627406252,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/brits_etth1_p4/brits-stage2-selected.pt",
+  "checkpoint_sha256": "2831aaf408fccec9c9e331490b9cc464df025f85b4149c8f29f25989496ea07f",
+  "dataset": "ETTh1",
+  "epochs_completed": 100,
+  "learning_rate": 0.0001,
+  "loss": "forecast_MSE",
+  "metric_space": "train_standardized",
+  "model": "BRITS+shared PatchTST",
+  "official_source_sha256": "15ff32e301b9f88975ed50288d4125af01e0c3e1f189c12c3286bd362e117de6",
+  "predictor_profile": {
+    "attn_dropout": 0.0,
+    "d_ff": 128,
+    "d_model": 16,
+    "dropout": 0.3,
+    "encoder_layers": 3,
+    "fc_dropout": 0.3,
+    "head_dropout": 0.0,
+    "n_heads": 4
+  },
+  "scenario": "P4",
+  "seed": 2021,
+  "selection": "earliest minimum fixed-validation forecast MAE",
+  "settings": {
+    "MIT": true,
+    "feature_num": 7,
+    "rnn_hidden_size": 128,
+    "seq_len": 96
+  },
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "forecast",
+  "stage1_checkpoint_sha256": "bddfd80992e20fec21ab24fce10de52c2a848f5f4c5243e999b8e5cdf8594245",
+  "stage1_selection_sha256": "d53526c573522887bc6bcf73f8aef13c1230b5a6bef242fbcf0888940175d2bc",
+  "test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "trainable_parameters": 187168,
+  "training_seconds": 913.7620877707377,
+  "upstream_revision": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

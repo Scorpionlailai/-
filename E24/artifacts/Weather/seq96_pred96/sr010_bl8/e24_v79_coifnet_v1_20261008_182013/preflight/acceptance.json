@@ -1,0 +1,37 @@
+{
+  "finite_coifnet_backward": true,
+  "identity": {
+    "data_protocol_id": "E24-weather-v79-sr010-bl8-seq96-pred96-all-eval-v1",
+    "dataset_manifest_sha256": "898d2571aa7107ae486e2293d6042f32413aaa256c0f5792bf18d1ca3bb9f5e7",
+    "e24_config_sha256": "60c32c9dc351bad0546f18876286f1b55a0ba54c8dc6cabae21a62bb4891c816",
+    "exploratory": true,
+    "mask_semantics": "original_true_visibility; repaired coordinates remain unobserved",
+    "model": "E24-v79+CoIFNet-v1",
+    "model_adapter_sha256": "563a3f404388df2ef93b3e651eb2bba44ab5bc2f8cc61fbc8dc95c98af6ed1e5",
+    "normalization": "observed_only_stats_preserve_repaired_values_v1",
+    "profiles_sha256": "b7bd7a740879b22d1754fc62ec0b1cb8e34da4646db84b8567bc307d978a6972",
+    "protocol_id": "E24-weather-frozen-repair-coifnet-sr010-bl8-v1",
+    "public_patchtst_protocol_compliant": false,
+    "reconstruction_supervision": "observed_history_only; repaired pseudo-values are not targets",
+    "repair_selection_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage1/runs/e23-stage1.json",
+    "repair_selection_sha256": "a9d9123067eca0e147777bed1981ea3db7af17cdbc93b40010a8d5bd68cc0366",
+    "repair_update_policy": "fully_frozen",
+    "runner_sha256": "6f4642b9ebe46367807ef62071f19343f3f1e49772fb57fc0a3e3745920c6504",
+    "source_csv_sha256": "34ee981d07313e51da2a50bb600072c8ae4a69cb4b0651f4cb93a069d7a2ba63",
+    "stage1_checkpoint_sha256": "24da663234d7d10276dd920be088c9ec703bff36310af0b0de1f8c68f3d54ccf",
+    "training_seed": 2023,
+    "upstream_revision": "114c964945cbd1a1b1791ca403d08f827e3c9fe4"
+  },
+  "labels_excluded": true,
+  "observed_only_normalization": true,
+  "original_visible_path_parity": true,
+  "output_shape": [
+    16,
+    192,
+    21
+  ],
+  "repair_state_unchanged": true,
+  "repaired_values_reach_forecast": true,
+  "smoke_weights_discarded": true,
+  "status": "passed"
+}

@@ -1,0 +1,100 @@
+{
+  "completed_runs": 10,
+  "expected_training_seeds": [
+    102,
+    202,
+    302,
+    402,
+    502
+  ],
+  "models": {
+    "E23-v31-B": {
+      "mae": {
+        "mean": 0.4307108830432503,
+        "test_mask_std_ddof1": 0.0027362937581376355,
+        "test_masks": 20,
+        "training_runs": 5,
+        "training_seed_std_ddof1": 0.004925721723318437
+      },
+      "mse": {
+        "mean": 0.41491841548694774,
+        "test_mask_std_ddof1": 0.005715184585627581,
+        "test_masks": 20,
+        "training_runs": 5,
+        "training_seed_std_ddof1": 0.005474232040809611
+      }
+    },
+    "T1": {
+      "mae": {
+        "mean": 0.4212830734901687,
+        "test_mask_std_ddof1": 0.0034302080852748567,
+        "test_masks": 20,
+        "training_runs": 5,
+        "training_seed_std_ddof1": 0.005503150813484121
+      },
+      "mse": {
+        "mean": 0.3964210389152406,
+        "test_mask_std_ddof1": 0.007918317947241188,
+        "test_masks": 20,
+        "training_runs": 5,
+        "training_seed_std_ddof1": 0.007138903601917845
+      }
+    }
+  },
+  "paired_completed_seeds": [
+    102,
+    202,
+    302,
+    402,
+    502
+  ],
+  "paired_difference": {
+    "mae": {
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20261004,
+      "crossed_bootstrap_ci95": [
+        0.004308516299373168,
+        0.014224118701995364
+      ],
+      "mask_pair_win_count": 0,
+      "mean_difference_ours_minus_T1": 0.009427809553081486,
+      "seed_pair_win_count": 0,
+      "uncertainty_scope": "training RNG and missing positions conditional on this fixed ETTh1 split"
+    },
+    "mse": {
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20261004,
+      "crossed_bootstrap_ci95": [
+        0.011246938668411064,
+        0.02450937159369592
+      ],
+      "mask_pair_win_count": 1,
+      "mean_difference_ours_minus_T1": 0.018497376571707178,
+      "seed_pair_win_count": 0,
+      "uncertainty_scope": "training RNG and missing positions conditional on this fixed ETTh1 split"
+    }
+  },
+  "status": "complete",
+  "test_mask_seeds": [
+    2026100401,
+    2026100402,
+    2026100403,
+    2026100404,
+    2026100405,
+    2026100406,
+    2026100407,
+    2026100408,
+    2026100409,
+    2026100410,
+    2026100411,
+    2026100412,
+    2026100413,
+    2026100414,
+    2026100415,
+    2026100416,
+    2026100417,
+    2026100418,
+    2026100419,
+    2026100420
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "split": "original_fixed_validation",
+  "metric_space": "train_standardized",
+  "diagnostic_only": true,
+  "recovery_rounds": 3,
+  "route_order": [
+    "none",
+    "historical",
+    "variable",
+    "temporal"
+  ],
+  "preview_order": [
+    "temporal",
+    "variable"
+  ],
+  "stage1": {
+    "windows": 2688,
+    "hidden_coordinates": 1023670,
+    "damaged_patch_targets": 203715,
+    "rounds": [
+      {
+        "round_index": 0,
+        "global_mse": 0.5915012064816421,
+        "global_mae": 0.5225320845050773,
+        "mean_update_norm": 1.6253971780812042,
+        "mean_route_weights": [
+          0.14723278089157346,
+          0.36340663912764143,
+          0.27045666991972606,
+          0.21890391008285867
+        ],
+        "mean_preview_gates": [
+          0.6244069253052732,
+          0.6190666650963433
+        ]
+      },
+      {
+        "round_index": 1,
+        "global_mse": 0.35241043427844176,
+        "global_mae": 0.4020590036187199,
+        "mean_update_norm": 1.6187472963147043,
+        "mean_route_weights": [
+          0.04619340682016688,
+          0.25626766731956935,
+          0.4119979630397116,
+          0.2855409628012149
+        ],
+        "mean_preview_gates": [
+          0.8710237027307417,
+          0.8099009115107694
+        ]
+      },
+      {
+        "round_index": 2,
+        "global_mse": 0.2553664345031236,
+        "global_mae": 0.33586128067394766,
+        "mean_update_norm": 1.7908131506102276,
+        "mean_route_weights": [
+          0.04829399305964112,
+          0.13920194726040305,
+          0.37569632126646646,
+          0.4368077382968931
+        ],
+        "mean_preview_gates": [
+          0.9040430360308769,
+          0.7902493796368697
+        ]
+      }
+    ],
+    "checkpoint_sha256": "1a030577352b8b752cb6a4952c59172649cd70fa8c921f1aa972e7fb7216df16",
+    "selected_epoch": 98,
+    "h_key_sha256_before": "f813e8aeccb5ad6bfb495982b18dd8faa5a88b9570ef8093a70b35ef1795ba73",
+    "h_key_sha256_after": "f813e8aeccb5ad6bfb495982b18dd8faa5a88b9570ef8093a70b35ef1795ba73",
+    "h_bank_sha256_before": "94b21d2dd398aec094539a1bab37f7d370e6f791db9871a64a985b95e65fcd7c",
+    "h_bank_sha256_after": "94b21d2dd398aec094539a1bab37f7d370e6f791db9871a64a985b95e65fcd7c"
+  },
+  "repair_parameters": 135321,
+  "stage2": {
+    "windows": 2688,
+    "hidden_coordinates": 1023670,
+    "damaged_patch_targets": 203715,
+    "rounds": [
+      {
+        "round_index": 0,
+        "global_mse": 0.5934348330486143,
+        "global_mae": 0.5242532784155294,
+        "mean_update_norm": 2.3921712587131534,
+        "mean_route_weights": [
+          0.10348141399264917,
+          0.5399648495877407,
+          0.24251421446225668,
+          0.11403952196562592
+        ],
+        "mean_preview_gates": [
+          0.6194731614955455,
+          0.7461574708202051
+        ]
+      },
+      {
+        "round_index": 1,
+        "global_mse": 0.40447754197214436,
+        "global_mae": 0.4368455885517916,
+        "mean_update_norm": 2.2107794111104977,
+        "mean_route_weights": [
+          0.026359571522884193,
+          0.33716953290725366,
+          0.40458096049526304,
+          0.23188993514948422
+        ],
+        "mean_preview_gates": [
+          0.9058607834803,
+          0.8743539859087855
+        ]
+      },
+      {
+        "round_index": 2,
+        "global_mse": 0.46432974463205917,
+        "global_mae": 0.4665797497072421,
+        "mean_update_norm": 2.5155474560047124,
+        "mean_route_weights": [
+          0.03045380206942635,
+          0.14735394449042868,
+          0.39949362735306604,
+          0.4226986260468083
+        ],
+        "mean_preview_gates": [
+          0.932643736922233,
+          0.8700518365156313
+        ]
+      }
+    ],
+    "checkpoint_sha256": "85180b9f49b4c141edc656b23497bbebd2c2c673fc2d81c1f37441d304875ea5",
+    "selected_epoch": 12,
+    "h_key_sha256_before": "f813e8aeccb5ad6bfb495982b18dd8faa5a88b9570ef8093a70b35ef1795ba73",
+    "h_key_sha256_after": "f813e8aeccb5ad6bfb495982b18dd8faa5a88b9570ef8093a70b35ef1795ba73",
+    "h_bank_sha256_before": "94b21d2dd398aec094539a1bab37f7d370e6f791db9871a64a985b95e65fcd7c",
+    "h_bank_sha256_after": "94b21d2dd398aec094539a1bab37f7d370e6f791db9871a64a985b95e65fcd7c"
+  }
+}

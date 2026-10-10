@@ -1,0 +1,100 @@
+[
+  {
+    "stage": "stage1",
+    "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_shared/stage1/runs/e23-stage1.json",
+    "selection_sha256": "02a4c8e6d45e91118f7bb84bd8c6debc15eb6b2dae032d39990166612adcfa92",
+    "checkpoint_sha256": "4379de0df1e7d5034cc38ddba17086b3458d09c6cc9f92e47bfcf209ea4a2871",
+    "selected_epoch": 89,
+    "metric_space": "train_standardized",
+    "metrics": {
+      "all96": {
+        "mse": 0.24230987617406233,
+        "mae": 0.320981429822162,
+        "hidden_coordinates": 1325353
+      },
+      "before64": {
+        "mse": 0.23777337637571966,
+        "mae": 0.31747985630033265,
+        "hidden_coordinates": 884130
+      },
+      "last32": {
+        "mse": 0.25140019006683023,
+        "mae": 0.3279979411959001,
+        "hidden_coordinates": 441223
+      },
+      "block_boundaries": {
+        "mse": 0.22911642860498801,
+        "mae": 0.31329218380789703,
+        "hidden_coordinates": 138031
+      }
+    },
+    "repair_stride": 8,
+    "repair_patch_count": 12,
+    "repair_parameters": 420973,
+    "history_sampling_stride": 8,
+    "historical_query_length": 16,
+    "repair_patch_length": 16,
+    "last32_level_mse": 0.05064512252700851,
+    "last32_slope_mse": 0.00029020607174801225,
+    "h_available_damaged_patches": 165463,
+    "damaged_patches": 220757,
+    "h_available_fully_hidden_patches": 0,
+    "point_weight_absolute_deviation": 0.19581197930420505,
+    "point_weight_within_patch_variance": 0.0038298462410925054,
+    "overlap_weight_absolute_deviation": 1.061411010435616,
+    "point_candidate_entropy": 1.470203672358844,
+    "point_candidate_null_mass": 0.5400844388237267,
+    "point_candidate_within_patch_variance": 0.03042734494971555,
+    "bank_state_unchanged": true,
+    "diagnostic_seconds": 1.485854814760387
+  },
+  {
+    "stage": "stage2_mse",
+    "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_frozen_mse/stage2/runs/e23-stage2.json",
+    "selection_sha256": "fe8bda966bee934deb18e1120ef2b2b28839ddedd48417a6f6dd873ef3739c8a",
+    "checkpoint_sha256": "3efb7f61a449a6fcbcdf5d2458830fb7d30697bb16e198c2f413ef51befad70e",
+    "selected_epoch": 100,
+    "metric_space": "train_standardized",
+    "metrics": {
+      "all96": {
+        "mse": 0.24230987617406233,
+        "mae": 0.320981429822162,
+        "hidden_coordinates": 1325353
+      },
+      "before64": {
+        "mse": 0.23777337637571966,
+        "mae": 0.31747985630033265,
+        "hidden_coordinates": 884130
+      },
+      "last32": {
+        "mse": 0.25140019006683023,
+        "mae": 0.3279979411959001,
+        "hidden_coordinates": 441223
+      },
+      "block_boundaries": {
+        "mse": 0.22911642860498801,
+        "mae": 0.31329218380789703,
+        "hidden_coordinates": 138031
+      }
+    },
+    "repair_stride": 8,
+    "repair_patch_count": 12,
+    "repair_parameters": 420973,
+    "history_sampling_stride": 8,
+    "historical_query_length": 16,
+    "repair_patch_length": 16,
+    "last32_level_mse": 0.05064512252700851,
+    "last32_slope_mse": 0.00029020607174801225,
+    "h_available_damaged_patches": 165463,
+    "damaged_patches": 220757,
+    "h_available_fully_hidden_patches": 0,
+    "point_weight_absolute_deviation": 0.19581197930420505,
+    "point_weight_within_patch_variance": 0.0038298462410925054,
+    "overlap_weight_absolute_deviation": 1.061411010435616,
+    "point_candidate_entropy": 1.470203672358844,
+    "point_candidate_null_mass": 0.5400844388237267,
+    "point_candidate_within_patch_variance": 0.03042734494971555,
+    "bank_state_unchanged": true,
+    "diagnostic_seconds": 0.8879283471032977
+  }
+]

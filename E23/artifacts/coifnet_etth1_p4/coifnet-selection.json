@@ -1,0 +1,31 @@
+{
+  "adapter_sha256": "95beb033f9a23ffd353071e7a1c390b37db83ace1090ba68209dd61eab64be9b",
+  "batch_size": 128,
+  "best_epoch": 97,
+  "best_validation": {
+    "mae": 0.6047228144950607,
+    "mse": 0.8270186285853657,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/coifnet_etth1_p4/coifnet-selected.pt",
+  "checkpoint_sha256": "4a2a2dd8b8840bdc8486429d3cdeb843bfa83bc9c9edd63585acb095ec7efffb",
+  "config_path": "/home/xyw/paper/E23/configs/stage1_seq96_dynamic_temporal_repair.yaml",
+  "dataset": "ETTh1",
+  "epochs_completed": 100,
+  "learning_rate": 0.001,
+  "loss": "0.1 * forecast_MAE + 0.9 * observed_reconstruction_MAE",
+  "metric_space": "train_standardized",
+  "model": "CoIFNet",
+  "official_source_sha256": "ccf487d3857c0d83b3619747c025a6327d8766653f4d01b1e114afa40f41755c",
+  "scenario": "P4",
+  "seed": 2021,
+  "selection": "earliest minimum fixed-validation forecast MAE",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "timestamp_features": "day_of_month_mod_7 + hour",
+  "trainable_parameters": 182733,
+  "training_seconds": 74.57217248529196,
+  "upstream_revision": "114c964945cbd1a1b1791ca403d08f827e3c9fe4",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

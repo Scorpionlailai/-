@@ -1,0 +1,5 @@
+| run_id | dataset | variant | mse | mae | degradation_mse_absolute | degradation_mae_absolute | degradation_mse_relative_percent | degradation_mae_relative_percent | drr_mse | drr_mae | final_rate | trainable_parameters | training_seconds |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Exchange-clean-a0ed0b18ea7a | Exchange | clean | 0.08168167237079504 | 0.1980154144041466 | 0.0 | 0.0 | 0.0 | 0.0 | N/A | N/A | 0.0 | 548704 | 400.53598087700084 |
+| Exchange-missing-c0c535b15ef9 | Exchange | missing | 0.10949951726378816 | 0.23322618639830386 | 0.027817844892993118 | 0.03521077199415726 | 34.05640957828781 | 17.78183385374867 | 0.0 | 0.0 | 0.5709857408555487 | 548704 | 363.4132100841962 |
+| Exchange-ours-9a1de7e89c3c | Exchange | ours | 0.09110654574452025 | 0.21020751107822766 | 0.009424873373725204 | 0.012192096674081054 | 11.538541144139245 | 6.157145245873213 | 66.119325886028 | 65.37395807139882 | 0.5709857408555487 | 1268750 | 1861.399016335141 |

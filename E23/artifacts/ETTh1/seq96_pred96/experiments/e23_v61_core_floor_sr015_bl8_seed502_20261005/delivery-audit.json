@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "source_files_verified": 496,
+  "protected_files_verified": 7521,
+  "new_stage1_runs": 1,
+  "new_stage2_runs": 1,
+  "new_test_draws": 20,
+  "cached_reference_draws": 360,
+  "tests_passed": 20,
+  "gpu_configurations_checked": 1,
+  "source_archive_sha256": "1b32c252d9bc7587edaa7e25932482f412f0a6f0467fd72c72fa04f0d0145461",
+  "new_full_training_seconds": 926.0310948686674,
+  "physical_gpu_uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "retained_parent": {
+    "label": "E23-v58-recent-mean",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean",
+    "validation": {
+      "mse": 0.750384486451441,
+      "mae": 0.5869973619508635
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  },
+  "original_predictor_unchanged": true,
+  "forecast_head_audit": {
+    "predictor_sources_identical": true,
+    "forecast_wrapper_ast_identical": true,
+    "stage2_objective_ast_identical": true,
+    "stage2_training_function_ast_identical_to_v60": true
+  },
+  "test_used_for_checkpoint_or_automatic_parent_selection": false
+}

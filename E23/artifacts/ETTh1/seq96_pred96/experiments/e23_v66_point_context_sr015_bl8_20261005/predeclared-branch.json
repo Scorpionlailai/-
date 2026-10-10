@@ -1,0 +1,22 @@
+{
+  "parent": "v67 validation-retained parent, after pure-MSE frozen control; execute only if still below T1",
+  "only_change": "direct pointwise numeric readout from unpooled visible CNN context and existing H/V/T routed latent, without extra attention",
+  "point_context_readout": "direct_point_v1",
+  "scope": 32,
+  "inputs": "CNN64 + folded routed64 + coarse relative value1 + original visible features5 + fixed variable onehot7",
+  "network": [
+    141,
+    64,
+    1
+  ],
+  "extra_parameters": 9153,
+  "output": "zero initialized, 2*tanh(delta/2) in robust relative units",
+  "observations_unchanged": true,
+  "head_unchanged": true,
+  "future_labels": "none added",
+  "stage1_epochs": 100,
+  "stage2_epochs": 100,
+  "stage2_recipe": "inherit retained parent exactly",
+  "motivation": "point context can write corrections directly instead of solely selecting existing patch candidates; closest forecast-sensitive last32 scope supported by validation oracle diagnostics",
+  "selection": "MAE primary and MSE secondary saved in same run; predeclared validation gate before tests"
+}

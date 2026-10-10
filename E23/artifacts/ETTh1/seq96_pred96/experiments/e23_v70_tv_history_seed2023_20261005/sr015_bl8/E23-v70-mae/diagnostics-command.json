@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "scripts/diagnose_e23_front_context.py",
+    "--cell",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v70_tv_history_seed2023_20261005/sr015_bl8/E23-v70-mae"
+  ],
+  "environment": {
+    "PYTHONPATH": "src:.",
+    "MALR_MISSING_SCENARIO": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  }
+}

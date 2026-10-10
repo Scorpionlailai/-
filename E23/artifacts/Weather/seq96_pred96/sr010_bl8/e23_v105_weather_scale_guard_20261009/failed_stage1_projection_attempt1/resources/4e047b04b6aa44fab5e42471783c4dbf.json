@@ -1,0 +1,40 @@
+{
+  "amp": false,
+  "batch_size": 128,
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "name": "x86_64",
+    "requested": "cpu",
+    "type": "cpu"
+  },
+  "error_type": "AssertionError",
+  "finished_utc": "2026-10-08T16:24:09.834045+00:00",
+  "full_workflow_seconds": 132.87051016651094,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "E23-v105-output-projection",
+  "peak_allocated_bytes": null,
+  "peak_reserved_bytes": null,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 0.8302282532677054,
+  "schema_version": 1,
+  "stages": {
+    "stage1_output_projection_and_validation": {
+      "peak_allocated_bytes": null,
+      "peak_reserved_bytes": null,
+      "status": "failed",
+      "wall_seconds": 132.04028191324323
+    }
+  },
+  "started_utc": "2026-10-08T16:21:57.792748+00:00",
+  "status": "failed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 132.04028191324323
+}

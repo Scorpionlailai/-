@@ -1,0 +1,87 @@
+{
+  "label": "E23-v56-pure-mse-MSE",
+  "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v56_pure_mse_sr015_bl8_seed502_20261005/v56_pure_mse_mse",
+  "trial": {
+    "label": "E23-v56-pure-mse-MSE",
+    "config": "/home/xyw/paper/.e23-v54-local-coordinates/E23/configs/e23_v54_local_coordinates_seed502.yaml",
+    "config_key": "parent_architecture",
+    "parent": {
+      "label": "E23-v54-local-coordinates",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+      "validation": {
+        "mse": 0.7578881516748545,
+        "mae": 0.5871681204728799
+      },
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "none",
+      "point_candidate_readout": "eight_head_v1",
+      "variable_calibration": "none",
+      "front_variable_context": "none",
+      "repair_coordinates": "robust_local_v1",
+      "point_variable_readout": "none"
+    },
+    "only_change": "stage2_pure_mse_without_retention_and_mse_selection",
+    "cached_stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates/stage1/runs/e23-stage1.json",
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none"
+  },
+  "validation_lock": {
+    "parent": {
+      "label": "E23-v54-local-coordinates",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+      "validation": {
+        "mse": 0.7578881516748545,
+        "mae": 0.5871681204728799
+      },
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "none",
+      "point_candidate_readout": "eight_head_v1",
+      "variable_calibration": "none",
+      "front_variable_context": "none",
+      "repair_coordinates": "robust_local_v1",
+      "point_variable_readout": "none"
+    },
+    "validation": {
+      "mse": 0.7557102471522463,
+      "mae": 0.5906620458140125
+    },
+    "selected_epoch": 24,
+    "selection_metric": "mse",
+    "checkpoint_sha256": "b7ce4ac8911dda11fdc9915d616eaee92a3680bac7516ba5c29795acf4afa94b",
+    "accepted_on_validation": false,
+    "matched_v41_validation_gate": true,
+    "test_metrics_seen": false
+  },
+  "test_mean": {
+    "mae": 0.4449739804884203,
+    "mse": 0.4424514769967181
+  },
+  "test_std": {
+    "mae": 0.005657524363711768,
+    "mse": 0.016544716598288378
+  },
+  "next_parent": {
+    "label": "E23-v54-local-coordinates",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v54_local_coordinates_sr015_bl8_seed502_20261005/v54_local_coordinates",
+    "validation": {
+      "mse": 0.7578881516748545,
+      "mae": 0.5871681204728799
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none"
+  }
+}

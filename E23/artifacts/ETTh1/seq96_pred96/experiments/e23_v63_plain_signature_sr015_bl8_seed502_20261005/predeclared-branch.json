@@ -1,0 +1,25 @@
+{
+  "parent": "v62 validation-retained parent, determined before its tests",
+  "condition": "only execute if retained parent remains below T1",
+  "only_change": "whole-window variable signature attention without statistics affine conditioning",
+  "front_variable_context": "signature_plain_v2",
+  "blocks": 2,
+  "heads": 64,
+  "head_dim": 96,
+  "kernels": [
+    5,
+    31
+  ],
+  "statistics_conditioning": false,
+  "extra_parameters": 105088,
+  "variable_identity_embedding": false,
+  "source": "original visible-only robust window CNN features",
+  "future_label_access": false,
+  "forecast_head_unchanged": true,
+  "stage1_epochs": 100,
+  "stage2_epochs": 100,
+  "stage1_batch": "inherit validation-retained parent",
+  "checkpoint_selection": "same-run MAE primary and MSE secondary, fixed validation gate, MAE priority",
+  "contrast_with_v53": "v53 coupled variable attention with 178368 extra statistics-affine parameters; this isolates attention and removes those parameters",
+  "confirmation": "if old20 exceeds T1, lock then evaluate new same-scene missing positions"
+}

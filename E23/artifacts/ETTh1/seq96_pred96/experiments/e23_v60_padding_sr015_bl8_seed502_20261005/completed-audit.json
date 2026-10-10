@@ -1,0 +1,145 @@
+{
+  "status": "complete",
+  "conditions": [
+    {
+      "label": "E23-v60-padding",
+      "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v60_padding_sr015_bl8_seed502_20261005/v60_padding",
+      "trial": {
+        "label": "E23-v60-padding",
+        "config": "/home/xyw/paper/.e23-v58-recent-mean/E23/configs/e23_v58_recent_mean_seed502.yaml",
+        "config_key": "parent_architecture",
+        "parent": {
+          "label": "E23-v58-recent-mean",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean",
+          "validation": {
+            "mse": 0.750384486451441,
+            "mae": 0.5869973619508635
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "recent_mean_v2",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "robust_local_v1",
+          "point_variable_readout": "none",
+          "historical_key_policy": "legacy_v1",
+          "recent_mean_projection": "mean_v1",
+          "temporal_evidence_readout": "none",
+          "forecast_padding": "zero_invalid_v1"
+        },
+        "only_change": "forecast_padding",
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "recent_mean_v2",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1",
+        "point_variable_readout": "none",
+        "historical_key_policy": "legacy_v1",
+        "recent_mean_projection": "mean_v1",
+        "temporal_evidence_readout": "none",
+        "forecast_padding": "replicate_last_value_v1",
+        "cached_stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean/stage1/runs/e23-stage1.json"
+      },
+      "validation_lock": {
+        "parent": {
+          "label": "E23-v58-recent-mean",
+          "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean",
+          "validation": {
+            "mse": 0.750384486451441,
+            "mae": 0.5869973619508635
+          },
+          "point_router": "pointwise_v1",
+          "overlap_fusion": "confidence_v1",
+          "stage1_structure": "recent_mean_v2",
+          "point_candidate_readout": "eight_head_v1",
+          "variable_calibration": "none",
+          "front_variable_context": "none",
+          "repair_coordinates": "robust_local_v1",
+          "point_variable_readout": "none",
+          "historical_key_policy": "legacy_v1",
+          "recent_mean_projection": "mean_v1",
+          "temporal_evidence_readout": "none",
+          "forecast_padding": "zero_invalid_v1"
+        },
+        "validation": {
+          "mse": 0.7519380197503399,
+          "mae": 0.5869739320543077
+        },
+        "selected_epoch": 98,
+        "checkpoint_sha256": "c59b169e46f2a7c6bf09826a6bdab42d370a5923076c965b9bbeff284c4e8e79",
+        "accepted_on_validation": false,
+        "matched_v41_validation_gate": true,
+        "test_metrics_seen": false
+      },
+      "test_mean": {
+        "mae": 0.4373107384662238,
+        "mse": 0.42783864679790684
+      },
+      "test_std": {
+        "mae": 0.004812033812849152,
+        "mse": 0.014270557012999391
+      },
+      "next_parent": {
+        "label": "E23-v58-recent-mean",
+        "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean",
+        "validation": {
+          "mse": 0.750384486451441,
+          "mae": 0.5869973619508635
+        },
+        "point_router": "pointwise_v1",
+        "overlap_fusion": "confidence_v1",
+        "stage1_structure": "recent_mean_v2",
+        "point_candidate_readout": "eight_head_v1",
+        "variable_calibration": "none",
+        "front_variable_context": "none",
+        "repair_coordinates": "robust_local_v1",
+        "point_variable_readout": "none",
+        "historical_key_policy": "legacy_v1",
+        "recent_mean_projection": "mean_v1",
+        "temporal_evidence_readout": "none",
+        "forecast_padding": "zero_invalid_v1"
+      }
+    }
+  ],
+  "retained_parent": {
+    "label": "E23-v58-recent-mean",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v58_recent_mean_sr015_bl8_seed502_20261005/v58_recent_mean",
+    "validation": {
+      "mse": 0.750384486451441,
+      "mae": 0.5869973619508635
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "none",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1"
+  },
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "source_unchanged": true,
+  "protected_files_unchanged": true,
+  "stage1_reused": true,
+  "new_stage1_runs": 0,
+  "new_stage2_runs": 1,
+  "evaluation_reader_fix": {
+    "reason": "Frozen evaluator did not restore declared padding due unmatched quote in prelaunch textual edit; validation failed before any test metric",
+    "original_evaluator_sha256": "cd0365bb547f641e057718c15bd6c0df2b72ac5a54027f0f7397c42ee66e9fee",
+    "fixed_evaluator": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v60_padding_sr015_bl8_seed502_20261005/evaluate_padding_replay.py",
+    "fixed_evaluator_sha256": "285fcbbcad127e99f5b9e6595f7a92d849e1da429c14ac534eef3c0e15cfa719",
+    "original_training_sources_unchanged": true,
+    "stage2_manifest_sha256": "adca74007bc8debc8d69ec4a6166e0265ce87af8a631d2b18d7a80ddd3cfceba",
+    "checkpoint_sha256": "c59b169e46f2a7c6bf09826a6bdab42d370a5923076c965b9bbeff284c4e8e79",
+    "test_metrics_seen": false,
+    "no_retraining": true,
+    "padding_value": "replicate_last_value_v1"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "amp": false,
+  "batch_size": 128,
+  "checkpoint_sha256": "44732390b67c15a79c463ac1129f8e5377b22166b1bfe7b5f2fc7f5c48a08276",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "name": "x86_64",
+    "requested": "cpu",
+    "type": "cpu"
+  },
+  "epochs_completed": 0,
+  "finished_utc": "2026-10-08T16:35:31.597095+00:00",
+  "full_workflow_seconds": 139.14151748269796,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "E23-v105-output-projection",
+  "peak_allocated_bytes": null,
+  "peak_reserved_bytes": null,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 0.8673635460436344,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v105_weather_scale_guard_20261009/E23-v105/sr010_bl8/stage1/runs/e23-stage1.json",
+  "selection_manifest_sha256": "93845a1da11ff651960cb511adefc4c309e1e3479b9a1dcdc5b93df7d84b6c25",
+  "stages": {
+    "stage1_output_projection_and_validation": {
+      "peak_allocated_bytes": null,
+      "peak_reserved_bytes": null,
+      "status": "completed",
+      "wall_seconds": 138.27415393665433
+    }
+  },
+  "started_utc": "2026-10-08T16:33:13.322009+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 138.27415393665433
+}

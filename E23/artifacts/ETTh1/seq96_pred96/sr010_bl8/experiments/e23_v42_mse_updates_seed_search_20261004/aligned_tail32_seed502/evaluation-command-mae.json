@@ -1,0 +1,20 @@
+[
+  "/home/xyw/miniforge3/envs/malr/bin/python",
+  "scripts/evaluate_e23_t1_replicate.py",
+  "--model",
+  "E23-v31-B",
+  "--model-label",
+  "E23-v42-aligned-tail32-select-mae",
+  "--training-seed",
+  "502",
+  "--selection",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/aligned_tail32_seed502/stage2/runs/e23-stage2.json",
+  "--e23-config",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/e23_seed502.yaml",
+  "--test-mask-bank",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+  "--output",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/aligned_tail32_seed502/evaluation_mae",
+  "--device",
+  "cuda:1"
+]

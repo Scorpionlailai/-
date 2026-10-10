@@ -1,0 +1,66 @@
+{
+  "label": "E23-v69-seed2023-frozen-MAE",
+  "scope": "ETTh1 96to96 sr015_bl8 about73percent missing",
+  "role": "development winner and new missing-position confirmed candidate; original validation retained parent stillv63",
+  "training_seed": 2023,
+  "selection_metric": "mae",
+  "selected_stage2_epoch": 100,
+  "config": "/home/xyw/paper/.e23-v69-signature-position/E23/configs/e23_v69_signature_position_seed2023.yaml",
+  "work": "/home/xyw/paper/.e23-v69-signature-position/E23",
+  "frozen_source_archive": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/frozen-source.tar.gz",
+  "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_frozen_mae/stage2/runs/e23-stage2.json",
+  "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_frozen_mae/stage2/checkpoints/e23-stage2.pt",
+  "checkpoint_sha256": "53109b90638c35d7e1b593d487f10c61ce2222d18681c4f2c675e480db7b67a0",
+  "stage1_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_shared/stage1/runs/e23-stage1.json",
+  "development_scores": {
+    "mae": 0.41315055082714747,
+    "mse": 0.4085089773007261
+  },
+  "fresh_confirmation": {
+    "model": "E23-v69-seed2023-frozen-MAE",
+    "training_seed": 2023,
+    "E23_mean": {
+      "mae": 0.4141945339384533,
+      "mse": 0.40962308066772496
+    },
+    "T1_mean": {
+      "mae": 0.4305408036627737,
+      "mse": 0.41652992247453896
+    },
+    "E23_mask_std": {
+      "mae": 0.0032878959792764276,
+      "mse": 0.007616400232590476
+    },
+    "T1_mask_std": {
+      "mae": 0.004269493051966246,
+      "mse": 0.011084423551764968
+    },
+    "paired_delta": {
+      "mse": {
+        "mean": -0.006906841806813974,
+        "mask_std_ddof1": 0.009753151654395805,
+        "wins": 14,
+        "draws": 20
+      },
+      "mae": {
+        "mean": -0.0163462697243204,
+        "mask_std_ddof1": 0.003593121403644202,
+        "wins": 20,
+        "draws": 20
+      }
+    },
+    "exceeds_T1_on_both": true,
+    "all_locked_files_unchanged": true,
+    "new_mask_bank_sha256": "466d75aa0de2c8096015358636ac8399190a64770cbe67b26c201440bd0a9520",
+    "actual_missing_fraction": 0.7277096564537273,
+    "scope": "missing-position robustness on same future targets, single E23 training seed"
+  },
+  "forecaster_parameters": 35427,
+  "forecaster_architecture_unchanged": true,
+  "repair_parameters": 420973,
+  "stage2_policy": "entire repair frozen, original forecaster normally trained",
+  "main_source_integrated": false,
+  "review": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/independent-review.json",
+  "metadata_erratum": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/archive-erratum.json",
+  "comparison_csv": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v69_T1_confirmed_comparison_20261005.csv"
+}

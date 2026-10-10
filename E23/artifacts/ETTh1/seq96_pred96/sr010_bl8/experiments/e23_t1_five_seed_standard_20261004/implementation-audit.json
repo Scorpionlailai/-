@@ -1,0 +1,23 @@
+{
+  "changed_existing_files": [
+    "integrations/forecast_compare/protocol.py",
+    "integrations/forecast_compare/author_provenance.py",
+    "integrations/e23/config.py",
+    "integrations/e23/run.py",
+    "scripts/run_author_aligned_p4.py"
+  ],
+  "disposable_preflight_original_record": "preflight.json has post-forward buffer hashes; use preflight-validated.json for initialization hashes",
+  "model_or_objective_sources_changed": [],
+  "new_implementation_files": [
+    "scripts/run_e23_t1_five_seed.py",
+    "scripts/summarize_e23_t1_five_seed.py",
+    "scripts/evaluate_e23_t1_replicate.py",
+    "scripts/preflight_e23_t1_standard.py",
+    "tests/forecast_compare/test_five_seed_standard.py",
+    "integrations/forecast_compare/test_mask_bank_v2.py",
+    "integrations/forecast_compare/replicate_statistics.py"
+  ],
+  "passed_related_tests": 61,
+  "training_seed_change_only": true,
+  "validated_cuda_preflight": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/preflight-validated.json"
+}

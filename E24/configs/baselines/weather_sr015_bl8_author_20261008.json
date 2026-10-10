@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "dataset": "Weather",
+    "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr015_bl8/shared_protocol_v1/dataset_manifest.json",
+    "seq_len": 96,
+    "pred_len": 96,
+    "n_vars": 21,
+    "start_rate": 0.15,
+    "block_len": 8,
+    "test_groups": 20,
+    "evaluation_windows": 10444,
+    "validation_windows": 5175,
+    "stage2_seed": 2023,
+    "default_seed": 2023
+  },
+  "shared_forecast_stage": {
+    "epochs": 100,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "precision": "float32",
+    "loss": "forecast_mse",
+    "selection_metric": "mae",
+    "patience": null,
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "repair_update_policy": "frozen_v1",
+    "seed": 2023,
+    "lradj": "constant"
+  },
+  "models": {
+    "CRIB": {
+      "kind": "forecast",
+      "root": "/home/xyw/paper/CRIB",
+      "revision": "a457672c7b0152f74c929858dba2a9c886405519",
+      "version": "paper Appendix D.1 architecture + released Weather bash/bash_train.sh training settings",
+      "model": {
+        "patch_len": 8,
+        "model_dim": 32,
+        "heads_num": 4,
+        "enc_num": 2,
+        "dropout": 0.1
+      },
+      "training": {
+        "epochs": 10,
+        "batch_size": 16,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float16",
+        "patience": null,
+        "selection_metric": "mae",
+        "loss": "forecast_mae + consistency_mse + 1e-6*kl",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://arxiv.org/html/2509.23494#A4",
+        "utils/args.py",
+        "bash/bash_train.sh"
+      ],
+      "notes": "Paper Appendix D.1 specifies 2 attention layers; released Weather training script explicitly uses batch16. Keep shared seq96/pred96 and masks; fixed-validation MAE selection is the task adaptation.",
+      "seed": 2023
+    },
+    "CoIFNet": {
+      "kind": "forecast",
+      "root": "/home/xyw/paper/CoIFNet",
+      "revision": "114c964945cbd1a1b1791ca403d08f827e3c9fe4",
+      "version": "paper Table III + official conf/conf.yaml",
+      "model": {
+        "hidden": 256,
+        "dropout": 0.1,
+        "temp_dim_tid": 8,
+        "temp_dim_tiw": 8,
+        "loss_lambda": 0.2
+      },
+      "training": {
+        "epochs": 100,
+        "batch_size": 512,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float32",
+        "patience": 10,
+        "selection_metric": "mae",
+        "loss": "0.2*forecast_mae + 0.8*observed_reconstruction_mae",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://arxiv.org/html/2506.13064v2#S5.SS1",
+        "conf/conf.yaml",
+        "conf/model/CoIFNet.yaml"
+      ],
+      "notes": "Paper Table III lambda 0.2 takes precedence over release 0.1 and sensitivity paragraph 0.3. Preserve author day-of-month modulo 7 time feature. Weather dimension adaptation: 21 variables; fixed seq96/pred96/block0.15/8 and shared full evaluation scope. Explicit imputers use frozen common Stage2, pure forecast MSE.",
+      "seed": 2023
+    },
+    "BiTGraph": {
+      "kind": "forecast",
+      "root": "/home/xyw/paper/BiTGraph",
+      "revision": "4f1d05bcc20bb3f5084bd1facc995478f84a40ed",
+      "version": "paper blocks3/topk10 + released global small model; no dedicated Weather config",
+      "model": {
+        "layers": 3,
+        "paper_topk": 10,
+        "effective_topk": 10,
+        "dropout": 0.3,
+        "node_dim": 3,
+        "conv_channels": 8,
+        "residual_channels": 8,
+        "skip_channels": 16,
+        "end_channels": 32
+      },
+      "training": {
+        "epochs": 200,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float32",
+        "patience": null,
+        "selection_metric": "mae",
+        "loss": "forecast_mae",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://proceedings.iclr.cc/paper_files/paper/2024/file/7f3b25e39e0f0330435d1ffc1d6fa193-Paper-Conference.pdf",
+        "main.py",
+        "README.md"
+      ],
+      "notes": "No dedicated Weather settings. Paper blocks3/topk10 and released small-model channels; effective graph topk10 for 21 variables. Preserve author forecast MAE; select on shared standardized validation MAE. Virtual CUDA0 required.",
+      "seed": 2023
+    },
+    "ChannelTokenFormer": {
+      "kind": "forecast",
+      "root": "/home/xyw/paper/ChannelTokenFormer",
+      "revision": "b1c100effb9c27cd25de07e91de7f9005d18d5e7",
+      "version": "released regular model/run.py defaults transferred to Weather; no Weather-specific script released",
+      "model": {
+        "d_model": 256,
+        "d_ff": 1024,
+        "n_heads": 8,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "keep_prob": 1.0,
+        "patch_len": 24,
+        "num_global_tokens": 2,
+        "factor": 3
+      },
+      "training": {
+        "epochs": 10,
+        "batch_size": 32,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0,
+        "precision": "float32",
+        "patience": 3,
+        "selection_metric": "mse",
+        "loss": "forecast_mse",
+        "lradj": "ctf_type1"
+      },
+      "sources": [
+        "https://arxiv.org/html/2506.08660",
+        "scripts_regular/CTF_ETTh1.sh",
+        "run.py",
+        "utils/tools.py"
+      ],
+      "notes": "Use ChannelTokenFormer_missing for P4. Group samples by full-patch visibility to preserve per-sample mask correctness; include this overhead in resources. Epoch-end LR becomes base*0.5**(epoch-1). Weather dimension adaptation: 21 variables; fixed seq96/pred96/block0.15/8 and shared full evaluation scope. Explicit imputers use frozen common Stage2, pure forecast MSE.",
+      "seed": 2023
+    },
+    "T1": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/T1",
+      "revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+      "version": "official T1_Weather.sh and run.py defaults; prior locked T1 repair seed502",
+      "model": {
+        "n_heads": 128,
+        "patch_size": 2,
+        "patch_stride": 1,
+        "n_blocks": [
+          2,
+          2
+        ],
+        "kernel_size_large": [
+          71,
+          31
+        ],
+        "kernel_size_small": 5,
+        "ffn_ratio": 1.0,
+        "downsample_ratio": 2,
+        "imputation_use_mask_embedding": false
+      },
+      "training": {
+        "epochs": 300,
+        "batch_size": 16,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0,
+        "precision": "bfloat16",
+        "patience": 30,
+        "selection_metric": "mse",
+        "loss": "hidden_reconstruction_mse",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://arxiv.org/html/2602.21043",
+        "scripts/imputation/T1_Weather.sh",
+        "exp/exp_imputation.py",
+        "utils/tools.py"
+      ],
+      "notes": "Official type3 means constant LR. Mask embedding false is the released script/default, despite the paper's mask-aware description. Stage 2 uses the common P4 forecast interface. Weather dimension adaptation: 21 variables; fixed seq96/pred96/block0.15/8 and shared full evaluation scope. Explicit imputers use frozen common Stage2, pure forecast MSE.",
+      "seed": 502
+    },
+    "SAITS": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/SAITS",
+      "revision": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+      "version": "public SAITS-base; no dedicated Weather configuration; feature dimension21",
+      "model": {
+        "n_groups": 2,
+        "n_group_inner_layers": 1,
+        "d_model": 256,
+        "d_inner": 128,
+        "n_head": 4,
+        "d_k": 64,
+        "d_v": 64,
+        "dropout": 0.1
+      },
+      "training": {
+        "epochs": 10000,
+        "batch_size": 128,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float32",
+        "patience": 30,
+        "selection_metric": "mae",
+        "loss": "observed_reconstruction_mae + hidden_imputation_mae",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://arxiv.org/html/2202.08516",
+        "configs/Electricity_SAITS_base.ini"
+      ],
+      "notes": "No dedicated Weather configuration: public SAITS-base architecture/training; 21 features. Shared fixed validation replaces original per-step validation cadence. Frozen shared forecast Stage2.",
+      "seed": 2023
+    },
+    "S4M": {
+      "kind": "s4m",
+      "root": "/home/xyw/paper/S4M",
+      "revision": "7c384fb7cc9ebd21b1e6eeed9ee9cc3a2039b8b8",
+      "upstream_commit": "a718823addd3606e763dfc261174e0135b2535f4",
+      "version": "released scripts.sh Weather architecture + author SGD optimizer; protected-core bridge for shared missing windows",
+      "model": {
+        "d_model": 256,
+        "d_ff": 256,
+        "en_conv_hidden_size": 256,
+        "e_layers": 8,
+        "dropout": 0.1,
+        "per_mem_size": 5,
+        "topK": 20,
+        "thres1": 0.95,
+        "thres2": 0.6,
+        "M": 50,
+        "memory_size": 200,
+        "momentum": 0.99,
+        "short_len": 32,
+        "num_pattn": 30,
+        "num_dG": 1,
+        "encoder_type": 3,
+        "memnet": 13,
+        "mem_type": 3
+      },
+      "training": {
+        "epochs": 10,
+        "batch_size": 16,
+        "learning_rate": 0.005,
+        "weight_decay": 1e-05,
+        "precision": "float32",
+        "patience": 3,
+        "selection_metric": "mse",
+        "loss": "forecast_mse",
+        "lradj": "s4m_type1",
+        "optimizer": "sgd",
+        "momentum": 0.9
+      },
+      "sources": [
+        "https://arxiv.org/html/2503.00900",
+        "s4m/scripts.sh",
+        "s4m/run.py"
+      ],
+      "notes": "Weather released example depth8/LR.005, default batch16/epochs10/patience3. Original exp_pretrain1 optimizer: SGD momentum0.9 weight_decay1e-5. Preserve first-batch bank warmup without optimizer update each epoch. Shared P4 per-window training masks; freeze bank during fixed validation/test and checkpoint full CPU bank. PyTorch S4 kernel fallback. Native forecast model, no extra Stage2.",
+      "seed": 2023
+    }
+  }
+}

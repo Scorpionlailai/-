@@ -1,0 +1,143 @@
+{
+  "model": "E23-v41-tail32-slow",
+  "split": "original_fixed_validation",
+  "training_seed": 502,
+  "prediction_metrics": {
+    "baseline": {
+      "mse": 0.7379902088430076,
+      "mae": 0.5799525232085826
+    },
+    "restore_stage1_last32": {
+      "mse": 0.7441061735492371,
+      "mae": 0.5790131043984525
+    },
+    "oracle_half_last32": {
+      "mse": 0.7020009714611706,
+      "mae": 0.5615854189683109
+    },
+    "oracle_full_last32": {
+      "mse": 0.6968007494565105,
+      "mae": 0.5549280098632304
+    },
+    "oracle_level_last32": {
+      "mse": 0.7143297496332833,
+      "mae": 0.5677567568000925
+    },
+    "oracle_level_slope_last32": {
+      "mse": 0.7062153777302524,
+      "mae": 0.5635790815223602
+    },
+    "oracle_all96": {
+      "mse": 0.7186730376368823,
+      "mae": 0.557888613850347
+    }
+  },
+  "three_contiguous_validation_segments": {
+    "baseline": [
+      {
+        "mse": 0.8809331379107133,
+        "mae": 0.6278992406502559
+      },
+      {
+        "mse": 0.7834225353136042,
+        "mae": 0.60557567968401
+      },
+      {
+        "mse": 0.5496149533047056,
+        "mae": 0.5063826492914817
+      }
+    ],
+    "restore_stage1_last32": [
+      {
+        "mse": 0.8633151780662079,
+        "mae": 0.6203848353431924
+      },
+      {
+        "mse": 0.7993323761516781,
+        "mae": 0.6066323605101253
+      },
+      {
+        "mse": 0.5696709664298261,
+        "mae": 0.5100221173420401
+      }
+    ],
+    "oracle_half_last32": [
+      {
+        "mse": 0.8178892023038882,
+        "mae": 0.6055291840403315
+      },
+      {
+        "mse": 0.7559586832777072,
+        "mae": 0.5879185113878665
+      },
+      {
+        "mse": 0.532155028801917,
+        "mae": 0.4913085614767348
+      }
+    ],
+    "oracle_full_last32": [
+      {
+        "mse": 0.793585598988275,
+        "mae": 0.59381903068603
+      },
+      {
+        "mse": 0.7653301239506071,
+        "mae": 0.5865156112959189
+      },
+      {
+        "mse": 0.5314865254306492,
+        "mae": 0.48444938760774237
+      }
+    ],
+    "oracle_level_last32": [
+      {
+        "mse": 0.8200181406134236,
+        "mae": 0.6095255104483275
+      },
+      {
+        "mse": 0.7809022040622203,
+        "mae": 0.5983088344271029
+      },
+      {
+        "mse": 0.5420689042242061,
+        "mae": 0.49543592552484733
+      }
+    ],
+    "oracle_level_slope_last32": [
+      {
+        "mse": 0.8066142009028223,
+        "mae": 0.6034873015738329
+      },
+      {
+        "mse": 0.7738211093698462,
+        "mae": 0.5942567260773193
+      },
+      {
+        "mse": 0.5382108229180889,
+        "mae": 0.49299321691592857
+      }
+    ],
+    "oracle_all96": [
+      {
+        "mse": 0.8077396648235551,
+        "mae": 0.5952306877471157
+      },
+      {
+        "mse": 0.7872636351842104,
+        "mae": 0.5903121413629416
+      },
+      {
+        "mse": 0.5610158129028807,
+        "mae": 0.48812301244098394
+      }
+    ]
+  },
+  "input_observations_mask_query_stats_and_all_weights_fixed": true,
+  "no_training": true,
+  "no_test_evaluation": true,
+  "no_checkpoint_selection": true,
+  "oracle_is_not_deployable": true,
+  "level_slope_intervention": "minimum-norm additive correction restricted to last32 hidden coordinates matching full last32 level/slope",
+  "model_intervention_not_physical_causality": true,
+  "seconds": 1.8273543799296021
+}

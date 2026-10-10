@@ -1,0 +1,91 @@
+{
+  "ablations": {
+    "use_historical": true,
+    "use_recovery_loss": false,
+    "use_temporal": true,
+    "use_variable": true
+  },
+  "bank_sha256": null,
+  "checkpoint_sha256": "19fc71573c69017cfe6f07c96f48ac9678f41949c28df281368100ce0695aa28",
+  "clean_baseline_fingerprint": "b48fcaf26e2f7f592f24584c5576f3128eb3fd79c86b534e6a554828c076aefb",
+  "config_hash": "a1452ca1defb171a6fe04bae64355b9a7c4be0cd8cbe99c307d1fc3af706b557",
+  "dataset": "Weather",
+  "degradation_mae_absolute": 0.006227347667150607,
+  "degradation_mae_relative_percent": 2.900423946273335,
+  "degradation_mse_absolute": 0.0009119107394943149,
+  "degradation_mse_relative_percent": 0.5291179815958733,
+  "drr_mae": 84.32991184049389,
+  "drr_mse": 97.98113038942898,
+  "final_rate": 0.5679763583853852,
+  "inference_ablations": {
+    "historical_only": {
+      "mae": 0.2531894814806749,
+      "mse": 0.20926079601818498
+    },
+    "without_historical": {
+      "mae": 0.218842111876905,
+      "mse": 0.17259278791604807
+    },
+    "without_temporal": {
+      "mae": 0.2337655737634782,
+      "mse": 0.18654271553375087
+    },
+    "without_variable": {
+      "mae": 0.2380163727397289,
+      "mse": 0.19640502097985332
+    }
+  },
+  "mae": 0.2209320867847521,
+  "mask_sha256": "8656da3ad5bca822ad4306c56273282ad1396af5144b8c9c14b44ae8c8584a4e",
+  "metric_space": "train_standardized",
+  "missing_baseline_fingerprint": "a8b87d449653be87b92ec174fca271df8f60ca7e2a354aef74313fd4abca426e",
+  "mse": 0.17325735565215822,
+  "online_diagnostics": {
+    "historical_actual_gain": 0.0,
+    "historical_candidate_rate": 0.4875822315351532,
+    "historical_predicted_gain": -0.7102039159827866,
+    "historical_selected_rate": 0.054309824509457816,
+    "historical_zero_rate": 0.8886140203705469,
+    "route_historical_actual_gain": 0.0,
+    "route_historical_rate": 0.04270409047714852,
+    "route_historical_temporal_actual_gain": 0.0,
+    "route_historical_temporal_rate": 0.0,
+    "route_historical_temporal_variable_actual_gain": 0.0,
+    "route_historical_temporal_variable_rate": 0.0,
+    "route_historical_variable_actual_gain": 0.0,
+    "route_historical_variable_rate": 0.0,
+    "route_none_actual_gain": 0.0,
+    "route_none_rate": 0.5150717217998083,
+    "route_repair_regret": 0.0,
+    "route_repair_regret_positive_rate": 0.0,
+    "route_selection_error_rate": 0.0,
+    "route_temporal_actual_gain": 0.0,
+    "route_temporal_rate": 0.0,
+    "route_temporal_variable_actual_gain": 0.0,
+    "route_temporal_variable_rate": 0.0,
+    "route_variable_actual_gain": 0.0,
+    "route_variable_rate": 0.4422241877230432,
+    "temporal_actual_gain": 0.0,
+    "temporal_candidate_rate": 0.8937801715016415,
+    "temporal_global_use_rate": 0.7346568906965668,
+    "temporal_local_use_rate": 0.15912328080507465,
+    "temporal_predicted_gain": 0.0,
+    "temporal_selected_rate": 0.8937801715016415,
+    "temporal_zero_rate": 0.0,
+    "variable_actual_gain": 0.0,
+    "variable_candidate_rate": 0.8965714013866201,
+    "variable_predicted_gain": -0.7122068783517032,
+    "variable_selected_rate": 0.006670186431548903,
+    "variable_zero_rate": 0.9925603399559333
+  },
+  "online_ema_sha256": "d256daf0cb10f37845d9f99eac3c64783ca105a35edd3ceaed68f7fd3bf4de92",
+  "online_memory_sha256": "296bc52a211b5783643efd9a916677b21c38203c5ef449d7e3ff486d7a18c97f",
+  "online_relation_prior_sha256": "34c85eebb70b8119833a84cd5cdd0b5b825db61fb852e718b941ebe47a53a531",
+  "run_id": "Weather-ours-6df17cd6b981",
+  "seed": 2021,
+  "source_csv_sha256": "34ee981d07313e51da2a50bb600072c8ae4a69cb4b0651f4cb93a069d7a2ba63",
+  "timestamp_utc": "2026-09-21T11:44:11.877308+00:00",
+  "trainable_parameters": 1272078,
+  "training_seconds": 64691.86172567215,
+  "variant": "ours"
+}

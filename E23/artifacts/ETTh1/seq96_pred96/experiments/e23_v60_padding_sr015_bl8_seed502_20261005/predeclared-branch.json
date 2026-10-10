@@ -1,0 +1,10 @@
+{
+  "parent": "v59 validation-retained parent; branch only if T1 not yet exceeded",
+  "only_change": "forecast_padding replicate_last_value_v1 matching existing T1 wrapper",
+  "scope": "fill invalid trailing patch positions with last repaired true timestep; original observations/mask/validity retained",
+  "forecast_head_structure_parameters_initialization_unchanged": true,
+  "optimizer_objective_and_training_loop_unchanged": true,
+  "stage1": "reuse exact parent selected checkpoint and bank",
+  "selection": "MAE with fixed validation MSE lower and MAE no worse promotion",
+  "cost": "report cached Stage1 plus measured new Stage2 as full model training cost; new incremental time separately"
+}

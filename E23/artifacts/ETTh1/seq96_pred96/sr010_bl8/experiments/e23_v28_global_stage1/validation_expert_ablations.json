@@ -1,0 +1,44 @@
+{
+  "model": "E23_v28",
+  "split": "original_fixed_validation",
+  "method": "Disable selected expert availability before router softmax; all weights fixed; no retraining.",
+  "checkpoint_sha256": "7224e3d3f60273742ab6afe8a40e9ccc5eec4a5eb7a1291a5db780b305188c48",
+  "h_state_unchanged": true,
+  "results": {
+    "full": {
+      "mse": 0.7402293330687785,
+      "mae": 0.5855096656989619,
+      "coordinates": 1806336,
+      "delta_mse": 0.0,
+      "delta_mae": 0.0
+    },
+    "without_H": {
+      "mse": 0.7999909589079772,
+      "mae": 0.599664515108208,
+      "coordinates": 1806336,
+      "delta_mse": 0.05976162583919875,
+      "delta_mae": 0.01415484940924605
+    },
+    "without_V": {
+      "mse": 0.7928753829056443,
+      "mae": 0.6135868820744037,
+      "coordinates": 1806336,
+      "delta_mse": 0.05264604983686583,
+      "delta_mae": 0.028077216375441805
+    },
+    "without_T": {
+      "mse": 0.7656206349396651,
+      "mae": 0.5986944877641812,
+      "coordinates": 1806336,
+      "delta_mse": 0.025391301870886673,
+      "delta_mae": 0.013184822065219315
+    },
+    "without_all": {
+      "mse": 0.9494767145775344,
+      "mae": 0.6641176963339046,
+      "coordinates": 1806336,
+      "delta_mse": 0.20924738150875588,
+      "delta_mae": 0.0786080306349427
+    }
+  }
+}

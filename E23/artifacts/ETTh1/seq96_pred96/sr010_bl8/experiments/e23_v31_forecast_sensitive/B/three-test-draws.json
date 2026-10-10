@@ -1,0 +1,104 @@
+{
+  "candidate_selection": "top_k",
+  "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v31_forecast_sensitive/B/stage2/checkpoints/e23-stage2.pt",
+  "checkpoint_selection": "original fixed validation only; same selected weights in every test group",
+  "checkpoint_sha256": "569d67b3f4c391f623a063ff4e4ace2e73ec86d28e8bf0958e099d49e872178b",
+  "dataset": "ETTh1",
+  "e23_config_sha256": "5bef11d4174fd6656606471566d21a59f17e259eb9f8f7272b5f2d10f014d5cf",
+  "h_state_unchanged": true,
+  "metric_space": "train_standardized",
+  "model": "E23_v31_B",
+  "profile_version": "locked width64/window_context_topk_v1/global_mse_v1/iterative_tv_h_v1/r1",
+  "recovery_rounds": 1,
+  "recovery_schedule": "iterative_tv_h_v1",
+  "repair_retention": "uniform_v1",
+  "repair_retention_warmup": 10,
+  "repair_retention_weight": 0.05,
+  "repair_width": 64,
+  "scenario": "P4",
+  "schema_version": 1,
+  "selection_sha256": "434a3abd6bedcd83cfb84928f05a84705bd9a6febf5fb50bc0899b289a08b2f9",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage1_objective": "global_mse_v1",
+  "stage1_selection_metric_space": "train_standardized",
+  "std_definition": "population standard deviation across three test missing-position draws (ddof=0)",
+  "test_draws": 3,
+  "test_groups": [
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_0",
+      "mae": 0.42040571874501753,
+      "missing_evaluation_fraction": 0.5667107337726758,
+      "missing_timeline_fraction": 0.5672043010752689,
+      "mse": 0.4051927644379285,
+      "path": "test_group_0.npz",
+      "seed": 2021,
+      "sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_1",
+      "mae": 0.4210614357946141,
+      "missing_evaluation_fraction": 0.5668004180839002,
+      "missing_timeline_fraction": 0.5658122119815668,
+      "mse": 0.40241660660897255,
+      "path": "test_group_1.npz",
+      "seed": 2026100201,
+      "sha256": "a9009133109fab0b94011a7007b7e880071344a5ac7a42f58d5fa0944ecd4ede",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_2",
+      "mae": 0.42070655000993723,
+      "missing_evaluation_fraction": 0.5695579338506236,
+      "missing_timeline_fraction": 0.5679723502304147,
+      "mse": 0.4126979018014575,
+      "path": "test_group_2.npz",
+      "seed": 2026100202,
+      "sha256": "737c1710fe4dda249b310e482a1d70b9d560eed31c6f4711a97c038c835f96b4",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    }
+  ],
+  "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/test_mask_bank_20261002/manifest.json",
+  "test_mask_bank_sha256": "95fe49c78c6b884477e70c05f18a6c6c06f009e75d3afa01946275207b70e3a9",
+  "test_mean": {
+    "mae": 0.42072456818318965,
+    "mse": 0.40676909094945285
+  },
+  "test_std": {
+    "mae": 0.0002679983870702901,
+    "mse": 0.004342799531942067
+  },
+  "training_resources": {
+    "batch_size": "128",
+    "full_workflow_seconds": 402.8320234119892,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 399.69722595624626,
+    "peak_allocated_gib": 1.8027100563049316,
+    "peak_reserved_gib": 5.478515625,
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v31_forecast_sensitive/common_stage1/resources/b5bc1793c0b944d48cca45e4310e69bd.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v31_forecast_sensitive/B/stage2/resources/0063bda0212743e088f9dcdb0189483e.json"
+    ],
+    "resource_status": "measured_all_stages",
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v31_forecast_sensitive/common_stage1/runs/e23-stage1.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v31_forecast_sensitive/B/stage2/runs/e23-stage2.json"
+    ],
+    "stage1_legacy_loop_seconds": 217.37940108403563,
+    "stage2_legacy_loop_seconds": 182.31782487221062,
+    "training_stages_seconds": 400.61907198652625
+  },
+  "training_runs": 1,
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c",
+  "variable_selection": "window_context_topk_v1"
+}

@@ -1,0 +1,81 @@
+{
+  "status": "complete",
+  "completed_utc": "2026-10-04T06:57:18.249775+00:00",
+  "training_seed": 502,
+  "seed_scope": "exploratory; seed selected from existing formal test results",
+  "split": "original_fixed_validation",
+  "windows": 2688,
+  "forecast_coordinates": 1806336,
+  "new_training": false,
+  "test_predictions_computed": false,
+  "checkpoint_selection_changed": false,
+  "metric_space": "train_standardized",
+  "original_heads_frozen": true,
+  "predictor_parameters": 35427,
+  "regions": 42,
+  "region_combinations": 14,
+  "position_rows": 588,
+  "signed_gains_retained": true,
+  "half_oracle_strength": 0.5,
+  "original_masks_and_query_stats_fixed": true,
+  "overlapping_windows_not_independent": true,
+  "oracle_not_a_guaranteed_bound": true,
+  "cross_swaps_diagnostic_only": true,
+  "real_world_causality_identified": false,
+  "regional_interventions_padding": "all invalid padding fixed to zero to compare valid repaired content",
+  "native_padding_replay_and_padding_controls": true,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c",
+  "checkpoint_sha256": {
+    "v31B": "52fa614a982ac2526ee063e6fc90dd63a6f36025b80a20041d1d3ff8c177bae1",
+    "v38": "a45a13fce546f55f76c841955d6dcb20cf903cfc0037f0aeceb522a9e81e0017",
+    "T1": "15d7c4dbb7b441d47a3ca0cc6ec600a540854cfdb9d7d30cf9aa25a595156dc3"
+  },
+  "state_hashes_unchanged": {
+    "v31B": {
+      "model": "157c21dfce96416ca8406736aa5fee765f2b1f631ff9a15350838a3cf21ca145",
+      "key": "de8fcba94e68f729899670433192fbadb11d4896ba2e1f4c60e30e9e691b7264",
+      "memory": "7039bb4ff0c3af1c99978e437b2c3cca5d3d942d7b7f73ab4014f1d8ee44d6d5"
+    },
+    "v38": {
+      "model": "60a62e63dc1ab43928608d45760842a5b69399d6c90ea80a7daeb1d9340a0df2",
+      "key": "44f2eda24212bfc9ae9cb5920e40d74ed9cb13664d1805b5c8b009da7284dcf2",
+      "memory": "f5a75389030801309c8f451f72f985a59c8c781c962cb329842fd32d00784777"
+    },
+    "T1": {
+      "model": "33d3acd6c5e8e2633279bd24dc8ac931299ff35d79a7d45ff9c04da5dfce927c"
+    }
+  },
+  "protected_files_unchanged": 737,
+  "outputs": {
+    "baseline_head_padding.csv": "505ffff806459a3f4138e1e13427ec735d8484fd44ef91469ada9dd833fbde15",
+    "position_interventions.csv": "4adee1f259ad0eea4222d62ca7935628d43394d0acc98b74a39a317ff0df57f4",
+    "repair_metrics.csv": "fe2abf020f9ef46561073731b5b0a8c6f101ca905da16e946f6732ec3e15e6d9",
+    "per_window_gains.npz": "32e1435fa925b3177fc1e6251daa357d99ca43ed1f7eb7e290d43418797f9bd4"
+  },
+  "repair_metrics": [
+    {
+      "model": "v31B",
+      "mse": 0.41595649073475677,
+      "mae": 0.4442075773074297,
+      "hidden_coordinates": 1023670
+    },
+    {
+      "model": "v38",
+      "mse": 0.3819408843471364,
+      "mae": 0.42636487825194797,
+      "hidden_coordinates": 1023670
+    },
+    {
+      "model": "T1",
+      "mse": 0.49255980031145413,
+      "mae": 0.48121114008688776,
+      "hidden_coordinates": 1023670
+    }
+  ],
+  "diagnostic_seconds": 9.378940018825233,
+  "device": "cuda:1",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "peak_allocated_gib": 0.407839298248291,
+  "peak_reserved_gib": 0.591796875
+}

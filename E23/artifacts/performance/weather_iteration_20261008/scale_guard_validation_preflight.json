@@ -1,0 +1,57 @@
+{
+  "scope": "full fixed validation only; parent Weather v79 weights with zero-init v97 dense; v105 deterministic missing-output tail compression; no optimizer or test data",
+  "threshold": 16.0,
+  "source_lineage": "ETTh1 v97 architecture",
+  "windows": 5175,
+  "same_parameters_and_weights": true,
+  "visible_coordinates_exact": true,
+  "central_hidden_range_exact": true,
+  "model_parameters": 109719,
+  "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+  "validation_mask_sha256": "49aa35e9bc9e8cc71424a92792d92ff5b2bb2066bb46c28efbcd5f8264a6ad0c",
+  "seconds": 111.79988502897322,
+  "rows": [
+    {
+      "model": "Weather_parent_v79_on_v97_architecture",
+      "repair96_mse": 0.19010261687280908,
+      "repair96_mae": 0.09980658048746742,
+      "normalized_missing_values": {
+        "coordinates": 5949977,
+        "mean_squared_value": 110.77250956792818,
+        "q99": 19.872615814208984,
+        "q999": 106.78317260742188,
+        "max": 5157.7509765625,
+        "fraction_above_16": 0.012233996763825417,
+        "fraction_above_100": 0.001104374066926539
+      }
+    },
+    {
+      "model": "same_weights_with_v105_guard",
+      "repair96_mse": 0.1903041085701235,
+      "repair96_mae": 0.09915088025843843,
+      "normalized_missing_values": {
+        "coordinates": 5949977,
+        "mean_squared_value": 8.091172866906149,
+        "q99": 18.063344955444336,
+        "q999": 21.20165252685547,
+        "max": 25.238296508789062,
+        "fraction_above_16": 0.012233996763825417,
+        "fraction_above_100": 0.0
+      }
+    },
+    {
+      "model": "T1",
+      "repair96_mse": 0.16605044580418915,
+      "repair96_mae": 0.09850824900979485,
+      "normalized_missing_values": {
+        "coordinates": 5949977,
+        "mean_squared_value": 1.2880660659340435,
+        "q99": 3.3025572299957275,
+        "q999": 6.47791051864624,
+        "max": 17.93031120300293,
+        "fraction_above_16": 6.722714829265897e-07,
+        "fraction_above_100": 0.0
+      }
+    }
+  ]
+}

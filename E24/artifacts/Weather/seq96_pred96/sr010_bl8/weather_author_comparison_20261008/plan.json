@@ -1,0 +1,53 @@
+{
+  "archive_sha256": "074d359b21748a9ab524f2fdb93cabc91ba091dc72386cc096142b9b184721e5",
+  "block_len": 8,
+  "concurrent_gpu_jobs_at_launch": [
+    "1687434, GPU-1315e15c-d657-e61f-bde5-6e0b38e6e54b, 2424 MiB"
+  ],
+  "created_utc": "2026-10-07T16:27:45.349989+00:00",
+  "dataset": "Weather",
+  "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+  "dataset_manifest_sha256": "898d2571aa7107ae486e2293d6042f32413aaa256c0f5792bf18d1ca3bb9f5e7",
+  "gpu_uuid": "GPU-1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "head_seed": 2023,
+  "heartbeat_seconds": 1800,
+  "max_attempts_per_stage": 2,
+  "order": [
+    "T1",
+    "SAITS",
+    "S4M",
+    "CRIB",
+    "CoIFNet",
+    "BiTGraph",
+    "ChannelTokenFormer",
+    "BRITS"
+  ],
+  "profiles": "/home/xyw/paper/E24/configs/baselines/weather_sr010_bl8_author_20261008.json",
+  "profiles_sha256": "b7bd7a740879b22d1754fc62ec0b1cb8e34da4646db84b8567bc307d978a6972",
+  "python_environments": {
+    "BRITS": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "BiTGraph": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "CRIB": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "ChannelTokenFormer": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "CoIFNet": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "S4M": "/home/xyw/miniforge3/envs/malr-s4m/bin/python",
+    "SAITS": "/home/xyw/miniforge3/envs/malr-saits/bin/python",
+    "T1": "/home/xyw/miniforge3/envs/malr/bin/python"
+  },
+  "repair_update": "fully_frozen",
+  "scope": "one training run per model, fixed validation selection, same 20 test masks; no test tuning",
+  "shared_stage2_loss": "pure_mse",
+  "source_seal_sha256": "fe4fb665f52a6e01b675220d9b3c0418734428d9f371310e8a5a090a6eafb5d4",
+  "stage1_seeds": {
+    "BRITS": 2023,
+    "BiTGraph": 2023,
+    "CRIB": 2023,
+    "ChannelTokenFormer": 2023,
+    "CoIFNet": 2023,
+    "S4M": 2023,
+    "SAITS": 2023,
+    "T1": 502
+  },
+  "start_rate": 0.1,
+  "test_draws": 20
+}

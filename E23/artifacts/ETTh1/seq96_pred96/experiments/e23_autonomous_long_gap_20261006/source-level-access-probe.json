@@ -1,0 +1,23 @@
+{
+  "model": "E23-v72",
+  "model_seed": 2023,
+  "probe_windows": 4,
+  "split": "first_fixed_validation_batch",
+  "source_variable": 1,
+  "target_variable": 0,
+  "source_global_level_shift": 1.0,
+  "target_repair_max_absolute_change": 0.0,
+  "target_forecast_max_absolute_change": 0.0,
+  "forecast_shape": [
+    4,
+    7,
+    96
+  ],
+  "global_only_shift": true,
+  "no_training": true,
+  "no_test_scoring": true,
+  "bank_unchanged": true,
+  "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v72_long_gap_moments_seed2023_20261005/sr010_bl16/E23-v72-mae/stage2/runs/e23-stage2.json",
+  "selection_sha256": "173a77cfbc607386d0b870316162c2a19e3c8c137ad4d9db2049014cc6d97f73",
+  "note": "Normalized visible patterns/masks/std and target mean held fixed; shifting source mean changes source global visible values. This is information-access probe, not causal evidence on real data."
+}

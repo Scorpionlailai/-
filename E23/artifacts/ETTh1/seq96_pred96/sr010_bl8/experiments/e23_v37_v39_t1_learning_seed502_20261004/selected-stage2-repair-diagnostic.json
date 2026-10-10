@@ -1,0 +1,71 @@
+[
+  {
+    "model": "E23-v31-B",
+    "split": "fixed_validation",
+    "repair_metrics": {
+      "window_mse": 189.33796584455317,
+      "global_mse": 0.41595649148712477,
+      "global_mae": 0.44420758211722283,
+      "hidden_coordinates": 1023670,
+      "small_std_hidden_fraction": 0.0067267771840534545,
+      "small_std_window_squared_share": 0.9934266527962111,
+      "small_std_global_squared_share": 0.004521948426737205
+    },
+    "learned_feature_scales": {},
+    "historical_state_read_only": true
+  },
+  {
+    "model": "v37",
+    "split": "fixed_validation",
+    "repair_metrics": {
+      "window_mse": 107.0590168866981,
+      "global_mse": 0.41840501921090295,
+      "global_mae": 0.4456647482220833,
+      "hidden_coordinates": 1023670,
+      "small_std_hidden_fraction": 0.0067267771840534545,
+      "small_std_window_squared_share": 0.9884092358718644,
+      "small_std_global_squared_share": 0.0025290833888474587
+    },
+    "learned_feature_scales": {},
+    "historical_state_read_only": true
+  },
+  {
+    "model": "v38",
+    "split": "fixed_validation",
+    "repair_metrics": {
+      "window_mse": 169.4049893398263,
+      "global_mse": 0.38194088312456653,
+      "global_mae": 0.4263648836340691,
+      "hidden_coordinates": 1023670,
+      "small_std_hidden_fraction": 0.0067267771840534545,
+      "small_std_window_squared_share": 0.9933670401751564,
+      "small_std_global_squared_share": 0.004405952310843732
+    },
+    "learned_feature_scales": {
+      "repair.iterative.feature_banks.0.temporal_scale": 0.342288613319397,
+      "repair.iterative.feature_banks.0.variable_scale": 0.5616415739059448
+    },
+    "historical_state_read_only": true
+  },
+  {
+    "model": "v39",
+    "split": "fixed_validation",
+    "repair_metrics": {
+      "window_mse": 157.80572121554675,
+      "global_mse": 0.43403189283106375,
+      "global_mae": 0.45851223225929744,
+      "hidden_coordinates": 1023670,
+      "small_std_hidden_fraction": 0.0067267771840534545,
+      "small_std_window_squared_share": 0.9919178488615805,
+      "small_std_global_squared_share": 0.0036064239354870165
+    },
+    "learned_feature_scales": {
+      "repair.iterative.later_step_logits": -0.9339516758918762,
+      "repair.iterative.feature_banks.0.temporal_scale": 0.23124171793460846,
+      "repair.iterative.feature_banks.0.variable_scale": 0.5038517117500305,
+      "repair.iterative.feature_banks.1.temporal_scale": 0.36480191349983215,
+      "repair.iterative.feature_banks.1.variable_scale": 0.5958341956138611
+    },
+    "historical_state_read_only": true
+  }
+]

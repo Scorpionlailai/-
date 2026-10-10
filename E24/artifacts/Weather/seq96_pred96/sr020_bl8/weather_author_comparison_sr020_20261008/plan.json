@@ -1,0 +1,48 @@
+{
+  "archive_sha256": "84a3759b248f9d25e3bd2a0622e2752ce1faa971fc73ee1d06e4a654bf7c63f5",
+  "block_len": 8,
+  "concurrent_gpu_jobs_at_launch": [],
+  "created_utc": "2026-10-09T04:26:19.611501+00:00",
+  "dataset": "Weather",
+  "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr020_bl8/shared_protocol_v1/dataset_manifest.json",
+  "dataset_manifest_sha256": "3b031c9105557dbba24511b6c8aed6288241e6d04f2ade484d4340f7e5bab87f",
+  "gpu_uuid": "GPU-1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "head_seed": 2023,
+  "heartbeat_seconds": 3600,
+  "max_attempts_per_stage": 2,
+  "order": [
+    "T1",
+    "SAITS",
+    "S4M",
+    "CRIB",
+    "CoIFNet",
+    "BiTGraph",
+    "ChannelTokenFormer"
+  ],
+  "profiles": "/home/xyw/paper/E24/configs/baselines/weather_sr020_bl8_author_20261008.json",
+  "profiles_sha256": "5310317b52b89df41fc88a37367894c63e01b30dfec62904c2ebc8d85fb8cb23",
+  "python_environments": {
+    "BiTGraph": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "CRIB": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "ChannelTokenFormer": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "CoIFNet": "/home/xyw/miniforge3/envs/malr/bin/python",
+    "S4M": "/home/xyw/miniforge3/envs/malr-s4m/bin/python",
+    "SAITS": "/home/xyw/miniforge3/envs/malr-saits/bin/python",
+    "T1": "/home/xyw/miniforge3/envs/malr/bin/python"
+  },
+  "repair_update": "fully_frozen",
+  "scope": "one training run per model, fixed validation selection, same 20 test masks; no test tuning",
+  "shared_stage2_loss": "pure_mse",
+  "source_seal_sha256": "b5e5595a70b8d083d970c23a894b9ea47a28d55ab9f0a6dc23b7190fddff9c79",
+  "stage1_seeds": {
+    "BiTGraph": 2023,
+    "CRIB": 2023,
+    "ChannelTokenFormer": 2023,
+    "CoIFNet": 2023,
+    "S4M": 2023,
+    "SAITS": 2023,
+    "T1": 502
+  },
+  "start_rate": 0.2,
+  "test_draws": 20
+}

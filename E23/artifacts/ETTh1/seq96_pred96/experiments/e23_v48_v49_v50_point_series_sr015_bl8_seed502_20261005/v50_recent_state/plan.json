@@ -1,0 +1,20 @@
+{
+  "label": "E23-v50-recent-state",
+  "config": "/home/xyw/paper/.e23-point-series/E23/configs/e23_point_series_p1o1s1_seed502.yaml",
+  "config_key": "p1o1s1",
+  "parent": {
+    "label": "E23-v49-overlap",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v49_overlap",
+    "validation": {
+      "mse": 0.7967074441801664,
+      "mae": 0.6010208778640851
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none"
+  },
+  "only_change": "stage1_structure",
+  "point_router": "pointwise_v1",
+  "overlap_fusion": "confidence_v1",
+  "stage1_structure": "recent_state_v1"
+}

@@ -1,0 +1,72 @@
+{
+  "best_epoch": 100,
+  "best_val_mse": 0.7827891416830811,
+  "cached_references": {
+    "clean": {
+      "fingerprint": "b5932e46c76ee3e89ccbc51bec219b521bb1c8b4ed085d063a8c1b89102148fe",
+      "mae": 0.406349116171839,
+      "mse": 0.39158731901726757,
+      "path": "/home/xyw/paper/E22/artifacts/ETTh1/seq96_pred96/clean/b5932e46c76ee3e89ccbc51bec219b521bb1c8b4ed085d063a8c1b89102148fe/baseline.json",
+      "sha256": "21e2183d812d0396d18c9ed8134a10a63e36202b7842577fad9213f735c05d49"
+    },
+    "missing": {
+      "fingerprint": "292570de0560129a4bd96568f13fc19875e06e80fd7041a7e7f8d06a89710f10",
+      "mae": 0.4668949174772855,
+      "mse": 0.5196692808415073,
+      "path": "/home/xyw/paper/E22/artifacts/ETTh1/seq96_pred96/sr010_bl8/missing/292570de0560129a4bd96568f13fc19875e06e80fd7041a7e7f8d06a89710f10/baseline.json",
+      "sha256": "eb3de3fdced8a27286bd756844aae11b9f9c75bda7bbcc9ac2b3c137939dad0b"
+    }
+  },
+  "checkpoint_sha256": "3587374055cc1ef49a2cf92f158271297190787f66be57736c6f8544ac377194",
+  "drr_mae_percent": 45.63514592969502,
+  "drr_mse_percent": 55.809939903510696,
+  "e23_config_sha256": "3e310d86f90ff28c0bf8f42834249558c75b542a2d1a892ba6baf525822ea217",
+  "expert_diagnostics": {
+    "availability_rate": {
+      "historical": 0.7443585401173207,
+      "none": 1.0,
+      "temporal": 1.0,
+      "variable": 1.0
+    },
+    "available_but_suppressed_rate": {
+      "historical": 2.9452912156689494e-05,
+      "none": 0.0,
+      "temporal": 0.0,
+      "variable": 0.0
+    },
+    "damaged_patch_targets": 203715,
+    "mean_candidate_count": {
+      "historical": 2.789504945634833,
+      "temporal": 4.746282797044891,
+      "variable": 10.201963527477112
+    },
+    "no_evidence_fallback_rate": 0.0,
+    "weight_mean": {
+      "historical": 0.2661900414641779,
+      "none": 0.24951581382653154,
+      "temporal": 0.19444793370851282,
+      "variable": 0.28984620201246225
+    }
+  },
+  "h_state_unchanged": true,
+  "key_sha256": "99134cbc7fc8007752ecb1a6dc09a5072cec35cf77a6e556d9a76c347f51767c",
+  "mae": 0.4392647526972418,
+  "memory_sha256": "5dacd3c0c02fee37304fd20903210aa49216fa95352d02783b20271a04a2e7a5",
+  "metric_space": "train_standardized",
+  "model": "E23 explicit H/V/T repair + mask-aware PatchTST",
+  "mse": 0.4481868149201616,
+  "protocol_config_sha256": "8198daf84c6b583770f2d11c3c4fc2463aa24b4e713312374b07567d4a9797eb",
+  "repair_mae": 0.9005979748417459,
+  "repair_mse": 1.6212259756867446,
+  "seed": 2021,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_multi_expert_v1/stage2_p4_v2/runs/e23-stage2.json",
+  "selection_manifest_sha256": "21b050d9fbf2374527f42c541cc0a0a6b9576df9103bc602a0c425f191f82d6f",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "split": "test",
+  "stage": "forecast",
+  "stage1_manifest_sha256": "80f737635499b46fa226574223bc76bcd8955832d04dbf0e706735596519121a",
+  "target_elements": 1806336,
+  "test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c",
+  "windows": 2688
+}

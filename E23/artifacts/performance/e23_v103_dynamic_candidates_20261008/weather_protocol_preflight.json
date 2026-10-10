@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "rows": [
+    {
+      "dataset": "Weather",
+      "variables": 21,
+      "variable_topk": 16,
+      "prediction_shape": [
+        4,
+        21,
+        96
+      ],
+      "repair_parameters": 605251,
+      "dense_features": 105,
+      "dense_parameters": 86037,
+      "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+      "config": "/home/xyw/paper/E23/artifacts/performance/e23_v103_dynamic_candidates_20261008/weather_v103_V16.yaml",
+      "observations_unchanged": true,
+      "finite_forecast": true,
+      "frozen_stage2_one_step_verified": true,
+      "stage2_loss": "pure_mse",
+      "head_source_unchanged": true
+    }
+  ],
+  "head_initialization_unchanged": true,
+  "scope": "four real fixed validation inputs; one Stage2 freeze verification update; no tests, no trained accuracy claims",
+  "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json"
+}

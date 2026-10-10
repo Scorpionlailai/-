@@ -1,0 +1,14 @@
+{
+  "scope": "descriptive metadata clarification only; frozen source/plan/checkpoints unchanged",
+  "frozen_plan_training_seed_field": 502,
+  "actual_training_seed": 2023,
+  "authoritative_training_seed_sources": [
+    "plan.json seeds/configs list",
+    "seed_2023_shared/stage1/runs/e23-stage1.json",
+    "seed_2023_frozen_mae/stage2/runs/e23-stage2.json"
+  ],
+  "cause": "scalar training_seed inherited from original seed502 architecture template; controller uses explicit seeds/configs list; model/config/checkpoints/head hash all2023",
+  "completion": "100ep Stage1, legacy/frozen100ep Stage2 complete; both old20/fresh20 better thanT1 means on both",
+  "confirmation_results": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_T1_fresh20_confirmation_20261005/confirmation-results.json",
+  "full_report": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v69_T1_confirmed_comparison_20261005.md"
+}

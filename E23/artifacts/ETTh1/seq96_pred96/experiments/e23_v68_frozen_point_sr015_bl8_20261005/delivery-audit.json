@@ -1,0 +1,37 @@
+{
+  "status": "complete",
+  "new_stage1_runs": 0,
+  "new_stage2_runs": 1,
+  "new_test_draws": 40,
+  "cached_reference_draws": 940,
+  "new_full_training_seconds": 289.68798562698066,
+  "physical_gpu_uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "source_files_verified": 513,
+  "protected_files_verified": 12250,
+  "original_head_architecture_verified": true,
+  "different_seed_initializations_recorded": true,
+  "test_used_for_checkpoint_or_automatic_parent_selection": false,
+  "retained_parent": {
+    "label": "E23-v63-plain-signature-MAE",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v63_plain_signature_sr015_bl8_seed502_20261005/v63_plain_signature_mae",
+    "validation": {
+      "mse": 0.7425686723791283,
+      "mae": 0.5820202103007137
+    },
+    "selection_metric": "mae",
+    "stage1_training_batch_size": 128,
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_mean_v2",
+    "point_candidate_readout": "eight_head_v1",
+    "variable_calibration": "none",
+    "front_variable_context": "signature_plain_v2",
+    "repair_coordinates": "robust_local_v1",
+    "point_variable_readout": "none",
+    "historical_key_policy": "legacy_v1",
+    "recent_mean_projection": "mean_v1",
+    "temporal_evidence_readout": "none",
+    "forecast_padding": "zero_invalid_v1",
+    "repair_input_scaling": "legacy_v1"
+  }
+}
