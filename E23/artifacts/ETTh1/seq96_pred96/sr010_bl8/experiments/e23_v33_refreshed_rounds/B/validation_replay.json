@@ -1,0 +1,28 @@
+{
+  "split": "validation",
+  "windows": 2688,
+  "coordinates": 1806336,
+  "mse": 0.754104071463587,
+  "mae": 0.5911587306431362,
+  "h_key_sha256_before": "8460d15cbbdc1bb032f62cf3d477946b4ecd8dfdd87f1e763d93e86f6fd57823",
+  "h_key_sha256_after": "8460d15cbbdc1bb032f62cf3d477946b4ecd8dfdd87f1e763d93e86f6fd57823",
+  "stage2_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v33_refreshed_rounds/B/stage2/runs/e23-stage2.json",
+  "stage2_checkpoint_sha256": "97956d0a6e924a129f740870ef51722d704034f7ec6d8adaa98ae501fdf5692c",
+  "h_bank_sha256_before": "c945cfc8393da322a875e4b5b4004467cebd274edb3121adcc70b0134eb89281",
+  "h_bank_sha256_after": "c945cfc8393da322a875e4b5b4004467cebd274edb3121adcc70b0134eb89281",
+  "recovery_schedule": "iterative_tv_h_refresh_v1",
+  "recovery_rounds": 3,
+  "repair_width": 64,
+  "candidate_selection": "top_k",
+  "variable_selection": "window_context_topk_v1",
+  "stage1_objective": "global_round_mse_v1",
+  "stage1_selection_metric_space": "train_standardized",
+  "stage1_round_weights": [
+    0.2,
+    0.3,
+    0.5
+  ],
+  "historical_query_blend_max": 0.25,
+  "variable_refresh_score_bound": 0.5,
+  "repair_update_gate": "sigmoid_after_first_v1"
+}

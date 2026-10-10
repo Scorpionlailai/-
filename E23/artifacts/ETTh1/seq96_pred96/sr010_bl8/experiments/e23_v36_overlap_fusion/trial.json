@@ -1,0 +1,20 @@
+{
+  "condition": "F",
+  "model": "E23_v36_F",
+  "config": "/home/xyw/paper/.e23-v36-fusion/E23/configs/e23_multi_expert_p4_overlap_fusion_v36.yaml",
+  "identity": {
+    "temporal_selection": "banded_v1",
+    "overlap_fusion": "position_weighted_v1"
+  },
+  "control_setting_overrides": {
+    "overlap_fusion": "uniform_v1"
+  },
+  "matched_reference": "E23_v32_preservation_A",
+  "best_reference": "E23_v31_B",
+  "reference_csv": "/home/xyw/paper/.e23-v35-temporal/E23/docs/experiments/ETTh1_P4_E23_v35_comparison_2026-10-04.csv",
+  "reference_csv_sha256": "b2114a3006f089d11229d3dd129de8a0f15f8ba752e2ae85917ccd02e426aa77",
+  "baseline_workspace": "/home/xyw/paper/.e23-v35-temporal/E23",
+  "report_stem": "ETTh1_P4_E23_v36",
+  "selection_basis": "Neither v34 H nor v35 T improved matched-control fixed validation",
+  "previous_validation_selection_sha256": "0328147c5d1f99e7fae330e52c4ebf2d8bc9bf752e3f80bec6f7b0e29195dbb9"
+}

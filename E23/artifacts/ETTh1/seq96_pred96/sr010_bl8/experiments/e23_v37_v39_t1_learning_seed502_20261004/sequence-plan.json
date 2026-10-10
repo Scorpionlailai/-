@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-10-04T04:57:05.425314+00:00",
+  "status": "planned",
+  "training_seed": 502,
+  "seed_choice": "Lowest previously observed twenty-mask test MSE and MAE among the five E23 seeds; exploratory selection, not a five-seed superiority claim",
+  "base_source_archive": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/frozen-source.tar.gz",
+  "base_archive_sha256": "37093118560bd89dd2959459da07c715c05e04f80461b09201333e8901a1aa1f",
+  "baseline": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_502/E23-v31-B/evaluation/twenty-test-draws.json",
+  "paired_T1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_502/T1/evaluation/twenty-test-draws.json",
+  "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+  "device": "cuda:1",
+  "prediction_head": "Original PatchTST D16/35427 params; initial head SHA must equal original seed502 run",
+  "stage2": "v31-B MSE+.2MAE; uniform .05 repair retention from epoch11; 100 epochs batch128 FP32 lr.0001; select original fixed validation MAE",
+  "promotion": "Selected fixed validation MSE strictly lower and MAE no higher than parent; test metrics are reported, not used for promotion",
+  "steps": [
+    {
+      "name": "v37",
+      "change": "Stage1 batch32, 100 epochs, original architecture/objective/lr; Stage2 unchanged",
+      "worktree": "/home/xyw/paper/.e23-v37-batch/E23"
+    },
+    {
+      "name": "v38",
+      "change": "Shared point temporal feature bank and feature-dependent cross-variable transfer at width64; H preserved; one layer",
+      "dependency": "Use v37 batch32 only if validation gate passes, otherwise baseline batch128"
+    },
+    {
+      "name": "v39",
+      "change": "Two refreshed feature/relationship layers with learnable residual scale",
+      "dependency": "Only after v38 validation gate passes; otherwise document deferred"
+    }
+  ]
+}

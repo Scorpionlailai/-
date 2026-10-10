@@ -1,0 +1,80 @@
+{
+  "batch_size": 128,
+  "device": "cuda:1",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "gpu_uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "measured_steps": 10,
+  "models": [
+    {
+      "config": "/home/xyw/paper/E23/configs/e23_multi_expert_p4_width64_iterative_tv_h_r1_v29.yaml",
+      "repair_parameters": 135321,
+      "rounds": 1,
+      "stages": {
+        "forecast": {
+          "backward_ms": 7.053069677203894,
+          "expert_availability": [
+            0.1809895932674408,
+            0.918340802192688,
+            0.918340802192688
+          ],
+          "forward_ms": 8.592398278415203,
+          "h_queries": 14,
+          "peak_allocated_gib": 0.852116584777832,
+          "peak_reserved_gib": 0.994140625,
+          "t_source_encodings": 14
+        },
+        "repair": {
+          "backward_ms": 7.859889231622219,
+          "expert_availability": [
+            0.1564360111951828,
+            0.8194754719734192,
+            0.8219866156578064
+          ],
+          "forward_ms": 10.535561479628086,
+          "h_queries": 14,
+          "peak_allocated_gib": 1.7768959999084473,
+          "peak_reserved_gib": 2.1953125,
+          "t_source_encodings": 14
+        }
+      },
+      "temporary_bank_members": 653
+    },
+    {
+      "config": "/home/xyw/paper/E23/configs/e23_multi_expert_p4_width64_iterative_tv_h_r3_v29.yaml",
+      "repair_parameters": 135321,
+      "rounds": 3,
+      "stages": {
+        "forecast": {
+          "backward_ms": 16.707223001867533,
+          "expert_availability": [
+            0.1809895932674408,
+            0.918340802192688,
+            0.918340802192688
+          ],
+          "forward_ms": 19.320005644112825,
+          "h_queries": 14,
+          "peak_allocated_gib": 2.0713024139404297,
+          "peak_reserved_gib": 2.31640625,
+          "t_source_encodings": 14
+        },
+        "repair": {
+          "backward_ms": 18.279243726283312,
+          "expert_availability": [
+            0.1564360111951828,
+            0.8194754719734192,
+            0.8219866156578064
+          ],
+          "forward_ms": 21.125451382249594,
+          "h_queries": 14,
+          "peak_allocated_gib": 2.9930243492126465,
+          "peak_reserved_gib": 3.451171875,
+          "t_source_encodings": 14
+        }
+      },
+      "temporary_bank_members": 653
+    }
+  ],
+  "precision": "float32",
+  "purpose": "throwaway preflight, no optimizer updates",
+  "warmup_steps": 4
+}

@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "completed_utc": "2026-10-03T11:09:20.415068+00:00",
+  "diagnostic_only": true,
+  "split": "original_fixed_validation",
+  "training_or_checkpoint_selection": false,
+  "test_accessed": false,
+  "real_world_causality_claim": false,
+  "intervention": "restore missing values in each variable x disjoint 16-step region to oracle history; fixed predictor, original masks, query mean/std, observed values and validity",
+  "region_count": 42,
+  "windows": 2688,
+  "metric_space": "train_standardized",
+  "overlapping_windows_not_independent": true,
+  "positive_gain_definition": "original forecast MSE minus oracle-region forecast MSE; negative values retained",
+  "oracle_predictions_not_deployable": true,
+  "oracle_not_a_guaranteed_error_upper_bound": true,
+  "predictors_cross_swapped_for_diagnosis_not_formal_benchmarks": true,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c",
+  "code_freeze_sha256": "45ad3a8dd6260e8ea6126a9d3d565a255619865c0706e56ac832daad46540578",
+  "source_code_freeze_unchanged": true,
+  "checkpoint_sha256": {
+    "v29_r1_stage1": "5c4477650587b5d82325ac3036bc20a11e02bdb56691e29aa2e1f3c16eab8c05",
+    "v29_r1_stage2": "5484f4d2f7eb9380eb9bc7c011b078685dd41a431688bcfa2e063815e2f5ee2f",
+    "v30_l4_g8_stage1": "a5f2ffd276a77c1fd19c364af7df657ab1e32729bf705c4ccca1f6c300c5a76f",
+    "v30_l4_g8_stage2": "df3bbb1c656f0f3006770e0a73b95201d289ba40cbb3b12e1a5e055106751fab"
+  },
+  "state_hashes_unchanged": {
+    "v29_r1_stage1": {
+      "model_sha": "f038f17000be845bb8bd323b37b5b8145b74172a37e2fea76d46119bb38bb57b",
+      "key_sha": "42926c5655ecb5eba9249c9c4b6faa4782b70ffcbb49b578be7f98b514b66309",
+      "bank_sha": "2c47a98c6c2547db27b6a0ff7f7a19a3f421de32401fbf89d5d91a67d69b55cd"
+    },
+    "v29_r1_stage2": {
+      "model_sha": "fdd964bca31eadb358139797b3ac6739f7dec8e63a185600963c6e73774b3a93",
+      "key_sha": "42926c5655ecb5eba9249c9c4b6faa4782b70ffcbb49b578be7f98b514b66309",
+      "bank_sha": "2c47a98c6c2547db27b6a0ff7f7a19a3f421de32401fbf89d5d91a67d69b55cd"
+    },
+    "v30_l4_g8_stage1": {
+      "model_sha": "bbff1466ac55ff3512367fecf8090613246be858ff3d6ab30a94a40854e04036",
+      "key_sha": "1217ff33b5786e1f31b0585c078bf2c59bbfc95e4228d9adc5b78c162943a229",
+      "bank_sha": "ae80e61d1cf3d9a68ab9a0b424e0aff7eb5a3229503891893b91db1d2524ac54"
+    },
+    "v30_l4_g8_stage2": {
+      "model_sha": "f83237185d30deaff87dc1ae8f1f22438a756c595f4fa9a315f6e055794736ab",
+      "key_sha": "1217ff33b5786e1f31b0585c078bf2c59bbfc95e4228d9adc5b78c162943a229",
+      "bank_sha": "ae80e61d1cf3d9a68ab9a0b424e0aff7eb5a3229503891893b91db1d2524ac54"
+    }
+  },
+  "device": "cuda:0",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "diagnostic_seconds": 13.4802947351709,
+  "peak_allocated_gib": 2.9723777770996094,
+  "peak_reserved_gib": 4.392578125,
+  "summaries": [
+    {
+      "source": "v29_r1_stage1",
+      "predictor": "v29_r1",
+      "repair_mse_global": 0.2901593452888688,
+      "forecast_mse": 0.7810229386021151,
+      "forecast_mae": 0.5916273166230409,
+      "all_hidden_oracle_mse": 0.7402764956943982,
+      "all_hidden_oracle_mae": 0.5674921749387394,
+      "oracle_mse_gain": 0.040746442907716875,
+      "positive_mean_regions": 33,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    },
+    {
+      "source": "v29_r1_stage1",
+      "predictor": "v30_l4_g8",
+      "repair_mse_global": 0.2901593452888688,
+      "forecast_mse": 0.886525503742522,
+      "forecast_mae": 0.6476459414033064,
+      "all_hidden_oracle_mse": 0.8456843026305616,
+      "all_hidden_oracle_mae": 0.6289969455513277,
+      "oracle_mse_gain": 0.04084120111196047,
+      "positive_mean_regions": 36,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    },
+    {
+      "source": "v29_r1_stage2",
+      "predictor": "v29_r1",
+      "repair_mse_global": 0.5361364472127417,
+      "forecast_mse": 0.749936542548758,
+      "forecast_mae": 0.5840456878014532,
+      "all_hidden_oracle_mse": 0.7402764956943982,
+      "all_hidden_oracle_mae": 0.5674921749387394,
+      "oracle_mse_gain": 0.00966004685435969,
+      "positive_mean_regions": 23,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    },
+    {
+      "source": "v29_r1_stage2",
+      "predictor": "v30_l4_g8",
+      "repair_mse_global": 0.5361364472127417,
+      "forecast_mse": 0.8588156541521142,
+      "forecast_mae": 0.6390388131957586,
+      "all_hidden_oracle_mse": 0.8456843026305616,
+      "all_hidden_oracle_mae": 0.6289969455513277,
+      "oracle_mse_gain": 0.013131351521552691,
+      "positive_mean_regions": 23,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    },
+    {
+      "source": "v30_l4_g8_stage1",
+      "predictor": "v29_r1",
+      "repair_mse_global": 0.20554960832888786,
+      "forecast_mse": 0.7642407218699423,
+      "forecast_mae": 0.5794293425524533,
+      "all_hidden_oracle_mse": 0.7402764956943982,
+      "all_hidden_oracle_mae": 0.5674921749387394,
+      "oracle_mse_gain": 0.023964226175544067,
+      "positive_mean_regions": 22,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    },
+    {
+      "source": "v30_l4_g8_stage1",
+      "predictor": "v30_l4_g8",
+      "repair_mse_global": 0.20554960832888786,
+      "forecast_mse": 0.8633349083868496,
+      "forecast_mae": 0.6362951361066361,
+      "all_hidden_oracle_mse": 0.8456843026305616,
+      "all_hidden_oracle_mae": 0.6289969455513277,
+      "oracle_mse_gain": 0.017650605756288,
+      "positive_mean_regions": 24,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    },
+    {
+      "source": "v30_l4_g8_stage2",
+      "predictor": "v29_r1",
+      "repair_mse_global": 0.8791930418614854,
+      "forecast_mse": 0.9793555656668071,
+      "forecast_mae": 0.657144112624554,
+      "all_hidden_oracle_mse": 0.7402764956943982,
+      "all_hidden_oracle_mae": 0.5674921749387394,
+      "oracle_mse_gain": 0.23907906997240883,
+      "positive_mean_regions": 41,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    },
+    {
+      "source": "v30_l4_g8_stage2",
+      "predictor": "v30_l4_g8",
+      "repair_mse_global": 0.8791930418614854,
+      "forecast_mse": 0.8485302423914111,
+      "forecast_mae": 0.6225527336649974,
+      "all_hidden_oracle_mse": 0.8456843026305616,
+      "all_hidden_oracle_mae": 0.6289969455513277,
+      "oracle_mse_gain": 0.002845939760849404,
+      "positive_mean_regions": 21,
+      "regions": 42,
+      "windows": 2688,
+      "forecast_coordinates": 1806336
+    }
+  ],
+  "script_sha256": "580fb9130b47b166bf61e37791b3c740e73e2c3db513a1a8276936bf7721b54a"
+}

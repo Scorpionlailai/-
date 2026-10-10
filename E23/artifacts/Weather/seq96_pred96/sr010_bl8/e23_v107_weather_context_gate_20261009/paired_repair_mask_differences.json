@@ -1,0 +1,81 @@
+{
+  "scope": "same20 missing masks; uncertainty over missing positions only, not training seeds; primary MAE checkpoint selected without test",
+  "comparisons": {
+    "T1": {
+      "repair96_mse": {
+        "v107_minus_baseline_mean": -0.005159350851232607,
+        "improved_masks": 20,
+        "mask_difference_std_ddof1": 0.0015876332244614518,
+        "paired_mask_bootstrap95": [
+          -0.005839664243242083,
+          -0.00447947754088654
+        ]
+      },
+      "repair96_mae": {
+        "v107_minus_baseline_mean": -0.010638372575156346,
+        "improved_masks": 20,
+        "mask_difference_std_ddof1": 0.0004212008942843161,
+        "paired_mask_bootstrap95": [
+          -0.010827543145287636,
+          -0.010465151350498119
+        ]
+      },
+      "repair32_mse": {
+        "v107_minus_baseline_mean": -0.006282732855630448,
+        "improved_masks": 20,
+        "mask_difference_std_ddof1": 0.002077915353829646,
+        "paired_mask_bootstrap95": [
+          -0.007169847126576318,
+          -0.005402865803798571
+        ]
+      },
+      "repair32_mae": {
+        "v107_minus_baseline_mean": -0.012298613164618019,
+        "improved_masks": 20,
+        "mask_difference_std_ddof1": 0.0004342232308949653,
+        "paired_mask_bootstrap95": [
+          -0.012488049342344702,
+          -0.012115505201534161
+        ]
+      }
+    },
+    "SAITS": {
+      "repair96_mse": {
+        "v107_minus_baseline_mean": -0.004364553384735908,
+        "improved_masks": 20,
+        "mask_difference_std_ddof1": 0.0021085537321662157,
+        "paired_mask_bootstrap95": [
+          -0.005266628026079161,
+          -0.0034694502556088806
+        ]
+      },
+      "repair96_mae": {
+        "v107_minus_baseline_mean": 0.009850224756580771,
+        "improved_masks": 0,
+        "mask_difference_std_ddof1": 0.0006333051198525137,
+        "paired_mask_bootstrap95": [
+          0.009576643501958138,
+          0.010116414202972112
+        ]
+      },
+      "repair32_mse": {
+        "v107_minus_baseline_mean": -0.0033623209091058572,
+        "improved_masks": 19,
+        "mask_difference_std_ddof1": 0.0018965712208954364,
+        "paired_mask_bootstrap95": [
+          -0.00416326395933364,
+          -0.002516584599098327
+        ]
+      },
+      "repair32_mae": {
+        "v107_minus_baseline_mean": 0.010652030519047687,
+        "improved_masks": 0,
+        "mask_difference_std_ddof1": 0.000612173321508667,
+        "paired_mask_bootstrap95": [
+          0.010393181475587052,
+          0.010912441242456316
+        ]
+      }
+    }
+  }
+}

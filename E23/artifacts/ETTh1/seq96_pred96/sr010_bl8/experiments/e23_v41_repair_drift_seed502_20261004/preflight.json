@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "records": [
+    {
+      "trial": "base_frozen",
+      "repair_state_exactly_preserved": true,
+      "head_learns": true,
+      "finite_gradients": true,
+      "optimizer_learning_rates": [
+        0.0001
+      ],
+      "repair_trainable_parameters": 0
+    },
+    {
+      "trial": "tail_frozen",
+      "repair_state_exactly_preserved": true,
+      "head_learns": true,
+      "finite_gradients": true,
+      "optimizer_learning_rates": [
+        0.0001
+      ],
+      "repair_trainable_parameters": 0
+    },
+    {
+      "trial": "tail_slow",
+      "repair_state_exactly_preserved": false,
+      "head_learns": true,
+      "finite_gradients": true,
+      "optimizer_learning_rates": [
+        1e-05,
+        0.0001
+      ],
+      "repair_trainable_parameters": 168090
+    }
+  ],
+  "discarded_optimizer_steps": 9,
+  "new_stage1_training": false,
+  "original_head_build_and_forecast_objective_unchanged": true
+}

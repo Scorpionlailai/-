@@ -1,0 +1,33 @@
+{
+  "adapter_sha256": "508bcdf2ec2f25d09497963a7c226a6c8d9b40981c97cac12a37d78b45cc5847",
+  "batch_size": 128,
+  "best_epoch": 90,
+  "best_validation": {
+    "mae": 0.621776463670863,
+    "mse": 0.7958957542519586,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/ctf_etth1_p4/ctf-selected.pt",
+  "checkpoint_sha256": "c78a4cc0e96f523b52bf36a44bca0a32e48a6f3e994dfac0bd896821ccd873fc",
+  "config_path": "/home/xyw/paper/E23/configs/stage1_seq96_dynamic_temporal_repair.yaml",
+  "dataset": "ETTh1",
+  "epochs_completed": 100,
+  "keep_prob": 0.6,
+  "learning_rate": 0.0001,
+  "loss": "forecast_MSE",
+  "mask_adapter": "group equal full-patch visibility before upstream first-sample deletion",
+  "metric_space": "train_standardized",
+  "model": "ChannelTokenFormer_missing",
+  "official_source_sha256": "6aaf2f27e18c43719a689104db2be5dd47588f55a876fa6f4ead62e8c3cd9c8f",
+  "patch_len": 24,
+  "scenario": "P4",
+  "seed": 2021,
+  "selection": "earliest minimum fixed-validation forecast MAE",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "trainable_parameters": 1637984,
+  "training_seconds": 2654.573831157293,
+  "upstream_revision": "b1c100effb9c27cd25de07e91de7f9005d18d5e7",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

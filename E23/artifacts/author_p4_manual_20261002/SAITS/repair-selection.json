@@ -1,0 +1,71 @@
+{
+  "adapter_sha256": "2fd79ffcc08d22c99f0011fd0b9d76652e44bd30e1bc5f3c3bed1793489c6342",
+  "author_profiles_sha256": "b6cb42742fda9fc20b65604383b8a6c8523e5e5971000c3e2969dac3de859c8a",
+  "best_epoch": 40,
+  "best_validation": {
+    "mae": 0.32221360914497593,
+    "mse": 0.40194466294336495,
+    "target_elements": 1023670,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_manual_20261002/SAITS/repair-selected.pt",
+  "checkpoint_sha256": "53bfa8dfb1f66682cd2e5d3b646370cc0f2ac657774e515dc5c3faa8405d5df7",
+  "epochs_completed": 70,
+  "model": "SAITS",
+  "original_test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "profile": {
+    "kind": "imputer",
+    "model": {
+      "d_inner": 128,
+      "d_k": 64,
+      "d_model": 256,
+      "d_v": 64,
+      "dropout": 0.1,
+      "n_group_inner_layers": 1,
+      "n_groups": 2,
+      "n_head": 4
+    },
+    "notes": "No unique ETTh1 paper configuration found: use publicly specified SAITS-base, not the Electricity best model. Epoch-level fixed P4 validation replaces the original step validation frequency; no extra test-derived tuning. Global train standardization feeds the imputer.",
+    "revision": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+    "root": "../SAITS",
+    "sources": [
+      "https://arxiv.org/html/2202.08516",
+      "configs/Electricity_SAITS_base.ini"
+    ],
+    "training": {
+      "batch_size": 128,
+      "epochs": 10000,
+      "learning_rate": 0.001,
+      "loss": "observed_reconstruction_mae + hidden_imputation_mae",
+      "lradj": "constant",
+      "patience": 30,
+      "precision": "float32",
+      "selection_metric": "mae",
+      "weight_decay": 0.0
+    },
+    "version": "SAITS-base (not an ETTh1-specific optimum); pinned core 660b87f19c1277065f314f24134f646229e89ca9"
+  },
+  "profile_version": "SAITS-base (not an ETTh1-specific optimum); pinned core 660b87f19c1277065f314f24134f646229e89ca9",
+  "protocol_config_sha256": "6805b1c785e884411e85895104b927c815a75dea96d09a53728c916bcf61c9e5",
+  "seed": 2021,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "repair",
+  "status": "validation_finalized",
+  "test_metrics_seen": false,
+  "trainable_parameters": 1328414,
+  "training": {
+    "batch_size": 128,
+    "epochs": 10000,
+    "learning_rate": 0.001,
+    "loss": "observed_reconstruction_mae + hidden_imputation_mae",
+    "lradj": "constant",
+    "patience": 30,
+    "precision": "float32",
+    "selection_metric": "mae",
+    "weight_decay": 0.0
+  },
+  "training_seconds": 89.93109481409192,
+  "upstream_revision": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+  "upstream_source_sha256": "3d870ba3cbfd8327af20ef75ee5f8f5015a0c0fa6797968f3a8e51c0464d439c",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

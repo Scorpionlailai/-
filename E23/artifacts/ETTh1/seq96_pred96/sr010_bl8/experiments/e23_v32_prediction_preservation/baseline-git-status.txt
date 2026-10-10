@@ -1,0 +1,113 @@
+ M docs/experiments/E22_all_datasets_missing_scenarios.csv
+ M integrations/e23/config.py
+ M integrations/e23/run.py
+ M integrations/e23/train.py
+ M src/malr/models/e23/contracts.py
+ M src/malr/models/e23/historical.py
+ M src/malr/models/e23/model.py
+ M src/malr/models/e23/temporal.py
+ M src/malr/models/e23/variable.py
+ M tests/forecast_compare/test_protocol.py
+ M tests/forecast_compare/test_s4m_p4.py
+ M tests/forecast_compare/test_saits_forecast.py
+ M tests/integration/test_e23_config.py
+ M tests/integration/test_e23_history_adapter_training.py
+ M tests/integration/test_e23_model.py
+ M tests/integration/test_e23_run.py
+ M tests/integration/test_e23_stage2.py
+ M tests/unit/test_e23_variable.py
+?? configs/baselines/etth1_p4_author_20261002.json
+?? configs/e23_multi_expert_p4_width128_window_eighthead_v23.yaml
+?? configs/e23_multi_expert_p4_width128_window_singlehead_v22.yaml
+?? configs/e23_multi_expert_p4_width64_affine_v16.yaml
+?? configs/e23_multi_expert_p4_width64_bounded_channelwise_v27.yaml
+?? configs/e23_multi_expert_p4_width64_channelwise_v26.yaml
+?? configs/e23_multi_expert_p4_width64_global_stage1_v28.yaml
+?? configs/e23_multi_expert_p4_width64_post_fusion_v20.yaml
+?? configs/e23_multi_expert_p4_width64_temporal_attention_v18.yaml
+?? configs/e23_multi_expert_p4_width64_three_head_v21.yaml
+?? configs/e23_multi_expert_p4_width64_window_eighthead_v24.yaml
+?? configs/e23_multi_expert_p4_width64_window_fullhead_v25.yaml
+?? docs/experiments/2026-10-02_author_configuration_and_three_test_draws.md
+?? docs/experiments/2026-10-02_baseline_reproduction_and_resources_audit.md
+?? docs/experiments/2026-10-03_e23_t1_validation_diagnosis.md
+?? docs/experiments/2026-10-03_e23_v29_r1_t1_error_gap.md
+?? docs/experiments/2026-10-03_stage2_repair_retention_design.md
+?? docs/experiments/E23_v12_expert_ablation_2026-10-01.md
+?? docs/experiments/E23_v12_variable_source_diagnostic_2026-10-01.md
+?? docs/experiments/E23_v16_affine_variable_evidence_P4_trial.md
+?? docs/experiments/E23_v17_forecast_utility_router_P4_trial.md
+?? docs/experiments/E23_v18_visible_temporal_attention_P4_trial.md
+?? docs/experiments/E23_v19_implicit_forecast_interface_P4_trial.md
+?? docs/experiments/E23_v20_post_fusion_evidence_refiner_P4_trial.md
+?? docs/experiments/E23_v21_three_head_tri_expert_P4_trial.md
+?? docs/experiments/E23_v22_v23_eight_candidate_head_P4_trial.md
+?? docs/experiments/E23_v24_width64_eight_candidate_head_P4_trial.md
+?? docs/experiments/E23_v25_full_width_gated_heads_P4_trial.md
+?? docs/experiments/E23_v26_channelwise_V_P4_trial.md
+?? docs/experiments/E23_v27_bounded_channelwise_V_P4_trial.md
+?? docs/experiments/E23_v28_global_stage1_P4_trial.md
+?? docs/experiments/ETTh1_P4_E23_v12_three_test_draws_2026-10-02.csv
+?? docs/experiments/ETTh1_P4_E23_v12_v28_T1_comparison_2026-10-03.csv
+?? docs/experiments/ETTh1_P4_E23_v12_v28_T1_test_groups_2026-10-03.csv
+?? docs/experiments/ETTh1_P4_E23_v29_r1_T1_error_by_variable_2026-10-03.csv
+?? docs/experiments/ETTh1_P4_author_configuration_alignment_2026-10-02.csv
+?? docs/experiments/ETTh1_P4_author_manual_comparison.csv
+?? docs/experiments/ETTh1_P4_author_three_test_draws_2026-10-02.csv
+?? docs/experiments/ETTh1_P4_extended_baselines_2026-10-02.csv
+?? docs/experiments/ETTh1_P4_extended_baselines_2026-10-02.md
+?? docs/experiments/ETTh1_P4_test_mask_groups_2026-10-02.csv
+?? docs/superpowers/plans/2026-10-01-e23-eight-head-candidate-recovery.md
+?? docs/superpowers/plans/2026-10-01-e23-full-width-gated-heads.md
+?? docs/superpowers/specs/2026-10-01-e23-eight-head-candidate-recovery-design.md
+?? docs/superpowers/specs/2026-10-01-e23-full-width-gated-heads-design.md
+?? integrations/forecast_compare/author_profiles.py
+?? integrations/forecast_compare/author_provenance.py
+?? integrations/forecast_compare/bitgraph_p4.py
+?? integrations/forecast_compare/brits_p4.py
+?? integrations/forecast_compare/coifnet_p4.py
+?? integrations/forecast_compare/crib_p4.py
+?? integrations/forecast_compare/ctf_p4.py
+?? integrations/forecast_compare/resources.py
+?? integrations/forecast_compare/t1_p4.py
+?? integrations/forecast_compare/test_mask_bank.py
+?? integrations/forecast_compare/three_draw_evaluation.py
+?? scripts/diagnose_e23_candidate_heads.py
+?? scripts/diagnose_e23_v12_experts.py
+?? scripts/diagnose_e23_v12_variable.py
+?? scripts/evaluate_e23_three_test_draws.py
+?? scripts/generate_p4_test_masks.py
+?? scripts/replay_e23_p4_validation.py
+?? scripts/report_author_p4_comparison.py
+?? scripts/run_author_aligned_p4.py
+?? scripts/run_author_p4_suite.py
+?? scripts/run_author_s4m_p4.py
+?? scripts/run_bitgraph_p4.py
+?? scripts/run_brits_p4.py
+?? scripts/run_coifnet_p4.py
+?? scripts/run_crib_p4.py
+?? scripts/run_ctf_p4.py
+?? scripts/run_e23_v22_v23_trial.py
+?? scripts/run_measured_training.py
+?? scripts/run_t1_p4.py
+?? scripts/update_p4_resource_report.py
+?? src/malr/models/e23/multihead_router.py
+?? src/malr/models/e23/post_fusion.py
+?? src/malr/models/e23/temporal_attention.py
+?? tests/forecast_compare/test_author_profiles.py
+?? tests/forecast_compare/test_author_training_selection.py
+?? tests/forecast_compare/test_bitgraph_p4.py
+?? tests/forecast_compare/test_brits_p4.py
+?? tests/forecast_compare/test_coifnet_p4.py
+?? tests/forecast_compare/test_crib_p4.py
+?? tests/forecast_compare/test_ctf_p4.py
+?? tests/forecast_compare/test_legacy_runner_provenance.py
+?? tests/forecast_compare/test_t1_p4.py
+?? tests/forecast_compare/test_test_mask_bank.py
+?? tests/forecast_compare/test_three_draw_evaluation.py
+?? tests/forecast_compare/test_training_resources.py
+?? tests/integration/test_e23_global_repair_objective.py
+?? tests/unit/test_e23_affine_fit.py
+?? tests/unit/test_e23_multihead_router.py
+?? tests/unit/test_e23_post_fusion.py
+?? tests/unit/test_e23_temporal_attention.py

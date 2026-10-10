@@ -1,0 +1,41 @@
+{
+  "scope": "fixed validation only, no training or future forecast targets or test data",
+  "hypotheses": [
+    "small query standard deviations amplify normalized values",
+    "locate the first numerical branch producing overestimates",
+    "blind tail compression may improve false events but suppress correctly recovered events"
+  ],
+  "checkpoint_source": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v97_weather_cached_20261008/E23-v97/sr010_bl8/stage1/runs/e23-stage1.json",
+  "checkpoint_sha256": "0f0009ccc25f57731e77455e63ff297f4c559dd7bac382109117412c79f41656",
+  "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+  "validation_mask_sha256": "49aa35e9bc9e8cc71424a92792d92ff5b2bb2066bb46c28efbcd5f8264a6ad0c",
+  "t1": {
+    "selection": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/weather_author_comparison_20261008/T1/stage2/selection.json",
+    "checkpoint_sha256": "2a77ca3d172f1f66867eef12c87066adf37bf3e6587ff38aeb194e327194c9c5"
+  },
+  "code_root": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v107_weather_context_gate_20261009",
+  "model_weights_modified": false,
+  "branch_outputs": [
+    "before_candidate_readout_fixed_overlap",
+    "after_candidate_readout",
+    "after_recent_point_refiner",
+    "after_recent_mean",
+    "v97_final",
+    "v105_guard",
+    "T1"
+  ],
+  "intermediate_output_note": "branch tracing, not retrained ablation; before candidate readout uses actual final overlap weights",
+  "group_thresholds": {
+    "small_std": 0.01,
+    "extreme_z": 16.0,
+    "large_z": 100.0,
+    "rain_event_min_physical": 0.0001
+  },
+  "checklist": [
+    "verify sealed parent identity",
+    "trace fixed weights",
+    "compare strata and compression harm",
+    "write findings with limitations"
+  ],
+  "script_sha256": "2e8bc520d5005fd801d95e447f27a6eee71ce3b2427f0bbeff624198fd3b3202"
+}

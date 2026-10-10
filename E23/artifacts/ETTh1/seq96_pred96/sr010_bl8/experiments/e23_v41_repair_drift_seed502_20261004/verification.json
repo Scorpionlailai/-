@@ -1,0 +1,51 @@
+{
+  "tests_passed": 25,
+  "test_files": [
+    "tests/integration/test_e23_repair_updates.py",
+    "tests/integration/test_e23_stage2.py"
+  ],
+  "command": "PYTHONPATH=src:. OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 /home/xyw/miniforge3/envs/malr/bin/python -m pytest -q tests/integration/test_e23_repair_updates.py tests/integration/test_e23_stage2.py",
+  "preflight": {
+    "status": "passed",
+    "records": [
+      {
+        "trial": "base_frozen",
+        "repair_state_exactly_preserved": true,
+        "head_learns": true,
+        "finite_gradients": true,
+        "optimizer_learning_rates": [
+          0.0001
+        ],
+        "repair_trainable_parameters": 0
+      },
+      {
+        "trial": "tail_frozen",
+        "repair_state_exactly_preserved": true,
+        "head_learns": true,
+        "finite_gradients": true,
+        "optimizer_learning_rates": [
+          0.0001
+        ],
+        "repair_trainable_parameters": 0
+      },
+      {
+        "trial": "tail_slow",
+        "repair_state_exactly_preserved": false,
+        "head_learns": true,
+        "finite_gradients": true,
+        "optimizer_learning_rates": [
+          1e-05,
+          0.0001
+        ],
+        "repair_trainable_parameters": 168090
+      }
+    ],
+    "discarded_optimizer_steps": 9,
+    "new_stage1_training": false,
+    "original_head_build_and_forecast_objective_unchanged": true
+  },
+  "head_files": {
+    "src/malr/models/patchtst.py": "17d3fafa87d3b1772ac2ca4c674d5f962b56c72e7d485f9f721ad83100ea1d12",
+    "src/malr/models/repaired_forecast.py": "ceb4d9ade5fa6b2d889a4845c0814346896a1e6ecac5fc037ac482b48ff1c0a6"
+  }
+}

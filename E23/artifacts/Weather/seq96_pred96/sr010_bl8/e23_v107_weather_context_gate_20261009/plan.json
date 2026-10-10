@@ -1,0 +1,103 @@
+{
+  "scenarios": [
+    {
+      "name": "sr010_bl8",
+      "start_rate": 0.1,
+      "block_len": 8
+    }
+  ],
+  "stage1_training_seed": 2023,
+  "stage2_training_seed": 2023,
+  "epochs": 100,
+  "batch_size": 128,
+  "learning_rate": 0.0001,
+  "weight_decay": 0.0,
+  "precision": "float32",
+  "forecast_loss": "mse",
+  "selection_metric": "mae",
+  "secondary_selection_metric": "mse",
+  "forecast_padding": "zero_invalid_v1",
+  "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+  "predictor_parameters": 35427,
+  "device": "cuda:0",
+  "cpu_threads": 4,
+  "repair_update_policy": "frozen_v1",
+  "test_groups": 20,
+  "physical_gpu_uuid": "GPU-382ce2ea-81a9-82ea-073f-729eaefd0268",
+  "actual_refinement_learning_rate": 0.0001,
+  "refinement_epochs": 100,
+  "parent_settings": "/home/xyw/paper/E24/configs/e24_v79.yaml",
+  "refinement_loss_tail_weight": 0.25,
+  "refinement_loss_tail_mae_weight": 0.05,
+  "stage1_parent_mean_trainable_parameters": 23682,
+  "parent_selection": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage1/runs/e23-stage1.json",
+  "dataset_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+  "label": "E23-v107: v97 architecture plus contextual guide correction and full hidden MAE",
+  "root": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v107_weather_context_gate_20261009",
+  "work": "/home/xyw/.cache/codex-worktrees/e23-v107-weather-context-gate-20261009",
+  "dataset": "Weather",
+  "n_vars": 21,
+  "seq_len": 96,
+  "pred_len": 96,
+  "stage1_aux_forecast": "none",
+  "stage1_coarse_reused": true,
+  "stage1_total_epochs": 200,
+  "stage2_epochs": 100,
+  "test_role": "sealed Weather20 development masks; test does not select",
+  "checkpoint_selection": "Stage1 fixed validation hidden-coordinate global MAE primary, MSE secondary; both saved; forecast deferred",
+  "source_lineage": "ETTh1 v97/v101/v102 structure; Weather v79 same-scenario coarse parent; new dense+gate initialized zero at outputs",
+  "parent_refinement_model": "E23-v97",
+  "changes_from_etth1": "variables7->21, Stage1 context guide gate, additional full-hidden MAE; unchanged head and frozen pureMSE Stage2",
+  "training_masks": "original deterministic epoch-varying masks, not cached",
+  "monitor_interval_seconds": 300,
+  "report_interval_seconds": 600,
+  "authorization": "2026-10-09 user authorizes sustained Weather repair iteration; Stage1 mandatory, forecast later",
+  "created_at": "2026-10-08T16:51:22.805125+00:00",
+  "models": [
+    {
+      "label": "E23-v107",
+      "config": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v107_weather_context_gate_20261009/v107_weather.yaml",
+      "trainable_parameters": 111084
+    }
+  ],
+  "refinement_loss_full_mae_weight": 2.0,
+  "only_changes": "1365-parameter zero-initialized contextual visible-guide gate and +2 full hidden MAE loss; original additive branch retained",
+  "screening_source": "/home/xyw/paper/E23/artifacts/performance/weather_iteration_20261008/v107_contextual_calibration_screen/results.json",
+  "screen_weights_reused": false,
+  "stage1_extra_training_epochs": 100,
+  "queue_after": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v105_weather_scale_guard_20261009",
+  "stage1_primary_selection": "mae",
+  "stage1_secondary_selection": "mse",
+  "stage2_automatic": false,
+  "refinement_objective_weights": {
+    "full_mse": 1.0,
+    "full_mae": 2.0,
+    "tail_mse": 0.25,
+    "tail_mae": 0.05
+  },
+  "workflow_updated_at": "2026-10-08T17:43:57.711202+00:00",
+  "repair_targets": {
+    "repair96_mse": 0.0440385021,
+    "repair96_mae": 0.0441557401,
+    "repair32_mse": 0.0451146593,
+    "repair32_mae": 0.0440097086
+  },
+  "repair_baselines": [
+    {
+      "label": "T1",
+      "evaluation": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/weather_author_comparison_20261008/T1/evaluation/mae/twenty-test-draws.json"
+    },
+    {
+      "label": "SAITS",
+      "evaluation": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/weather_author_comparison_20261008/SAITS/evaluation/mae/twenty-test-draws.json"
+    },
+    {
+      "label": "E23-v97",
+      "evaluation": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v97_weather_cached_20261008/E23-v97/sr010_bl8/evaluation_mae/twenty-test-draws.json"
+    },
+    {
+      "label": "E23-v103",
+      "evaluation": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v103_dynamic_candidates_20261008/seed_2023/E23-v103/evaluation_mae/twenty-test-draws.json"
+    }
+  ]
+}

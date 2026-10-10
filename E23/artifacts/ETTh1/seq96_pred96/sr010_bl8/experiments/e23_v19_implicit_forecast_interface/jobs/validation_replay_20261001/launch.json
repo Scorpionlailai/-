@@ -1,0 +1,18 @@
+{
+  "command": [
+    "env",
+    "PYTHONPATH=.:src",
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "scripts/replay_e23_p4_validation.py",
+    "--e23-config",
+    "configs/e23_multi_expert_p4_width64_window_v12.yaml",
+    "--stage2-manifest",
+    "artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v19_implicit_forecast_interface/stage2/runs/e23-stage2.json",
+    "--output",
+    "artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v19_implicit_forecast_interface/benchmarks/v19_validation_replay.json",
+    "--device",
+    "cuda:0"
+  ],
+  "cwd": "/home/xyw/paper/E23",
+  "created_at": "2026-10-01T09:03:45.262046+00:00"
+}

@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "trials": [
+    {
+      "label": "tail32",
+      "repair_parameters": 174362,
+      "refiner_parameters": 39041,
+      "forecast_parameters": 35427,
+      "head_initial_sha256": "26cee63e94dc41607f346f09a29e01cf7d02e75e513b1d9b631ce270ec3e0b7c",
+      "zero_start_forecast_exact": true,
+      "hidden_input_canary_unchanged": true,
+      "finite_gpu_gradients": true
+    },
+    {
+      "label": "full96",
+      "repair_parameters": 174362,
+      "refiner_parameters": 39041,
+      "forecast_parameters": 35427,
+      "head_initial_sha256": "26cee63e94dc41607f346f09a29e01cf7d02e75e513b1d9b631ce270ec3e0b7c",
+      "zero_start_forecast_exact": true,
+      "hidden_input_canary_unchanged": true,
+      "finite_gpu_gradients": true
+    }
+  ],
+  "equal_branch_initial_sha256": "7a204f1c21343176432896dc6d992ba0d79865596b14528a32f516257680d76c",
+  "original_stage2_functions_unchanged": [
+    "build_forecast_model",
+    "stage2_objective",
+    "train_forecast"
+  ],
+  "original_experts_and_head_files_unchanged": [
+    "src/malr/models/patchtst.py",
+    "src/malr/models/repaired_forecast.py",
+    "src/malr/models/e23/historical.py",
+    "src/malr/models/e23/temporal.py",
+    "src/malr/models/e23/variable.py",
+    "src/malr/models/e23/router.py",
+    "src/malr/models/e23/iterative.py",
+    "integrations/e23/forecast_sensitive.py"
+  ],
+  "note": "three optimizer steps are discarded preflight checks; formal training starts fresh"
+}

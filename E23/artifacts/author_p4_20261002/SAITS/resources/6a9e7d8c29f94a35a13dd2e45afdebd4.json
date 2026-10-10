@@ -1,0 +1,56 @@
+{
+  "amp": false,
+  "batch_size": 128,
+  "checkpoint_sha256": "b80c9ee0b78d0109fcfd1b0cdf9926f3f9d35652cc955d4bcca28220a9adec52",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:0",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "382ce2ea-81a9-82ea-073f-729eaefd0268"
+  },
+  "epochs_completed": 100,
+  "finished_utc": "2026-10-02T10:16:33.022800+00:00",
+  "full_workflow_seconds": 242.3335564909503,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "SAITS",
+  "peak_allocated_bytes": 683319808,
+  "peak_reserved_bytes": 729808896,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 1.306608285754919,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/author_p4_20261002/SAITS/forecast-selection.json",
+  "selection_manifest_sha256": "687eb5cc13f14457479a475ac8c880b78e4e4e840c23fd964822c53e2d6236bf",
+  "stages": {
+    "forecast": {
+      "batch_size": 128,
+      "peak_allocated_bytes": 683319808,
+      "peak_reserved_bytes": 729808896,
+      "precision": "float32",
+      "status": "completed",
+      "wall_seconds": 149.23044156841934
+    },
+    "repair": {
+      "batch_size": 128,
+      "peak_allocated_bytes": 654725120,
+      "peak_reserved_bytes": 706740224,
+      "precision": "float32",
+      "status": "completed",
+      "wall_seconds": 91.79650663677603
+    }
+  },
+  "started_utc": "2026-10-02T10:12:31.592787+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 241.02694820519537
+}

@@ -1,0 +1,39 @@
+{
+  "dataset": "Weather",
+  "variables": 21,
+  "batch_size": 128,
+  "validation_batches": 3,
+  "checkpoint": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage1/runs/e23-stage1.json",
+  "training": false,
+  "test_used": false,
+  "original_forward_ms": 59.38418551037709,
+  "optimized_forward_ms": 59.352051466703415,
+  "original_peak_allocated_gib": 3.2512383460998535,
+  "optimized_peak_allocated_gib": 3.254122257232666,
+  "component_cuda_ms": {
+    "window_context": 12.272661209106445,
+    "historical_lookup": 2.690389315287272,
+    "variable_selection": 1.1921173334121704,
+    "point_candidate_readout": 22.355627059936523,
+    "recent_mean": 0.9110400080680847
+  },
+  "exact_equal": [
+    true,
+    true,
+    true
+  ],
+  "max_absolute_difference": 0.0,
+  "index_shapes": {
+    "group_member_keys": [
+      500,
+      16,
+      64
+    ],
+    "padded_centers": [
+      21,
+      128,
+      64
+    ]
+  },
+  "optimization": "release gathered keys after reduction; gather only selected raw patches; FP64 and stable full sorting unchanged"
+}

@@ -1,0 +1,22 @@
+{
+  "split": "validation",
+  "windows": 2688,
+  "coordinates": 1806336,
+  "mse": 0.766826249033956,
+  "mae": 0.5923653989692393,
+  "h_key_sha256_before": "198c4ff085406cdebd1693396e249e2aa5658c3031066e92151cae05b212250f",
+  "h_key_sha256_after": "198c4ff085406cdebd1693396e249e2aa5658c3031066e92151cae05b212250f",
+  "stage2_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v34_contextual_memory/B/stage2/runs/e23-stage2.json",
+  "stage2_checkpoint_sha256": "1f9f781d20727fb9952043ed1d2fd6dd3181ee788b7ebcc97ebc58962096d277",
+  "h_bank_sha256_before": "11c31f294177654746f473c7b3502ccb1ca0b7af39aff148f627bb6b5c31d25f",
+  "h_bank_sha256_after": "11c31f294177654746f473c7b3502ccb1ca0b7af39aff148f627bb6b5c31d25f",
+  "recovery_schedule": "iterative_tv_h_v1",
+  "recovery_rounds": 1,
+  "repair_width": 64,
+  "candidate_selection": "top_k",
+  "variable_selection": "window_context_topk_v1",
+  "historical_query_mode": "global_context_v1",
+  "historical_context_length": 48,
+  "stage1_objective": "global_mse_v1",
+  "stage1_selection_metric_space": "train_standardized"
+}

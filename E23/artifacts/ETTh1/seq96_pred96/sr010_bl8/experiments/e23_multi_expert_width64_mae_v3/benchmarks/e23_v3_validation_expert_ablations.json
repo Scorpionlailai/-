@@ -1,0 +1,36 @@
+{
+  "ablation_method": "mask one expert availability before router softmax; frozen selected checkpoint",
+  "checkpoint_sha256": "1501fa96be1e43361d651d9a5889b3d7e3df147cfc18f918c8ad930aace576d9",
+  "h_state_unchanged": true,
+  "results": {
+    "full": {
+      "mae": 0.5904396656148828,
+      "mse": 0.7647695325129157,
+      "windows": 2688
+    },
+    "without_all_experts": {
+      "mae": 0.6640330561164285,
+      "mse": 0.9353713210748167,
+      "windows": 2688
+    },
+    "without_historical": {
+      "mae": 0.6134829888808754,
+      "mse": 0.8265149360881641,
+      "windows": 2688
+    },
+    "without_temporal": {
+      "mae": 0.6035355461968316,
+      "mse": 0.7920990065922813,
+      "windows": 2688
+    },
+    "without_variable": {
+      "mae": 0.6263560167515899,
+      "mse": 0.8318720480211738,
+      "windows": 2688
+    }
+  },
+  "selection_manifest_sha256": "18ac3d7a2a72cd1ea26866be3da0f602d54084b180c0b45323c24e77aa41a33c",
+  "selection_metric": "mae",
+  "split": "validation",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

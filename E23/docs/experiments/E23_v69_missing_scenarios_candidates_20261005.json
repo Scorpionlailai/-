@@ -1,0 +1,162 @@
+{
+  "label": "E23-v69 fixed recipe across missing parameters",
+  "dataset": "ETTh1",
+  "seq_len": 96,
+  "pred_len": 96,
+  "work": "/home/xyw/paper/.e23-v69-other-missing/E23",
+  "config": "/home/xyw/paper/.e23-v69-other-missing/E23/configs/e23_v69_signature_position_seed2023.yaml",
+  "source_archive": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/frozen-source.tar.gz",
+  "original_v69_candidate_index": "/home/xyw/paper/E23/docs/experiments/E23_v69_frozen_candidate_20261005.json",
+  "candidates": [
+    {
+      "scenario": "sr010_bl8",
+      "start_rate": 0.1,
+      "block_len": 8,
+      "actual_test_missing_fraction": 0.5727573109321853,
+      "training_seed": 2023,
+      "scenario_environment": null,
+      "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+      "stage1_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage1/runs/e23-stage1.json",
+      "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage2/runs/e23-stage2.json",
+      "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage2/checkpoints/e23-stage2.pt",
+      "checkpoint_sha256": "afa502b5a386b7bebb326b47f6d93a8ea03a63caa1f707f264f5a81f0428a188",
+      "selected_stage2_epoch": 98,
+      "scores": {
+        "mae": 0.39974427525959316,
+        "mse": 0.3862432559060942
+      },
+      "mask_std": {
+        "mae": 0.00199050586525912,
+        "mse": 0.00571981251901698
+      },
+      "training_resources": {
+        "batch_size": "128",
+        "full_workflow_seconds": 840.1239922121167,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 836.9345815479755,
+        "peak_allocated_gib": 4.512415885925293,
+        "peak_reserved_gib": 7.24609375,
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage1/resources/bb9bd91a30404938b5d7deae31c12ec5.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage2/resources/b75cdbbd4b164b11a7d788c219f2e830.json"
+        ],
+        "resource_status": "measured_all_stages",
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage2/runs/e23-stage2.json"
+        ],
+        "stage1_legacy_loop_seconds": 558.9698478011414,
+        "stage2_legacy_loop_seconds": 277.9647337468341,
+        "training_stages_seconds": 837.8811567146331
+      },
+      "t1_checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/T1_seed502/training/forecast-selected.pt",
+      "t1_checkpoint_sha256": "9fbb95c8d0dc48aa408326a133ff67bba4e0cde271ee2314094888cb73ce8832",
+      "secondary_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mse/stage2/runs/e23-stage2.json"
+    },
+    {
+      "scenario": "sr020_bl8",
+      "start_rate": 0.2,
+      "block_len": 8,
+      "actual_test_missing_fraction": 0.8350602268902352,
+      "training_seed": 2023,
+      "scenario_environment": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr020_bl8/scenario.json",
+      "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr020_bl8/test_masks/manifest.json",
+      "stage1_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mae/stage1/runs/e23-stage1.json",
+      "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mae/stage2/runs/e23-stage2.json",
+      "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mae/stage2/checkpoints/e23-stage2.pt",
+      "checkpoint_sha256": "901342dea603eb72968627ea912d7b8337b42f229d3f5b44b3af8a483fb5ee4b",
+      "selected_stage2_epoch": 76,
+      "scores": {
+        "mae": 0.45185223388023116,
+        "mse": 0.47535029063149115
+      },
+      "mask_std": {
+        "mae": 0.006333350016639986,
+        "mse": 0.016658142505083438
+      },
+      "training_resources": {
+        "batch_size": "128",
+        "full_workflow_seconds": 862.0327710015699,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 858.9912201408297,
+        "peak_allocated_gib": 4.672243118286133,
+        "peak_reserved_gib": 7.763671875,
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mae/stage1/resources/28ed5412475e4b86862dbcbed1d7f3ef.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mae/stage2/resources/03dc8cd53cde4a38aaadafccd30a90dd.json"
+        ],
+        "resource_status": "measured_all_stages",
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mae/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mae/stage2/runs/e23-stage2.json"
+        ],
+        "stage1_legacy_loop_seconds": 571.53631546814,
+        "stage2_legacy_loop_seconds": 287.45490467268974,
+        "training_stages_seconds": 859.9257016861811
+      },
+      "t1_checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr020_bl8/T1/training/forecast-selected.pt",
+      "t1_checkpoint_sha256": "09e924dbe5c9b3ffe7b4bd085fe4a740905bb91acfe598b3ff571d05b6a046f6",
+      "secondary_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr020_bl8/E23-v69-mse/stage2/runs/e23-stage2.json"
+    },
+    {
+      "scenario": "sr010_bl16",
+      "start_rate": 0.1,
+      "block_len": 16,
+      "actual_test_missing_fraction": 0.8193881149464994,
+      "training_seed": 2023,
+      "scenario_environment": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/scenario.json",
+      "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/test_masks/manifest.json",
+      "stage1_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mae/stage1/runs/e23-stage1.json",
+      "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mae/stage2/runs/e23-stage2.json",
+      "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mae/stage2/checkpoints/e23-stage2.pt",
+      "checkpoint_sha256": "e7feff581710caa6fdd0f2dec9258ea15e6f6927f02769075d6184408b34a09e",
+      "selected_stage2_epoch": 96,
+      "scores": {
+        "mae": 0.5012299596587547,
+        "mse": 0.5616161965999474
+      },
+      "mask_std": {
+        "mae": 0.01066986384173409,
+        "mse": 0.024737918840975436
+      },
+      "training_resources": {
+        "batch_size": "128",
+        "full_workflow_seconds": 836.4595451131463,
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "hardware_consistent": true,
+        "legacy_training_loop_seconds": 833.4256703015417,
+        "peak_allocated_gib": 4.588133811950684,
+        "peak_reserved_gib": 8.6796875,
+        "resource_record_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mae/stage1/resources/d58b5844b7f24aa2b9b956a77f154a0a.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mae/stage2/resources/618683d2182a4c8397ef8ab1b3122a4c.json"
+        ],
+        "resource_status": "measured_all_stages",
+        "selection_manifest_paths": [
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mae/stage1/runs/e23-stage1.json",
+          "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mae/stage2/runs/e23-stage2.json"
+        ],
+        "stage1_legacy_loop_seconds": 558.0911999894306,
+        "stage2_legacy_loop_seconds": 275.3344703121111,
+        "training_stages_seconds": 834.3723213402554
+      },
+      "t1_checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/T1/training/forecast-selected.pt",
+      "t1_checkpoint_sha256": "3049f4d7a5d272201b98df279e3914b88425abcd39c0c399cb81825b55d07692",
+      "secondary_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl16/E23-v69-mse/stage2/runs/e23-stage2.json"
+    }
+  ],
+  "primary_selection": "mae",
+  "repair_update_policy": "frozen_v1",
+  "predictor_parameters": 35427,
+  "repair_parameters": 420973,
+  "main_source_integrated": false,
+  "architecture_or_seed_search_in_expansion": false,
+  "new_t1_training_runs": 0,
+  "expansion_training_seconds": 2538.616308326833,
+  "expansion_training_minutes": 42.310271805447215,
+  "all_scenarios_csv": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v69_T1_other_missing_seed2023_20261005_all_scenarios.csv",
+  "report_audit": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/report-audit.json",
+  "scope": "single E23 training seed2023 vs cached T1 seed502;20 masks per scene,same ETTh1 future targets"
+}

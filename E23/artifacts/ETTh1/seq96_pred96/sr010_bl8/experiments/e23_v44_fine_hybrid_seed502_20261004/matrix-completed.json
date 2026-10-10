@@ -1,0 +1,38 @@
+{
+  "status": "complete",
+  "validation_gates": {
+    "fine8_hybrid": {
+      "matched_gate": false,
+      "v41_reference_gate": false
+    },
+    "fine4_hybrid": {
+      "matched_gate": false,
+      "v41_reference_gate": false
+    },
+    "fine4_cnn": {
+      "matched_gate": false,
+      "v41_reference_gate": false
+    }
+  },
+  "matched_pairs": {
+    "fine8_hybrid_vs_fine16_hybrid": {
+      "validation_mse_delta": 0.006902051350427096,
+      "validation_mae_delta": 0.00154330238463396,
+      "passed": false
+    },
+    "fine4_hybrid_vs_fine16_hybrid": {
+      "validation_mse_delta": 0.007831120436964656,
+      "validation_mae_delta": 0.004230846353128759,
+      "passed": false
+    },
+    "fine4_hybrid_vs_fine4_cnn": {
+      "validation_mse_delta": -0.0007615305669183003,
+      "validation_mae_delta": 0.0033016767090950916,
+      "passed": false
+    }
+  },
+  "test_used_for_selection": false,
+  "new_T1_training": false,
+  "source_unchanged": true,
+  "protected_files_unchanged": true
+}

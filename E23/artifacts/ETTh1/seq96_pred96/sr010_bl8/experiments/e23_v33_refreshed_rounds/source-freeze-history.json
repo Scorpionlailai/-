@@ -1,0 +1,13 @@
+{
+  "v1": "pre-diagnostic-fix-code-freeze.json",
+  "v2": "code-freeze.json",
+  "changed_between_freezes": [
+    "scripts/run_e23_v33_trial.py",
+    "scripts/diagnose_e23_v33.py",
+    "tests/integration/test_e23_v33.py"
+  ],
+  "reason": "Only diagnostic forecast repatching failed to clear invalid tail padding; formal model already cleared it. Added regression and resume handling.",
+  "completed_training_preserved": "C0 Stage2 100 epochs, no retraining",
+  "formal_repair_head_stage2_sources_identical_between_versions": true,
+  "focused_after_fix_passed": 11
+}

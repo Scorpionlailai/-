@@ -1,0 +1,24 @@
+{
+  "command": [
+    "env",
+    "PYTHONPATH=.:src",
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "-m",
+    "integrations.e23.run",
+    "train-repair",
+    "--protocol-config",
+    "configs/stage1_seq96_dynamic_temporal_repair.yaml",
+    "--e23-config",
+    "configs/e23_multi_expert_p4_width64_post_fusion_v20.yaml",
+    "--migration-catalog",
+    "../E22/migration/paper_catalog.jsonl",
+    "--mask-artifacts",
+    "../E22/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/two_stage_v5_dynamic_temporal_context",
+    "--output",
+    "artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v20_post_fusion_refiner/stage1",
+    "--device",
+    "cuda:0"
+  ],
+  "cwd": "/home/xyw/paper/E23",
+  "created_at": "2026-10-01T09:15:01.905024+00:00"
+}

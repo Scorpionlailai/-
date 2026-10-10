@@ -1,0 +1,122 @@
+{
+  "scope": "same Weather sr015/bl8 development masks; one training seed per model; mask uncertainty only",
+  "comparisons": {
+    "T1": {
+      "repair96_mse": {
+        "mean_difference": -0.009902419543462673,
+        "relative_reduction_percent": 16.28312260021791,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.010808771638315942,
+          -0.00897799355439148
+        ]
+      },
+      "repair96_mae": {
+        "mean_difference": -0.02651442687804817,
+        "relative_reduction_percent": 34.203017276907666,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.026881544207965503,
+          -0.02613441291647357
+        ]
+      },
+      "repair32_mse": {
+        "mean_difference": -0.010553368145127934,
+        "relative_reduction_percent": 16.92107469135846,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.011633797059859905,
+          -0.009385723064598518
+        ]
+      },
+      "repair32_mae": {
+        "mean_difference": -0.028580857574212536,
+        "relative_reduction_percent": 35.602971290250125,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.029003766382616595,
+          -0.028134584797004095
+        ]
+      }
+    },
+    "SAITS": {
+      "repair96_mse": {
+        "mean_difference": -0.005730384136673252,
+        "relative_reduction_percent": 10.116851224199594,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.006783293557442899,
+          -0.004754117804592869
+        ]
+      },
+      "repair96_mae": {
+        "mean_difference": -0.0058515719837045664,
+        "relative_reduction_percent": 10.2915779275139,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.006175027210277057,
+          -0.00553392606743385
+        ]
+      },
+      "repair32_mse": {
+        "mean_difference": -0.005872572456663132,
+        "relative_reduction_percent": 10.179992436109131,
+        "improved_masks": 19,
+        "paired_mask_bootstrap95": [
+          -0.0072297088766901454,
+          -0.0044751059880748945
+        ]
+      },
+      "repair32_mae": {
+        "mean_difference": -0.005996165909658806,
+        "relative_reduction_percent": 10.393424810559072,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.006405161114478191,
+          -0.005575001398701339
+        ]
+      }
+    },
+    "Weather-v79": {
+      "repair96_mse": {
+        "mean_difference": -0.006301098085345391,
+        "relative_reduction_percent": 11.013462963870824,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.006780104637862862,
+          -0.0058362734625217955
+        ]
+      },
+      "repair96_mae": {
+        "mean_difference": -0.02968482201801581,
+        "relative_reduction_percent": 36.788214192562066,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.029854469198028363,
+          -0.029512959852248534
+        ]
+      },
+      "repair32_mse": {
+        "mean_difference": -0.006465261846751206,
+        "relative_reduction_percent": 11.093432524201658,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.006882158221708597,
+          -0.006026520525148124
+        ]
+      },
+      "repair32_mae": {
+        "mean_difference": -0.0371802293441081,
+        "relative_reduction_percent": 41.833833603890916,
+        "improved_masks": 20,
+        "paired_mask_bootstrap95": [
+          -0.03740143513311025,
+          -0.03696850812446083
+        ]
+      }
+    }
+  },
+  "all_four_means_lower_than_external": true,
+  "all_four_external_mask95_upper_negative": true,
+  "average_window_missing_fraction": 0.7281765860667323
+}

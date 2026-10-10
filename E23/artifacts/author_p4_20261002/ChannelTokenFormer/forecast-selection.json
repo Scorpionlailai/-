@@ -1,0 +1,74 @@
+{
+  "adapter_sha256": "2fd79ffcc08d22c99f0011fd0b9d76652e44bd30e1bc5f3c3bed1793489c6342",
+  "author_profiles_sha256": "b6cb42742fda9fc20b65604383b8a6c8523e5e5971000c3e2969dac3de859c8a",
+  "best_epoch": 4,
+  "best_validation": {
+    "mae": 0.6454925802018907,
+    "mse": 0.8508679799211809,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_20261002/ChannelTokenFormer/forecast-selected.pt",
+  "checkpoint_sha256": "e866d3fb0b262354d5614b84f6b7ad9d5e71dd877af1adf63e638c8a9e146557",
+  "epochs_completed": 7,
+  "model": "ChannelTokenFormer",
+  "original_test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "profile": {
+    "kind": "forecast",
+    "model": {
+      "d_ff": 1024,
+      "d_model": 256,
+      "dropout": 0.1,
+      "e_layers": 2,
+      "factor": 3,
+      "keep_prob": 1.0,
+      "n_heads": 8,
+      "num_global_tokens": 2,
+      "patch_len": 24
+    },
+    "notes": "Use ChannelTokenFormer_missing for P4. Group samples by full-patch visibility to preserve per-sample mask correctness; include this overhead in resources. Epoch-end LR becomes base*0.5**(epoch-1).",
+    "revision": "b1c100effb9c27cd25de07e91de7f9005d18d5e7",
+    "root": "artifacts/upstream/ChannelTokenFormer",
+    "sources": [
+      "https://arxiv.org/html/2506.08660",
+      "scripts_regular/CTF_ETTh1.sh",
+      "run.py",
+      "utils/tools.py"
+    ],
+    "training": {
+      "batch_size": 32,
+      "epochs": 10,
+      "learning_rate": 0.0001,
+      "loss": "forecast_mse",
+      "lradj": "ctf_type1",
+      "patience": 3,
+      "precision": "float32",
+      "selection_metric": "mse",
+      "weight_decay": 0.0
+    },
+    "version": "regular ETTh1 script + run.py defaults; missing-aware model"
+  },
+  "profile_version": "regular ETTh1 script + run.py defaults; missing-aware model",
+  "protocol_config_sha256": "6805b1c785e884411e85895104b927c815a75dea96d09a53728c916bcf61c9e5",
+  "seed": 2021,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "forecast",
+  "status": "validation_finalized",
+  "test_metrics_seen": false,
+  "trainable_parameters": 1637984,
+  "training": {
+    "batch_size": 32,
+    "epochs": 10,
+    "learning_rate": 0.0001,
+    "loss": "forecast_mse",
+    "lradj": "ctf_type1",
+    "patience": 3,
+    "precision": "float32",
+    "selection_metric": "mse",
+    "weight_decay": 0.0
+  },
+  "training_seconds": 312.8918970860541,
+  "upstream_revision": "b1c100effb9c27cd25de07e91de7f9005d18d5e7",
+  "upstream_source_sha256": "4221c4aba301cf1ca5637258a1378c0b50ac0baf8fb77938bd0c8dbb1b4cdbf0",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

@@ -1,0 +1,54 @@
+{
+  "version": "E23-v41",
+  "seed": 502,
+  "scope": "exploratory; seed chosen from previously seen formal test outcomes",
+  "trials": [
+    {
+      "trial": "base_frozen",
+      "label": "E23-v41-base-frozen",
+      "config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/configs/e23_seed_502.yaml",
+      "stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_502/E23-v31-B/stage1/runs/e23-stage1.json",
+      "policy": "frozen_v1"
+    },
+    {
+      "trial": "tail_frozen",
+      "label": "E23-v41-tail32-frozen",
+      "config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/e23_seed502.yaml",
+      "stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage1/runs/e23-stage1.json",
+      "policy": "frozen_v1"
+    },
+    {
+      "trial": "tail_slow",
+      "label": "E23-v41-tail32-slow",
+      "config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/e23_seed502.yaml",
+      "stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage1/runs/e23-stage1.json",
+      "policy": "slow_lr_0p1_v1"
+    }
+  ],
+  "new_stage1_training": false,
+  "stage1": "reuse exact original v31-B / v40-tail32 selected weights, counts and costs retained",
+  "stage2": {
+    "epochs": 100,
+    "batch": 128,
+    "precision": "float32",
+    "optimizer": "Adam",
+    "weight_decay": 0,
+    "predictor_lr": 0.0001,
+    "loss": "forecast MSE + .2 MAE; from epoch11 add .05 global uniform repair MSE",
+    "repair_lr": {
+      "joint": 0.0001,
+      "frozen_v1": 0,
+      "slow_lr_0p1_v1": 1e-05
+    }
+  },
+  "prediction_head": "same original D16 35427 parameters; same seed502 initialization",
+  "selection": "lowest original fixed validation MAE; same original v31-B validation MSE<.7445468891775257 and MAE<=.5852035470560294 gate",
+  "test": "same20 frozen masks after each selected checkpoint lock; evaluate every trial regardless gate",
+  "resources": "cached Stage1 full workflow + measured new Stage2; also report actual new training seconds; allocated/reserved and actual stage costs",
+  "hypotheses": [
+    "does hard preservation of Stage1 restoration improve forecasting",
+    "under frozen repair does tail32 capacity improve upon frozen original v31-B",
+    "does slow adaptation preserve useful forecasting adaptation with less repair drift"
+  ],
+  "worktree": "/home/xyw/paper/.e23-v41-drift/E23"
+}

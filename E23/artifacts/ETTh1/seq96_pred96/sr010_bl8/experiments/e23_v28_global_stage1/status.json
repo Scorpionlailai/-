@@ -1,0 +1,28 @@
+{
+  "state": "finished",
+  "stage1_epochs": 100,
+  "stage2_epochs": 100,
+  "device": "cuda:1",
+  "passes_predeclared_validation_gate": true,
+  "selected_by_validation": "E23_v28",
+  "test_evaluation": "one checkpoint; all three frozen mask draws",
+  "test_mean": {
+    "mse": 0.422192316927517,
+    "mae": 0.43232650100869474
+  },
+  "test_mse_change_vs_v12_percent": -1.2329747028490545,
+  "test_mae_change_vs_v12_percent": 0.22509868423112867,
+  "resource_summary": {
+    "full_workflow_seconds": 361.4969014134258,
+    "peak_allocated_gib": 1.6255064010620117,
+    "peak_reserved_gib": 5.306640625
+  },
+  "test_result_path": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v28_global_stage1/three-test-draws.json",
+  "verification": {
+    "tests_passed": 791,
+    "tests_skipped": 1,
+    "warnings": 8,
+    "log": "/tmp/e23-v28-full-suite-final.log"
+  },
+  "evaluation_source_sha256": "6930e053e69486cffd51cf438ed7b29b2569d2ddcf49c333be25c503d9e6adaf"
+}

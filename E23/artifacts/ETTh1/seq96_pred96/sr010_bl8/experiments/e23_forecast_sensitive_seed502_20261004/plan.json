@@ -1,0 +1,21 @@
+{
+  "status": "frozen_before_diagnosis",
+  "training_seed": 502,
+  "models": ["E23-v31-B", "T1", "E23-v38"],
+  "split": "original_fixed_validation",
+  "new_training": false,
+  "new_test_evaluation": false,
+  "heads": "original selected Stage2 PatchTST heads, frozen; same architecture and initialization",
+  "cross_combinations": 9,
+  "regions": "six disjoint original-time bands of 16 points x seven variables; all overlapping patch copies updated",
+  "regional_interventions": [
+    "replace one region's missing values with clean history under each of nine source-head combinations",
+    "move missing repaired values halfway toward clean history for each model under its own frozen head",
+    "replace one region's E23 missing repaired values with T1 estimates under the original E23 frozen head"
+  ],
+  "padding_control": "native replay, zero and replicate padding, full-history oracle with native or zero padding; regional comparisons fix padding to zero",
+  "fixed": ["parameters", "H memory and keys", "original masks", "query mean/std", "observed values", "forecast target"],
+  "metrics": ["forecast MSE/MAE", "signed region gains", "four 24-step forecast horizons", "global and regional hidden repair MSE/MAE", "diagnostic wall time", "peak allocated/reserved GiB"],
+  "integrity": "replay own-head native forecasts within 1e-6; verify source/config/checkpoint hashes and runtime states before/after",
+  "scope": "development diagnosis on a seed selected from existing test results; not formal multi-seed evidence, not physical causality"
+}

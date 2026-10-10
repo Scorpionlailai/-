@@ -1,0 +1,54 @@
+{
+  "created_client_date": "2026-10-04",
+  "timezone": "Asia/Shanghai",
+  "training_seed": 502,
+  "development_seed": true,
+  "cells": [
+    {
+      "name": "overlap_slow",
+      "label": "E23-v43-O",
+      "config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/e23_seed502.yaml",
+      "cached_stage1": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v40_local_point_refinement_seed502_20261004/tail32/stage1/runs/e23-stage1.json",
+      "repair_stride": 8,
+      "point_feature_width": 0
+    },
+    {
+      "name": "nonoverlap_slow",
+      "label": "E23-v43-N",
+      "config": "/home/xyw/paper/.e23-v43-nonoverlap/E23/configs/e23_v43_nonoverlap_slow_seed502.yaml",
+      "cached_stage1": null,
+      "repair_stride": 16,
+      "point_feature_width": 0
+    },
+    {
+      "name": "nonoverlap_expand_slow",
+      "label": "E23-v43-P",
+      "config": "/home/xyw/paper/.e23-v43-nonoverlap/E23/configs/e23_v43_nonoverlap_expand_slow_seed502.yaml",
+      "cached_stage1": null,
+      "repair_stride": 16,
+      "point_feature_width": 32
+    }
+  ],
+  "predictor_initial_sha256": "26cee63e94dc41607f346f09a29e01cf7d02e75e513b1d9b631ce270ec3e0b7c",
+  "v41_reference_validation": {
+    "mse": 0.7379902117376695,
+    "mae": 0.5799525232812445
+  },
+  "primary_selection": "validation_mae",
+  "secondary_selection": "validation_mse",
+  "training": "100+100epochs,batch128,FP32,Adam,weight_decay0",
+  "stage1_loss": "global_missing_mse+0.1retrieval",
+  "stage1_lr": 0.001,
+  "stage2_loss": "forecast_mse_only",
+  "stage2_predictor_lr": 0.0001,
+  "stage2_repair_lr": 1e-05,
+  "downstream_protocol": "t1_mse_v1",
+  "forecast_padding": "replicate_last_value_v1",
+  "training_rng_reset_before_stage2": true,
+  "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+  "test_draws": 20,
+  "geometrical_confound": "patch_count12to6;T_radius_and_bands_match_real_time;V_offsets8to16points",
+  "history_sampling_stride": 8,
+  "test_used_for_config_selection": false,
+  "T1_reused": true
+}

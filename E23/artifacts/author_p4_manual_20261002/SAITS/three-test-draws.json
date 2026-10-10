@@ -1,0 +1,96 @@
+{
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_manual_20261002/SAITS/forecast-selected.pt",
+  "checkpoint_selection": "original fixed validation only; same selected weights in every test group",
+  "checkpoint_sha256": "b80c9ee0b78d0109fcfd1b0cdf9926f3f9d35652cc955d4bcca28220a9adec52",
+  "dataset": "ETTh1",
+  "metric_space": "train_standardized",
+  "model": "SAITS",
+  "profile_version": "SAITS-base (not an ETTh1-specific optimum); pinned core 660b87f19c1277065f314f24134f646229e89ca9",
+  "scenario": "P4",
+  "schema_version": 1,
+  "selection_sha256": "71c8d9b045befb617f3bbae00017fb25e50fc0c3391b206682d15144cbcf7360",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "std_definition": "population standard deviation across three test missing-position draws (ddof=0)",
+  "test_draws": 3,
+  "test_groups": [
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_0",
+      "mae": 0.5478866257094472,
+      "missing_evaluation_fraction": 0.5667107337726758,
+      "missing_timeline_fraction": 0.5672043010752689,
+      "mse": 0.5698973737876701,
+      "path": "test_group_0.npz",
+      "seed": 2021,
+      "sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_1",
+      "mae": 0.5501808482232818,
+      "missing_evaluation_fraction": 0.5668004180839002,
+      "missing_timeline_fraction": 0.5658122119815668,
+      "mse": 0.5626082593351265,
+      "path": "test_group_1.npz",
+      "seed": 2026100201,
+      "sha256": "a9009133109fab0b94011a7007b7e880071344a5ac7a42f58d5fa0944ecd4ede",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_2",
+      "mae": 0.5513413920153837,
+      "missing_evaluation_fraction": 0.5695579338506236,
+      "missing_timeline_fraction": 0.5679723502304147,
+      "mse": 0.5760196828517784,
+      "path": "test_group_2.npz",
+      "seed": 2026100202,
+      "sha256": "737c1710fe4dda249b310e482a1d70b9d560eed31c6f4711a97c038c835f96b4",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    }
+  ],
+  "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/test_mask_bank_20261002/manifest.json",
+  "test_mask_bank_sha256": "95fe49c78c6b884477e70c05f18a6c6c06f009e75d3afa01946275207b70e3a9",
+  "test_mean": {
+    "mae": 0.5498029553160375,
+    "mse": 0.5695084386581916
+  },
+  "test_std": {
+    "mae": 0.001435491749463708,
+    "mse": 0.005482093461866422
+  },
+  "training_resources": {
+    "batch_size": "128",
+    "full_workflow_seconds": 239.73555484134704,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 147.97245617210865,
+    "peak_allocated_gib": 0.6363911628723145,
+    "peak_reserved_gib": 0.6796875,
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/author_p4_manual_20261002/SAITS/resources/7073bfdc28c1483798fd7e226817b845.json"
+    ],
+    "resource_status": "measured_all_stages",
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/author_p4_manual_20261002/SAITS/forecast-selection.json"
+    ],
+    "stage1_legacy_loop_seconds": null,
+    "stage2_legacy_loop_seconds": null,
+    "training_stages_seconds": 238.2977719279006
+  },
+  "training_runs": 1,
+  "validation": {
+    "mae": 0.6345269663804243,
+    "mse": 0.8547529557935235,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

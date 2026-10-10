@@ -1,0 +1,49 @@
+{
+  "split": "original_fixed_validation",
+  "stage1_epochs_completed": 100,
+  "selection_by_window_metric": {
+    "epoch": 26,
+    "metrics": {
+      "global_mae": 0.40043138482433305,
+      "global_mse": 0.35900602084595135,
+      "hidden_coordinates": 1023670,
+      "small_std_global_squared_share": 0.0029307832516946805,
+      "small_std_hidden_fraction": 0.0067267771840534545,
+      "small_std_window_squared_share": 0.9895794078115523,
+      "window_mse": 106.32485424685201
+    }
+  },
+  "selection_by_global_metric": {
+    "epoch": 99,
+    "metrics": {
+      "global_mae": 0.3727756503560718,
+      "global_mse": 0.30581590872943676,
+      "hidden_coordinates": 1023670,
+      "small_std_global_squared_share": 0.0034687511901730418,
+      "small_std_hidden_fraction": 0.0067267771840534545,
+      "small_std_window_squared_share": 0.9905796276201789,
+      "window_mse": 107.08875578151101
+    }
+  },
+  "v12_global_repair_mse": 0.3688236435753221,
+  "v28_global_repair_relative_reduction": 0.1708343159215544,
+  "stage1_resources": {
+    "full_workflow_seconds": 195.3425893848762,
+    "training_stages_seconds": 194.4489840855822,
+    "peak_allocated_gib": 1.6255064010620117,
+    "peak_reserved_gib": 5.306640625,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "batch_size": "128",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 194.0482756793499,
+    "stage1_legacy_loop_seconds": null,
+    "stage2_legacy_loop_seconds": null,
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v28_global_stage1/stage1/runs/e23-stage1.json"
+    ],
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v28_global_stage1/stage1/resources/97cd21aea9134c1db3dbdcb06a933c96.json"
+    ],
+    "resource_status": "measured_all_stages"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "source_freeze_unchanged": true,
+  "source_files": 386,
+  "prediction_head_unchanged": true,
+  "stage2_training_unchanged": true,
+  "shared_existing_files_unchanged": true,
+  "records": [
+    {
+      "condition": "C0",
+      "stage1_sha256": "1a030577352b8b752cb6a4952c59172649cd70fa8c921f1aa972e7fb7216df16",
+      "stage2_sha256": "fa967e477514330f928818634c2e28c176c0d68712d8848ee3f3885f5fc0a6d4",
+      "stage1_best_epoch": 98,
+      "stage2_best_epoch": 12,
+      "test_mean": {
+        "mae": 0.4416236953129844,
+        "mse": 0.425694626024611
+      }
+    },
+    {
+      "condition": "A",
+      "stage1_sha256": "957772176c2dece501b79a52e355417266c5dac209891f6f5fd2bc3f384f4783",
+      "stage2_sha256": "aefbfc5b87c5d2170d179c99260659ede5ceab00864545fde97e8d92943850bd",
+      "stage1_best_epoch": 98,
+      "stage2_best_epoch": 20,
+      "test_mean": {
+        "mae": 0.4499459828919565,
+        "mse": 0.43350229530017304
+      }
+    },
+    {
+      "condition": "B",
+      "stage1_sha256": "f597a22909e6e9c313f0902c5748ee7ab4a70efdf1827fc3104d90cab11fabdb",
+      "stage2_sha256": "97956d0a6e924a129f740870ef51722d704034f7ec6d8adaa98ae501fdf5692c",
+      "stage1_best_epoch": 72,
+      "stage2_best_epoch": 24,
+      "test_mean": {
+        "mae": 0.4430530523587066,
+        "mse": 0.4278908186758997
+      }
+    }
+  ],
+  "tests": 9,
+  "baseline_stage1_reused_without_retraining": true,
+  "decision": {
+    "retained_model": "E23_v31_B",
+    "selection_source": "original fixed validation only; tests not used",
+    "matched_control_passed": [],
+    "actual_matrix_training_full_seconds": 1709.1965986127034
+  },
+  "retained_model": "E23_v31_B",
+  "report_csv_copied_to_shared": true
+}

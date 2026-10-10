@@ -1,0 +1,42 @@
+{
+  "scenarios": [
+    {
+      "name": "sr015_bl8",
+      "start_rate": 0.15,
+      "block_len": 8,
+      "scenario_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json",
+      "test_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/test_masks/manifest.json",
+      "actual_test_missing_mean": 0.729251839081987
+    },
+    {
+      "name": "sr020_bl8",
+      "start_rate": 0.2,
+      "block_len": 8,
+      "scenario_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr020_bl8/scenario.json",
+      "test_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr020_bl8/test_masks/manifest.json",
+      "actual_test_missing_mean": 0.8350602268902352
+    },
+    {
+      "name": "sr010_bl16",
+      "start_rate": 0.1,
+      "block_len": 16,
+      "scenario_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/scenario.json",
+      "test_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/test_masks/manifest.json",
+      "actual_test_missing_mean": 0.8193881149464994
+    }
+  ],
+  "training_seed": 502,
+  "models": [
+    "E23-v41-slow",
+    "T1"
+  ],
+  "device": "cuda:1",
+  "selection": "fixed validation MAE",
+  "head_parameters": 35427,
+  "predictor_initial_sha256": "26cee63e94dc41607f346f09a29e01cf7d02e75e513b1d9b631ce270ec3e0b7c",
+  "e23_config": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/configs/e23_v41_slow_seed502.yaml",
+  "author_profiles": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/configs/author_seed502.json",
+  "stage2_difference": "E23 original v41 mixed loss/retention/slow update/legacy padding; T1 original author pure-MSE shared forecast training; fixed head source/config/initialization",
+  "test_used_for_selection": false,
+  "new_training_per_scenario": true
+}

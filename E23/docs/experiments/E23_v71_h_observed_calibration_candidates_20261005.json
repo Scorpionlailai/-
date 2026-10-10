@@ -1,0 +1,35 @@
+{
+  "work": "/home/xyw/paper/.e23-v71-h-observed-calibration/E23",
+  "config": "/home/xyw/paper/.e23-v71-h-observed-calibration/E23/configs/e23_v71_h_observed_calibration_seed2023.yaml",
+  "source_archive": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v71_h_observed_calibration_seed2023_20261005/frozen-source.tar.gz",
+  "architecture": "v69 plus observed-only H level alignment and LOO reliability",
+  "training_seed": 2023,
+  "repair_parameters": 420973,
+  "predictor_parameters": 35427,
+  "candidates": [
+    {
+      "scenario": "sr015_bl8",
+      "selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v71_h_observed_calibration_seed2023_20261005/sr015_bl8/E23-v71-mae/stage2/runs/e23-stage2.json",
+      "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v71_h_observed_calibration_seed2023_20261005/sr015_bl8/E23-v71-mae/stage2/checkpoints/e23-stage2.pt",
+      "checkpoint_sha256": "cb673483b37f193115c6186a2311ffa4b64cd848b6d0020af2b6fe397c1d6ea2",
+      "config": "/home/xyw/paper/.e23-v71-h-observed-calibration/E23/configs/e23_v71_h_observed_calibration_seed2023.yaml",
+      "training_seed": 2023,
+      "stage1_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v71_h_observed_calibration_seed2023_20261005/sr015_bl8/E23-v71-mae/stage1/runs/e23-stage1.json",
+      "scenario_environment": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json",
+      "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/test_masks/manifest.json",
+      "scores": {
+        "mae": 0.4125791068520406,
+        "mse": 0.4069962662904441
+      },
+      "mask_std": {
+        "mae": 0.0038180100787898403,
+        "mse": 0.012263820678065503
+      },
+      "validation_upgrade_vs_v69": false,
+      "main_source_integrated": false
+    }
+  ],
+  "main_source_integrated": false,
+  "new_t1_training_runs": 0,
+  "measured_new_training_seconds": 857.1610255520791
+}

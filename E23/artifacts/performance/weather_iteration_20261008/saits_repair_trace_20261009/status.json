@@ -1,0 +1,101 @@
+{
+  "status": "completed",
+  "updated_at": "2026-10-08T17:30:35.798326+00:00",
+  "pid": 1723839,
+  "exit_code": 0,
+  "summary": [
+    {
+      "model": "v97",
+      "group": "all_hidden",
+      "count": 5949977,
+      "mse": 0.1902662297710102,
+      "mae": 0.09767203440362648
+    },
+    {
+      "model": "v97",
+      "group": "small_std",
+      "count": 546853,
+      "mse": 0.028138236696361965,
+      "mae": 0.04265860048991166
+    },
+    {
+      "model": "v97",
+      "group": "ordinary_std",
+      "count": 5403124,
+      "mse": 0.2066752885667829,
+      "mae": 0.10323997276225319
+    },
+    {
+      "model": "v97",
+      "group": "tail32_hidden",
+      "count": 1985073,
+      "mse": 0.18621035621388968,
+      "mae": 0.10129909597632741
+    },
+    {
+      "model": "T1",
+      "group": "all_hidden",
+      "count": 5949977,
+      "mse": 0.16605044580418918,
+      "mae": 0.09850824900979485
+    },
+    {
+      "model": "T1",
+      "group": "small_std",
+      "count": 546853,
+      "mse": 0.033941999776444666,
+      "mae": 0.015262818982436033
+    },
+    {
+      "model": "T1",
+      "group": "ordinary_std",
+      "count": 5403124,
+      "mse": 0.17942121057575655,
+      "mae": 0.10693356242972583
+    },
+    {
+      "model": "T1",
+      "group": "tail32_hidden",
+      "count": 1985073,
+      "mse": 0.16667134111252588,
+      "mae": 0.10034813682649876
+    },
+    {
+      "model": "SAITS",
+      "group": "all_hidden",
+      "count": 5949977,
+      "mse": 0.241523037043693,
+      "mae": 0.06492580837000696
+    },
+    {
+      "model": "SAITS",
+      "group": "small_std",
+      "count": 546853,
+      "mse": 0.04139680681802012,
+      "mae": 0.021401334227531647
+    },
+    {
+      "model": "SAITS",
+      "group": "ordinary_std",
+      "count": 5403124,
+      "mse": 0.26177791725329014,
+      "mae": 0.06933094311395047
+    },
+    {
+      "model": "SAITS",
+      "group": "tail32_hidden",
+      "count": 1985073,
+      "mse": 0.23915161765251222,
+      "mae": 0.06419686893979624
+    }
+  ],
+  "cpu_minus_original_cuda_validation": {
+    "mse": 5.100119937484493e-09,
+    "mae": 5.172290512556188e-10
+  },
+  "weights_unchanged": true,
+  "source_checkpoint_sha256": "462e3cf132a34ecdc31d2dab89538d1394d18a72b963520991692d89d96b098f",
+  "selected_epoch": 94,
+  "scope": "fixed validation disaggregation, no training/future forecast/test targets",
+  "seconds": 5.471704190596938
+}

@@ -1,0 +1,55 @@
+{
+  "version": "E23-v40",
+  "seed": 502,
+  "exploratory_seed_selected_from_old_test": true,
+  "trial_order": [
+    "tail32",
+    "full96"
+  ],
+  "point_network": {
+    "width": 64,
+    "shared_across_variables": true,
+    "inputs": [
+      "repaired normalized sequence",
+      "observed-only normalized values",
+      "original observation mask",
+      "relative time position",
+      "folded router latents",
+      "folded none/H/V/T router weights"
+    ],
+    "blocks": [
+      {
+        "depthwise_kernel": 5,
+        "dilation": 1,
+        "pointwise_expansion": 2
+      },
+      {
+        "depthwise_kernel": 5,
+        "dilation": 3,
+        "pointwise_expansion": 2
+      }
+    ],
+    "zero_initialized_scalar_output": true,
+    "context_and_computation": "full96 for both; only output modification scope differs"
+  },
+  "original_experts": "unchanged v31-B",
+  "prediction_head": "original PatchTST D16; 35427 parameters; initialization matches original seed502",
+  "stage1": {
+    "epochs": 100,
+    "batch": 128,
+    "loss": "global missing MSE + 0.1 retrieval",
+    "learning_rate": 0.001,
+    "specialist_exposure": 0.2
+  },
+  "stage2": {
+    "epochs": 100,
+    "batch": 128,
+    "loss": "forecast MSE + .2 MAE; from epoch11 add .05 uniform global repair MSE",
+    "learning_rate": 0.0001
+  },
+  "selection": "lowest original fixed validation MAE",
+  "promotion_gate": "selected validation MSE strictly lower than original v31-B and MAE no higher",
+  "test": "same20 frozen masks after checkpoint lock; evaluate both trials regardless gate; no test-based promotion",
+  "resources": "full training workflow seconds and stage seconds; GPU1 RTX5090 allocated/reserved GiB; test and diagnostics separately",
+  "worktree": "/home/xyw/paper/.e23-v40-point/E23"
+}

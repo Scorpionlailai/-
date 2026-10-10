@@ -1,0 +1,89 @@
+{
+  "status": "passed",
+  "utc": "2026-10-04T08:10:45.136788+00:00",
+  "source_files": 399,
+  "protected_files": 352,
+  "new_stage1_training": false,
+  "new_stage2_runs": 3,
+  "scored_models": 6,
+  "total_test_draws": 120,
+  "new_test_draws": 60,
+  "max_window_mean_error": 1.3318127489725384e-08,
+  "head_sources_build_loss_and_initialization_unchanged": true,
+  "frozen_repair_tensors_checked": 170,
+  "actual_new_training_seconds": 554.5051597533748,
+  "paired_mask_comparisons": {
+    "E23-v41-base-frozen": {
+      "v31B": {
+        "mse": {
+          "mean_delta": -0.0007853778852086601,
+          "better_masks": 11
+        },
+        "mae": {
+          "mean_delta": -0.008812778498850704,
+          "better_masks": 20
+        }
+      },
+      "T1": {
+        "mse": {
+          "mean_delta": 0.018810767165117037,
+          "better_masks": 0
+        },
+        "mae": {
+          "mean_delta": -0.0031752286854784817,
+          "better_masks": 17
+        }
+      }
+    },
+    "E23-v41-tail32-frozen": {
+      "v31B": {
+        "mse": {
+          "mean_delta": -0.005159197940307558,
+          "better_masks": 17
+        },
+        "mae": {
+          "mean_delta": -0.010900141646802586,
+          "better_masks": 20
+        }
+      },
+      "T1": {
+        "mse": {
+          "mean_delta": 0.014436947110018139,
+          "better_masks": 1
+        },
+        "mae": {
+          "mean_delta": -0.005262591833430363,
+          "better_masks": 20
+        }
+      }
+    },
+    "E23-v41-tail32-slow": {
+      "v31B": {
+        "mse": {
+          "mean_delta": -0.0067228345373591125,
+          "better_masks": 20
+        },
+        "mae": {
+          "mean_delta": -0.005043099148203223,
+          "better_masks": 20
+        }
+      },
+      "T1": {
+        "mse": {
+          "mean_delta": 0.012873310512966585,
+          "better_masks": 2
+        },
+        "mae": {
+          "mean_delta": 0.0005944506651689996,
+          "better_masks": 8
+        }
+      }
+    }
+  },
+  "selected": "E23-v41-tail32-slow",
+  "formal_multiseed_results_unchanged": true,
+  "repair_diagnostic_rows": 252,
+  "summary_rows": 6,
+  "draw_rows": 120,
+  "public_reports_match_artifacts": true
+}

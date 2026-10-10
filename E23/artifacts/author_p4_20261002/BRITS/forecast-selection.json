@@ -1,0 +1,72 @@
+{
+  "adapter_sha256": "2fd79ffcc08d22c99f0011fd0b9d76652e44bd30e1bc5f3c3bed1793489c6342",
+  "author_profiles_sha256": "b6cb42742fda9fc20b65604383b8a6c8523e5e5971000c3e2969dac3de859c8a",
+  "best_epoch": 8,
+  "best_validation": {
+    "mae": 0.6275020045758375,
+    "mse": 0.8474339325141474,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/author_p4_20261002/BRITS/forecast-selected.pt",
+  "checkpoint_sha256": "95d05008257c891c94da9e67d479ca781f80cb3e2def4fd2d65766fec4dc3ff8",
+  "epochs_completed": 100,
+  "model": "BRITS",
+  "original_test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "profile": {
+    "kind": "imputer",
+    "model": {
+      "hidden_size": 108,
+      "impute_weight": 0.3,
+      "label_weight": 0.0
+    },
+    "notes": "No ETTh1-specific configuration: README example supplies hidden size, weight and batch omitted from default parser. Necessary adaptations are 48->96, 35->7, device-safe tensors, unused legacy import removal, and classification label_weight=0 because P4 has no labels. Preserve original summed ORT and consistency weights; do not use the SAITS-repository BRITS normalization. Validation checkpoint selection and shared forecast head are P4 extensions.",
+    "revision": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+    "root": "artifacts/upstream/BRITS",
+    "sources": [
+      "https://github.com/caow13/BRITS",
+      "README.md",
+      "main.py",
+      "models/rits.py",
+      "models/brits.py"
+    ],
+    "training": {
+      "batch_size": 64,
+      "epochs": 1000,
+      "learning_rate": 0.001,
+      "loss": "0.3*(forward_ORT_sum + backward_ORT_sum) + 0.1*consistency_mae",
+      "lradj": "constant",
+      "patience": null,
+      "precision": "float32",
+      "selection_metric": "mae",
+      "weight_decay": 0.0
+    },
+    "version": "original caow13/BRITS; README RITS_I example hyperparameters applied to BRITS"
+  },
+  "profile_version": "original caow13/BRITS; README RITS_I example hyperparameters applied to BRITS",
+  "protocol_config_sha256": "6805b1c785e884411e85895104b927c815a75dea96d09a53728c916bcf61c9e5",
+  "repair_selection_manifest": "/home/xyw/paper/E23/artifacts/author_p4_20261002/BRITS/repair-selection.json",
+  "repair_selection_sha256": "dcae6360c74dcf8494215af55f7bf8f7f16af577c41c435d70428afe8bed28a4",
+  "seed": 2021,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "forecast",
+  "status": "validation_finalized",
+  "test_metrics_seen": false,
+  "trainable_parameters": 146466,
+  "training": {
+    "batch_size": 128,
+    "epochs": 100,
+    "learning_rate": 0.0001,
+    "loss": "forecast_mse",
+    "lradj": "constant",
+    "patience": null,
+    "precision": "float32",
+    "selection_metric": "mae",
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "weight_decay": 0.0
+  },
+  "training_seconds": 946.4134866576642,
+  "upstream_revision": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+  "upstream_source_sha256": "5c406313530755b94f4abc5a781b08eeb3db580a990240cdc242a1bef3ce2373",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

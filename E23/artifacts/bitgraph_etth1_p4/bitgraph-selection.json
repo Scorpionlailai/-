@@ -1,0 +1,30 @@
+{
+  "adapter_sha256": "9c6b85428bccc1a1c5b23a9549d7d4470b11b6c5331d9a51c25500fdcd6fdf99",
+  "batch_size": 128,
+  "best_epoch": 12,
+  "best_validation": {
+    "mae": 0.629619544325502,
+    "mse": 0.844371673471533,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/bitgraph_etth1_p4/bitgraph-selected.pt",
+  "checkpoint_sha256": "e491212d2af9a106fc11466ee3e8e26b43c8bd5341e1faeb693709b2547a8443",
+  "config_path": "/home/xyw/paper/E23/configs/stage1_seq96_dynamic_temporal_repair.yaml",
+  "dataset": "ETTh1",
+  "epochs_completed": 100,
+  "learning_rate": 0.001,
+  "loss": "forecast_MAE",
+  "metric_space": "train_standardized",
+  "model": "BiTGraph",
+  "official_source_sha256": "5a651ff6e96f2116617b67690660c51270f7f19b84b9a9fae69aa4e2d4c417d2",
+  "scenario": "P4",
+  "seed": 2021,
+  "selection": "earliest minimum fixed-validation forecast MAE",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "trainable_parameters": 70638,
+  "training_seconds": 125.99197821505368,
+  "upstream_revision": "4f1d05bcc20bb3f5084bd1facc995478f84a40ed",
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

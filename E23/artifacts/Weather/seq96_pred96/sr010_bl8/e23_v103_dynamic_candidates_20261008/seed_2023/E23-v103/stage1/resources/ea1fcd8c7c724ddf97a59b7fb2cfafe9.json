@@ -1,0 +1,52 @@
+{
+  "amp": false,
+  "batch_size": 128,
+  "checkpoint_sha256": "4ff2fc3ea05b49bcb9015edd917d087b08f51c28459644726b8d971a8f08a6a3",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:0",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "382ce2ea-81a9-82ea-073f-729eaefd0268"
+  },
+  "epochs_completed": 100,
+  "finished_utc": "2026-10-08T09:57:29.881444+00:00",
+  "full_workflow_seconds": 9586.309740527533,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "E23-v103-dynamic-V",
+  "peak_allocated_bytes": 25133854720,
+  "peak_reserved_bytes": 32933675008,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 1.0833080485463142,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v103_dynamic_candidates_20261008/seed_2023/E23-v103/stage1/runs/e23-stage1.json",
+  "selection_manifest_sha256": "60941fa2818008b4f8faefe2059a956f489b8e8b4b9a8a76056dd236e2761c76",
+  "stages": {
+    "data_preparation": {
+      "peak_allocated_bytes": 0,
+      "peak_reserved_bytes": 0,
+      "status": "completed",
+      "wall_seconds": 0.183195143006742
+    },
+    "repair_training": {
+      "peak_allocated_bytes": 25133854720,
+      "peak_reserved_bytes": 32933675008,
+      "status": "completed",
+      "wall_seconds": 9585.04323733598
+    }
+  },
+  "started_utc": "2026-10-08T07:17:44.649968+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 9585.226432478987
+}

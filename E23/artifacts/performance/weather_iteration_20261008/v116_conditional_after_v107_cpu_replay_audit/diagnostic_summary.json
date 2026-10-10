@@ -1,0 +1,52 @@
+{
+  "cpu_replay": [
+    {
+      "posterior_variance_ratio_threshold": null,
+      "full_mse": 0.19385407460116405,
+      "full_mae": 0.08018054660090569,
+      "tail_mse": 0.18841929579980263,
+      "tail_mae": 0.08027831342427702,
+      "used_hidden_fraction": 0.0
+    },
+    {
+      "posterior_variance_ratio_threshold": 0.0001,
+      "full_mse": 0.19369329076628083,
+      "full_mae": 0.07855572169890168,
+      "tail_mse": 0.18826934159373968,
+      "tail_mae": 0.07865272970762605,
+      "used_hidden_fraction": 0.05618929283256053
+    },
+    {
+      "posterior_variance_ratio_threshold": 0.001,
+      "full_mse": 0.19317152497224868,
+      "full_mae": 0.07469571537159053,
+      "tail_mse": 0.18779284978903293,
+      "tail_mae": 0.07484375292356753,
+      "used_hidden_fraction": 0.18695752941565993
+    },
+    {
+      "posterior_variance_ratio_threshold": 0.01,
+      "full_mse": 0.1932251402209488,
+      "full_mae": 0.07547833644589616,
+      "tail_mse": 0.18783957904607354,
+      "tail_mae": 0.07553300055219116,
+      "used_hidden_fraction": 0.28220344381163154
+    }
+  ],
+  "formal_cuda": {
+    "global_mae": 0.08017957320760705,
+    "global_mse": 0.19384192254422594,
+    "hidden_coordinates": 5949977,
+    "small_std_global_squared_share": 0.011383480635166894,
+    "small_std_hidden_fraction": 0.0919084225031458,
+    "small_std_window_squared_share": 0.9964370447806488,
+    "window_mse": 220.3069348412765
+  },
+  "absolute_difference": {
+    "mse": 1.2152056938108391e-05,
+    "mae": 9.733932986449867e-07
+  },
+  "scope": "validation-only approximate CPU diagnostic; v107 selected frozen fallback; not a formal GPU model result",
+  "interpretation": "CPU replay MSE differs from CUDA by 1.2152e-5 and MAE by 9.7339e-7; preserve failed strict comparison. Conditional gain is assessed within same CPU replay only.",
+  "candidate_training_started": false
+}

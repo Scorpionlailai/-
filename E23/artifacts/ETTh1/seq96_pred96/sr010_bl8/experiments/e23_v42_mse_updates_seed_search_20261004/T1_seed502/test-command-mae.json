@@ -1,0 +1,20 @@
+[
+  "/home/xyw/miniforge3/envs/malr/bin/python",
+  "scripts/evaluate_e23_t1_replicate.py",
+  "--model",
+  "T1",
+  "--model-label",
+  "T1-select-mae",
+  "--training-seed",
+  "502",
+  "--profiles",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/configs/author_seed_502.json",
+  "--selection",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/T1_seed502/training/forecast-selection.json",
+  "--test-mask-bank",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/test_masks/manifest.json",
+  "--output",
+  "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v42_mse_updates_seed_search_20261004/T1_seed502/evaluation_mae",
+  "--device",
+  "cuda:1"
+]

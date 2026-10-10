@@ -1,0 +1,56 @@
+{
+  "amp": true,
+  "batch_size": 16,
+  "checkpoint_sha256": "5c0532738e6405d6dd10a1418fed164ace1e560f632bed11510d32fde1ab0fbe",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:0",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "382ce2ea-81a9-82ea-073f-729eaefd0268"
+  },
+  "epochs_completed": 100,
+  "finished_utc": "2026-10-02T15:52:18.097615+00:00",
+  "full_workflow_seconds": 643.4801742220297,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "T1",
+  "peak_allocated_bytes": 1910624768,
+  "peak_reserved_bytes": 2898264064,
+  "precision": "bfloat16",
+  "preparation_and_reporting_seconds": 1.1237716767936945,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/author_p4_manual_20261002/T1/forecast-selection.json",
+  "selection_manifest_sha256": "afa1f4c0d61f955c9c609d798b3a6596f011630557bcab53c8e0431233faf2ac",
+  "stages": {
+    "forecast": {
+      "batch_size": 128,
+      "peak_allocated_bytes": 1910624768,
+      "peak_reserved_bytes": 2898264064,
+      "precision": "float32",
+      "status": "completed",
+      "wall_seconds": 327.3106700601056
+    },
+    "repair": {
+      "batch_size": 16,
+      "peak_allocated_bytes": 404230144,
+      "peak_reserved_bytes": 618659840,
+      "precision": "bfloat16",
+      "status": "completed",
+      "wall_seconds": 315.04573248513043
+    }
+  },
+  "started_utc": "2026-10-02T15:41:35.690985+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 642.356402545236
+}

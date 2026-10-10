@@ -1,0 +1,10 @@
+{
+  "phase": "adaptive read-only validation diagnosis after the frozen original plan completed",
+  "reason": "joint effects cannot be inferred from individual regional gains; native T1 padding responses must be checked before interpreting common-zero padding controls",
+  "new_training": false,
+  "new_test_predictions": false,
+  "regions": ["LUFL last16", "LUFL last32", "LUFL all96", "all variables last16", "all variables last32", "all hidden"],
+  "variants": "oracle full/half for all three models; local T1 donor full/half for the two E23 models; fixed own heads and native padding",
+  "T1_extra_control": "42 own-head original-padding full/half oracle regions; full clean numeric history with replicated clean padding",
+  "chronological_check": "three equal, contiguous blocks of validation windows; descriptive sign check, not independent folds or significance testing"
+}

@@ -1,0 +1,51 @@
+{
+  "cuda_preflight": [
+    {
+      "condition": "C0",
+      "loss": 0.7907644510269165,
+      "batch_size": 128,
+      "h_key_sha256": "42926c5655ecb5eba9249c9c4b6faa4782b70ffcbb49b578be7f98b514b66309",
+      "h_bank_sha256": "2c47a98c6c2547db27b6a0ff7f7a19a3f421de32401fbf89d5d91a67d69b55cd",
+      "finite_gradients": true,
+      "predictor_initial_sha256": "18ad18b5af292a9b526233ea426f81ffb3899d1f4fc850441060843d8adc404a",
+      "predictor_parameters": 35427,
+      "repair_parameters": 135321,
+      "formal_training_reuses_preflight_weights": false
+    },
+    {
+      "condition": "A",
+      "loss": 0.7907644510269165,
+      "batch_size": 128,
+      "h_key_sha256": "42926c5655ecb5eba9249c9c4b6faa4782b70ffcbb49b578be7f98b514b66309",
+      "h_bank_sha256": "2c47a98c6c2547db27b6a0ff7f7a19a3f421de32401fbf89d5d91a67d69b55cd",
+      "finite_gradients": true,
+      "predictor_initial_sha256": "18ad18b5af292a9b526233ea426f81ffb3899d1f4fc850441060843d8adc404a",
+      "predictor_parameters": 35427,
+      "repair_parameters": 135321,
+      "formal_training_reuses_preflight_weights": false
+    },
+    {
+      "condition": "B",
+      "loss": 0.32686498761177063,
+      "batch_size": 128,
+      "h_key_sha256": "42926c5655ecb5eba9249c9c4b6faa4782b70ffcbb49b578be7f98b514b66309",
+      "h_bank_sha256": "2c47a98c6c2547db27b6a0ff7f7a19a3f421de32401fbf89d5d91a67d69b55cd",
+      "finite_gradients": true,
+      "predictor_initial_sha256": "18ad18b5af292a9b526233ea426f81ffb3899d1f4fc850441060843d8adc404a",
+      "predictor_parameters": 35427,
+      "repair_parameters": 143770,
+      "formal_training_reuses_preflight_weights": false
+    }
+  ],
+  "head_and_stage2_source_unchanged": true,
+  "head_files": [
+    "src/malr/models/patchtst.py",
+    "src/malr/models/repaired_forecast.py",
+    "src/malr/vendor/patchtst/LICENSE",
+    "src/malr/vendor/patchtst/NOTICE.md",
+    "src/malr/vendor/patchtst/PatchTST_backbone.py",
+    "src/malr/vendor/patchtst/PatchTST_layers.py",
+    "src/malr/vendor/patchtst/RevIN.py",
+    "src/malr/vendor/patchtst/__init__.py"
+  ]
+}

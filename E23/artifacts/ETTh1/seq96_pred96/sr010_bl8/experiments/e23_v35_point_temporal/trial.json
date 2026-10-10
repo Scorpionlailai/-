@@ -1,0 +1,19 @@
+{
+  "condition": "T",
+  "model": "E23_v35_T",
+  "config": "/home/xyw/paper/.e23-v35-temporal/E23/configs/e23_multi_expert_p4_point_temporal_v35.yaml",
+  "identity": {
+    "temporal_selection": "point_convolution_v1"
+  },
+  "control_setting_overrides": {
+    "temporal_selection": "banded_v1"
+  },
+  "matched_reference": "E23_v32_preservation_A",
+  "best_reference": "E23_v31_B",
+  "reference_csv": "/home/xyw/paper/.e23-v34-context/E23/docs/experiments/ETTh1_P4_E23_v34_comparison_2026-10-04.csv",
+  "reference_csv_sha256": "07bd25b2fcb9531c196dd023209e57c7a07d8a102383c80e3948df757aca9a87",
+  "baseline_workspace": "/home/xyw/paper/.e23-v34-context/E23",
+  "report_stem": "ETTh1_P4_E23_v35",
+  "h_selection_basis": "v34 fixed validation: neither A nor B improved the matched pure-MSE control",
+  "h_validation_selection_sha256": "cc42faf367325410487eaed01c4fb703181b9e35c944c5782e64bb021279ac47"
+}

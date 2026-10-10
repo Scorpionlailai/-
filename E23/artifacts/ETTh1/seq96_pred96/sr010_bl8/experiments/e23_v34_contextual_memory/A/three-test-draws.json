@@ -1,0 +1,103 @@
+{
+  "candidate_selection": "top_k",
+  "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v34_contextual_memory/A/stage2/checkpoints/e23-stage2.pt",
+  "checkpoint_selection": "original fixed validation only; same selected weights in every test group",
+  "checkpoint_sha256": "cc56aae1058688586257da99318fd07c26563e3f4ca0bed797543aad0b9456df",
+  "dataset": "ETTh1",
+  "e23_config_sha256": "75c1a79cb1e25c2087dbee153b81e1ed9a72fa4aca07d657607720e09489d9ff",
+  "h_state_unchanged": true,
+  "historical_context_length": 16,
+  "historical_query_mode": "global_patch_v1",
+  "metric_space": "train_standardized",
+  "model": "E23_v34_A",
+  "profile_version": "locked width64/window_context_topk_v1/global_mse_v1/iterative_tv_h_v1/r1",
+  "recovery_rounds": 1,
+  "recovery_schedule": "iterative_tv_h_v1",
+  "repair_width": 64,
+  "scenario": "P4",
+  "schema_version": 1,
+  "selection_sha256": "9f01facfb98fbc4dc74e773f86af4b26bb5b6ed6b1decc4196cdb23206135b5b",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage1_objective": "global_mse_v1",
+  "stage1_selection_metric_space": "train_standardized",
+  "std_definition": "population standard deviation across three test missing-position draws (ddof=0)",
+  "test_draws": 3,
+  "test_groups": [
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_0",
+      "mae": 0.4324293342036725,
+      "missing_evaluation_fraction": 0.5667107337726758,
+      "missing_timeline_fraction": 0.5672043010752689,
+      "mse": 0.41786989225011295,
+      "path": "test_group_0.npz",
+      "seed": 2021,
+      "sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_1",
+      "mae": 0.4342778329135609,
+      "missing_evaluation_fraction": 0.5668004180839002,
+      "missing_timeline_fraction": 0.5658122119815668,
+      "mse": 0.4144831709310311,
+      "path": "test_group_1.npz",
+      "seed": 2026100201,
+      "sha256": "a9009133109fab0b94011a7007b7e880071344a5ac7a42f58d5fa0944ecd4ede",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    },
+    {
+      "evaluation_windows": 2688,
+      "group_id": "group_2",
+      "mae": 0.42805283734587585,
+      "missing_evaluation_fraction": 0.5695579338506236,
+      "missing_timeline_fraction": 0.5679723502304147,
+      "mse": 0.41714663408240493,
+      "path": "test_group_2.npz",
+      "seed": 2026100202,
+      "sha256": "737c1710fe4dda249b310e482a1d70b9d560eed31c6f4711a97c038c835f96b4",
+      "split": "test",
+      "target_elements": 1806336,
+      "windows": 2688
+    }
+  ],
+  "test_mask_bank": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/test_mask_bank_20261002/manifest.json",
+  "test_mask_bank_sha256": "95fe49c78c6b884477e70c05f18a6c6c06f009e75d3afa01946275207b70e3a9",
+  "test_mean": {
+    "mae": 0.4315866681543698,
+    "mse": 0.4164998990878496
+  },
+  "test_std": {
+    "mae": 0.0026102626952614495,
+    "mse": 0.0014562897921699715
+  },
+  "training_resources": {
+    "batch_size": "128",
+    "full_workflow_seconds": 399.9712243694812,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "hardware_consistent": true,
+    "legacy_training_loop_seconds": 396.87331201601774,
+    "peak_allocated_gib": 1.594977855682373,
+    "peak_reserved_gib": 4.556640625,
+    "resource_record_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v34_contextual_memory/A/stage1/resources/bde6abb5a74447e595a8a5c57d485df2.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v34_contextual_memory/A/stage2/resources/bf148d73fa284cb197ab4614feb5c440.json"
+    ],
+    "resource_status": "measured_all_stages",
+    "selection_manifest_paths": [
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v34_contextual_memory/A/stage1/runs/e23-stage1.json",
+      "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_v34_contextual_memory/A/stage2/runs/e23-stage2.json"
+    ],
+    "stage1_legacy_loop_seconds": 216.25537721347064,
+    "stage2_legacy_loop_seconds": 180.6179348025471,
+    "training_stages_seconds": 397.8046111650765
+  },
+  "training_runs": 1,
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c",
+  "variable_selection": "window_context_topk_v1"
+}
