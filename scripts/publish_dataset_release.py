@@ -28,7 +28,10 @@ def process(a):
   for p in a['parts']:
    b=f.read(p['bytes']);assert hashlib.sha256(b).hexdigest()==p['sha256']
    if present(p):continue
-   part=folder/p['name'];part.write_bytes(b);upload(part);part.unlink()
+   part=folder/p['name']
+   if part!=dst:part.write_bytes(b)
+   upload(part)
+   if part!=dst:part.unlink()
  dst.unlink()
  return 'Uploaded '+a['dataset']+'/'+Path(a['path']).name
 with ThreadPoolExecutor(max_workers=4) as pool:
