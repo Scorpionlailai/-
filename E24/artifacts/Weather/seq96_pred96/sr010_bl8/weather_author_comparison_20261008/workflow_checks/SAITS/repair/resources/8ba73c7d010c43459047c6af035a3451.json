@@ -1,0 +1,46 @@
+{
+  "amp": false,
+  "batch_size": 128,
+  "checkpoint_sha256": "cd39728c4746dddc4da360da7f0a7591aa85b64d2267b8d649709817986b67ac",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": "GPU-1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:0",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b"
+  },
+  "epochs_completed": 1,
+  "finished_utc": "2026-10-07T16:23:26.680531+00:00",
+  "full_workflow_seconds": 2.159591745585203,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "smoke",
+  "model": "SAITS",
+  "peak_allocated_bytes": 649705472,
+  "peak_reserved_bytes": 723517440,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 1.176465107128024,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/weather_author_comparison_20261008/workflow_checks/SAITS/repair/selection.json",
+  "selection_manifest_sha256": "87b1497988152d4ed3399c69bd7615daa55319ff0a7f59e25b5952337688738f",
+  "stages": {
+    "repair": {
+      "peak_allocated_bytes": 649705472,
+      "peak_reserved_bytes": 723517440,
+      "status": "completed",
+      "wall_seconds": 0.9831266384571791
+    }
+  },
+  "started_utc": "2026-10-07T16:23:25.696497+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 0.9831266384571791
+}

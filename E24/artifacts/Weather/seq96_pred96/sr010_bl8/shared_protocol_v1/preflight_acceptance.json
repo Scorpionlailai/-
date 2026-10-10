@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "dataset": "Weather",
+  "protocol_id": "E24-weather-v79-sr010-bl8-seq96-pred96-all-eval-v1",
+  "windows": {
+    "train": 36696,
+    "validation": 5175,
+    "test": 10444
+  },
+  "evaluated_windows": {
+    "validation": 5175,
+    "test": 10444
+  },
+  "train_batches_per_epoch": 286,
+  "optimizer_updates_per_stage": 28600,
+  "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+  "predictor_parameters": 35427,
+  "repair_parameters": 519214,
+  "batch128_forward_backward_peak_allocated_GiB": 10.247185230255127,
+  "preflight_seconds": 1.0211336417123675,
+  "preflight_optimizer_updates": 1,
+  "hidden_truth_excluded": true,
+  "visible_values_exact": true,
+  "optimizer_only_predictor": true,
+  "repair_state_unchanged": true,
+  "head_source_sha256": "17d3fafa87d3b1772ac2ca4c674d5f962b56c72e7d485f9f721ad83100ea1d12",
+  "etth1_regression_validation": {
+    "mse": 0.7441835187189704,
+    "mae": 0.5719284816664092
+  },
+  "etth1_regression_passed": true
+}

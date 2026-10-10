@@ -1,0 +1,68 @@
+{
+  "checks": [
+    {
+      "n": 1,
+      "temperature": 1.0,
+      "loss_absolute_difference": 0.0,
+      "gradient_max_abs_difference": 0.0
+    },
+    {
+      "n": 19,
+      "temperature": 0.3,
+      "loss_absolute_difference": 4.440892098500626e-16,
+      "gradient_max_abs_difference": 4.163336342344337e-17
+    },
+    {
+      "n": 257,
+      "temperature": 1.0,
+      "loss_absolute_difference": 9.5367431640625e-07,
+      "gradient_max_abs_difference": 1.6298145055770874e-09
+    },
+    {
+      "n": 29592,
+      "loss_absolute_difference": 1.9073486328125e-06,
+      "gradient_max_abs_difference": 8.003553375601768e-11
+    }
+  ],
+  "damaged_patches": 29592,
+  "benchmarks": [
+    {
+      "name": "dense",
+      "warmup_discarded": 1,
+      "measurements": [
+        {
+          "seconds": 0.03630205616354942,
+          "additional_peak_GiB": 9.786560535430908
+        },
+        {
+          "seconds": 0.03648353833705187,
+          "additional_peak_GiB": 9.786560535430908
+        },
+        {
+          "seconds": 0.036407927982509136,
+          "additional_peak_GiB": 9.786560535430908
+        }
+      ]
+    },
+    {
+      "name": "row_blocks",
+      "warmup_discarded": 1,
+      "measurements": [
+        {
+          "seconds": 0.03267333563417196,
+          "additional_peak_GiB": 0.17697811126708984
+        },
+        {
+          "seconds": 0.032526264898478985,
+          "additional_peak_GiB": 0.17697811126708984
+        },
+        {
+          "seconds": 0.03270785138010979,
+          "additional_peak_GiB": 0.17697811126708984
+        }
+      ]
+    }
+  ],
+  "scope": "retrieval contrastive loss only; synthetic normalized keys at actual Weather batch geometry",
+  "original_training_unchanged": true
+}

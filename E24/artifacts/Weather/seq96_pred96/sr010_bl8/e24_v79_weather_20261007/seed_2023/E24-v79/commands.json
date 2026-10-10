@@ -1,0 +1,74 @@
+{
+  "cwd": "/home/xyw/paper/E24",
+  "environment": {
+    "MKL_NUM_THREADS": "4",
+    "OMP_NUM_THREADS": "4",
+    "PYTHONPATH": "src:."
+  },
+  "jobs": [
+    [
+      "stage1",
+      [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "-m",
+        "integrations.e24.run",
+        "train-repair",
+        "--dataset-manifest",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+        "--device",
+        "cuda:1",
+        "--output",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage1"
+      ]
+    ],
+    [
+      "stage2",
+      [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "-m",
+        "integrations.e24.run",
+        "train-forecast",
+        "--dataset-manifest",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+        "--device",
+        "cuda:1",
+        "--stage1-manifest",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage1/runs/e23-stage1.json",
+        "--output",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage2"
+      ]
+    ],
+    [
+      "evaluation_mae",
+      [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "-m",
+        "integrations.e24.evaluate",
+        "--dataset-manifest",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+        "--device",
+        "cuda:1",
+        "--selection",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage2/runs/e23-stage2.json",
+        "--output",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/evaluation_mae"
+      ]
+    ],
+    [
+      "evaluation_mse",
+      [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "-m",
+        "integrations.e24.evaluate",
+        "--dataset-manifest",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json",
+        "--device",
+        "cuda:1",
+        "--selection",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/stage2/runs/e23-stage2-mse.json",
+        "--output",
+        "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/e24_v79_weather_20261007/seed_2023/E24-v79/evaluation_mse"
+      ]
+    ]
+  ]
+}

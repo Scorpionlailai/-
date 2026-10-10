@@ -1,0 +1,72 @@
+{
+  "batch_size": 128,
+  "variables": 21,
+  "patches": 12,
+  "damaged_patches": 29592,
+  "contrastive_matrix_elements": 875686464,
+  "contrastive_one_matrix_GiB": 3.262186288833618,
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "phase_measurements": [
+    {
+      "name": "repair_forward_train",
+      "seconds": 0.061708700843155384,
+      "peak_allocated_GiB": 10.287791728973389,
+      "additional_peak_GiB": 10.253944396972656
+    },
+    {
+      "name": "retrieval_loss_forward",
+      "seconds": 0.013242200016975403,
+      "peak_allocated_GiB": 16.687544345855713,
+      "additional_peak_GiB": 6.607835292816162
+    },
+    {
+      "name": "combined_backward",
+      "seconds": 0.13302984926849604,
+      "peak_allocated_GiB": 19.913536071777344,
+      "additional_peak_GiB": 6.523709774017334
+    },
+    {
+      "name": "repair_frozen_forward_0",
+      "seconds": 0.060169972479343414,
+      "peak_allocated_GiB": 3.253523349761963,
+      "additional_peak_GiB": 3.2196760177612305
+    },
+    {
+      "name": "repair_frozen_forward_1",
+      "seconds": 0.05956503003835678,
+      "peak_allocated_GiB": 3.2552781105041504,
+      "additional_peak_GiB": 3.221430778503418
+    },
+    {
+      "name": "repair_frozen_forward_2",
+      "seconds": 0.05978461541235447,
+      "peak_allocated_GiB": 3.2552781105041504,
+      "additional_peak_GiB": 3.221430778503418
+    },
+    {
+      "name": "repair_frozen_forward_3",
+      "seconds": 0.05965133756399155,
+      "peak_allocated_GiB": 3.2552781105041504,
+      "additional_peak_GiB": 3.221430778503418
+    }
+  ],
+  "bank_group_shape": [
+    500,
+    16,
+    64
+  ],
+  "bank_members": 5039,
+  "repair_forward_module_cuda_ms": {
+    "base_encoder": 0.058720000088214874,
+    "decoder": 0.0936960019171238,
+    "front_context": 12.772543907165527,
+    "iterative": 13.59113597869873,
+    "overlap_confidence": 2.3972160816192627,
+    "point_candidate_readout": 22.348480224609375,
+    "point_refiner": 3.6719679832458496,
+    "point_router": 3.2332160472869873,
+    "recent_mean_projector": 1.0493760108947754
+  },
+  "checkpoint_read_only": true,
+  "not_a_formal_training_or_test_run": true
+}

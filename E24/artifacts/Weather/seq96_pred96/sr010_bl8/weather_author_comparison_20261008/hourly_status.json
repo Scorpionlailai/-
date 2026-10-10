@@ -1,0 +1,81 @@
+{
+  "time_utc": "2026-10-08T02:33:46.082088+00:00",
+  "queue_status": "running",
+  "queue_pid": 1687474,
+  "queue_alive": true,
+  "active": {
+    "action": "train",
+    "log": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/weather_author_comparison_20261008/BRITS/stage1/train-attempt1.log",
+    "metric": null,
+    "model": "BRITS",
+    "pid": 1690406,
+    "stage": "repair"
+  },
+  "progress": {
+    "stage": "repair",
+    "epoch": 83,
+    "batch": 1,
+    "batches": 573,
+    "loss": 12.255579948425293,
+    "optimizer_updates": 46987
+  },
+  "last_validation": {
+    "model": "BRITS",
+    "stage": "repair",
+    "epoch": 82,
+    "validation": {
+      "mse": 0.27595748065220793,
+      "mae": 0.09884526147663603,
+      "windows": 5175,
+      "target_elements": 5949977,
+      "repair96_mse": 0.27595748065220793,
+      "repair96_mae": 0.09884526147663603,
+      "hidden96_coordinates": 5949977,
+      "repair32_mse": 0.2805096501934719,
+      "repair32_mae": 0.10324297022259422,
+      "hidden32_coordinates": 1985073
+    },
+    "best_epoch": 39
+  },
+  "models": {
+    "BRITS": {
+      "started_utc": "2026-10-08T00:45:27.374812+00:00",
+      "status": "running"
+    },
+    "BiTGraph": {
+      "finished_utc": "2026-10-07T20:12:00.022916+00:00",
+      "started_utc": "2026-10-07T18:59:45.473057+00:00",
+      "status": "completed"
+    },
+    "CRIB": {
+      "finished_utc": "2026-10-07T18:57:25.209886+00:00",
+      "started_utc": "2026-10-07T18:53:04.828698+00:00",
+      "status": "completed"
+    },
+    "ChannelTokenFormer": {
+      "finished_utc": "2026-10-08T00:45:27.372321+00:00",
+      "started_utc": "2026-10-07T20:12:00.025231+00:00",
+      "status": "completed"
+    },
+    "CoIFNet": {
+      "finished_utc": "2026-10-07T18:59:45.465315+00:00",
+      "started_utc": "2026-10-07T18:57:25.211531+00:00",
+      "status": "completed"
+    },
+    "S4M": {
+      "finished_utc": "2026-10-07T18:53:04.826918+00:00",
+      "started_utc": "2026-10-07T18:45:14.223428+00:00",
+      "status": "completed"
+    },
+    "SAITS": {
+      "finished_utc": "2026-10-07T18:45:14.221862+00:00",
+      "started_utc": "2026-10-07T18:11:41.952146+00:00",
+      "status": "completed"
+    },
+    "T1": {
+      "finished_utc": "2026-10-07T18:11:41.951067+00:00",
+      "started_utc": "2026-10-07T16:27:45.423866+00:00",
+      "status": "completed"
+    }
+  }
+}

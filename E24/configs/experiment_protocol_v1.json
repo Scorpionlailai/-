@@ -1,0 +1,147 @@
+{
+  "protocol_id": "E24-v1-frozen-pureMSE",
+  "created_date": "2026-10-07",
+  "parent_model": "E23-v79",
+  "status": "weather_single_run_completed_and_accepted",
+  "task": {
+    "seq_len": 96,
+    "pred_len": 96,
+    "target": "all_variables",
+    "metric_space": "train_standardized",
+    "missing_applies_to": "history_only"
+  },
+  "scenarios": [
+    {
+      "name": "sr010_bl8",
+      "start_rate": 0.1,
+      "block_len": 8
+    },
+    {
+      "name": "sr015_bl8",
+      "start_rate": 0.15,
+      "block_len": 8
+    },
+    {
+      "name": "sr020_bl8",
+      "start_rate": 0.2,
+      "block_len": 8
+    },
+    {
+      "name": "sr010_bl16",
+      "start_rate": 0.1,
+      "block_len": 16
+    }
+  ],
+  "masks": {
+    "allow_block_overlap": true,
+    "training": "dynamic_per_epoch",
+    "validation": "one_fixed_shared_bank",
+    "test_groups": 20,
+    "test_masks_shared_by_models": true,
+    "old_development_seeds": [
+      2026100401,
+      2026100420
+    ],
+    "exposed_confirmation_seeds": [
+      2026100701,
+      2026100720
+    ],
+    "future_confirmation": "new_preregistered_bank_required"
+  },
+  "stage1_e24_baseline": {
+    "epochs": 100,
+    "batch_size": 128,
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "precision": "float32",
+    "early_stopping": false,
+    "repair_loss": "global_mse_v1",
+    "retrieval_weight": 0.1,
+    "structure": "recent_mean_v2",
+    "level_weight": 1.0,
+    "trend_weight": 0.0,
+    "auxiliary_forecast": "none",
+    "selection_metric": "validation_hidden_global_mse"
+  },
+  "stage2_shared": {
+    "repair_update_policy": "frozen_v1",
+    "repair_parameters_trainable": 0,
+    "repair_mode": "eval",
+    "repair_buffers_memory_retrieval_readonly": true,
+    "optimizer_parameters": "predictor_only",
+    "loss": "forecast_mse_only",
+    "repair_retention": "none",
+    "forecast_mixer": "none",
+    "forecast_input": "explicit_v1",
+    "optimizer": "adam",
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "epochs": 100,
+    "batch_size": 128,
+    "precision": "float32",
+    "early_stopping": false,
+    "primary_selection": "validation_mae",
+    "secondary_selection": "validation_mse_same_trajectory",
+    "require_same_initial_head_sha256": true,
+    "require_same_optimizer_steps": true
+  },
+  "predictor": {
+    "architecture": "original_patchtst",
+    "patch_length": 16,
+    "stride": 8,
+    "d_model": 16,
+    "heads": 4,
+    "d_ff": 128,
+    "layers": 3,
+    "dropout": 0.3,
+    "fc_dropout": 0.3,
+    "head_dropout": 0.0,
+    "attn_dropout": 0.0,
+    "ETTh1_parameters": 35427,
+    "e24_padding": "zero_invalid_v1",
+    "t1_padding": "replicate_last_value_v1"
+  },
+  "seeds": {
+    "development_seed": 2023,
+    "sealed_t1_stage1_seed": 502,
+    "formal_replication_list": [
+      102,
+      202,
+      302,
+      402,
+      502
+    ],
+    "formal_replications_not_started": true,
+    "full_model_claim_requires_all_stages_retrained": true
+  },
+  "required_metrics": [
+    "forecast_mse",
+    "forecast_mae",
+    "stage1_full_history_hidden_mse",
+    "stage1_full_history_hidden_mae",
+    "stage1_last32_hidden_mse",
+    "stage1_last32_hidden_mae",
+    "training_seed_std",
+    "mask_position_std",
+    "full_workflow_seconds",
+    "stage1_seconds",
+    "stage2_seconds",
+    "peak_allocated_gib",
+    "peak_reserved_gib"
+  ],
+  "resource_scope": "preparation_all_training_validation_saving_reporting_excluding_final_test",
+  "monitor_interval_seconds": 300,
+  "native_forecasters": {
+    "stage2": "not_applicable",
+    "training": "author_dataset_configuration",
+    "report_separately_from_shared_predictor_controls": true
+  },
+  "multi_dataset_execution": "Weather21_adapter_accepted_other_datasets_require_separate_acceptance",
+  "dataset_extensions": {
+    "Weather": "artifacts/Weather/seq96_pred96/sr010_bl8/shared_protocol_v1/dataset_manifest.json"
+  },
+  "completed_runs": {
+    "Weather_sr010_bl8_seed2023": "docs/experiments/Weather_sr010_bl8_E24_v79_seed2023_results.csv"
+  }
+}

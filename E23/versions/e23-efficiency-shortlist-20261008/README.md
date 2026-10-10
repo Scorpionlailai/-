@@ -1,0 +1,5 @@
+# Experimental variable-count-aware efficiency branch
+
+Includes opt-in `--cache-fixed-validation` for frozen pure-MSE Stage2 and explicit `window_context_shortlist16_auto_v1` V policy. C <64 uses original full source scoring exactly. C >=64 ranks global learned priors, keeps16 candidate sources, computes local scores only for those sources, then selects4. Exploration rotates one globally omitted source into the shortlist and also preserves the output exploration-slot rule. This changes source selection for large C and needs from-scratch accuracy experiments.
+
+Synthetic source-selection timing is not whole-model training performance. Weather original selected weights had identical full validation metrics with cap16; it was not newly trained. Original E24 is untouched. This branch still inherits ETTh1-specific protocol and v97 dense 7-variable geometry; it does not claim an out-of-the-box Weather/full large-dataset implementation. Generic shortlist V module can be ported to the E24 dynamic-variable loader in a separately frozen run.
