@@ -1,0 +1,23 @@
+name: Publish verified dataset mirrors
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-datasets-20261010
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            scripts
+            data/metadata
+      - name: Fetch official sources, check snapshot SHA256, upload and verify Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_dataset_release.py
