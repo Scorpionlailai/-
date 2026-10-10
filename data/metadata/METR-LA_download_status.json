@@ -1,0 +1,48 @@
+{
+  "state": "complete",
+  "dataset": "METR-LA",
+  "source_page": "https://github.com/TorchSpatiotemporal/tsl/blob/main/tsl/datasets/metr_la.py",
+  "completed_utc": "2026-10-10T08:33:20.402011+00:00",
+  "archives": [
+    {
+      "path": "downloads/planned_20261010/METR-LA/metr_la.zip",
+      "url": "https://huggingface.co/datasets/TorchSpatiotemporal/ProcessedDatasets/resolve/v1.0.0/traffic/metr_la.zip",
+      "bytes": 13078583,
+      "sha256": "cc249982e8ac42c8c0e21f2a1233a621eada95cee14131aaa3adce99e2efc30b"
+    }
+  ],
+  "raw_files": [
+    {
+      "path": "raw/METR-LA/distances_la.csv",
+      "bytes": 6393348,
+      "sha256": "a576a2a3e28dbb959be6da22688e24dd1b246b81264595e129147c256cd53de5"
+    },
+    {
+      "path": "raw/METR-LA/metr_la.h5",
+      "bytes": 11361867,
+      "sha256": "e00a068ca5ec0abcf225b5a044bf962cc1c32c4fef31bad8187c04f342ef0990"
+    },
+    {
+      "path": "raw/METR-LA/sensor_ids_la.txt",
+      "bytes": 1448,
+      "sha256": "3ba026caa2e6263ab0ea54b0fa1b125dbfa7216544cd05313b555e826292b990"
+    },
+    {
+      "path": "raw/METR-LA/sensor_locations_la.csv",
+      "bytes": 6341,
+      "sha256": "eb8ea96e07358b45d0e4ba3b89c2673fa20c54af50150249e627389e749ade6f"
+    }
+  ],
+  "checks": {
+    "archive_crc_verified": true,
+    "hdf5_magic_verified": true,
+    "provider_version": "TorchSpatiotemporal/ProcessedDatasets v1.0.0",
+    "zero_and_nan_values_preserved": true,
+    "table_shape_validation": "verified with isolated h5py reader",
+    "rows": 34272,
+    "variables": 207,
+    "structure_audit": "metadata/METR-LA_structure_audit.json"
+  },
+  "preprocessing_applied": false,
+  "training_started": false
+}
