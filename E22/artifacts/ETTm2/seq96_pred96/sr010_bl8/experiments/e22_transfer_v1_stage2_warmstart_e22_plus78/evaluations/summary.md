@@ -1,0 +1,3 @@
+| run_id | dataset | variant | mse | mae | degradation_mse_absolute | degradation_mae_absolute | degradation_mse_relative_percent | degradation_mae_relative_percent | drr_mse | drr_mae | final_rate | trainable_parameters | training_seconds |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ETTm2-ours-9617f6a72836 | ETTm2 | ours | 0.19211162727997863 | 0.2727664703350771 | 0.014083350355322821 | 0.013032726453165722 | 7.910737888724892 | 5.01772555940636 | 50.239196229202854 | 50.82807263373257 | 0.568538469106651 | 1268494 | 12362.36666008737 |

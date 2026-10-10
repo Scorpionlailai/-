@@ -1,0 +1,52 @@
+{
+  "amp": true,
+  "batch_size": 16,
+  "cached_stage1": true,
+  "checkpoint_sha256": "74e098616b54a1a42fa4d21614e2938551022bfd50db6f6f42199ca535a98caa",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": null,
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 1,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:1",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b"
+  },
+  "epochs_completed": 185,
+  "finished_utc": "2026-10-04T16:53:24.989143+00:00",
+  "full_workflow_seconds": 797.3077360298485,
+  "legacy_training_seconds": 795.9861886044964,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "T1",
+  "peak_allocated_bytes": 404313600,
+  "peak_reserved_bytes": 616562688,
+  "precision": "bfloat16",
+  "preparation_and_reporting_seconds": 0.939633084461093,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/T1/training/repair-selection.json",
+  "selection_manifest_sha256": "56377cf66db8e571858a59c587d5a389f61e589feea3bc44fbfd0d27ec1737df",
+  "source_resource_record": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr010_bl16/T1/training/resources/60cff5c427e9426ca88d78b07cc1088a.json",
+  "source_resource_record_sha256": "d6c3800cb03581f2c5a39163e92c2f796678d376d4efb3d4c2e526066f745dd8",
+  "stages": {
+    "repair": {
+      "batch_size": 16,
+      "peak_allocated_bytes": 404313600,
+      "peak_reserved_bytes": 616562688,
+      "precision": "bfloat16",
+      "status": "completed",
+      "wall_seconds": 796.3681029453874
+    }
+  },
+  "started_utc": "2026-10-04T16:34:37.756727+00:00",
+  "status": "completed",
+  "timing_scope": "cached original repair stage + all original entrypoint non-stage overhead; excludes old Stage2; recomposed cost, not a fresh end-to-end run",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 796.3681029453874
+}

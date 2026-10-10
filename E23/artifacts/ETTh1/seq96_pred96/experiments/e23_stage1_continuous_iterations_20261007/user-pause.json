@@ -1,0 +1,91 @@
+{
+  "status": "paused_by_user",
+  "time_utc": "2026-10-07T11:45:58.758924+00:00",
+  "reason": "用户要求先暂停迭代，核对四场景预测、全窗口修复及最近32点修复",
+  "stopped_processes": [
+    {
+      "pid": 1678842,
+      "args": [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_global_dense_stage1_iterations_20261007/start_after_parent.py"
+      ]
+    },
+    {
+      "pid": 1678348,
+      "args": [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/queue.py"
+      ]
+    },
+    {
+      "pid": 1679336,
+      "args": [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/live_status.py"
+      ]
+    },
+    {
+      "pid": 1679625,
+      "args": [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v83/execute.py"
+      ]
+    },
+    {
+      "pid": 1679842,
+      "args": [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "-m",
+        "integrations.e23.run",
+        "train-repair",
+        "--protocol-config",
+        "/home/xyw/paper/E23/configs/stage1_seq96_dynamic_temporal_repair.yaml",
+        "--migration-catalog",
+        "/home/xyw/paper/E22/migration/paper_catalog.jsonl",
+        "--mask-artifacts",
+        "/home/xyw/paper/E22/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/two_stage_v5_dynamic_temporal_context",
+        "--e23-config",
+        "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23/configs/e23_v83_stage1_loss_seed2023.yaml",
+        "--training-seed",
+        "2023",
+        "--device",
+        "cuda:1",
+        "--auxiliary-forecast",
+        "none",
+        "--repair-batch-size",
+        "128",
+        "--output",
+        "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v83/sr020_bl8/E23-v83/stage1"
+      ]
+    }
+  ],
+  "prior_state": {
+    "status": "running",
+    "active": {
+      "version": 83,
+      "label": "E23-v83",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v83",
+      "work": "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23",
+      "stage1_structure": "recent_mean_weak_v3",
+      "projection": "global_level_mean_v2"
+    },
+    "controller_pid": 1679625,
+    "completed": [
+      {
+        "model": "E23-v81",
+        "verification": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v81/verification.json",
+        "report": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v81_v79_T1_pureMSE_frozen_three_scenarios_20261007.md",
+        "passed_development_criteria": false
+      },
+      {
+        "model": "E23-v82",
+        "verification": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v82/verification.json",
+        "report": "/home/xyw/paper/E23/docs/experiments/ETTh1_E23_v82_v79_T1_pureMSE_frozen_three_scenarios_20261007.md",
+        "passed_development_criteria": false
+      }
+    ],
+    "started_utc": "2026-10-07T11:30:16.563592+00:00",
+    "monitor_interval_seconds": 300
+  },
+  "best_completed_model": "E23-v79"
+}

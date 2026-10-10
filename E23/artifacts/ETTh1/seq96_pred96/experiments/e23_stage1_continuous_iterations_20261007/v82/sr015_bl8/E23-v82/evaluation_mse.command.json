@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/home/xyw/miniforge3/envs/malr/bin/python",
+    "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23/scripts/evaluate_e23_t1_replicate.py",
+    "--model",
+    "E23-v31-B",
+    "--model-label",
+    "E23-v82-pureMSE-frozen-MSE",
+    "--training-seed",
+    "2023",
+    "--e23-config",
+    "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23/configs/e23_v82_stage1_loss_seed2023.yaml",
+    "--selection",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v82/sr015_bl8/E23-v82/stage2/runs/e23-stage2-mse.json",
+    "--test-mask-bank",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/test_masks/manifest.json",
+    "--output",
+    "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v82/sr015_bl8/E23-v82/evaluation_mse",
+    "--device",
+    "cuda:1"
+  ],
+  "scene": "sr015_bl8"
+}

@@ -1,0 +1,59 @@
+{
+  "scene": "sr015_bl8",
+  "choices": {
+    "mae": {
+      "checks": {
+        "entire_repair_and_predictor_state_exact_equal": true,
+        "best_epoch_equal": true,
+        "memory_sha_equal": true,
+        "key_sha_equal": true,
+        "predictor_initial_sha_equal": true,
+        "repair_fully_frozen": true,
+        "pure_forecast_mse": true,
+        "epochs_completed": true,
+        "cache_enabled": true
+      },
+      "best_epoch": 100,
+      "selected_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v101_combined_validation_cache_20261008/sr015_bl8/stage2/runs/e23-stage2.json",
+      "reused_test_result": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v97_frozen_prediction_20261008/sr015_bl8/evaluation_mae/twenty-test-draws.json",
+      "test_result_sha256": "c921382f0d91b2d23ff117c91958d55462a74b582427f2c65118cffd401b99e8",
+      "test_mean": {
+        "mae": 0.40709420899414955,
+        "mse": 0.3986128952227481
+      },
+      "mask_std_ddof1": {
+        "mae": 0.003574288030420022,
+        "mse": 0.010853617113904238
+      }
+    },
+    "mse": {
+      "checks": {
+        "entire_repair_and_predictor_state_exact_equal": true,
+        "best_epoch_equal": true,
+        "memory_sha_equal": true,
+        "key_sha_equal": true,
+        "predictor_initial_sha_equal": true,
+        "repair_fully_frozen": true,
+        "pure_forecast_mse": true,
+        "epochs_completed": true,
+        "cache_enabled": true
+      },
+      "best_epoch": 100,
+      "selected_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v101_combined_validation_cache_20261008/sr015_bl8/stage2/runs/e23-stage2-mse.json",
+      "reused_test_result": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v97_frozen_prediction_20261008/sr015_bl8/evaluation_mse/twenty-test-draws.json",
+      "test_result_sha256": "09121afe5db60737c0b6517ce02288ab8253412c4114c19b1a93254b485c67dc",
+      "test_mean": {
+        "mae": 0.40709420899414955,
+        "mse": 0.3986128952227481
+      },
+      "mask_std_ddof1": {
+        "mae": 0.003574288030420022,
+        "mse": 0.010853617113904238
+      }
+    }
+  },
+  "acceptance_passed": true,
+  "stage1_equivalence": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v100_stage1_validation_cache_20261008/extended_acceptance.json",
+  "tests_rerun": false,
+  "metric_space": "train_standardized"
+}

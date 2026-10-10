@@ -1,0 +1,103 @@
+{
+  "best_epoch": 85,
+  "best_validation": {
+    "mae": 0.5752747031836823,
+    "mse": 0.7468074703432805,
+    "target_elements": 1806336,
+    "windows": 2688
+  },
+  "cached_stage1_resource_record": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_t1_pure_mse_frozen_four_scenarios_20261007/T1/sr010_bl8/training/cached-stage1-resources.json",
+  "cached_stage1_resource_sha256": "024731ae99db3550fa75a2d31136fa66b9f9a5c13e7271f2e8023fcbb64d78d8",
+  "checkpoint": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_t1_pure_mse_frozen_four_scenarios_20261007/T1/sr010_bl8/training/forecast-mse-selected.pt",
+  "checkpoint_sha256": "b68ca8ba27300582c6ffdd551620e47ff15bb5ec0b205e8d99fdbc9baceba894",
+  "e23_reference_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_other_missing_seed2023_20261005/sr010_bl8/E23-v69-mae/stage2/runs/e23-stage2.json",
+  "e23_reference_selection_sha256": "76db4637efd4a945cb9152a720490528608d7fcdac76b7448942270531a8de0b",
+  "epochs_completed": 100,
+  "forecast_padding": "replicate_last_value_v1",
+  "frozen_imputer_sha256": "bf56a71773fc1d269c11ab3a1ef2d897af2e6ecb5554f555a12382ffad9e7235",
+  "frozen_state_verified_epochs": 100,
+  "loss": "forecast_mse_only",
+  "model": "T1-frozen-E23-aligned",
+  "optimizer_steps": 6600,
+  "original_test_mask_sha256": "f7974ff9b4228d69fe33d940e3722cd1a069766e2fa1387c6240757d5a8762d8",
+  "predictor_final_sha256": "79ca56aed6ae2d5d6a57486d4999fc4bc1a9242b4bbbf51dd151ad7dd2b176f0",
+  "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+  "predictor_parameters": 35427,
+  "profile": {
+    "kind": "imputer",
+    "model": {
+      "downsample_ratio": 2,
+      "ffn_ratio": 1.0,
+      "imputation_use_mask_embedding": false,
+      "kernel_size_large": [
+        71,
+        31
+      ],
+      "kernel_size_small": 5,
+      "n_blocks": [
+        2,
+        2
+      ],
+      "n_heads": 128,
+      "patch_size": 2,
+      "patch_stride": 1
+    },
+    "notes": "Official type3 means constant LR. Mask embedding false is the released script/default, despite the paper's mask-aware description. Stage 2 uses the common P4 forecast interface.",
+    "revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+    "root": "artifacts/upstream/T1",
+    "sources": [
+      "https://arxiv.org/html/2602.21043",
+      "scripts/imputation/T1_ETTh1.sh",
+      "exp/exp_imputation.py",
+      "utils/tools.py"
+    ],
+    "training": {
+      "batch_size": 16,
+      "epochs": 300,
+      "learning_rate": 0.001,
+      "loss": "hidden_reconstruction_mse",
+      "lradj": "constant",
+      "patience": 30,
+      "precision": "bfloat16",
+      "selection_metric": "mse",
+      "weight_decay": 0.0
+    },
+    "version": "official T1_ETTh1.sh and run.py defaults"
+  },
+  "profile_version": "official T1_ETTh1.sh and run.py defaults",
+  "repair_retention": "none",
+  "repair_selection_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/sr010_bl8/experiments/e23_t1_five_seed_standard_20261004/seed_502/T1/training/repair-selection.json",
+  "repair_selection_sha256": "0c37b33fac1005c372a8751d1910d0e2a7798fd3c5fcb84b187567558df3713e",
+  "repair_trainable_parameters": 0,
+  "repair_training_mode": "eval",
+  "repair_update_policy": "frozen_v1",
+  "runner_sha256": "aa63fc4f3a3e38691294d2611a2f8f6b9bb6dbaf121f4df1a38d04009dba3f88",
+  "seed": 2023,
+  "selection_metric": "mse",
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "stage": "forecast",
+  "stage1_checkpoint_sha256": "03b339c27db5290ce4dddd84b18e0d94343fbf9fc46da0b1218331a6a5e2be51",
+  "stage1_reused": true,
+  "stage1_training_seed": 502,
+  "status": "validation_finalized",
+  "test_mask_bank_sha256": "cac4fd4cfe18b7b1b200010e9d32b45bc9791b97209502f206e482a9e4eee9a9",
+  "test_metrics_seen": false,
+  "trainable_parameters": 35424,
+  "training": {
+    "batch_size": 128,
+    "epochs": 100,
+    "learning_rate": 0.0001,
+    "loss": "forecast_mse_only",
+    "lradj": "constant",
+    "patience": null,
+    "precision": "float32",
+    "selection_metric": "mse",
+    "weight_decay": 0.0
+  },
+  "training_resource_parent_manifest": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_t1_pure_mse_frozen_four_scenarios_20261007/T1/sr010_bl8/training/forecast-mae-selection.json",
+  "training_resource_parent_sha256": "78f3951f19bfd90edc44780706918cce9bfbc2423142e1cd908c4d51f2fd9f32",
+  "training_seconds": 158.3939712420106,
+  "training_seed": 2023,
+  "training_windows": 844800,
+  "validation_mask_sha256": "cbe7c520afded9002f714c5ed8e67d62c92b97fa7aa9b1e6e4711db785fd846c"
+}

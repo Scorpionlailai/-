@@ -1,0 +1,65 @@
+{
+  "label": "E23-v50-recent-state",
+  "cell": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v50_recent_state",
+  "trial": {
+    "label": "E23-v50-recent-state",
+    "config": "/home/xyw/paper/.e23-point-series/E23/configs/e23_point_series_p1o1s1_seed502.yaml",
+    "config_key": "p1o1s1",
+    "parent": {
+      "label": "E23-v49-overlap",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v49_overlap",
+      "validation": {
+        "mse": 0.7967074441801664,
+        "mae": 0.6010208778640851
+      },
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "none"
+    },
+    "only_change": "stage1_structure",
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "recent_state_v1"
+  },
+  "validation_lock": {
+    "parent": {
+      "label": "E23-v49-overlap",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v49_overlap",
+      "validation": {
+        "mse": 0.7967074441801664,
+        "mae": 0.6010208778640851
+      },
+      "point_router": "pointwise_v1",
+      "overlap_fusion": "confidence_v1",
+      "stage1_structure": "none"
+    },
+    "validation": {
+      "mse": 0.7976555413399694,
+      "mae": 0.6012629965265321
+    },
+    "selected_epoch": 56,
+    "checkpoint_sha256": "1877598a5eab88463ba5f1cec3c3745789e509f7ff49346574c1cca5467b85b9",
+    "accepted_on_validation": false,
+    "matched_v41_validation_gate": false,
+    "test_metrics_seen": false
+  },
+  "test_mean": {
+    "mae": 0.4385084956141016,
+    "mse": 0.43968836109654436
+  },
+  "test_std": {
+    "mae": 0.004784964860254246,
+    "mse": 0.014096135630557477
+  },
+  "next_parent": {
+    "label": "E23-v49-overlap",
+    "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v48_v49_v50_point_series_sr015_bl8_seed502_20261005/v49_overlap",
+    "validation": {
+      "mse": 0.7967074441801664,
+      "mae": 0.6010208778640851
+    },
+    "point_router": "pointwise_v1",
+    "overlap_fusion": "confidence_v1",
+    "stage1_structure": "none"
+  }
+}

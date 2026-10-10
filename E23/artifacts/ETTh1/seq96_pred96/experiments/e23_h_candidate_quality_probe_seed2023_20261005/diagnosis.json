@@ -1,0 +1,74 @@
+{
+  "purpose": "train-only candidate diagnosis; numerical estimates are not end-to-end model results",
+  "source_work": "/home/xyw/paper/.e23-v69-other-missing/E23",
+  "scenario": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/t1_v41_higher_missing_seed502_20261004/sr015_bl8/scenario.json",
+  "training_seed": 2023,
+  "split": "train",
+  "mask_epoch": 89,
+  "windows": 1024,
+  "sampled_shuffled_batches": 8,
+  "stage1_selection": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_v69_signature_position_sr015_bl8_20261005/seed_2023_shared/stage1/runs/e23-stage1.json",
+  "selection_sha256": "02a4c8e6d45e91118f7bb84bd8c6debc15eb6b2dae032d39990166612adcfa92",
+  "metric_space": "train_standardized",
+  "counting": "patch copies, including overlaps; same coordinates per method",
+  "h_available_damaged_patches": 65141,
+  "damaged_patches": 82966,
+  "fully_hidden_patches": 17712,
+  "average_candidates": 3.5589260220137855,
+  "candidate_raw_mse": {
+    "all96": {
+      "legacy_weighted": 1.0688105745215868,
+      "visible_best": 1.1112544262779624,
+      "key_best": 1.1330365793143586,
+      "oracle_best": 0.9117389933823753,
+      "observed_mean_fallback": 0.4851202624440761,
+      "ridge_offset_same_weights": 0.7674380037751757,
+      "ridge_offset_reranked": 0.7646956313597424
+    },
+    "last32": {
+      "legacy_weighted": 1.085717189299705,
+      "visible_best": 1.1292200216158905,
+      "key_best": 1.1510790434927765,
+      "oracle_best": 0.9184841309881967,
+      "observed_mean_fallback": 0.5026058750421996,
+      "ridge_offset_same_weights": 0.7809129601905401,
+      "ridge_offset_reranked": 0.7781734612578625
+    }
+  },
+  "counted_coordinates": {
+    "all96": 685516,
+    "last32": 233591
+  },
+  "multi_candidate_patches": 60224,
+  "visible_best_matches_oracle": 0.37921758767268865,
+  "key_best_matches_oracle": 0.33230937832093516,
+  "correlations_visible_error_key_similarity_best_hidden_mse": [
+    [
+      0.9999999999999998,
+      0.06729028288634652,
+      0.3372872962554929
+    ],
+    [
+      0.0672902828863465,
+      1.0,
+      0.009069469565670176
+    ],
+    [
+      0.3372872962554929,
+      0.009069469565670176,
+      1.0
+    ]
+  ],
+  "mean_h_router_weight": 0.3663361103228135,
+  "mean_h_point_attention": 0.09495336106477799,
+  "state_unchanged": true,
+  "forecast_targets_read": false,
+  "validation_or_test_labels_read": false,
+  "offset_probe": "mean residual with four virtual prior observations; clamp two robust local scales",
+  "candidate_per_patch_array_columns": [
+    "minimum_visible_error_local",
+    "max_key_similarity",
+    "minimum_hidden_mse_global",
+    "real_visible_count"
+  ]
+}

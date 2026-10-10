@@ -1,0 +1,54 @@
+{
+  "scene": "sr010_bl16",
+  "split": "fixed_validation",
+  "device": "cpu",
+  "in_memory_component_intervention_only": true,
+  "checkpoint_unchanged": true,
+  "metrics": {
+    "v92_full": {
+      "windows": 2688,
+      "metrics": {
+        "all_hidden": {
+          "mse": 0.4640301593214026,
+          "mae": 0.4479266377830831,
+          "hidden_coordinates": 1473201
+        },
+        "last32_hidden": {
+          "mse": 0.5279098415125086,
+          "mae": 0.48316627361947884,
+          "hidden_coordinates": 490230
+        }
+      }
+    },
+    "v79_coarse_plus_mean": {
+      "windows": 2688,
+      "metrics": {
+        "all_hidden": {
+          "mse": 0.5046660000371276,
+          "mae": 0.4713940434584197,
+          "hidden_coordinates": 1473201
+        },
+        "last32_hidden": {
+          "mse": 0.5143111718175377,
+          "mae": 0.4902917715743239,
+          "hidden_coordinates": 490230
+        }
+      }
+    },
+    "v79_coarse_without_mean": {
+      "windows": 2688,
+      "metrics": {
+        "all_hidden": {
+          "mse": 0.4946133543776165,
+          "mae": 0.4643335974612839,
+          "hidden_coordinates": 1473201
+        },
+        "last32_hidden": {
+          "mse": 0.48410174432791586,
+          "mae": 0.46907426937448615,
+          "hidden_coordinates": 490230
+        }
+      }
+    }
+  }
+}

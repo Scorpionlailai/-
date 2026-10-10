@@ -1,0 +1,43 @@
+{
+  "created_utc": "2026-10-07T10:00:18.644058+00:00",
+  "models": [
+    {
+      "version": 81,
+      "label": "E23-v81",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v81",
+      "work": "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23",
+      "stage1_structure": "recent_mean_weak_v3",
+      "projection": "global_recent_bands_v3"
+    },
+    {
+      "version": 82,
+      "label": "E23-v82",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v82",
+      "work": "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23",
+      "stage1_structure": "none",
+      "projection": "global_recent_bands_v3"
+    },
+    {
+      "version": 83,
+      "label": "E23-v83",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v83",
+      "work": "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23",
+      "stage1_structure": "recent_mean_weak_v3",
+      "projection": "global_level_mean_v2"
+    },
+    {
+      "version": 84,
+      "label": "E23-v84",
+      "root": "/home/xyw/paper/E23/artifacts/ETTh1/seq96_pred96/experiments/e23_stage1_continuous_iterations_20261007/v84",
+      "work": "/home/xyw/paper/.e23-stage1-loss-iterations-20261007/E23",
+      "stage1_structure": "none",
+      "projection": "global_level_mean_v2"
+    }
+  ],
+  "stage2_policy": "pure MSE, fully frozen repair, original predictor, unchanged 100 epochs/seed2023/batch128/lr1e-4",
+  "stage1_only_changes": true,
+  "training_seed_search": false,
+  "monitor_interval_seconds": 300,
+  "early_stop": "All three scenes repair MSE/MAE below T1 AND forecast MSE/MAE below v79 (old20 development only).",
+  "test_role": "development, never checkpoint selection"
+}
