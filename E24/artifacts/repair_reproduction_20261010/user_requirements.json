@@ -1,0 +1,27 @@
+{
+  "author_parameters": "dataset_specific_if_published_else_author_base_explicitly_labeled",
+  "confirm_uncertainties": true,
+  "datasets": [
+    "ETTh1",
+    "Weather"
+  ],
+  "github": "only_after_user_review",
+  "models": [
+    "TimesNet",
+    "ImputeFormer",
+    "BRITS",
+    "CSDI"
+  ],
+  "order": "repair_first_then_frozen_common_PatchTST",
+  "report_metrics": [
+    "full96_hidden_MSE_MAE",
+    "recent32_hidden_MSE_MAE",
+    "forecast_MSE_MAE"
+  ],
+  "scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ]
+}

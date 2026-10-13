@@ -1,0 +1,443 @@
+{
+  "block_len": 16,
+  "columns": [
+    "p (mbar)",
+    "T (degC)",
+    "Tpot (K)",
+    "Tdew (degC)",
+    "rh (%)",
+    "VPmax (mbar)",
+    "VPact (mbar)",
+    "VPdef (mbar)",
+    "sh (g/kg)",
+    "H2OC (mmol/mol)",
+    "rho (g/m**3)",
+    "wv (m/s)",
+    "max. wv (m/s)",
+    "wd (deg)",
+    "rain (mm)",
+    "raining (s)",
+    "SWDR (W/m\ufffd)",
+    "PAR (\ufffdmol/m\ufffd/s)",
+    "max. PAR (\ufffdmol/m\ufffd/s)",
+    "Tlog (degC)",
+    "OT"
+  ],
+  "dataset": "Weather",
+  "generator_sha256": "72363940ab67cb5c87e4f20b544fe3c46ff50a4befaf0918dbc4d1bfacf41b0a",
+  "masks": [
+    {
+      "content_checksum": "aaeaf4ccef2358b296c68c7cbc6f7cf6e9137b149a84fee8113aacc6bea243e9",
+      "final_missing_rate": 0.8113341497612836,
+      "legacy_file_sha256": "a8a6b54ef2ca4d09102f8293424581615fb513db06e28be19d6920d6f373e71e",
+      "legacy_file_sha_matches": false,
+      "path": "validation_2021.npz",
+      "seed": 2021,
+      "sha256": "44ddbd61719a8c850f4c79c9c02992587e9af6a4e4196a0cdd6b54c1e4712572",
+      "split": "validation",
+      "support": [
+        36791,
+        42157
+      ]
+    },
+    {
+      "content_checksum": "56dc050ca4f24ea778f66cac51f31fbd2cb930a273220f9a9c5e5923e9b23bca",
+      "final_missing_rate": 0.8140148207849195,
+      "legacy_file_sha256": "2d0fd24f739337b031daa5f71e236e0032b142c8534ab1f2d8af64127d8afec0",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100801.npz",
+      "seed": 2026100801,
+      "sha256": "b043e60e3fddc5ec443fdf01efc3f19679b808892975158147042cc1d089e292",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "13b394ada5d71af1215368af34b9a21a321eb06fe8cf1ae370e21f53571087f7",
+      "final_missing_rate": 0.8176550921261782,
+      "legacy_file_sha256": "efea69e459777a5aa57774b2d3b3ca7d7e3164e79b1a5f14da1811863ec1cbdf",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100802.npz",
+      "seed": 2026100802,
+      "sha256": "e0914424d82d1a0535264f5e9897c671ae5cb9d05b766479aabe7ca999f5ba2a",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "e904975a2cc64db84fa537890a346ba135f4a38f21f3670d34163f9c9ab48ae5",
+      "final_missing_rate": 0.8142163118185686,
+      "legacy_file_sha256": "e4ed429253568a4e4b06f01ee524253e45b4775f99bcd5ecf027af2f76bf7d19",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100803.npz",
+      "seed": 2026100803,
+      "sha256": "21c9b2d4c640b3d3a571fc39e80a5c2a22d5d69853c7beaeaad8f8f8b106cfc1",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "dc60d0c61c75bb46d394d9e076aa931cc980b76f2a46d578c4aa7c19380f39c8",
+      "final_missing_rate": 0.8156357042111626,
+      "legacy_file_sha256": "adde9c141e52d2e508f9db813a569b021692517cf35ba9a41fd994009287aac8",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100804.npz",
+      "seed": 2026100804,
+      "sha256": "788665d2a58926960d8a87ff73d5f46c086c74cde4eb6a45d271df9cb3fe24b5",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "fc29aa61ebc69397dd8357acb0b730bf54860e3afec8a1de572ae9cc61d8fff5",
+      "final_missing_rate": 0.8174894217207335,
+      "legacy_file_sha256": "3235c03f79e97f200e80c510a23c1d3bf2bfbf71288c8e4ee896804722dcc922",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100805.npz",
+      "seed": 2026100805,
+      "sha256": "e7922419e586eb48a717db54fdfe99b1f26f61b0b46417fcd17679e576cba5a9",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "7afdb6a2abb7e20da232c6d360ffb1d0c322fd52e99ccd4f70a7b9278e2d74ac",
+      "final_missing_rate": 0.815353616764054,
+      "legacy_file_sha256": "5bdef8647b9b23f799e43a59b9b9b79cec8fe1003fda29013ddd07986235c24d",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100806.npz",
+      "seed": 2026100806,
+      "sha256": "2f58d7b553af17d29ebc1d27ec81a9cd82e84811199d937a1282482f1f4ae338",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "4aee54598b2b7e201fe95fea125fc226367c1dccab19cd308b696ee863468033",
+      "final_missing_rate": 0.8159491347079499,
+      "legacy_file_sha256": "c83fe98f8d31e38e10c50ab6c71a4f6230240aa3e86bbab1f727e5258b83f0f4",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100807.npz",
+      "seed": 2026100807,
+      "sha256": "689ae023a501e4aecb790dcddd349951f1d91de2f689f544d8b54a0913878619",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "710335ce866179c9c49a1eb8b8337dd4914466c7c650032fadbcc1c83ae989cc",
+      "final_missing_rate": 0.8125148319788659,
+      "legacy_file_sha256": "a41c6f8616f007d9ca945c3106e1a58e6d512968188a62c20cc29e536a3d483d",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100808.npz",
+      "seed": 2026100808,
+      "sha256": "f22f10bc16eb534b3fd05712e0ea193ef0d367c576fcbd56c85ecddaa0561209",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "08cc5be0265c5e88aa265ce494400b93be5b62400c8f96eeda53bc30b6c4380f",
+      "final_missing_rate": 0.8119775225558018,
+      "legacy_file_sha256": "d0cd0a0cd142da8f6293036f56edba4aa4c4b106b7d4616a95d86737055746f0",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100809.npz",
+      "seed": 2026100809,
+      "sha256": "1552c82a219c327b40ea4f286270aa9a99d601847a49d011e983d48d8a39c41a",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "65d54687d708369f0ec75004a9abd2b31e431a01b75f1e18e271c827d467419e",
+      "final_missing_rate": 0.8164103252960799,
+      "legacy_file_sha256": "4423bfdae3a1ba7a01cdd9f188dbc81543f4cc30f93a9eab14771aa94915d81b",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100810.npz",
+      "seed": 2026100810,
+      "sha256": "a79d5c8de112343eef3173d4445378e50f7894449d9250c181b233925666e0a1",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "b3584b9adf2a49d08905dba04dc9b5ef9ee008cafa73aba70d2bf54baaceb26c",
+      "final_missing_rate": 0.8151969015156604,
+      "legacy_file_sha256": "c124b21b6bcec293eaa71b781fd53c7477aa9a44a7b4623af7e6dfbe178d5c79",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100811.npz",
+      "seed": 2026100811,
+      "sha256": "335d83d3a2bd56bc70d64d47d3a22031c1c34fc2a213c86814ff9ee5d950c75c",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "30a1761f1ef95906663100dac5461209f2f54705da19d97a5eed199ce7361f4d",
+      "final_missing_rate": 0.8155237647480242,
+      "legacy_file_sha256": "274a5a0f45b108c8069d2cf2ded186ea2b716b158ae6c863f915d6a2836878ba",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100812.npz",
+      "seed": 2026100812,
+      "sha256": "fe3be8037d1183f5a8a9030da7ae85092c22a1cf05cce280b29b94b0669f29c1",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "632f321c9c03b85087e02dd0207a23971ca5b3344b8da358b9408e936e7096e8",
+      "final_missing_rate": 0.8124252804083552,
+      "legacy_file_sha256": "f4476a7286c07e9964584cc0d275e68f87c69daa7450aefdf47db9647b9f4b2b",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100813.npz",
+      "seed": 2026100813,
+      "sha256": "fbc1b5e9e79fdfada5f7f26658c01b76464c48eb1d888369f6a676376e8ed56a",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "0b52fd43df1f87052dccaed1794cdbeaba830d58959d075b30fe97edccbc9c98",
+      "final_missing_rate": 0.8109924552801845,
+      "legacy_file_sha256": "caa4d270b6529790c59433ef356ffcec23e39ee40de2520514b8e030bbe00428",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100814.npz",
+      "seed": 2026100814,
+      "sha256": "7f9db810206c36c670879fa4d57f843faead1bd2764bc061299421c7ab0b241e",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "4056de637335a29024dd0c7dd9b0b8a17755425b4bb265bee2d6a0c1f979e2ce",
+      "final_missing_rate": 0.8154655562271923,
+      "legacy_file_sha256": "ddfbeafa224a523df63ba133fd834facbdc5fceca3b278158ab1214439929319",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100815.npz",
+      "seed": 2026100815,
+      "sha256": "98aec18ea8e07b51cb34c8270866c40c05b0a1fe984831b803cc1c95f9381e63",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "8944284ee7f6cff765254353869a12f17a405a9b9353dbec743d81287ac120e1",
+      "final_missing_rate": 0.8133431840060895,
+      "legacy_file_sha256": "2f76fbf3a8761db881b2699b79c53762c0ce3ba289fbb148f4a3b257480cd6b6",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100816.npz",
+      "seed": 2026100816,
+      "sha256": "07823dfac87940d4f9e3bc2883b172053314042405921cca056515645491ef48",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "fade98a6ebce3635acefd61e4e6aeab2724d7421e297e78d8be3de9e5e8c40d1",
+      "final_missing_rate": 0.811332751248125,
+      "legacy_file_sha256": "705e9097f4d5a3346ff2a44ed68349e0edb186290137159822dbd18353777f51",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100817.npz",
+      "seed": 2026100817,
+      "sha256": "8dca905ce37add90a70b3bdef8ded86fbc286a953c6ef8f871666176506f3be6",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "7fa314f77fccad5f14f7184a793b4d154d965fc09c93b4ddefb0b82962e76ded",
+      "final_missing_rate": 0.8151073499451497,
+      "legacy_file_sha256": "cd18986d34d6e1fb16be734dd0bba3b230e28e469eb66635d3cb0b7406e3e88e",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100818.npz",
+      "seed": 2026100818,
+      "sha256": "a8f83eb2e4840072da460e6f0e0d9ce24d6a5f716e1474aac763173da5d3b973",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "4393a18552994b50f762e82ef2fb365a4851a627d81e28e82f1cac33bd51255f",
+      "final_missing_rate": 0.8134327355766002,
+      "legacy_file_sha256": "0074e6d7de64b43ec898193715dc586eaeb878cd95d2f59505c923ad8759e01d",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100819.npz",
+      "seed": 2026100819,
+      "sha256": "bb96652f97ef72a20ef20823953f20f6864c73ecba3bac0650e497d698b75de5",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    },
+    {
+      "content_checksum": "7f3cf6b44a02a33385de78ea1640fabef7de939792e0d145a3ec4e14c5e6c66c",
+      "final_missing_rate": 0.8128909485750107,
+      "legacy_file_sha256": "857dc939f1694b00fdda2ab71946d072c5f26d1480f73243ff6b78a956baa871",
+      "legacy_file_sha_matches": false,
+      "path": "test_2026100820.npz",
+      "seed": 2026100820,
+      "sha256": "ae8069e6ace2c981f692f3680f9780f5d79eb61ccd02e5057ab54aadadaf1386",
+      "split": "test",
+      "support": [
+        42061,
+        52696
+      ]
+    }
+  ],
+  "pred_len": 96,
+  "prior_history_at_split_boundary": true,
+  "protocol_id": "repair-shared-legacy-v1",
+  "scaler": {
+    "fit_rows": [
+      0,
+      36887
+    ],
+    "mean": [
+      990.6424618429255,
+      11.97874318865725,
+      285.9094998237862,
+      5.474408599235503,
+      67.52999105375878,
+      15.683926315504108,
+      9.844447095182586,
+      5.839411445766801,
+      6.215718545829154,
+      9.947950768563452,
+      1206.7523290047986,
+      1.9474169761704665,
+      3.7608498929162044,
+      175.98528397538428,
+      0.011481009569767126,
+      23.287065903977012,
+      160.64175752975302,
+      318.0403689646759,
+      378.4815870089733,
+      22.811720389297044,
+      411.0543416379754
+    ],
+    "std": [
+      8.630709833546048,
+      7.718422186776981,
+      7.9166763087675305,
+      6.464405778018869,
+      18.75515932624141,
+      8.109081505918004,
+      4.396184747169019,
+      5.902716958360042,
+      2.7998813345512694,
+      4.461935641871606,
+      38.068159995158084,
+      52.09941335817868,
+      2.5959868098469023,
+      86.96403231681454,
+      0.1227842954291551,
+      105.34730507960829,
+      238.7777925095574,
+      468.055552246746,
+      643.3526922078195,
+      7.9779941945883825,
+      383.9570979658789
+    ]
+  },
+  "scene": "sr010_bl16",
+  "schema_version": 1,
+  "seq_len": 96,
+  "source_rows": 52696,
+  "source_sha256": "34ee981d07313e51da2a50bb600072c8ae4a69cb4b0651f4cb93a069d7a2ba63",
+  "splits": {
+    "test": [
+      42157,
+      52696
+    ],
+    "train": [
+      0,
+      36887
+    ],
+    "validation": [
+      36887,
+      42157
+    ]
+  },
+  "start_rate": 0.1,
+  "status": "original_weather_mask_content_identity_verified",
+  "test_seeds": [
+    2026100801,
+    2026100802,
+    2026100803,
+    2026100804,
+    2026100805,
+    2026100806,
+    2026100807,
+    2026100808,
+    2026100809,
+    2026100810,
+    2026100811,
+    2026100812,
+    2026100813,
+    2026100814,
+    2026100815,
+    2026100816,
+    2026100817,
+    2026100818,
+    2026100819,
+    2026100820
+  ],
+  "training_masks": "EpochMaskManager.mask_for_sample(epoch,target_start,length=96)",
+  "windows": {
+    "test": {
+      "count": 10444,
+      "first": 42061,
+      "last": 52504,
+      "sha256": "c8724ea1fc64b92fb5cd093b5f179a4c744e9681f5ea3b3873913396da958af2"
+    },
+    "train": {
+      "count": 36696,
+      "first": 0,
+      "last": 36695,
+      "sha256": "3105bd34f4d7ef0d0a22be6e25645baf49873fa7cf6cbc0ce01e02b3a2a52e8d"
+    },
+    "validation": {
+      "count": 5175,
+      "first": 36791,
+      "last": 41965,
+      "sha256": "af1d26ae0562d6ce9d8c82cd2fa7d5e9df68b706100078e2c30cf4009eb4d93b"
+    }
+  }
+}

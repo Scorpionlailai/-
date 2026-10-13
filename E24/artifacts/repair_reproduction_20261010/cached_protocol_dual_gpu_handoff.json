@@ -1,0 +1,69 @@
+{
+  "active": [
+    {
+      "child_pid": 336673,
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/paper-csdi/bin/python",
+        "-u",
+        "-m",
+        "integrations.repair_baselines.run",
+        "--model",
+        "CSDI",
+        "--dataset",
+        "Weather",
+        "--scene",
+        "sr010_bl8",
+        "--phase",
+        "stage1",
+        "--root",
+        "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010"
+      ],
+      "dataset": "Weather",
+      "gpu": "1",
+      "log": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/logs/stage1_CSDI_Weather_sr010_bl8.log",
+      "model": "CSDI",
+      "phase": "stage1",
+      "process_token": "331711215",
+      "queue_pid": 320773,
+      "scene": "sr010_bl8",
+      "started_unix": 1791637114.3182547
+    },
+    {
+      "child_pid": 337497,
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/paper-csdi/bin/python",
+        "-u",
+        "-m",
+        "integrations.repair_baselines.run",
+        "--model",
+        "CSDI",
+        "--dataset",
+        "Weather",
+        "--scene",
+        "sr015_bl8",
+        "--phase",
+        "stage1",
+        "--root",
+        "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010"
+      ],
+      "dataset": "Weather",
+      "gpu": "0",
+      "log": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/logs/stage1_CSDI_Weather_sr015_bl8.log",
+      "model": "CSDI",
+      "phase": "stage1",
+      "process_token": "331736220",
+      "queue_pid": 320773,
+      "scene": "sr015_bl8",
+      "started_unix": 1791637364.3687158
+    }
+  ],
+  "failed_runs": [],
+  "gpus": [
+    "0",
+    "1"
+  ],
+  "pending_runs": 6,
+  "phase": "stage1",
+  "queue_pid": 320773,
+  "state": "running"
+}

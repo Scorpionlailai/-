@@ -1,0 +1,43 @@
+{
+  "datasets": [
+    {
+      "batch_size": 128,
+      "dataset": "ETTh1",
+      "head_identity_matches_latest_T1_v125": true,
+      "loss": "pure_forecast_mse",
+      "lr": 0.0001,
+      "main_selection": "mae",
+      "optimizer": "Adam",
+      "precision": "FP32",
+      "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+      "predictor_parameters": 35427,
+      "reference_plan": "/home/xyw/paper/E23/artifacts/performance/v125_forecast_two_datasets_20261010/ETTh1/sr010_bl8/plan.json",
+      "reference_plan_sha256": "70640d4adda21ac3ae7d73aa2a250b9c5f8260ef39f710fe7aefbfe9853398c8",
+      "secondary_selection": "mse",
+      "seed": 2023,
+      "stage2_epochs": 100,
+      "weight_decay": 0
+    },
+    {
+      "batch_size": 128,
+      "dataset": "Weather",
+      "head_identity_matches_latest_T1_v125": true,
+      "loss": "pure_forecast_mse",
+      "lr": 0.0001,
+      "main_selection": "mae",
+      "optimizer": "Adam",
+      "precision": "FP32",
+      "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+      "predictor_parameters": 35427,
+      "reference_plan": "/home/xyw/paper/E23/artifacts/performance/v125_forecast_two_datasets_20261010/Weather/sr010_bl8/plan.json",
+      "reference_plan_sha256": "44f8d7849481bf3d80843df298c279cbefb01f31f09e454ee2d5c27d607813ba",
+      "secondary_selection": "mse",
+      "seed": 2023,
+      "stage2_epochs": 100,
+      "weight_decay": 0
+    }
+  ],
+  "etth1_mask_exception": "user_accepted_independent_rebuilt_bank",
+  "reference": "latest_T1_v125",
+  "repair_author_profiles_preserved": true
+}

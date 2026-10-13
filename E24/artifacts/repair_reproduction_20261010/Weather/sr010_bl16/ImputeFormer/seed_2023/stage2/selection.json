@@ -1,0 +1,109 @@
+{
+  "batch_size": 128,
+  "cache_records": {
+    "train_2021": {
+      "binding": {
+        "batch_size": 32,
+        "checkpoint_sha256": "d5a789c9f7abca82a87240e9b5a5ec464e8fc7bf984df6fd134ba4f5694f3334",
+        "data_manifest_sha256": "ef1e1f59843e72ac06d566f185c0b86b0995bf048c017bf27249dba5d7962bc1",
+        "dtype": "float32",
+        "fixed_training_epoch": 0,
+        "implementation_sha256": {
+          "adapters.py": "685803b440cf93fce0ca97bf976f59ada0406f7710ee0d5a89e7ab83a82982e1",
+          "cache.py": "987898d96a4604e3cbfc4de2d08c075e48370b7f83a6aba2cd15de563d93c772",
+          "data.py": "6cf64b53e2598d008967f87f374c105c92ad41aaf3b7f50938c91cc4f1881a84",
+          "fast_brits.py": "1475cfcfe0f49eef8adaa61e24b55f8b19e3833857decd46c8d56aa43627a2d5",
+          "fast_csdi.py": "8f2f0ea278603878a6fde4fcb9dfbb8af7d621bde253bff51bbbbfa707fbfdd1"
+        },
+        "mask_seed": 2021,
+        "samples": null,
+        "sampling_seed_rule": "910000 + mask_seed_or_2021 + first_window_start",
+        "schema": 1,
+        "shape": [
+          36696,
+          96,
+          21
+        ],
+        "split": "train",
+        "starts_sha256": "3105bd34f4d7ef0d0a22be6e25645baf49873fa7cf6cbc0ce01e02b3a2a52e8d",
+        "state_sha256": "6e94298d667350c70ae6014dbe858f4afce6a624d71c253b06b3290541d8087a",
+        "training_mask_seed": 2023
+      },
+      "files": {
+        "completed.npy": "c515792042844dd86988ac182f2b5e700b8de360ba3b3b773f80841763d3eb8a",
+        "observed.npy": "1ffdc445b41bc5fe2868f37ee27fa252a63584f7b6d0fdba0d35c1a31b8131f9"
+      },
+      "generation_seconds": 13.22497424390167,
+      "observed_sha256": "1ffdc445b41bc5fe2868f37ee27fa252a63584f7b6d0fdba0d35c1a31b8131f9"
+    },
+    "validation_2021": {
+      "binding": {
+        "batch_size": 32,
+        "checkpoint_sha256": "d5a789c9f7abca82a87240e9b5a5ec464e8fc7bf984df6fd134ba4f5694f3334",
+        "data_manifest_sha256": "ef1e1f59843e72ac06d566f185c0b86b0995bf048c017bf27249dba5d7962bc1",
+        "dtype": "float32",
+        "fixed_training_epoch": 0,
+        "implementation_sha256": {
+          "adapters.py": "685803b440cf93fce0ca97bf976f59ada0406f7710ee0d5a89e7ab83a82982e1",
+          "cache.py": "987898d96a4604e3cbfc4de2d08c075e48370b7f83a6aba2cd15de563d93c772",
+          "data.py": "6cf64b53e2598d008967f87f374c105c92ad41aaf3b7f50938c91cc4f1881a84",
+          "fast_brits.py": "1475cfcfe0f49eef8adaa61e24b55f8b19e3833857decd46c8d56aa43627a2d5",
+          "fast_csdi.py": "8f2f0ea278603878a6fde4fcb9dfbb8af7d621bde253bff51bbbbfa707fbfdd1"
+        },
+        "mask_seed": 2021,
+        "samples": null,
+        "sampling_seed_rule": "910000 + mask_seed_or_2021 + first_window_start",
+        "schema": 1,
+        "shape": [
+          5175,
+          96,
+          21
+        ],
+        "split": "validation",
+        "starts_sha256": "af1d26ae0562d6ce9d8c82cd2fa7d5e9df68b706100078e2c30cf4009eb4d93b",
+        "state_sha256": "6e94298d667350c70ae6014dbe858f4afce6a624d71c253b06b3290541d8087a",
+        "training_mask_seed": 2023
+      },
+      "files": {
+        "completed.npy": "d1bb414cf3216e57f8fc56375790cb7197657a8fd110d5f4c660a9e4cd7259f4",
+        "observed.npy": "e5e233b416c31ee5d7abb2103ffe152e936138602db0c2f452b0c44057afde15"
+      },
+      "generation_seconds": 1.2016749759204686,
+      "observed_sha256": "e5e233b416c31ee5d7abb2103ffe152e936138602db0c2f452b0c44057afde15"
+    }
+  },
+  "checkpoints": {
+    "mae": "fc809afe4a106c2bd78c91a8531f5e600f0186ca8d46e79c67453f57b267d82b",
+    "mse": "23b386220235119842b896d5ec00e013cdbbbee55a015923e40dc1ac1b5814cb"
+  },
+  "csdi_training_samples": null,
+  "epochs": 100,
+  "freeze_checks": "optimizer_exclusion,requires_grad_false,eval,no_grad,state_sha_each_epoch",
+  "head_initial_sha256": "35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88",
+  "learning_rate": 0.0001,
+  "loss": "pure_forecast_mse",
+  "main_selection": "validation_mae",
+  "optimizer_steps": 28600,
+  "parent_stage1_sha256": "d5a789c9f7abca82a87240e9b5a5ec464e8fc7bf984df6fd134ba4f5694f3334",
+  "precision": "float32",
+  "repair_state_sha256": "6e94298d667350c70ae6014dbe858f4afce6a624d71c253b06b3290541d8087a",
+  "resources": {
+    "cpu_threads": 4,
+    "cuda": "11.8",
+    "cuda_visible_devices": "1",
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "max_allocated_gib": 0.23735904693603516,
+    "max_reserved_gib": 0.326171875,
+    "python": "3.8.20",
+    "torch": "2.0.0+cu118"
+  },
+  "secondary_selection": "validation_mse",
+  "seed": 2023,
+  "selected_epochs": {
+    "mae": 100,
+    "mse": 100
+  },
+  "training_protocol": "fixed_epoch0_masks_cached_repair",
+  "training_seconds": 217.68143644416705,
+  "weight_decay": 0.0
+}

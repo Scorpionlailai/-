@@ -1,0 +1,19 @@
+{
+  "approved": true,
+  "user_answer": "统一固定训练掩码并缓存修复结果（推荐）",
+  "models": [
+    "TimesNet",
+    "ImputeFormer",
+    "BRITS",
+    "CSDI"
+  ],
+  "training_mask_epoch": 0,
+  "training_mask_seed": 2023,
+  "training_epochs": 100,
+  "test_mask_groups": 20,
+  "csdi_training_samples": 1,
+  "csdi_evaluation_samples": "restore each stage1 sealed plan (subsequent runs:5; existing runs:10)",
+  "validation_samples": "same as evaluation; median",
+  "protocol_difference": "fixed training masks instead of dynamic epoch masks",
+  "github_policy": "await_user_review"
+}

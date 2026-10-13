@@ -1,0 +1,24 @@
+{
+  "BRITS": {
+    "execution": "TorchScript recurrence",
+    "hidden_size": 108,
+    "max_epochs": 200,
+    "original_max_epochs": 1000,
+    "original_selection": "final_epoch",
+    "patience": 20,
+    "selection": "validation_mae",
+    "variant": "BRITS-accelerated-v1"
+  },
+  "CSDI": {
+    "aggregation": "torch.median",
+    "diffusion_steps": 50,
+    "inference_samples": 10,
+    "original_inference_samples": 100,
+    "sample_chunk_size": 5,
+    "train_epochs": 200,
+    "variant": "CSDI-accelerated-v1"
+  },
+  "authorized": true,
+  "github_policy": "await_user_review",
+  "user_statement": "\u5c31\u4f7f\u7528\u8fd9\u79cd\u52a0\u901f\u7248\uff0c\u5b83\u4eec\u90fd\u592a\u8017\u8d39\u65f6\u95f4\u4e86"
+}

@@ -1,0 +1,36 @@
+{
+  "entry_through_training_seconds": 168.1722106556408,
+  "training": {
+    "actual_epochs": 45,
+    "checkpoint_sha256": "56f2afc356675dd8d05cf9931c102c605b9f4d5ed0800ebc0a410a65dd991725",
+    "optimizer_steps": 11880,
+    "profile": {
+      "batch_size": 32,
+      "epochs": 300,
+      "grad_clip": 5.0,
+      "learning_rate": 0.001,
+      "loss": "hidden_l1_plus_author_Freg_0.01",
+      "max_batches": 300,
+      "parameter_status": "author_LA_base_not_target_dataset_optimum",
+      "patience": 20,
+      "precision": "float16_mixed",
+      "schedule": "magic",
+      "seed": 2023,
+      "selection": "mae",
+      "source": "ImputeFormer/config/imputation/imputeformer_la.yaml + official training entry",
+      "weight_decay": 0.0
+    },
+    "resources": {
+      "cpu_threads": 4,
+      "cuda": "11.8",
+      "cuda_visible_devices": "0",
+      "gpu": "NVIDIA GeForce RTX 4090 D",
+      "max_allocated_gib": 0.8250112533569336,
+      "max_reserved_gib": 0.98046875,
+      "python": "3.8.20",
+      "torch": "2.0.0+cu118"
+    },
+    "selected_epoch": 25,
+    "training_seconds": 167.0423769010231
+  }
+}

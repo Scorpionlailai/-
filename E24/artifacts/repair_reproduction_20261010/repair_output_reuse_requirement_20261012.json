@@ -1,0 +1,14 @@
+{
+  "user_requirement": "那你后面一定要记住，修复记录保存直接接上预测头",
+  "scope": "all four repair baselines, ETTh1 and Weather, all four scenes, future continuation",
+  "save_during_repair_evaluation": ["full repaired histories", "observed masks", "window ordering", "checkpoint identity", "data and mask identities", "actual sampling settings", "file checksums", "completed manifests"],
+  "test_mask_groups": 20,
+  "forecast_test_inputs": "reuse the exact stored repair outputs for both forecast checkpoint selections",
+  "training_validation_inputs": "cache the corresponding fixed-mask repair outputs once and reuse",
+  "repairer_frozen": true,
+  "forecast_test_implicit_repair_generation": false,
+  "missing_or_stale_test_cache": "fail explicitly",
+  "handoff_requirement": "verify 20 completed cache groups; metrics alone do not prove reusable outputs exist",
+  "existing_exception": "two legacy Weather CSDI jobs finishing previously unsaved outputs",
+  "github_policy": "local only until user review"
+}

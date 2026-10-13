@@ -1,0 +1,22 @@
+{
+  "scope": "subsequent CSDI processes; already running processes retain sealed configuration",
+  "model_display_name": "CSDI",
+  "stage1_epochs": 100,
+  "learning_rate_milestones": [
+    75,
+    90
+  ],
+  "stage2_training_samples": 1,
+  "evaluation_samples": 5,
+  "aggregation": "median",
+  "diffusion_steps": 50,
+  "stage2_epochs": 100,
+  "training_protocol": "fixed missing mask; cache repaired training inputs",
+  "configuration_differences_disclosed": true,
+  "existing_processes": [
+    336673,
+    337497
+  ],
+  "sampling_explanation_confirmed_by_user": true,
+  "confirmation_time": "2026-10-11T13:16:52.365868+08:00"
+}

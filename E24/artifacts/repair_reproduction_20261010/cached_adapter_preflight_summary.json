@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "models": {
+    "TimesNet": {
+      "model": "TimesNet",
+      "passed": true,
+      "results": [
+        {
+          "dataset": "ETTh1",
+          "selected_checkpoint_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_cache_finite": true
+        },
+        {
+          "dataset": "Weather",
+          "selected_checkpoint_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_cache_finite": true
+        }
+      ],
+      "scope": "two representative windows; not formal evaluation"
+    },
+    "ImputeFormer": {
+      "model": "ImputeFormer",
+      "passed": true,
+      "results": [
+        {
+          "dataset": "ETTh1",
+          "selected_checkpoint_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_cache_finite": true
+        },
+        {
+          "dataset": "Weather",
+          "selected_checkpoint_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_cache_finite": true
+        }
+      ],
+      "scope": "two representative windows; not formal evaluation"
+    },
+    "BRITS": {
+      "model": "BRITS",
+      "passed": true,
+      "results": [
+        {
+          "dataset": "ETTh1",
+          "selected_checkpoint_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_cache_finite": true
+        },
+        {
+          "dataset": "Weather",
+          "selected_checkpoint_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_cache_finite": true
+        }
+      ],
+      "scope": "two representative windows; not formal evaluation"
+    },
+    "CSDI": {
+      "passed": true,
+      "results": [
+        {
+          "dataset": "ETTh1",
+          "evaluation_samples": 5,
+          "real_csdi_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_samples": 1
+        },
+        {
+          "dataset": "Weather",
+          "evaluation_samples": 5,
+          "real_csdi_live_cached_exact": true,
+          "state_unchanged": true,
+          "training_samples": 1
+        }
+      ],
+      "scope": "untrained real CSDI; representative two-window integration check; not formal metrics or timing benchmark"
+    }
+  },
+  "brits_note": "two TorchScript profiling warmup calls before cache serialization; cold vs warm metric differences approximately 1e-9, warm results exactly match"
+}

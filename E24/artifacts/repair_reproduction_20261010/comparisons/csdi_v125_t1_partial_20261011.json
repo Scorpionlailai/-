@@ -1,0 +1,176 @@
+{
+  "created": "2026-10-11T12:59:47.653394+08:00",
+  "status": "partial_not_final_20_masks",
+  "rows": [
+    {
+      "dataset": "Weather",
+      "scene": "sr010_bl8",
+      "model": "E23-v125",
+      "groups": 12,
+      "stage1_selection": "mae",
+      "evaluation_samples": null,
+      "source": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr010_bl8/e23_v125_shared_calibration_20261009/E23-v125/sr010_bl8/repair_evaluation_mae/twenty-test-draws.json",
+      "source_sha256": "7ecdfb23b7e0efeccfc01c776fe75b9acaf4f0acf4ddbe923915329416fd5d0f",
+      "repair96_mse": 0.04114643793403344,
+      "repair96_mae": 0.04162546676366099,
+      "repair32_mse": 0.041741139939299975,
+      "repair32_mae": 0.04220919286190684
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr010_bl8",
+      "model": "T1",
+      "groups": 12,
+      "stage1_selection": "mse",
+      "evaluation_samples": null,
+      "source": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr010_bl8/weather_author_comparison_20261008/T1/evaluation/mae/twenty-test-draws.json",
+      "source_sha256": "e21e221c3a08bdbd6e8d5e6eed2d006932d142c715b0ab7cb666ab81573c4c65",
+      "repair96_mse": 0.04756572825981182,
+      "repair96_mae": 0.06476925430663946,
+      "repair32_mse": 0.04872351678015546,
+      "repair32_mae": 0.06712527045408141
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr010_bl8",
+      "model": "CSDI",
+      "groups": 12,
+      "stage1_selection": "final_epoch_200",
+      "evaluation_samples": 10,
+      "source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/Weather/sr010_bl8/CSDI/seed_2023/evaluation",
+      "source_sha256": "per_group_files",
+      "repair96_mse": 0.043248869445396396,
+      "repair96_mae": 0.0361586193682699,
+      "repair32_mse": 0.04343595651565224,
+      "repair32_mae": 0.03659791268088061
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr015_bl8",
+      "model": "E23-v125",
+      "groups": 12,
+      "stage1_selection": "mae",
+      "evaluation_samples": null,
+      "source": "/home/xyw/paper/E23/artifacts/Weather/seq96_pred96/sr015_bl8/e23_v125_fixed_transfer_20261009/ensemble/E23-v125/sr015_bl8/repair_evaluation_mae/twenty-test-draws.json",
+      "source_sha256": "80091dfa928ed7a8f13ffbf441e74df4318debc97fee8301a55750a51eef2ced",
+      "repair96_mse": 0.05148767277065324,
+      "repair96_mae": 0.051208173721466646,
+      "repair32_mse": 0.052117070147292915,
+      "repair32_mae": 0.051913530591427115
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr015_bl8",
+      "model": "T1",
+      "groups": 12,
+      "stage1_selection": "mse",
+      "evaluation_samples": null,
+      "source": "/home/xyw/paper/E24/artifacts/Weather/seq96_pred96/sr015_bl8/weather_author_comparison_sr015_20261008/T1/evaluation/mae/twenty-test-draws.json",
+      "source_sha256": "7ecead9d0ab44c6b0295e4a856df8818a00b0285f11390c69ab0b16d5ed0b37a",
+      "repair96_mse": 0.06122912802812693,
+      "repair96_mae": 0.07773744831175756,
+      "repair32_mse": 0.06238002084627628,
+      "repair32_mae": 0.08040482275523385
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr015_bl8",
+      "model": "CSDI",
+      "groups": 12,
+      "stage1_selection": "final_epoch_200",
+      "evaluation_samples": 10,
+      "source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/Weather/sr015_bl8/CSDI/seed_2023/evaluation",
+      "source_sha256": "per_group_files",
+      "repair96_mse": 0.05064023726707254,
+      "repair96_mae": 0.043641115512775844,
+      "repair32_mse": 0.0511142618230056,
+      "repair32_mae": 0.04434868610688539
+    }
+  ],
+  "audit": [
+    {
+      "scene": "sr010_bl8",
+      "seeds": [
+        2026100801,
+        2026100802,
+        2026100803,
+        2026100804,
+        2026100805,
+        2026100806,
+        2026100807,
+        2026100808,
+        2026100809,
+        2026100810,
+        2026100811,
+        2026100812
+      ],
+      "coordinate_counts_and_window_support_equal": true,
+      "mask_protocol": "Weather shared mask content verified against legacy manifest",
+      "csdi_parameters": {
+        "batch_size": 16,
+        "changes_from_author": {
+          "architecture": "unchanged",
+          "diffusion_steps": "50 unchanged",
+          "inference_samples": "100->10",
+          "sampling": "sequential->parallel_chunks5"
+        },
+        "epochs": 200,
+        "grad_clip": null,
+        "learning_rate": 0.001,
+        "loss": "hidden_diffusion_noise_mse",
+        "max_batches": null,
+        "parameter_status": "user_authorized_accelerated_base",
+        "patience": null,
+        "precision": "float32",
+        "schedule": "multistep",
+        "seed": 2023,
+        "selection": "final_epoch",
+        "source": "CSDI/config/base.yaml + utils.py (saves final epoch, no best checkpoint saved)",
+        "variant": "CSDI-accelerated-v1",
+        "weight_decay": 1e-06
+      }
+    },
+    {
+      "scene": "sr015_bl8",
+      "seeds": [
+        2026100801,
+        2026100802,
+        2026100803,
+        2026100804,
+        2026100805,
+        2026100806,
+        2026100807,
+        2026100808,
+        2026100809,
+        2026100810,
+        2026100811,
+        2026100812
+      ],
+      "coordinate_counts_and_window_support_equal": true,
+      "mask_protocol": "Weather shared mask content verified against legacy manifest",
+      "csdi_parameters": {
+        "batch_size": 16,
+        "changes_from_author": {
+          "architecture": "unchanged",
+          "diffusion_steps": "50 unchanged",
+          "inference_samples": "100->10",
+          "sampling": "sequential->parallel_chunks5"
+        },
+        "epochs": 200,
+        "grad_clip": null,
+        "learning_rate": 0.001,
+        "loss": "hidden_diffusion_noise_mse",
+        "max_batches": null,
+        "parameter_status": "user_authorized_accelerated_base",
+        "patience": null,
+        "precision": "float32",
+        "schedule": "multistep",
+        "seed": 2023,
+        "selection": "final_epoch",
+        "source": "CSDI/config/base.yaml + utils.py (saves final epoch, no best checkpoint saved)",
+        "variant": "CSDI-accelerated-v1",
+        "weight_decay": 1e-06
+      }
+    }
+  ]
+}

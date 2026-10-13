@@ -1,0 +1,170 @@
+{
+  "adaptations": [
+    "shared_split_scaler_window_indices",
+    "shared_dynamic_block_mask",
+    "visible_values_preserved",
+    "no_future_model_inputs",
+    "task_dimensions"
+  ],
+  "data_manifest_sha256": "71e1aa931341125aeb7936fbe01bc321a36d2df54c758802e38b9dd7c4037fde",
+  "dataset": "ETTh1",
+  "github_policy": "local_only_until_user_review",
+  "model": "CSDI",
+  "model_config": {
+    "diffusion": {
+      "beta_end": 0.5,
+      "beta_start": 0.0001,
+      "channels": 64,
+      "diffusion_embedding_dim": 128,
+      "is_linear": false,
+      "layers": 4,
+      "nheads": 8,
+      "num_steps": 50,
+      "schedule": "quad"
+    },
+    "model": {
+      "featureemb": 16,
+      "is_unconditional": 0,
+      "target_strategy": "random",
+      "timeemb": 128
+    },
+    "sampling": {
+      "aggregation": "median",
+      "diffusion_steps": 50,
+      "sample_chunk_size": 5,
+      "samples": 5,
+      "training_samples": 1,
+      "variant": "CSDI"
+    },
+    "train": {
+      "batch_size": 16,
+      "epochs": 200,
+      "itr_per_epoch": 100000000.0,
+      "lr": 0.001
+    }
+  },
+  "model_parameters": 413617,
+  "profile": {
+    "batch_size": 16,
+    "changes_from_author": {
+      "architecture": "unchanged",
+      "diffusion_steps": "50 unchanged",
+      "epochs": "200->100",
+      "inference_samples": "100->5",
+      "milestones": "150,180->75,90",
+      "sampling": "sequential->parallel_chunks5",
+      "stage2_training_samples": 1
+    },
+    "epochs": 100,
+    "grad_clip": null,
+    "learning_rate": 0.001,
+    "loss": "hidden_diffusion_noise_mse",
+    "max_batches": null,
+    "milestones": [
+      75,
+      90
+    ],
+    "parameter_status": "user_authorized_accelerated_base",
+    "patience": null,
+    "precision": "float32",
+    "schedule": "multistep",
+    "seed": 2023,
+    "selection": "final_epoch",
+    "source": "CSDI/config/base.yaml + utils.py (saves final epoch, no best checkpoint saved)",
+    "variant": "CSDI",
+    "weight_decay": 1e-06
+  },
+  "scene": "sr020_bl8",
+  "source_seal": {
+    "files": {
+      "CSDI/dataset_forecasting.py": "f5f796b338ea95e8cc1f4a9d9c73250b10cc646751aaff434a4a83d784f3d640",
+      "CSDI/dataset_physio.py": "a79fd1def63b39da5bcd9a9fd897df9ae834e097188f6289f8e75ae704a2adcc",
+      "CSDI/dataset_pm25.py": "923a0e9e095b6e361039c4ca909dd6819145fe4d6452c0916cf28f7f4b742710",
+      "CSDI/diff_models.py": "1271c5ba574eb7271174e8817ddd102adcfeb540236ea135a197b5f49a56d24f",
+      "CSDI/download.py": "bae8ad2de3d73db4f84217c6b8e9ec26638153283117dad43df1694e02fc09b2",
+      "CSDI/exe_forecasting.py": "4587052dd2c17d0cb3e83249fe50fe66722f708699c7f66326c50de3dfb358b5",
+      "CSDI/exe_physio.py": "8d50d41f021c777728319c201c0956d0d107c0d58a5c23870a1730633b79c136",
+      "CSDI/exe_pm25.py": "37cdf1ae07eae54b7d1fa2c864f71fba3300d6bd3de18511dbe826be3421cd5e",
+      "CSDI/main_model.py": "c3702366be9b439f3abff74c304d08efd5488c4a8e0b85a1aa7d7072cf1db0d8",
+      "CSDI/utils.py": "7449ec7b9026ab3e9bae1b8b19e98f5ff4f61b7b364f01112fc8e6b12f15befe",
+      "E24/integrations/repair_baselines/__init__.py": "58571beb5b993fbcc21f8c99eef6e78738eeae1b4f353cf9f5f8855150056d94",
+      "E24/integrations/repair_baselines/adapters.py": "685803b440cf93fce0ca97bf976f59ada0406f7710ee0d5a89e7ab83a82982e1",
+      "E24/integrations/repair_baselines/cache.py": "987898d96a4604e3cbfc4de2d08c075e48370b7f83a6aba2cd15de563d93c772",
+      "E24/integrations/repair_baselines/data.py": "6cf64b53e2598d008967f87f374c105c92ad41aaf3b7f50938c91cc4f1881a84",
+      "E24/integrations/repair_baselines/fast_brits.py": "1475cfcfe0f49eef8adaa61e24b55f8b19e3833857decd46c8d56aa43627a2d5",
+      "E24/integrations/repair_baselines/fast_csdi.py": "8f2f0ea278603878a6fde4fcb9dfbb8af7d621bde253bff51bbbbfa707fbfdd1",
+      "E24/integrations/repair_baselines/parallel_queue.py": "8d1c36c180e56d3ac58a513835ae606a44852b5b57816ccde9a5859d4a4d4940",
+      "E24/integrations/repair_baselines/preflight.py": "3fadf45dd36f0bd1f32c4521b4e8f4c15fd480d5f35d05870920be76dcd1ea21",
+      "E24/integrations/repair_baselines/queue.py": "dd7367171de7e06f97d17c98e3c9bb9bc1c60595b0ae061c5b3697d801664350",
+      "E24/integrations/repair_baselines/report.py": "2d0f4789b4ff8b7f4064694ee24144d0f0efb35593505ed78a04114a6bf63436",
+      "E24/integrations/repair_baselines/run.py": "656d0e61eb61cb3723df1c54abd592dd2430588980dec10f8535654780f14021",
+      "E24/integrations/repair_baselines/timesnet.py": "d78a33766fe6f6fd4255578171481d3567ad1d71c20acd8818b7ecddc8b0a3c0"
+    },
+    "registry": {
+      "baselines": [
+        {
+          "commit": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+          "execution_server": "remote_baseline_servers",
+          "model": "T1",
+          "official_repository": "https://github.com/Oppenheimerdinger/T1.git",
+          "priority": 0,
+          "route": "existing",
+          "source_directory": "/home/xyw/paper/T1",
+          "status": "existing_adapter"
+        },
+        {
+          "commit": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+          "execution_server": "remote_baseline_servers",
+          "model": "SAITS",
+          "official_repository": "/home/xyw/missing_aware_latent_recovery/external/SAITS",
+          "priority": 0,
+          "route": "existing",
+          "source_directory": "/home/xyw/paper/SAITS",
+          "status": "existing_adapter"
+        },
+        {
+          "commit": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+          "execution_server": "remote_baseline_servers",
+          "model": "BRITS",
+          "official_repository": "https://github.com/caow13/BRITS",
+          "priority": 3,
+          "route": "bidirectional_RNN",
+          "source_directory": "/home/xyw/paper/BRITS",
+          "status": "source_present_adapter_audit_pending"
+        },
+        {
+          "commit": "1c3868cf499951ac43b4fc7280593fbb745f58c7",
+          "execution_server": "remote_baseline_servers",
+          "model": "ImputeFormer",
+          "official_repository": "https://github.com/tongnie/ImputeFormer",
+          "priority": 2,
+          "route": "low_rank_attention",
+          "source_directory": "/home/xyw/paper/ImputeFormer",
+          "status": "source_acquired_adapter_pending"
+        },
+        {
+          "commit": "4e938a1767106324dd753b2a44832bf870a0252e",
+          "execution_server": "remote_baseline_servers",
+          "model": "TimesNet",
+          "official_repository": "https://github.com/thuml/Time-Series-Library",
+          "priority": 1,
+          "route": "periodic_2D_CNN",
+          "source_directory": "/home/xyw/paper/TimesNet",
+          "status": "source_acquired_adapter_pending"
+        },
+        {
+          "commit": "7f24a436f08d98853a6b43d4f7f04e5a65ecdf27",
+          "execution_server": "remote_baseline_servers",
+          "model": "CSDI",
+          "official_repository": "https://github.com/ermongroup/CSDI",
+          "priority": 4,
+          "route": "conditional_diffusion",
+          "source_directory": "/home/xyw/paper/CSDI",
+          "status": "source_acquired_adapter_pending"
+        }
+      ],
+      "date": "2026-10-10",
+      "scope": "source registry; new adapters and experiments not completed"
+    }
+  }
+}
