@@ -1,0 +1,24 @@
+{
+  "checked_beijing": "2026-10-13T11:08:29.865437+08:00",
+  "source_url": "https://archive.ics.uci.edu/dataset/501/beijing+multi+site+air+quality+data",
+  "official_archive_sha256": "b04da438b2f331ac0ffd45aebdfec0d20d2367feb5f6948c4b1f7ce1191e33c4",
+  "original_raw_files_verified": 16,
+  "processed_source_sha256": "1f342ca365d228aafe9c00f832b8ef4d7e617c88dc309ad4f1de08c08c267aee",
+  "shape": [
+    35064,
+    12
+  ],
+  "native_missing_count": 8739,
+  "native_missing_fraction": 0.020769164955509924,
+  "existing_csv_completion": "causal_ffill_then_train_median",
+  "existing_csv_matches_official_raw_completion": true,
+  "restored_native_mask": "/home/xyw/paper/data/processed/beijing_pm25_12stations.natural_missing.npz",
+  "native_mask_sha256": "61fc0635775073e6d8523f2bca59331ab468d0769ff2c04f234c9c67b91b90e2",
+  "training_started": false,
+  "pending_decisions": [
+    "model_scope",
+    "data_columns_and_native_missing_evaluation"
+  ],
+  "gpu_precheck": "both CUDA devices available; RTX 4090 D; no prior baseline queue running",
+  "sidecar_serialization": "unicode_dates_no_object_arrays"
+}

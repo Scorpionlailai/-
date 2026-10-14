@@ -4,6 +4,7 @@
 
 ## 先读
 
+- [Beijing Air Quality 六模型、四场景修复与预测结果（2026-10-14）](docs/experiments/2026-10-13_Beijing_AirQuality_reproduction.md)
 - [ETTh1 / Weather 四个新增修复基线最终结果与v125、T1对照（2026-10-13）](docs/experiments/2026-10-13_ETTh1_Weather_repair_baselines.md)
 - [E23→E24交接：构成、历史实验、最终结果、目录和下一步](docs/2026-10-07_E23_to_E24_handoff.md)
 - [实验规范v1：冻结Stage2、纯MSE、数据/mask/选模/统计/资源](docs/EXPERIMENT_PROTOCOL.md)

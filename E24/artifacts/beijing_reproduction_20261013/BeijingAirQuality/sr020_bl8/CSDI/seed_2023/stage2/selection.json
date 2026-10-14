@@ -1,0 +1,127 @@
+{
+  "batch_size": 128,
+  "cache_records": {
+    "train_2021": {
+      "binding": {
+        "batch_size": 16,
+        "checkpoint_sha256": "913f52d71111fa5041e8e29991f59773f6477a0a20d6154f4a5e231a1b10e5f2",
+        "data_manifest_sha256": "bb0c78318e13b7c568c21cc70649644a2830efae46cb49d69ed2e9a17fde1b8f",
+        "dtype": "float32",
+        "fixed_training_epoch": 0,
+        "implementation_sha256": {
+          "__init__.py": "58571beb5b993fbcc21f8c99eef6e78738eeae1b4f353cf9f5f8855150056d94",
+          "adapters.py": "53d18fb1130b408f77df9b2a0777b59be705134c4ef4426d23f9eed8ba326d92",
+          "audit.py": "49bc64865f80ee457873f35a1b7e1c1aa0072a42c8e4b49ceffcb6d32895ad97",
+          "cache.py": "5c705ac1bc4b24e9cd99181c5f5068b6aa24517c2c27ce1f73090a4636eca558",
+          "data.py": "de98cdcccd1de588ef17fcc7860ec5f1511a670403e69671b50093ad7bf629a6",
+          "fast_brits.py": "1475cfcfe0f49eef8adaa61e24b55f8b19e3833857decd46c8d56aa43627a2d5",
+          "fast_csdi.py": "8f2f0ea278603878a6fde4fcb9dfbb8af7d621bde253bff51bbbbfa707fbfdd1",
+          "losses.py": "5d06405a165cd4bf98d0ed9d723eb62d72b45607441a93bf37fd09c0d92829d5",
+          "parallel_queue.py": "4acc5f16aa15246ed85fc5799a5f379980f58ed47474c657047ddae30fef0e39",
+          "preflight.py": "9b7c559c394372ce209f9c1fed2398d64360a4f52c8a0d88ef561ebb4f092061",
+          "references.py": "344f478f2fc30a3368f9cc30b0e77c1196cb91b5069f657b4fe85a3b28a1e557",
+          "report.py": "d50f3c041a7b0fbe66bdc54966d9c9d44d1a0e6d1e24870779497eb58e5928ef",
+          "run.py": "ff913e40c6d1f65cde65d53801df179842852cf56d3d4cf3d54af8f9cd696e5a",
+          "timesnet.py": "72cb431a726685669f67b3c147abb99f17a8db644a463c938e5381b09ab5d0f6"
+        },
+        "mask_seed": 2021,
+        "samples": 1,
+        "sampling_seed_rule": "910000 + mask_seed_or_2021 + first_window_start",
+        "schema": 1,
+        "shape": [
+          24353,
+          96,
+          12
+        ],
+        "split": "train",
+        "starts_sha256": "26f50215b9aabeaaa564c726d8353386d152ee6c502f70dc494c4c44b3cf8c07",
+        "state_sha256": "62635b8390c8bcaf3802bf0ed4b95ca23de3e1c43e39aee4bfc857ab86637143",
+        "training_mask_seed": 2023
+      },
+      "files": {
+        "completed.npy": "88456c9dfd565f737feb59bbddea1fba716a91c2755323627655597666c09736",
+        "observed.npy": "2d5ad2ec82dc34b885894154b30f88c6ae9b40a86d79de561983a455a0e45f30"
+      },
+      "generation_seconds": 443.5492285080254,
+      "observed_sha256": "2d5ad2ec82dc34b885894154b30f88c6ae9b40a86d79de561983a455a0e45f30"
+    },
+    "validation_2021": {
+      "binding": {
+        "batch_size": 16,
+        "checkpoint_sha256": "913f52d71111fa5041e8e29991f59773f6477a0a20d6154f4a5e231a1b10e5f2",
+        "data_manifest_sha256": "bb0c78318e13b7c568c21cc70649644a2830efae46cb49d69ed2e9a17fde1b8f",
+        "dtype": "float32",
+        "fixed_training_epoch": 0,
+        "implementation_sha256": {
+          "__init__.py": "58571beb5b993fbcc21f8c99eef6e78738eeae1b4f353cf9f5f8855150056d94",
+          "adapters.py": "53d18fb1130b408f77df9b2a0777b59be705134c4ef4426d23f9eed8ba326d92",
+          "audit.py": "49bc64865f80ee457873f35a1b7e1c1aa0072a42c8e4b49ceffcb6d32895ad97",
+          "cache.py": "5c705ac1bc4b24e9cd99181c5f5068b6aa24517c2c27ce1f73090a4636eca558",
+          "data.py": "de98cdcccd1de588ef17fcc7860ec5f1511a670403e69671b50093ad7bf629a6",
+          "fast_brits.py": "1475cfcfe0f49eef8adaa61e24b55f8b19e3833857decd46c8d56aa43627a2d5",
+          "fast_csdi.py": "8f2f0ea278603878a6fde4fcb9dfbb8af7d621bde253bff51bbbbfa707fbfdd1",
+          "losses.py": "5d06405a165cd4bf98d0ed9d723eb62d72b45607441a93bf37fd09c0d92829d5",
+          "parallel_queue.py": "4acc5f16aa15246ed85fc5799a5f379980f58ed47474c657047ddae30fef0e39",
+          "preflight.py": "9b7c559c394372ce209f9c1fed2398d64360a4f52c8a0d88ef561ebb4f092061",
+          "references.py": "344f478f2fc30a3368f9cc30b0e77c1196cb91b5069f657b4fe85a3b28a1e557",
+          "report.py": "d50f3c041a7b0fbe66bdc54966d9c9d44d1a0e6d1e24870779497eb58e5928ef",
+          "run.py": "ff913e40c6d1f65cde65d53801df179842852cf56d3d4cf3d54af8f9cd696e5a",
+          "timesnet.py": "72cb431a726685669f67b3c147abb99f17a8db644a463c938e5381b09ab5d0f6"
+        },
+        "mask_seed": 2021,
+        "samples": 5,
+        "sampling_seed_rule": "910000 + mask_seed_or_2021 + first_window_start",
+        "schema": 1,
+        "shape": [
+          3411,
+          96,
+          12
+        ],
+        "split": "validation",
+        "starts_sha256": "4f79f1795248da7f587f60ea017eacaa1f8223ca5cfcf96b42e2033e1c7dc645",
+        "state_sha256": "62635b8390c8bcaf3802bf0ed4b95ca23de3e1c43e39aee4bfc857ab86637143",
+        "training_mask_seed": 2023
+      },
+      "files": {
+        "completed.npy": "3f0cfadbe837cd7b007e5e45649b1455b84eab1fe631b0035b6253201aa91f6d",
+        "observed.npy": "7a60d8259fc7593d848a92270eebc81e6587dbd2787b642f4e7ff00e2c9f5df9"
+      },
+      "generation_seconds": 310.9758707252331,
+      "observed_sha256": "7a60d8259fc7593d848a92270eebc81e6587dbd2787b642f4e7ff00e2c9f5df9"
+    }
+  },
+  "checkpoints": {
+    "mae": "6b0d2403022127aca71279c166117632008b6fd3c0ede8f148653e2c6dde2fbf",
+    "mse": "b2035d44ccbb6174bfb486c39425339de5436be7c91bdea4d5bd3d3da26cb5b3"
+  },
+  "csdi_training_samples": 1,
+  "epochs": 100,
+  "freeze_checks": "optimizer_exclusion,requires_grad_false,eval,no_grad,state_sha_each_epoch",
+  "head_initial_sha256": "35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88",
+  "learning_rate": 0.0001,
+  "loss": "pure_forecast_mse",
+  "main_selection": "validation_mae",
+  "optimizer_steps": 19000,
+  "parent_stage1_sha256": "913f52d71111fa5041e8e29991f59773f6477a0a20d6154f4a5e231a1b10e5f2",
+  "precision": "float32",
+  "repair_state_sha256": "62635b8390c8bcaf3802bf0ed4b95ca23de3e1c43e39aee4bfc857ab86637143",
+  "resources": {
+    "cpu_threads": 4,
+    "cuda": "12.4",
+    "cuda_visible_devices": "0",
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "max_allocated_gib": 0.15044927597045898,
+    "max_reserved_gib": 0.1953125,
+    "python": "3.11.17",
+    "torch": "2.5.1+cu124"
+  },
+  "secondary_selection": "validation_mse",
+  "seed": 2023,
+  "selected_epochs": {
+    "mae": 85,
+    "mse": 85
+  },
+  "training_protocol": "fixed_epoch0_masks_cached_repair",
+  "training_seconds": 81.55245394492522,
+  "weight_decay": 0.0
+}

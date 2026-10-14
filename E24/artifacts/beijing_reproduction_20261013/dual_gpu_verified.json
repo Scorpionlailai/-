@@ -1,0 +1,33 @@
+{
+  "verified_beijing": "2026-10-13T11:32:34.270849+08:00",
+  "both_gpus_actively_training": true,
+  "queue_pid": 449420,
+  "queue_parent": 1,
+  "active": [
+    {
+      "gpu": 0,
+      "pid": 449502,
+      "model": "TimesNet",
+      "scene": "sr010_bl8",
+      "phase": "stage1_training",
+      "epoch": 6,
+      "optimizer_steps": 9132,
+      "cuda_visible_devices": "0",
+      "used_gib": 1.09912109375,
+      "train_loss": 0.17783111273635388
+    },
+    {
+      "gpu": 1,
+      "pid": 449503,
+      "model": "TimesNet",
+      "scene": "sr015_bl8",
+      "phase": "stage1_training",
+      "epoch": 6,
+      "optimizer_steps": 9132,
+      "cuda_visible_devices": "1",
+      "used_gib": 0.96527099609375,
+      "train_loss": 0.2471356024272965
+    }
+  ],
+  "evidence": "completed optimizer steps, training log progress, per-worker CUDA_VISIBLE_DEVICES and CUDA driver memory query; NVML is unavailable"
+}

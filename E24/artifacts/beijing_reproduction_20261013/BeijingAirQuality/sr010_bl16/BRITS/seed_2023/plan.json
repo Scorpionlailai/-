@@ -1,0 +1,145 @@
+{
+  "adaptations": [
+    "shared_split_scaler_window_indices",
+    "shared_dynamic_block_mask",
+    "visible_values_preserved",
+    "no_future_model_inputs",
+    "task_dimensions"
+  ],
+  "data_manifest_sha256": "dfbf970c9f0f4dc693362886d8489d45ff25e07c3270f80b0ea2900d4b4812ad",
+  "dataset": "BeijingAirQuality",
+  "github_policy": "local_only_until_user_review",
+  "model": "BRITS",
+  "model_config": {
+    "execution": "scripted_recurrence",
+    "features": 12,
+    "hidden_size": 108,
+    "impute_weight": 0.3,
+    "label_weight": 0.0,
+    "seq_len": 96,
+    "variant": "BRITS-accelerated-v1"
+  },
+  "model_parameters": 122642,
+  "profile": {
+    "batch_size": 64,
+    "changes_from_author": {
+      "checkpoint": "final_epoch->validation_mae",
+      "epochs": "1000->max200",
+      "execution": "eager->scripted",
+      "patience": "none->20"
+    },
+    "epochs": 200,
+    "grad_clip": null,
+    "learning_rate": 0.001,
+    "loss": "author_observed_l1_and_bidirectional_consistency",
+    "max_batches": null,
+    "parameter_status": "user_authorized_accelerated_base",
+    "patience": 20,
+    "precision": "float32",
+    "schedule": "constant",
+    "seed": 2023,
+    "selection": "mae",
+    "source": "BRITS/README.md example + main.py optimizer; no author validation checkpoint selection",
+    "variant": "BRITS-accelerated-v1",
+    "weight_decay": 0.0
+  },
+  "scene": "sr010_bl16",
+  "source_seal": {
+    "files": {
+      "BRITS/baseline_methods.py": "23550f64a5f4f10dc32b2e557e0ebe54617e106e4877a5af3f3f6d03ddc28b73",
+      "BRITS/data_loader.py": "99710e8852585395f53d61cc931f61aa4481065acf89a56770edc0eec08fc28f",
+      "BRITS/hyper_param.py": "6db583332528caedc09efb7067deb337b203b73e96f6c4cfb66812aa35275771",
+      "BRITS/input_process.py": "59e7e4b4947e470efab345dcb4aac2f0c79da4a860793b2f48d44fe9a02b33b8",
+      "BRITS/main.py": "0bd4e1e8fae1d0a109d0ea90440302daf7f652485d750851723e51b1f2773250",
+      "BRITS/models/__init__.py": "af6874b10e333081c2a02a7afa2cf8445065f58f6aaa18f56f73b90c0f94cf9d",
+      "BRITS/models/brits.py": "a94373ff64b08dc69ea742867dcdb2ad059565668db24c8a5186d9cfd3e7babe",
+      "BRITS/models/brits_i.py": "b457c07a62a4636f83aae2c514e1ad1b67d4d23f91bef5c0f9edc6a6e888f3a0",
+      "BRITS/models/gru_d.py": "8080a510696f507462f6eb690ef73824d34833754aed60e80b1391e3f35406d4",
+      "BRITS/models/m_rnn.py": "2d9b6e4b74c8f2bd1ac0fb014845923a299580cea7cbbf1312b8e2218c70e649",
+      "BRITS/models/rits.py": "d625f20b3e259261616b3c7b0da599cac938ff3e05b6e014053e66aafc084515",
+      "BRITS/models/rits_i.py": "a6aa7c41c41452df4ab7fd23f54efb44d04225010cf142b7d864c2f41d58746e",
+      "BRITS/result/random_forest.py": "9f2aaac4f6276499b665de4c18d11edefdfd25df0f244240e8d64b7413f66864",
+      "BRITS/utils.py": "f0d2eb2d086ee9aae0810ee9ed9b461d79cce9a130d5dfa43e5acc4f095187c8",
+      "E24/integrations/beijing_baselines/__init__.py": "58571beb5b993fbcc21f8c99eef6e78738eeae1b4f353cf9f5f8855150056d94",
+      "E24/integrations/beijing_baselines/adapters.py": "53d18fb1130b408f77df9b2a0777b59be705134c4ef4426d23f9eed8ba326d92",
+      "E24/integrations/beijing_baselines/audit.py": "49bc64865f80ee457873f35a1b7e1c1aa0072a42c8e4b49ceffcb6d32895ad97",
+      "E24/integrations/beijing_baselines/cache.py": "5c705ac1bc4b24e9cd99181c5f5068b6aa24517c2c27ce1f73090a4636eca558",
+      "E24/integrations/beijing_baselines/data.py": "de98cdcccd1de588ef17fcc7860ec5f1511a670403e69671b50093ad7bf629a6",
+      "E24/integrations/beijing_baselines/fast_brits.py": "1475cfcfe0f49eef8adaa61e24b55f8b19e3833857decd46c8d56aa43627a2d5",
+      "E24/integrations/beijing_baselines/fast_csdi.py": "8f2f0ea278603878a6fde4fcb9dfbb8af7d621bde253bff51bbbbfa707fbfdd1",
+      "E24/integrations/beijing_baselines/losses.py": "5d06405a165cd4bf98d0ed9d723eb62d72b45607441a93bf37fd09c0d92829d5",
+      "E24/integrations/beijing_baselines/parallel_queue.py": "4acc5f16aa15246ed85fc5799a5f379980f58ed47474c657047ddae30fef0e39",
+      "E24/integrations/beijing_baselines/preflight.py": "9b7c559c394372ce209f9c1fed2398d64360a4f52c8a0d88ef561ebb4f092061",
+      "E24/integrations/beijing_baselines/references.py": "344f478f2fc30a3368f9cc30b0e77c1196cb91b5069f657b4fe85a3b28a1e557",
+      "E24/integrations/beijing_baselines/report.py": "d50f3c041a7b0fbe66bdc54966d9c9d44d1a0e6d1e24870779497eb58e5928ef",
+      "E24/integrations/beijing_baselines/run.py": "ff913e40c6d1f65cde65d53801df179842852cf56d3d4cf3d54af8f9cd696e5a",
+      "E24/integrations/beijing_baselines/timesnet.py": "72cb431a726685669f67b3c147abb99f17a8db644a463c938e5381b09ab5d0f6"
+    },
+    "registry": {
+      "baselines": [
+        {
+          "commit": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+          "execution_server": "remote_baseline_servers",
+          "model": "T1",
+          "official_repository": "https://github.com/Oppenheimerdinger/T1.git",
+          "priority": 0,
+          "route": "existing",
+          "source_directory": "/home/xyw/paper/T1",
+          "status": "existing_adapter"
+        },
+        {
+          "commit": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+          "execution_server": "remote_baseline_servers",
+          "model": "SAITS",
+          "official_repository": "/home/xyw/missing_aware_latent_recovery/external/SAITS",
+          "priority": 0,
+          "route": "existing",
+          "source_directory": "/home/xyw/paper/SAITS",
+          "status": "existing_adapter"
+        },
+        {
+          "commit": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+          "execution_server": "remote_baseline_servers",
+          "model": "BRITS",
+          "official_repository": "https://github.com/caow13/BRITS",
+          "priority": 3,
+          "route": "bidirectional_RNN",
+          "source_directory": "/home/xyw/paper/BRITS",
+          "status": "source_present_adapter_audit_pending"
+        },
+        {
+          "commit": "1c3868cf499951ac43b4fc7280593fbb745f58c7",
+          "execution_server": "remote_baseline_servers",
+          "model": "ImputeFormer",
+          "official_repository": "https://github.com/tongnie/ImputeFormer",
+          "priority": 2,
+          "route": "low_rank_attention",
+          "source_directory": "/home/xyw/paper/ImputeFormer",
+          "status": "source_acquired_adapter_pending"
+        },
+        {
+          "commit": "4e938a1767106324dd753b2a44832bf870a0252e",
+          "execution_server": "remote_baseline_servers",
+          "model": "TimesNet",
+          "official_repository": "https://github.com/thuml/Time-Series-Library",
+          "priority": 1,
+          "route": "periodic_2D_CNN",
+          "source_directory": "/home/xyw/paper/TimesNet",
+          "status": "source_acquired_adapter_pending"
+        },
+        {
+          "commit": "7f24a436f08d98853a6b43d4f7f04e5a65ecdf27",
+          "execution_server": "remote_baseline_servers",
+          "model": "CSDI",
+          "official_repository": "https://github.com/ermongroup/CSDI",
+          "priority": 4,
+          "route": "conditional_diffusion",
+          "source_directory": "/home/xyw/paper/CSDI",
+          "status": "source_acquired_adapter_pending"
+        }
+      ],
+      "date": "2026-10-10",
+      "scope": "source registry; new adapters and experiments not completed"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "approved": true,
+  "confirmed_beijing": "2026-10-13T11:25:22.390925+08:00",
+  "models": [
+    "TimesNet",
+    "ImputeFormer",
+    "BRITS",
+    "CSDI",
+    "v125",
+    "T1"
+  ],
+  "model_order": "four_baselines_then_references",
+  "dataset": "UCI Beijing12 PM2.5",
+  "native_missing": "forward_fill_finite_container_preserve_native_mask_no_pseudo_label_supervision_or_scoring",
+  "shared_scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "seq_len": 96,
+  "pred_len": 96,
+  "test_mask_groups": 20,
+  "gpus": [
+    0,
+    1
+  ],
+  "stage2": "reuse_all_saved_repair_outputs_fixed_training_cache_shared_frozen_PatchTST",
+  "csdi": {
+    "epochs": 100,
+    "milestones": [
+      75,
+      90
+    ],
+    "diffusion_steps": 50,
+    "training_samples": 1,
+    "test_samples": 5,
+    "aggregation": "median"
+  },
+  "github_policy": "local_only_until_user_review"
+}
