@@ -1,0 +1,634 @@
+{
+  "block_len": 16,
+  "columns": [
+    "heart_rate",
+    "hand_temperature",
+    "hand_acc16_x",
+    "hand_acc16_y",
+    "hand_acc16_z",
+    "hand_acc6_x",
+    "hand_acc6_y",
+    "hand_acc6_z",
+    "hand_gyro_x",
+    "hand_gyro_y",
+    "hand_gyro_z",
+    "hand_mag_x",
+    "hand_mag_y",
+    "hand_mag_z",
+    "chest_temperature",
+    "chest_acc16_x",
+    "chest_acc16_y",
+    "chest_acc16_z",
+    "chest_acc6_x",
+    "chest_acc6_y",
+    "chest_acc6_z",
+    "chest_gyro_x",
+    "chest_gyro_y",
+    "chest_gyro_z",
+    "chest_mag_x",
+    "chest_mag_y",
+    "chest_mag_z",
+    "ankle_temperature",
+    "ankle_acc16_x",
+    "ankle_acc16_y",
+    "ankle_acc16_z",
+    "ankle_acc6_x",
+    "ankle_acc6_y",
+    "ankle_acc6_z",
+    "ankle_gyro_x",
+    "ankle_gyro_y",
+    "ankle_gyro_z",
+    "ankle_mag_x",
+    "ankle_mag_y",
+    "ankle_mag_z"
+  ],
+  "cross_record_windows": false,
+  "dataset": "PAMAP2",
+  "generator_sha256": "72363940ab67cb5c87e4f20b544fe3c46ff50a4befaf0918dbc4d1bfacf41b0a",
+  "labels": "originally_observed_only_for_repair_and_forecast",
+  "masks": [
+    {
+      "actual_artificial_missing_fraction": 0.8121591738589033,
+      "content_sha256": "4ba474e25009911400080584baef8a5675694c3416d8a88b96e68766141097aa",
+      "path": "validation_2021.npz",
+      "record_local": true,
+      "seed": 2021,
+      "sha256": "c7bb5231027474995febd3eb2d9ae4a24fcb75cf3c3d9dc0741e9b3517a34a8f",
+      "split": "validation",
+      "support": [
+        191344,
+        214633
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8134104275538538,
+      "content_sha256": "d5deba75daf5168a7daa17cd0af71d008865b92ef9af527c0c678a10ba763e07",
+      "path": "test_2026101401.npz",
+      "record_local": true,
+      "seed": 2026101401,
+      "sha256": "0070f44fcdd9f191e26c56e8ebe185fdcbf18a6a1837d9090a116d9502700b03",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8144616339835463,
+      "content_sha256": "9313a3076c2c3df7cc9eabf4b614c853ac3aaa645ce4c1f2de4b2f5d413284f7",
+      "path": "test_2026101402.npz",
+      "record_local": true,
+      "seed": 2026101402,
+      "sha256": "b7c75dcbf5eda9609e78b50933c06928332e296ad6e1cd82a0d5b6ab128ab003",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8143253824528724,
+      "content_sha256": "2320f94c8c8e7163d6e8a7dc7b6056e08960f423edbb7147293100055cb0e6fb",
+      "path": "test_2026101403.npz",
+      "record_local": true,
+      "seed": 2026101403,
+      "sha256": "eb0c07db5efa2a1741e4f5e6a3b99aa6121370e499afe80a3e1daca9ed5fd226",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8141063451820424,
+      "content_sha256": "e2475873570ae4d43ec81c6a24ece3df64342c0e920eff11b1edad438cad4ebc",
+      "path": "test_2026101404.npz",
+      "record_local": true,
+      "seed": 2026101404,
+      "sha256": "9d0cb3ac572585b1f83f8869270cbaf43659de517abd5a5f4409593a44582a84",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8138873079112123,
+      "content_sha256": "61096d8916d70ea85f5e6a5f67a2ac37124e78b277b4e1b4ae6f93181285bf05",
+      "path": "test_2026101405.npz",
+      "record_local": true,
+      "seed": 2026101405,
+      "sha256": "09cd7a6471266d778243e28dbbf0fbf959a31b7a3148cec6b0ba334e91cce8b5",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8134030975664441,
+      "content_sha256": "12f1d9ba91fd7c95837196856026f9c6ee8f2006fe07982bb187a4f32381aa16",
+      "path": "test_2026101406.npz",
+      "record_local": true,
+      "seed": 2026101406,
+      "sha256": "5b553d6f934534a6498e28a98469513ef106e15a9899dd65f89532d387d02626",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8138472085683242,
+      "content_sha256": "c3f0958d3a2c0827ae9c0c5ac3f9066eba3b41a7f4ec96071b133d27b07b8aa5",
+      "path": "test_2026101407.npz",
+      "record_local": true,
+      "seed": 2026101407,
+      "sha256": "51a95379e2992db714305e5945cde7c3e49e4149867bbf37a1ca27077944dbf3",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8145521808868422,
+      "content_sha256": "3be2c7b47cf39b2be5218e7b81b40cedba804d4a6b4de703e32bc29487c8dd4b",
+      "path": "test_2026101408.npz",
+      "record_local": true,
+      "seed": 2026101408,
+      "sha256": "4711487a51853d362ae513d5f1690ba186651a3938c7c5a61610caf2c24a55b5",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8133785205498353,
+      "content_sha256": "d39a58186fe9dd37c704f498b4a066af631f9f140444361fff05aee3cf4a1967",
+      "path": "test_2026101409.npz",
+      "record_local": true,
+      "seed": 2026101409,
+      "sha256": "2e60365b1e0c845763b96d25ff7035ab8b0ab7e5484b3909ec4d7d352715b512",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8139424984046498,
+      "content_sha256": "9beb0b8aaf93212fdef9aa213c6935de86a423f8b3e33b2c3be66864fae3a624",
+      "path": "test_2026101410.npz",
+      "record_local": true,
+      "seed": 2026101410,
+      "sha256": "0c77ba8181e61f79f9c8d6227bce77c2f5a87838665e9ad6292116334ceb3409",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8132953036339491,
+      "content_sha256": "17439740cc14495d3d286afc79b65f86ba420c45ecf5bd6c9a984552212ff244",
+      "path": "test_2026101411.npz",
+      "record_local": true,
+      "seed": 2026101411,
+      "sha256": "a4fd98eec158278485995c6fe73ee758356df43a0fdaec7467b2650da970bc37",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8148725444542178,
+      "content_sha256": "90373629542d03cf5ae66b57b60d2de6896f057ff4a0c282ce868779b46b6828",
+      "path": "test_2026101412.npz",
+      "record_local": true,
+      "seed": 2026101412,
+      "sha256": "41373511532f77573c2c125fe8b61c8e322ab543a6c24819a2383c02890e4989",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8147949328228212,
+      "content_sha256": "822aba1d19d0a4a3088cda38284cc54a78380cadfb474974cf6dcad1042407f2",
+      "path": "test_2026101413.npz",
+      "record_local": true,
+      "seed": 2026101413,
+      "sha256": "d9416613f069131a015a58f4eb237b15c4f7319c07a70af2f940da415ce0ad6b",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8144482675359169,
+      "content_sha256": "11db657d899f8e50e3a996a92d8c6886ed4131e91a3134cc9ff3b5a2dec13adb",
+      "path": "test_2026101414.npz",
+      "record_local": true,
+      "seed": 2026101414,
+      "sha256": "2ba00915dfec8d10ad8ee86273a204fd56d55a8668c6e6286a50a4aa6b8b8e7b",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8145077697866543,
+      "content_sha256": "3d90ac50eb35399df0c4e3e8a969b3b3622caa40cdcbad25eb930a86873fa8b1",
+      "path": "test_2026101415.npz",
+      "record_local": true,
+      "seed": 2026101415,
+      "sha256": "93b972082a663f792d83edf77828132c32a3669a156fcc70e7590f59d1391976",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8138329797692347,
+      "content_sha256": "5271470621767887c058e1f5129647a304a39f39e0c79a520bde9d0691e76628",
+      "path": "test_2026101416.npz",
+      "record_local": true,
+      "seed": 2026101416,
+      "sha256": "3ba5f5a76bb5a675ccd154bef88bdb3bc4f00491d4f90ce25bd4debce2234d07",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.81393646194443,
+      "content_sha256": "5baf25cbb938cb4e03ae244b0e346eb46a6c42264d8abfd29f8a9ea3dbe705c1",
+      "path": "test_2026101417.npz",
+      "record_local": true,
+      "seed": 2026101417,
+      "sha256": "05368589661a1fb41b2c6bb4b86d49e03c538ae078d17de55743b0b2b91ba40e",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.813960176609579,
+      "content_sha256": "161b7e8ec830caefc2f8c94313cc7435511d9af0035e7a049148bdf099110758",
+      "path": "test_2026101418.npz",
+      "record_local": true,
+      "seed": 2026101418,
+      "sha256": "5f3522ce57d5e54bb6933b4e233a374e17cb90e2508ac182c87fc11426c3a7d5",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8128580914437488,
+      "content_sha256": "3834831c71888e9f54ec3143c7d92d08dde4812c3c133b6c0bfcb2048b9d20ac",
+      "path": "test_2026101419.npz",
+      "record_local": true,
+      "seed": 2026101419,
+      "sha256": "f6c3d4e67e394efd85b0974c4047161c0cd4945891b28e9401a02c4187dc81e0",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    },
+    {
+      "actual_artificial_missing_fraction": 0.8143879029337197,
+      "content_sha256": "3b7ee926fde935903a31f157c49d2a1af25faf33265f700f49e6d7937daeb6ae",
+      "path": "test_2026101420.npz",
+      "record_local": true,
+      "seed": 2026101420,
+      "sha256": "b8663b6918ab0e86729ce7600bbe6ecba91636a3daa07555fc09250065433362",
+      "split": "test",
+      "support": [
+        214633,
+        272614
+      ]
+    }
+  ],
+  "missing_input": "native_observation_AND_record_local_artificial_mask",
+  "n_vars": 40,
+  "native_missing_count": 25715,
+  "native_observation_sha256": "85c948f3e66bfbf3e74ba62ca48208e9d121b22821efb4cb8e54dec8db175493",
+  "pred_len": 96,
+  "prepared_manifest_sha256": "bcbef1213169a197240ad41ba42864207f9cfcba17c422fe953ee681f45e97ac",
+  "prior_history_at_split_boundary": false,
+  "protocol_id": "pamap2-subject-record-10hz-stride16-v1",
+  "record_seed_rule": "little_endian_first4bytes_SHA256(str(seed)+pipe+segment_id)",
+  "scaler": {
+    "fit_rows": [
+      0,
+      191344
+    ],
+    "fit_series": "training_only_segment_filled",
+    "mean": [
+      104.3075926080776,
+      32.92364161079749,
+      -3.7244256086770715,
+      5.076508207667831,
+      3.851093432698508,
+      -3.646355331256445,
+      5.067476851440665,
+      4.041359273951171,
+      0.015743393394935308,
+      0.03431702895571465,
+      -0.0008618869260689757,
+      17.929420466436028,
+      -20.07455542293982,
+      -23.68872269646682,
+      35.87096736661187,
+      0.36089446444831175,
+      7.988358533609782,
+      -1.3843032996282822,
+      0.21908602052000267,
+      7.991330343712661,
+      -1.0704853874999638,
+      0.005110764780767965,
+      0.008685749675210819,
+      -0.02107608041507886,
+      3.3043963712054945,
+      -30.69230613774809,
+      4.967798891742247,
+      34.03831103929798,
+      8.88028694551907,
+      -0.40476187808601516,
+      -2.6127776040648962,
+      8.859527483519736,
+      -0.30570196627020624,
+      -2.1733333374296824,
+      0.003817576739061233,
+      -0.02792569066946193,
+      0.012025570070943604,
+      -29.489207205974544,
+      1.695989795351365,
+      17.65421019941533
+    ],
+    "std": [
+      24.838140564438795,
+      1.8352679701312125,
+      5.984663351072586,
+      4.7437299537232,
+      3.8974121034203124,
+      6.033193653352557,
+      4.630191879226312,
+      3.928691768445055,
+      1.1258514920738631,
+      0.9297523522336154,
+      1.4339400340871755,
+      23.40912778139769,
+      23.159355663764046,
+      22.26700537580027,
+      1.532326781147441,
+      1.4407990033820106,
+      4.030074365225639,
+      4.840041424640747,
+      1.4488141323443215,
+      4.045778868025549,
+      4.85511739620572,
+      0.3255614157912924,
+      0.5102391803576337,
+      0.27646726507344127,
+      17.23230924617396,
+      19.52951022225739,
+      21.803354518742843,
+      1.1835461179966664,
+      4.741378391580186,
+      5.044296533344826,
+      2.5541038593357888,
+      4.74110434996109,
+      5.061105256078202,
+      2.5726619137216518,
+      0.7711070441107291,
+      0.4665372836254461,
+      1.6310338548264642,
+      21.125192014614658,
+      22.943941881401145,
+      21.700804096585472
+    ]
+  },
+  "scene": "sr010_bl16",
+  "schema_version": 1,
+  "segment_window_counts": {
+    "Optional/subject101.dat/segment0000": 329,
+    "Optional/subject101.dat/segment0001": 511,
+    "Optional/subject101.dat/segment0002": 327,
+    "Optional/subject101.dat/segment0003": 158,
+    "Optional/subject105.dat/segment0000": 682,
+    "Optional/subject105.dat/segment0001": 167,
+    "Optional/subject106.dat/segment0000": 375,
+    "Optional/subject106.dat/segment0001": 168,
+    "Optional/subject106.dat/segment0002": 125,
+    "Optional/subject108.dat/segment0000": 418,
+    "Optional/subject108.dat/segment0001": 249,
+    "Optional/subject108.dat/segment0002": 136,
+    "Optional/subject108.dat/segment0003": 32,
+    "Optional/subject108.dat/segment0004": 58,
+    "Optional/subject109.dat/segment0000": 417,
+    "Optional/subject109.dat/segment0001": 202,
+    "Optional/subject109.dat/segment0002": 159,
+    "Optional/subject109.dat/segment0003": 169,
+    "Protocol/subject101.dat/segment0000": 159,
+    "Protocol/subject101.dat/segment0001": 135,
+    "Protocol/subject101.dat/segment0002": 124,
+    "Protocol/subject101.dat/segment0003": 136,
+    "Protocol/subject101.dat/segment0004": 132,
+    "Protocol/subject101.dat/segment0005": 39,
+    "Protocol/subject101.dat/segment0006": 35,
+    "Protocol/subject101.dat/segment0007": 37,
+    "Protocol/subject101.dat/segment0008": 35,
+    "Protocol/subject101.dat/segment0009": 128,
+    "Protocol/subject101.dat/segment0010": 115,
+    "Protocol/subject101.dat/segment0011": 136,
+    "Protocol/subject101.dat/segment0012": 122,
+    "Protocol/subject101.dat/segment0013": 69,
+    "Protocol/subject102.dat/segment0000": 135,
+    "Protocol/subject102.dat/segment0001": 128,
+    "Protocol/subject102.dat/segment0002": 148,
+    "Protocol/subject102.dat/segment0003": 169,
+    "Protocol/subject102.dat/segment0004": 118,
+    "Protocol/subject102.dat/segment0005": 43,
+    "Protocol/subject102.dat/segment0006": 37,
+    "Protocol/subject102.dat/segment0007": 42,
+    "Protocol/subject102.dat/segment0008": 35,
+    "Protocol/subject102.dat/segment0009": 192,
+    "Protocol/subject102.dat/segment0010": 174,
+    "Protocol/subject102.dat/segment0011": 146,
+    "Protocol/subject102.dat/segment0012": 46,
+    "Protocol/subject102.dat/segment0013": 71,
+    "Protocol/subject103.dat/segment0000": 126,
+    "Protocol/subject103.dat/segment0001": 168,
+    "Protocol/subject103.dat/segment0002": 117,
+    "Protocol/subject103.dat/segment0003": 163,
+    "Protocol/subject103.dat/segment0004": 116,
+    "Protocol/subject103.dat/segment0005": 25,
+    "Protocol/subject103.dat/segment0006": 23,
+    "Protocol/subject103.dat/segment0007": 19,
+    "Protocol/subject103.dat/segment0008": 20,
+    "Protocol/subject103.dat/segment0009": 18,
+    "Protocol/subject103.dat/segment0010": 170,
+    "Protocol/subject104.dat/segment0000": 133,
+    "Protocol/subject104.dat/segment0001": 148,
+    "Protocol/subject104.dat/segment0002": 143,
+    "Protocol/subject104.dat/segment0003": 145,
+    "Protocol/subject104.dat/segment0004": 114,
+    "Protocol/subject104.dat/segment0005": 42,
+    "Protocol/subject104.dat/segment0006": 34,
+    "Protocol/subject104.dat/segment0007": 40,
+    "Protocol/subject104.dat/segment0008": 32,
+    "Protocol/subject104.dat/segment0009": 188,
+    "Protocol/subject104.dat/segment0010": 161,
+    "Protocol/subject104.dat/segment0011": 130,
+    "Protocol/subject104.dat/segment0012": 0,
+    "Protocol/subject105.dat/segment0000": 137,
+    "Protocol/subject105.dat/segment0001": 156,
+    "Protocol/subject105.dat/segment0002": 127,
+    "Protocol/subject105.dat/segment0003": 195,
+    "Protocol/subject105.dat/segment0004": 141,
+    "Protocol/subject105.dat/segment0005": 27,
+    "Protocol/subject105.dat/segment0006": 32,
+    "Protocol/subject105.dat/segment0007": 40,
+    "Protocol/subject105.dat/segment0008": 24,
+    "Protocol/subject105.dat/segment0009": 189,
+    "Protocol/subject105.dat/segment0010": 153,
+    "Protocol/subject105.dat/segment0011": 142,
+    "Protocol/subject105.dat/segment0012": 143,
+    "Protocol/subject105.dat/segment0013": 37,
+    "Protocol/subject106.dat/segment0000": 134,
+    "Protocol/subject106.dat/segment0001": 133,
+    "Protocol/subject106.dat/segment0002": 141,
+    "Protocol/subject106.dat/segment0003": 224,
+    "Protocol/subject106.dat/segment0004": 120,
+    "Protocol/subject106.dat/segment0005": 28,
+    "Protocol/subject106.dat/segment0006": 27,
+    "Protocol/subject106.dat/segment0007": 33,
+    "Protocol/subject106.dat/segment0008": 20,
+    "Protocol/subject106.dat/segment0009": 149,
+    "Protocol/subject106.dat/segment0010": 155,
+    "Protocol/subject106.dat/segment0011": 117,
+    "Protocol/subject106.dat/segment0012": 131,
+    "Protocol/subject106.dat/segment0013": 0,
+    "Protocol/subject107.dat/segment0000": 149,
+    "Protocol/subject107.dat/segment0001": 65,
+    "Protocol/subject107.dat/segment0002": 150,
+    "Protocol/subject107.dat/segment0003": 173,
+    "Protocol/subject107.dat/segment0004": 123,
+    "Protocol/subject107.dat/segment0005": 45,
+    "Protocol/subject107.dat/segment0006": 28,
+    "Protocol/subject107.dat/segment0007": 42,
+    "Protocol/subject107.dat/segment0008": 22,
+    "Protocol/subject107.dat/segment0009": 199,
+    "Protocol/subject107.dat/segment0010": 168,
+    "Protocol/subject107.dat/segment0011": 130,
+    "Protocol/subject107.dat/segment0012": 12,
+    "Protocol/subject108.dat/segment0000": 140,
+    "Protocol/subject108.dat/segment0001": 132,
+    "Protocol/subject108.dat/segment0002": 146,
+    "Protocol/subject108.dat/segment0003": 195,
+    "Protocol/subject108.dat/segment0004": 140,
+    "Protocol/subject108.dat/segment0005": 25,
+    "Protocol/subject108.dat/segment0006": 19,
+    "Protocol/subject108.dat/segment0007": 25,
+    "Protocol/subject108.dat/segment0008": 19,
+    "Protocol/subject108.dat/segment0009": 186,
+    "Protocol/subject108.dat/segment0010": 148,
+    "Protocol/subject108.dat/segment0011": 169,
+    "Protocol/subject108.dat/segment0012": 92,
+    "Protocol/subject108.dat/segment0013": 44,
+    "Protocol/subject109.dat/segment0000": 29
+  },
+  "seq_len": 96,
+  "source_rows": 272614,
+  "splits": {
+    "test": [
+      214633,
+      272614
+    ],
+    "train": [
+      0,
+      191344
+    ],
+    "validation": [
+      191344,
+      214633
+    ]
+  },
+  "stage2_training_masks": "fixed_epoch0_cached",
+  "start_rate": 0.1,
+  "status": "subject_disjoint_record_and_activity_boundaries_verified",
+  "subjects": {
+    "test": [
+      108,
+      109
+    ],
+    "train": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106
+    ],
+    "validation": [
+      107
+    ]
+  },
+  "test_seeds": [
+    2026101401,
+    2026101402,
+    2026101403,
+    2026101404,
+    2026101405,
+    2026101406,
+    2026101407,
+    2026101408,
+    2026101409,
+    2026101410,
+    2026101411,
+    2026101412,
+    2026101413,
+    2026101414,
+    2026101415,
+    2026101416,
+    2026101417,
+    2026101418,
+    2026101419,
+    2026101420
+  ],
+  "training_masks": "per_segment_EpochMaskManager_local_target_seeded_by_segment_id",
+  "window_stride": 16,
+  "windows": {
+    "test": {
+      "count": 3349,
+      "first": 214633,
+      "last": 272422,
+      "sha256": "a0f5bdcb24f05d6b7b606f85bc0f582442e6ed6772ab4521f2be2dfa6bc37353"
+    },
+    "train": {
+      "count": 10958,
+      "first": 0,
+      "last": 191113,
+      "sha256": "70da0a93092b3c7dd4605ac53bc81f50397a8a43a67430d4d9fcaf7214d52913"
+    },
+    "validation": {
+      "count": 1306,
+      "first": 191344,
+      "last": 214439,
+      "sha256": "569cfa723ce7550a8c8c323432ffdd52861d1044144293ed2bd1d2da35e1648f"
+    }
+  }
+}

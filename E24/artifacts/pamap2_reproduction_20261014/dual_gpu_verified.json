@@ -1,0 +1,62 @@
+{
+  "verified_beijing": "2026-10-14T13:44:20.921559+08:00",
+  "queue_pid": 521314,
+  "queue_ppid": 1,
+  "detached_session": 521314,
+  "both_gpus_actively_training": true,
+  "failed_runs": [],
+  "completed_repairs": 4,
+  "completed_forecasts": 0,
+  "workers": [
+    {
+      "pid": 522849,
+      "gpu": 0,
+      "cuda_visible_devices": "0",
+      "model": "ImputeFormer",
+      "scene": "sr010_bl8",
+      "phase": "stage1_training",
+      "epoch": 9,
+      "steps": 2700,
+      "recent_training_progress": [
+        {
+          "epoch": 8,
+          "steps": 2400,
+          "elapsed_seconds": 82.19818070996553
+        },
+        {
+          "epoch": 9,
+          "steps": 2700,
+          "elapsed_seconds": 92.44218562077731
+        }
+      ],
+      "gpu_name": "NVIDIA GeForce RTX 4090 D",
+      "device_used_gib": 3.03857421875,
+      "device_total_gib": 23.5155029296875
+    },
+    {
+      "pid": 522984,
+      "gpu": 1,
+      "cuda_visible_devices": "1",
+      "model": "ImputeFormer",
+      "scene": "sr015_bl8",
+      "phase": "stage1_training",
+      "epoch": 7,
+      "steps": 2100,
+      "recent_training_progress": [
+        {
+          "epoch": 6,
+          "steps": 1800,
+          "elapsed_seconds": 62.79533727001399
+        },
+        {
+          "epoch": 7,
+          "steps": 2100,
+          "elapsed_seconds": 73.26396123087034
+        }
+      ],
+      "gpu_name": "NVIDIA GeForce RTX 4090 D",
+      "device_used_gib": 2.90472412109375,
+      "device_total_gib": 23.5184326171875
+    }
+  ]
+}

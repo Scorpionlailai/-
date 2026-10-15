@@ -1,0 +1,13 @@
+/home/xyw/.local/share/mamba/envs/paper-timesnet/lib/python3.11/site-packages/torch/cuda/__init__.py:716: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/xyw/paper/E24/integrations/pamap2_baselines/preflight.py:37: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=args.model=='ImputeFormer'):
+{'full_batch_probe': {'batch_size': 128, 'n_vars': 40, 'peak_allocated_gib': 19.623878955841064, 'peak_reserved_gib': 22.62890625, 'optimizer_steps': 2, 'csdi_production_samples': None}}
+/home/xyw/paper/E24/integrations/pamap2_baselines/preflight.py:63: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=amp):
+/home/xyw/paper/E24/integrations/pamap2_baselines/run.py:81: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=values.is_cuda and model.__class__.__name__ == 'ImputeFormerAdapter'):
+{'scene': 'sr010_bl8', 'loss': 0.2966495752334595, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 40], 'empty_input_finite': True, 'validation_windows': 1306, 'test_windows': 3349, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}
+{'scene': 'sr015_bl8', 'loss': 0.41628432273864746, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 40], 'empty_input_finite': True, 'validation_windows': 1306, 'test_windows': 3349, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}
+{'scene': 'sr020_bl8', 'loss': 0.38040730357170105, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 40], 'empty_input_finite': True, 'validation_windows': 1306, 'test_windows': 3349, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}
+{'scene': 'sr010_bl16', 'loss': 0.4046528935432434, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 40], 'empty_input_finite': True, 'validation_windows': 1306, 'test_windows': 3349, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}

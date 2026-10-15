@@ -1,0 +1,20 @@
+/home/xyw/.local/share/mamba/envs/paper-timesnet/lib/python3.11/site-packages/torch/cuda/__init__.py:716: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/xyw/paper/E24/integrations/pamap2_baselines/preflight.py:37: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=args.model=='ImputeFormer'):
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/xyw/paper/E24/integrations/pamap2_baselines/preflight.py", line 117, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/xyw/paper/E24/integrations/pamap2_baselines/preflight.py", line 38, in main
+    large_loss=model.loss(large_truth,large_observed,large_starts)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/xyw/paper/E24/integrations/pamap2_baselines/references.py", line 146, in loss
+    retrieval = masked_pair_loss(q,t) + .5*masked_contrastive_loss(q,t)/np.log(max(len(q),2))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/xyw/paper/E24/src/malr/prototypes/retrieval.py", line 206, in masked_contrastive_loss
+    logits = queries @ clean_keys.detach().transpose(0, 1) / temperature
+             ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+RuntimeError: NVML_SUCCESS == DriverAPI::get()->nvmlInit_v2_() INTERNAL ASSERT FAILED at "../c10/cuda/CUDACachingAllocator.cpp":963, please report a bug to PyTorch. 

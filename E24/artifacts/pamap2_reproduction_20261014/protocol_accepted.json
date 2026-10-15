@@ -1,0 +1,54 @@
+{
+  "approved": true,
+  "dataset": "PAMAP2",
+  "forecast": "frozen_common_PatchTST_only_read_saved_repair_outputs",
+  "github_policy": "local_only_until_user_review",
+  "gpus": [
+    0,
+    1
+  ],
+  "models": [
+    "TimesNet",
+    "ImputeFormer",
+    "BRITS",
+    "CSDI",
+    "v125",
+    "T1"
+  ],
+  "n_vars": 40,
+  "native_gaps": "per_segment_forward_fill_container_preserve_native_validity_exclude_missing_labels",
+  "pred_len": 96,
+  "resampled_hz": 10,
+  "seq_len": 96,
+  "sessions": [
+    "Protocol",
+    "Optional"
+  ],
+  "strict_boundaries": [
+    "subject",
+    "recording_file",
+    "activity_change",
+    "activity0_removal",
+    "time_reset",
+    "raw_clock_gap_gt_0.015s"
+  ],
+  "subject_groups": {
+    "test": [
+      108,
+      109
+    ],
+    "train": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106
+    ],
+    "validation": [
+      107
+    ]
+  },
+  "test_groups": 20,
+  "window_stride": 16
+}

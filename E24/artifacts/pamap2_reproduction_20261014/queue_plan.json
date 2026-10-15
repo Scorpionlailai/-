@@ -1,0 +1,133 @@
+{
+  "concurrency": 2,
+  "expected_forecast_runs": 24,
+  "expected_repair_runs": 24,
+  "github_policy": "local_only_until_user_review",
+  "gpus": [
+    "0",
+    "1"
+  ],
+  "matrix": [
+    {
+      "dataset": "PAMAP2",
+      "model": "TimesNet",
+      "scene": "sr010_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "TimesNet",
+      "scene": "sr015_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "TimesNet",
+      "scene": "sr020_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "TimesNet",
+      "scene": "sr010_bl16"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "ImputeFormer",
+      "scene": "sr010_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "ImputeFormer",
+      "scene": "sr015_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "ImputeFormer",
+      "scene": "sr020_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "ImputeFormer",
+      "scene": "sr010_bl16"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "BRITS",
+      "scene": "sr010_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "BRITS",
+      "scene": "sr015_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "BRITS",
+      "scene": "sr020_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "BRITS",
+      "scene": "sr010_bl16"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "CSDI",
+      "scene": "sr010_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "CSDI",
+      "scene": "sr015_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "CSDI",
+      "scene": "sr020_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "CSDI",
+      "scene": "sr010_bl16"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "v125",
+      "scene": "sr010_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "v125",
+      "scene": "sr015_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "v125",
+      "scene": "sr020_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "v125",
+      "scene": "sr010_bl16"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "T1",
+      "scene": "sr010_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "T1",
+      "scene": "sr015_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "T1",
+      "scene": "sr020_bl8"
+    },
+    {
+      "dataset": "PAMAP2",
+      "model": "T1",
+      "scene": "sr010_bl16"
+    }
+  ],
+  "phase_barrier": "all24_repair_evaluations_before_any_forecast_training"
+}
