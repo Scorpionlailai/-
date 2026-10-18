@@ -1,0 +1,173 @@
+{
+  "adaptations": [
+    "shared_split_scaler_window_indices",
+    "shared_dynamic_block_mask",
+    "visible_values_preserved",
+    "no_future_model_inputs",
+    "task_dimensions"
+  ],
+  "data_manifest_sha256": "26022666145fcf1d0a718e02329a1adca6a6e6cb4e60657b85bf001af7fca470",
+  "dataset": "PhysioNet2012",
+  "github_policy": "local_only_until_user_review",
+  "model": "CSDI",
+  "model_config": {
+    "diffusion": {
+      "beta_end": 0.5,
+      "beta_start": 0.0001,
+      "channels": 64,
+      "diffusion_embedding_dim": 128,
+      "is_linear": false,
+      "layers": 4,
+      "nheads": 8,
+      "num_steps": 50,
+      "schedule": "quad"
+    },
+    "model": {
+      "featureemb": 16,
+      "is_unconditional": 0,
+      "target_strategy": "random",
+      "timeemb": 128
+    },
+    "sampling": {
+      "aggregation": "median",
+      "diffusion_steps": 50,
+      "sample_chunk_size": 5,
+      "samples": 5,
+      "training_samples": 1,
+      "variant": "CSDI"
+    },
+    "train": {
+      "batch_size": 16,
+      "epochs": 200,
+      "itr_per_epoch": 100000000.0,
+      "lr": 0.001
+    }
+  },
+  "model_parameters": 414065,
+  "profile": {
+    "batch_size": 16,
+    "changes_from_author": {
+      "architecture": "unchanged",
+      "diffusion_steps": "50 unchanged",
+      "epochs": "200->100",
+      "inference_samples": "100->5",
+      "milestones": "150,180->75,90",
+      "sampling": "sequential->parallel_chunks5",
+      "stage2_training_samples": 1
+    },
+    "epochs": 100,
+    "grad_clip": null,
+    "learning_rate": 0.001,
+    "loss": "hidden_diffusion_noise_mse",
+    "max_batches": null,
+    "milestones": [
+      75,
+      90
+    ],
+    "parameter_status": "user_authorized_accelerated_base",
+    "patience": null,
+    "precision": "float32",
+    "schedule": "multistep",
+    "seed": 2023,
+    "selection": "final_epoch",
+    "source": "CSDI/config/base.yaml + utils.py (saves final epoch, no best checkpoint saved)",
+    "variant": "CSDI",
+    "weight_decay": 1e-06
+  },
+  "scene": "sr015_bl8",
+  "source_seal": {
+    "files": {
+      "CSDI/dataset_forecasting.py": "f5f796b338ea95e8cc1f4a9d9c73250b10cc646751aaff434a4a83d784f3d640",
+      "CSDI/dataset_physio.py": "a79fd1def63b39da5bcd9a9fd897df9ae834e097188f6289f8e75ae704a2adcc",
+      "CSDI/dataset_pm25.py": "923a0e9e095b6e361039c4ca909dd6819145fe4d6452c0916cf28f7f4b742710",
+      "CSDI/diff_models.py": "1271c5ba574eb7271174e8817ddd102adcfeb540236ea135a197b5f49a56d24f",
+      "CSDI/download.py": "bae8ad2de3d73db4f84217c6b8e9ec26638153283117dad43df1694e02fc09b2",
+      "CSDI/exe_forecasting.py": "4587052dd2c17d0cb3e83249fe50fe66722f708699c7f66326c50de3dfb358b5",
+      "CSDI/exe_physio.py": "8d50d41f021c777728319c201c0956d0d107c0d58a5c23870a1730633b79c136",
+      "CSDI/exe_pm25.py": "37cdf1ae07eae54b7d1fa2c864f71fba3300d6bd3de18511dbe826be3421cd5e",
+      "CSDI/main_model.py": "c3702366be9b439f3abff74c304d08efd5488c4a8e0b85a1aa7d7072cf1db0d8",
+      "CSDI/utils.py": "7449ec7b9026ab3e9bae1b8b19e98f5ff4f61b7b364f01112fc8e6b12f15befe",
+      "E24/integrations/physionet_baselines/__init__.py": "58571beb5b993fbcc21f8c99eef6e78738eeae1b4f353cf9f5f8855150056d94",
+      "E24/integrations/physionet_baselines/adapters.py": "366463ffe653028ee0e98f4cb78af727a7985937df8070c3d9d169bfdd44ab7d",
+      "E24/integrations/physionet_baselines/audit.py": "4aecdb2301615f6fdac23a3cce1fd58e7d4ee56e3d42ecf813dbe0b1a3ec110a",
+      "E24/integrations/physionet_baselines/cache.py": "5c705ac1bc4b24e9cd99181c5f5068b6aa24517c2c27ce1f73090a4636eca558",
+      "E24/integrations/physionet_baselines/data.py": "1780976b98fea0f6e68307667bafcd5789fc13e48c8004afe0b1cc338b2fce0a",
+      "E24/integrations/physionet_baselines/fast_brits.py": "1475cfcfe0f49eef8adaa61e24b55f8b19e3833857decd46c8d56aa43627a2d5",
+      "E24/integrations/physionet_baselines/fast_csdi.py": "8f2f0ea278603878a6fde4fcb9dfbb8af7d621bde253bff51bbbbfa707fbfdd1",
+      "E24/integrations/physionet_baselines/losses.py": "f51ff2278d6d5aac25517363c165b6929348a5f1cb91e9e277e33d4820d3fcd6",
+      "E24/integrations/physionet_baselines/parallel_queue.py": "b12909a7a9a25fcc7c83333f4ed941565d9cc193d82ded86d79872bc05dfce4b",
+      "E24/integrations/physionet_baselines/preflight.py": "3346b97fb3f793fb2808b2c2c3c6cd254b9c909403849b6aeea80caf21083464",
+      "E24/integrations/physionet_baselines/prepare.py": "8fb0d099c98d6ba2e58cc62fddd1c2abe797d1e1ba23d26aa63428736a419802",
+      "E24/integrations/physionet_baselines/references.py": "fc5f34a52b81aa9796008bad3883ed83a3b50729ca49627ab9caf263e4226ac4",
+      "E24/integrations/physionet_baselines/report.py": "94764e4e9556ae24886cd94ab61a90c9a6ddd48a68f5393e7d34aa4fa81ccf4e",
+      "E24/integrations/physionet_baselines/run.py": "7db3fa6a9b249a2d55f81729e6781a7db0cffdcbc9e3216ee202a313f5dac842",
+      "E24/integrations/physionet_baselines/timesnet.py": "4e2e2d679a6f937eeb135e018396a78fdaf20c9efac49ded250fd12d5db10c30"
+    },
+    "registry": {
+      "baselines": [
+        {
+          "commit": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+          "execution_server": "remote_baseline_servers",
+          "model": "T1",
+          "official_repository": "https://github.com/Oppenheimerdinger/T1.git",
+          "priority": 0,
+          "route": "existing",
+          "source_directory": "/home/xyw/paper/T1",
+          "status": "existing_adapter"
+        },
+        {
+          "commit": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+          "execution_server": "remote_baseline_servers",
+          "model": "SAITS",
+          "official_repository": "/home/xyw/missing_aware_latent_recovery/external/SAITS",
+          "priority": 0,
+          "route": "existing",
+          "source_directory": "/home/xyw/paper/SAITS",
+          "status": "existing_adapter"
+        },
+        {
+          "commit": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+          "execution_server": "remote_baseline_servers",
+          "model": "BRITS",
+          "official_repository": "https://github.com/caow13/BRITS",
+          "priority": 3,
+          "route": "bidirectional_RNN",
+          "source_directory": "/home/xyw/paper/BRITS",
+          "status": "source_present_adapter_audit_pending"
+        },
+        {
+          "commit": "1c3868cf499951ac43b4fc7280593fbb745f58c7",
+          "execution_server": "remote_baseline_servers",
+          "model": "ImputeFormer",
+          "official_repository": "https://github.com/tongnie/ImputeFormer",
+          "priority": 2,
+          "route": "low_rank_attention",
+          "source_directory": "/home/xyw/paper/ImputeFormer",
+          "status": "source_acquired_adapter_pending"
+        },
+        {
+          "commit": "4e938a1767106324dd753b2a44832bf870a0252e",
+          "execution_server": "remote_baseline_servers",
+          "model": "TimesNet",
+          "official_repository": "https://github.com/thuml/Time-Series-Library",
+          "priority": 1,
+          "route": "periodic_2D_CNN",
+          "source_directory": "/home/xyw/paper/TimesNet",
+          "status": "source_acquired_adapter_pending"
+        },
+        {
+          "commit": "7f24a436f08d98853a6b43d4f7f04e5a65ecdf27",
+          "execution_server": "remote_baseline_servers",
+          "model": "CSDI",
+          "official_repository": "https://github.com/ermongroup/CSDI",
+          "priority": 4,
+          "route": "conditional_diffusion",
+          "source_directory": "/home/xyw/paper/CSDI",
+          "status": "source_acquired_adapter_pending"
+        }
+      ],
+      "date": "2026-10-10",
+      "scope": "source registry; new adapters and experiments not completed"
+    }
+  }
+}

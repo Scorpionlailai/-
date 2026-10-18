@@ -4,6 +4,7 @@
 
 ## 先读
 
+- [PhysioNet 2012 六模型、四场景修复与预测完整结果（2026-10-16）](docs/experiments/2026-10-15_PhysioNet2012_reproduction.md)
 - [PAMAP2 六模型、四场景修复与预测完整结果（2026-10-15）](docs/experiments/2026-10-14_PAMAP2_reproduction.md)
 - [Beijing Air Quality 六模型、四场景修复与预测结果（2026-10-14）](docs/experiments/2026-10-13_Beijing_AirQuality_reproduction.md)
 - [ETTh1 / Weather 四个新增修复基线最终结果与v125、T1对照（2026-10-13）](docs/experiments/2026-10-13_ETTh1_Weather_repair_baselines.md)

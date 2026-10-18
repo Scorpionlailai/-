@@ -1,0 +1,21 @@
+{
+  "verified_beijing": "2026-10-18T12:50:00.300614+08:00",
+  "regression_tests": {
+    "command": "OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 PYTHONPATH=E24/src:E24 paper-timesnet/python -m pytest E24/tests/physionet_baselines E24/tests/pamap2_baselines --import-mode=importlib -q",
+    "exit_code": 0,
+    "passed": 27,
+    "warnings": 2,
+    "warning": "PyTorch AMP autocast deprecation"
+  },
+  "saved_output_audit": {
+    "cache_files_sha_verified": 1056,
+    "head_initial_sha256": [
+      "35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88"
+    ],
+    "passed": true,
+    "repair_model_calls": 0,
+    "total_test_groups": 480
+  },
+  "source_seal_verified_files": 15,
+  "remote_before_publication": "e93e954a3a111ef00530603bea0f2ab8220a246a"
+}

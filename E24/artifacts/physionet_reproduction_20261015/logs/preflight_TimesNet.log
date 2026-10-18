@@ -1,0 +1,15 @@
+/home/xyw/.local/share/mamba/envs/paper-timesnet/lib/python3.11/site-packages/torch/cuda/__init__.py:716: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/xyw/paper/E24/integrations/physionet_baselines/preflight.py:37: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=args.model=='ImputeFormer'):
+{'full_batch_probe': {'batch_size': 16, 'n_vars': 35, 'peak_allocated_gib': 0.1081399917602539, 'peak_reserved_gib': 0.125, 'optimizer_steps': 1, 'csdi_production_samples': None}}
+/home/xyw/.local/share/mamba/envs/paper-timesnet/lib/python3.11/site-packages/torch/cuda/__init__.py:716: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/xyw/paper/E24/integrations/physionet_baselines/preflight.py:63: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=amp):
+/home/xyw/paper/E24/integrations/physionet_baselines/run.py:82: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=values.is_cuda and model.__class__.__name__ == 'ImputeFormerAdapter'):
+{'scene': 'sr010_bl8', 'loss': 0.594234824180603, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 35], 'empty_input_finite': True, 'validation_windows': 1200, 'test_windows': 2400, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}
+{'scene': 'sr015_bl8', 'loss': 0.5469998121261597, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 35], 'empty_input_finite': True, 'validation_windows': 1200, 'test_windows': 2400, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}
+{'scene': 'sr020_bl8', 'loss': 0.5111563801765442, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 35], 'empty_input_finite': True, 'validation_windows': 1200, 'test_windows': 2400, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}
+{'scene': 'sr010_bl16', 'loss': 0.8089883327484131, 'checkpoint_round_trip': True, 'cache_only_forecast': True, 'common_head_initial_sha256': '35328f5bf2dbb9d545fe6ca40cb0de203e59cc8bdedf6db7d78e8a8a62d6fd88', 'shape': [2, 96, 35], 'empty_input_finite': True, 'validation_windows': 1200, 'test_windows': 2400, 'cuda_device': 'NVIDIA GeForce RTX 4090 D', 'csdi_samples': None}

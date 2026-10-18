@@ -1,0 +1,51 @@
+{
+  "approved": true,
+  "user_answer": "15分钟、96→96，保留当前评价口径（推荐）",
+  "recorded_beijing": "2026-10-15T21:58:51.725627+08:00",
+  "dataset": "PhysioNet2012",
+  "models": [
+    "TimesNet",
+    "ImputeFormer",
+    "BRITS",
+    "CSDI",
+    "v125",
+    "T1"
+  ],
+  "n_vars": 35,
+  "interval_minutes": 15,
+  "seq_len": 96,
+  "pred_len": 96,
+  "history_hours": 24,
+  "forecast_hours": 24,
+  "record_splits": [
+    8400,
+    1200,
+    2400
+  ],
+  "record_split_seed": 2023,
+  "record_split_ratios": [
+    0.7,
+    0.1,
+    0.2
+  ],
+  "official_sets_used": [
+    "A",
+    "B",
+    "C"
+  ],
+  "grouping_unit": "unique_ICU_RecordID",
+  "strict_boundaries": [
+    "RecordID",
+    "48h_ICU_stay"
+  ],
+  "native_missing": "preserved; observed_training_only_scaler; no_filled_labels; original_observed_only_scores",
+  "empty_record_policy": "retain_all_records; absent_truth_zero_weight_no_score",
+  "gpus": [
+    0,
+    1
+  ],
+  "test_groups": 20,
+  "forecast": "frozen_common_PatchTST_only_read_saved_repair_outputs",
+  "author_protocol_difference": "user_selected15min96to96, not author_hourly48_setA_imputation_benchmark",
+  "github_policy": "local_only_until_user_review"
+}

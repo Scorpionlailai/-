@@ -1,0 +1,14 @@
+{
+  "verified_beijing": "2026-10-15T22:04:23.898066+08:00",
+  "tests_command": "OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 PYTHONPATH=E24/src:E24 paper-timesnet/python -m pytest E24/tests/physionet_baselines E24/tests/pamap2_baselines --import-mode=importlib -q",
+  "tests_passed": 27,
+  "physionet_tests": 15,
+  "existing_pamap2_tests": 12,
+  "warnings": 2,
+  "warning_type": "PyTorch CUDA AMP deprecation",
+  "exit_code": 0,
+  "source_seal_files": 15,
+  "new_protocol_tests_first_failed": 8,
+  "legacy_test_fixture_corrected": "PAMAP2 shape/count literals updated to PhysioNet identities; no production fault was involved",
+  "formal_training_started": false
+}

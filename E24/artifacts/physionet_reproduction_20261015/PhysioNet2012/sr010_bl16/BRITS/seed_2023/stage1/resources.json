@@ -1,0 +1,43 @@
+{
+  "entry_through_training_seconds": 898.3732838830911,
+  "training": {
+    "actual_epochs": 82,
+    "checkpoint_sha256": "525bcab869d1935f53b3ea801961909a42bab46ff402d113df41f973a69a8ab0",
+    "optimizer_steps": 10742,
+    "profile": {
+      "batch_size": 64,
+      "changes_from_author": {
+        "checkpoint": "final_epoch->validation_mae",
+        "epochs": "1000->max200",
+        "execution": "eager->scripted",
+        "patience": "none->20"
+      },
+      "epochs": 200,
+      "grad_clip": null,
+      "learning_rate": 0.001,
+      "loss": "author_observed_l1_and_bidirectional_consistency",
+      "max_batches": null,
+      "parameter_status": "user_authorized_accelerated_base",
+      "patience": 20,
+      "precision": "float32",
+      "schedule": "constant",
+      "seed": 2023,
+      "selection": "mae",
+      "source": "BRITS/README.md example + main.py optimizer; no author validation checkpoint selection",
+      "variant": "BRITS-accelerated-v1",
+      "weight_decay": 0.0
+    },
+    "resources": {
+      "cpu_threads": 4,
+      "cuda": "12.4",
+      "cuda_visible_devices": "1",
+      "gpu": "NVIDIA GeForce RTX 4090 D",
+      "max_allocated_gib": 0.1384272575378418,
+      "max_reserved_gib": 0.14453125,
+      "python": "3.11.17",
+      "torch": "2.5.1+cu124"
+    },
+    "selected_epoch": 62,
+    "training_seconds": 896.1073552989401
+  }
+}

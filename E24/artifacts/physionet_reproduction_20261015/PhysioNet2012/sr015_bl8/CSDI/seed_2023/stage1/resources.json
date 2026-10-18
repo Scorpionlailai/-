@@ -1,0 +1,50 @@
+{
+  "entry_through_training_seconds": 2969.1328305518255,
+  "training": {
+    "actual_epochs": 100,
+    "checkpoint_sha256": "99f9ba19bc2b97daa09e7956eb898726f54dae9a45af7c35ea4072d0febf90dd",
+    "optimizer_steps": 52500,
+    "profile": {
+      "batch_size": 16,
+      "changes_from_author": {
+        "architecture": "unchanged",
+        "diffusion_steps": "50 unchanged",
+        "epochs": "200->100",
+        "inference_samples": "100->5",
+        "milestones": "150,180->75,90",
+        "sampling": "sequential->parallel_chunks5",
+        "stage2_training_samples": 1
+      },
+      "epochs": 100,
+      "grad_clip": null,
+      "learning_rate": 0.001,
+      "loss": "hidden_diffusion_noise_mse",
+      "max_batches": null,
+      "milestones": [
+        75,
+        90
+      ],
+      "parameter_status": "user_authorized_accelerated_base",
+      "patience": null,
+      "precision": "float32",
+      "schedule": "multistep",
+      "seed": 2023,
+      "selection": "final_epoch",
+      "source": "CSDI/config/base.yaml + utils.py (saves final epoch, no best checkpoint saved)",
+      "variant": "CSDI",
+      "weight_decay": 1e-06
+    },
+    "resources": {
+      "cpu_threads": 4,
+      "cuda": "12.4",
+      "cuda_visible_devices": "0",
+      "gpu": "NVIDIA GeForce RTX 4090 D",
+      "max_allocated_gib": 1.762617588043213,
+      "max_reserved_gib": 2.00390625,
+      "python": "3.11.17",
+      "torch": "2.5.1+cu124"
+    },
+    "selected_epoch": 100,
+    "training_seconds": 2966.798753059935
+  }
+}

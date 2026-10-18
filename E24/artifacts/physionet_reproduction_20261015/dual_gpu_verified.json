@@ -1,0 +1,84 @@
+{
+  "verified_beijing": "2026-10-15T22:06:34.914387+08:00",
+  "queue_pid": 565757,
+  "queue_ppid": 1,
+  "detached_session": 565757,
+  "both_gpus_running_formal_jobs": true,
+  "both_gpus_actively_training": false,
+  "failed_runs": [],
+  "source_seal_verified": true,
+  "workers": [
+    {
+      "gpu": 0,
+      "pid": 565765,
+      "model": "TimesNet",
+      "scene": "sr010_bl8",
+      "phase": "repair_test",
+      "epoch": null,
+      "optimizer_steps": null,
+      "recent_training_progress": [
+        {
+          "epoch": 8,
+          "optimizer_steps": 4200,
+          "elapsed_seconds": 68.11748830694705
+        },
+        {
+          "epoch": 9,
+          "optimizer_steps": 4725,
+          "elapsed_seconds": 76.59918417595327
+        }
+      ],
+      "cuda_visible_devices": "0",
+      "device_name": "NVIDIA GeForce RTX 4090 D",
+      "device_used_gib": 1.099
+    },
+    {
+      "gpu": 1,
+      "pid": 565766,
+      "model": "TimesNet",
+      "scene": "sr015_bl8",
+      "phase": "stage1_training",
+      "epoch": 10,
+      "optimizer_steps": 5250,
+      "recent_training_progress": [
+        {
+          "epoch": 9,
+          "optimizer_steps": 4725,
+          "elapsed_seconds": 79.31861910084262
+        },
+        {
+          "epoch": 10,
+          "optimizer_steps": 5250,
+          "elapsed_seconds": 88.08885015593842
+        }
+      ],
+      "cuda_visible_devices": "1",
+      "device_name": "NVIDIA GeForce RTX 4090 D",
+      "device_used_gib": 0.967
+    }
+  ],
+  "subsequent_training_verification": {
+    "verified_beijing": "2026-10-15T22:07:27.496094+08:00",
+    "both_gpus_actively_training": true,
+    "workers": [
+      {
+        "gpu": 0,
+        "pid": 566040,
+        "model": "TimesNet",
+        "scene": "sr020_bl8",
+        "phase": "stage1_training",
+        "epoch": 5,
+        "optimizer_steps": 2625
+      },
+      {
+        "gpu": 1,
+        "pid": 566090,
+        "model": "TimesNet",
+        "scene": "sr010_bl16",
+        "phase": "stage1_training",
+        "epoch": 3,
+        "optimizer_steps": 1575
+      }
+    ]
+  }
+}
