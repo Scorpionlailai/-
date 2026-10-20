@@ -1,0 +1,59 @@
+{
+  "approved_tasks": [
+    {
+      "arm": "A0",
+      "kind": "verified_reuse",
+      "model_seed": 2023
+    },
+    {
+      "arm": "A1",
+      "kind": "verified_reuse",
+      "model_seed": 2023
+    },
+    {
+      "arm": "A0",
+      "kind": "train64and256100epochs_each",
+      "model_seed": 2024
+    },
+    {
+      "arm": "A1",
+      "kind": "train64and256100epochs_each",
+      "model_seed": 2024
+    },
+    {
+      "arm": "A0",
+      "kind": "train64and256100epochs_each",
+      "model_seed": 2025
+    },
+    {
+      "arm": "A1",
+      "kind": "train64and256100epochs_each",
+      "model_seed": 2025
+    }
+  ],
+  "external_tools": {
+    "/home/xyw/paper/E24/artifacts/v125_contribution_diagnostics_20261019/tools/evaluate.py": "e2270e2c60296d0d355a01d8ad24ce2478eb0376727a2e0da6f1e639b9a5e296",
+    "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/tools/worker.py": "625dcd235bcaa60871ca017eaab468df685fc0b1e0a9eda0dfbd418fe6276983"
+  },
+  "no_large_assets": true,
+  "preflight_sha256": "ddac4c7439083e72c43ebdca265ab89cecbb48f695004512aee725ef6ddbb907",
+  "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+  "publication_authorized": true,
+  "publish_branch": "experiments/e23-v125-ablation-20261018",
+  "publish_directory": "experiment_results/v125_ablation",
+  "registered_unix": 1792488232.5058951,
+  "scope": "PAMAP2 sr015_bl8 A0/A1 seeds2023/2024/2025 original64/256 confirmation; no other stages",
+  "source_audit_sha256": "8d6ac5c1a4bc899d4034b5f622ec4e78fab5982ea3722a1357c862bced6607e8",
+  "source_design_lock_sha256": "0d35bcca5efe3c0a93eec970a8749a3b9cea024361517acff604af784d0cb62e",
+  "tools": {
+    "calibration_worker.py": "840b7b25ee074a5014da768dd910e4b6212abfdc69321486c0b8989f8763564e",
+    "export_results.py": "506610eee9f6f4c1cc316cfb236caa3f27c76d4d5688052311bbff15fc71a3dc",
+    "policy.py": "cd004cc6b0e9b217f9031b75c20f630989be3f4d40a71e08c80b392ce906ca05",
+    "preflight.py": "3bc9879371a8c1bcc9c6bfe5adb017f8f07551ec4cafb184fe5288da63c74492",
+    "prepare.py": "4b7876fdfba4ea6ac67e0efc4bd1d1a36eacb7f66660e5741340cfe4dd952064",
+    "supervisor.py": "9ae120ee2354c5785d752e2cbd8315dec3a9d8a0a0d32c8fb9d271c5ae61e366",
+    "test_policy.py": "12225dfbb6fd44a0f52bacd91a590b9ccd492c68c1decdf7291bd18e96f09143",
+    "verify_results.py": "aa12e12479b9dd01393856a16884c78333be667dba3ce71bd48260f9db3943f1"
+  },
+  "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+}

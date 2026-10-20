@@ -1,0 +1,25 @@
+{
+  "policy_unit_tests": {
+    "red": "4 expected assertion failures before helper implementation",
+    "green": "5 tests passed including phase-transition gradient clearing regression"
+  },
+  "E24_full_suite": {
+    "command": "python -m pytest -q",
+    "exit_code": 2,
+    "limitations": [
+      "import-file mismatch: tests/pamap2_baselines/test_native_scoring.py",
+      "import-file mismatch: tests/physionet_baselines/test_native_scoring.py",
+      "import-file mismatch: tests/physionet_baselines/test_record_protocol.py",
+      "missing optional omegaconf: tests/test_e24_coifnet_bridge.py"
+    ]
+  },
+  "PAMAP2_relevant_suite": {
+    "command": "python -m pytest -q --import-mode=importlib tests/pamap2_baselines/test_native_scoring.py tests/pamap2_baselines/test_record_protocol.py",
+    "result": "12 passed",
+    "warnings": [
+      "existing torch.cuda.amp.autocast deprecation"
+    ]
+  },
+  "ruling": "Do not modify sealed model/data source or experiment environment to fix unrelated full-suite collection issues; use actual full-batch freeze/initialization checks and relevant protocol tests before formal calibration. No new model modules.",
+  "export_coarse_regression": "252 per-mask rows;24 per-seed rows;4032 strata;all cross-seed means/sampleSD exactly match reviewed coarse summary"
+}

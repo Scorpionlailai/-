@@ -1,0 +1,117 @@
+{
+  "registered_unix": 1792382288.6833203,
+  "scope": "read-only validation diagnostics on existing PAMAP2 and PhysioNet results; no new training, datasets or Stage2",
+  "source_study": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018",
+  "requested_result_identity": "verify scene, model seed, split, masks from per-run plan and shared data manifest before evaluation",
+  "models": [
+    "A0",
+    "A1"
+  ],
+  "paths": [
+    "coarse",
+    "calibration64",
+    "calibration256",
+    "ensemble"
+  ],
+  "four_cells": {
+    "E0C0": "A1 own coarse_selected.pt with original coarse_projector retained",
+    "E0C1": "A1 own selected.pt fixed .5/.5 ensemble",
+    "E1C0": "A0 own coarse_selected.pt with original coarse_projector retained",
+    "E1C1": "A0 own selected.pt fixed .5/.5 ensemble"
+  },
+  "grouping": {
+    "invisible_run": [
+      {
+        "lo": 1,
+        "hi": 8
+      },
+      {
+        "lo": 9,
+        "hi": 16
+      },
+      {
+        "lo": 17,
+        "hi": 32
+      },
+      {
+        "lo": 33,
+        "hi": 96
+      }
+    ],
+    "history_intervals": [
+      [
+        0,
+        32
+      ],
+      [
+        32,
+        64
+      ],
+      [
+        64,
+        96
+      ]
+    ],
+    "window_visible_fraction_edges": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "other_variable_visible_fraction_edges": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "fraction_boundaries": "left closed, right open, except last bin includes1",
+    "invisible_run_definition": "per variable within the actual 96-point model input; consecutive NOT(originally-visible AND artificial-visible), truncated at input window edges",
+    "other_variable_visibility": "fraction of the other C-1 variables actually visible at the same input time",
+    "score": "native valid AND artificially hidden only, after 96-point reconstruction; no repeated patch copies",
+    "keep_empty_groups": true,
+    "counts": [
+      "scored_coordinates",
+      "windows_with_scored_coordinates",
+      "unique_records",
+      "unique_continuous_segments",
+      "native_missing_input_coordinates",
+      "native_and_artificial_overlap_coordinates",
+      "artificial_hidden_valid_coordinates"
+    ]
+  },
+  "metrics": [
+    "full96_mse",
+    "full96_mae",
+    "recent32_mse",
+    "recent32_mae"
+  ],
+  "scale": "training-global-standardized, identical to original pipeline",
+  "gains": [
+    {
+      "name": "expert_before_calibration",
+      "baseline": "E0C0",
+      "treatment": "E1C0"
+    },
+    {
+      "name": "expert_after_calibration",
+      "baseline": "E0C1",
+      "treatment": "E1C1"
+    },
+    {
+      "name": "calibration_without_experts",
+      "baseline": "E0C0",
+      "treatment": "E0C1"
+    },
+    {
+      "name": "calibration_with_experts",
+      "baseline": "E1C0",
+      "treatment": "E1C1"
+    }
+  ],
+  "relative_difference": "(baseline_error-treatment_error)/baseline_error*100; None if denominator0 or empty; positive means improvement",
+  "interpretation": "phase contribution diagnostic; unequal capacity, budgets and selection objectives; descriptive, not additive independent causal effects",
+  "preserve_old_results": true,
+  "raw_fp32_validation_outputs": true
+}
