@@ -10,6 +10,1099 @@
     "verify_results.py": "aa12e12479b9dd01393856a16884c78333be667dba3ce71bd48260f9db3943f1"
   },
   "original_source_lock_sha256": "0d35bcca5efe3c0a93eec970a8749a3b9cea024361517acff604af784d0cb62e",
-  "selection_provenance": [],
+  "selection_provenance": [
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.1565187741174096,
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/calibration64_selected.pt",
+      "checkpoint_sha256": "601e3efe3e9399f81df637c08d55e3e8422dca3ca0cd07458c066682ddf08d6a",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "history_snapshot_hash": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+      "incremental_training_seconds": 0.0,
+      "optimizer_steps": 8500,
+      "original_audit": {
+        "binding": {
+          "arm": "A0",
+          "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/coarse_selected.pt",
+          "coarse_frozen_prefix_sha256": "5cf79ba1a9b6797896da070f9cdf9a9413242744b0e7b236c469d31609ff5ec0",
+          "coarse_selected_epoch": 96,
+          "coarse_sha256": "387678a492e7808229135bf2b352eba46b0092c1ff0197fc7c1664084d39569c",
+          "library_sha256": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "branches": {
+          "256": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/calibration256_selected.pt",
+            "checkpoint_sha256": "937c70f9935328aab9b4f7f09979a36e8ac2e3eaf7ff92e3da148229aa2025fc",
+            "curve_sha256": "9d773043cde923cec2fe7ab09488cf5828f1ca9538d13583038b5185ea36ec3e",
+            "epochs": 100,
+            "max_allocated_gib": 19.704172134399414,
+            "max_reserved_gib": 20.333984375,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "27c453fb39c7ab4b594640ad7dba02b5fad4ace0bbee2aea9f207df277fae2c1",
+            "seconds": 1931.5628218017519,
+            "selected_epoch": 23,
+            "selection_json_sha256": "d61c8865e4a08e6f9823e9ae4c1b87d1825cc09f41a8f2058b3d1ded1478beff",
+            "tensor_sha256": "6e00c8b69434f9c02e3bd0ca4e55f15ff4171d217ec8ab8d7427f41951bf0281",
+            "trainable_parameters": 1252562,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 565980.5221373299,
+                "coordinates": 3648521,
+                "mae": 0.15512601466109963,
+                "mse": 0.10039942305227227,
+                "squared_error_sum": 366309.4033940995
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 192246.71256131685,
+                "coordinates": 1216689,
+                "mae": 0.15800809620315204,
+                "mse": 0.10336267734392209,
+                "squared_error_sum": 125760.23253489922
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          },
+          "64": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/calibration64_selected.pt",
+            "checkpoint_sha256": "601e3efe3e9399f81df637c08d55e3e8422dca3ca0cd07458c066682ddf08d6a",
+            "curve_sha256": "9d773043cde923cec2fe7ab09488cf5828f1ca9538d13583038b5185ea36ec3e",
+            "epochs": 100,
+            "max_allocated_gib": 19.704172134399414,
+            "max_reserved_gib": 20.333984375,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "1893b30a65c0ddd35d8ebf5dd936f8a952f6d98c897e38795a833fe68c651421",
+            "seconds": 1882.7781441695988,
+            "selected_epoch": 82,
+            "selection_json_sha256": "d61c8865e4a08e6f9823e9ae4c1b87d1825cc09f41a8f2058b3d1ded1478beff",
+            "tensor_sha256": "4044e476eae7523c8d21cc46b96fdaef5b57ea5a0039286cfba2a5b0923a5bde",
+            "trainable_parameters": 129362,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 571062.0342616254,
+                "coordinates": 3648521,
+                "mae": 0.1565187741174096,
+                "mse": 0.10130432486587129,
+                "squared_error_sum": 369610.9566639536
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 193728.3731627466,
+                "coordinates": 1216689,
+                "mae": 0.15922587708341787,
+                "mse": 0.10392018076635223,
+                "squared_error_sum": 126438.54081643233
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          }
+        },
+        "eligible": true,
+        "final_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/selected.pt",
+        "final_checkpoint_sha256": "a0d132f362a4cb57528ef9bb476f76bca70aef9a43d1ed172de84ac9d2aa01ae",
+        "frozen_prefix_and_library_verified": true,
+        "observed_binding": {
+          "arm": "A0",
+          "coarse_sha256": "387678a492e7808229135bf2b352eba46b0092c1ff0197fc7c1664084d39569c",
+          "library_sha256": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "optimizer_and100epoch_selection_verified": true,
+        "original_protocol_and_training_config_verified": true,
+        "source_plan_sha256": "3b231e87a6e34102903119200d6c846c1a541e38f4a0cdf410407ce1c0a1cd8e"
+      },
+      "phase": "calibration64",
+      "resources": {
+        "max_allocated_gib": 19.704172134399414,
+        "max_reserved_gib": 20.333984375,
+        "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable"
+      },
+      "reused": true,
+      "selected_epoch": 82,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A0",
+        "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/coarse_selected.pt",
+        "coarse_frozen_prefix_sha256": "5cf79ba1a9b6797896da070f9cdf9a9413242744b0e7b236c469d31609ff5ec0",
+        "coarse_selected_epoch": 96,
+        "coarse_sha256": "387678a492e7808229135bf2b352eba46b0092c1ff0197fc7c1664084d39569c",
+        "library_sha256": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+        "model_seed": 2023,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 1882.7781441695988
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.15512601466109963,
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/calibration256_selected.pt",
+      "checkpoint_sha256": "937c70f9935328aab9b4f7f09979a36e8ac2e3eaf7ff92e3da148229aa2025fc",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "history_snapshot_hash": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+      "incremental_training_seconds": 0.0,
+      "optimizer_steps": 8500,
+      "original_audit": {
+        "binding": {
+          "arm": "A0",
+          "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/coarse_selected.pt",
+          "coarse_frozen_prefix_sha256": "5cf79ba1a9b6797896da070f9cdf9a9413242744b0e7b236c469d31609ff5ec0",
+          "coarse_selected_epoch": 96,
+          "coarse_sha256": "387678a492e7808229135bf2b352eba46b0092c1ff0197fc7c1664084d39569c",
+          "library_sha256": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "branches": {
+          "256": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/calibration256_selected.pt",
+            "checkpoint_sha256": "937c70f9935328aab9b4f7f09979a36e8ac2e3eaf7ff92e3da148229aa2025fc",
+            "curve_sha256": "9d773043cde923cec2fe7ab09488cf5828f1ca9538d13583038b5185ea36ec3e",
+            "epochs": 100,
+            "max_allocated_gib": 19.704172134399414,
+            "max_reserved_gib": 20.333984375,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "27c453fb39c7ab4b594640ad7dba02b5fad4ace0bbee2aea9f207df277fae2c1",
+            "seconds": 1931.5628218017519,
+            "selected_epoch": 23,
+            "selection_json_sha256": "d61c8865e4a08e6f9823e9ae4c1b87d1825cc09f41a8f2058b3d1ded1478beff",
+            "tensor_sha256": "6e00c8b69434f9c02e3bd0ca4e55f15ff4171d217ec8ab8d7427f41951bf0281",
+            "trainable_parameters": 1252562,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 565980.5221373299,
+                "coordinates": 3648521,
+                "mae": 0.15512601466109963,
+                "mse": 0.10039942305227227,
+                "squared_error_sum": 366309.4033940995
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 192246.71256131685,
+                "coordinates": 1216689,
+                "mae": 0.15800809620315204,
+                "mse": 0.10336267734392209,
+                "squared_error_sum": 125760.23253489922
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          },
+          "64": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/calibration64_selected.pt",
+            "checkpoint_sha256": "601e3efe3e9399f81df637c08d55e3e8422dca3ca0cd07458c066682ddf08d6a",
+            "curve_sha256": "9d773043cde923cec2fe7ab09488cf5828f1ca9538d13583038b5185ea36ec3e",
+            "epochs": 100,
+            "max_allocated_gib": 19.704172134399414,
+            "max_reserved_gib": 20.333984375,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "1893b30a65c0ddd35d8ebf5dd936f8a952f6d98c897e38795a833fe68c651421",
+            "seconds": 1882.7781441695988,
+            "selected_epoch": 82,
+            "selection_json_sha256": "d61c8865e4a08e6f9823e9ae4c1b87d1825cc09f41a8f2058b3d1ded1478beff",
+            "tensor_sha256": "4044e476eae7523c8d21cc46b96fdaef5b57ea5a0039286cfba2a5b0923a5bde",
+            "trainable_parameters": 129362,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 571062.0342616254,
+                "coordinates": 3648521,
+                "mae": 0.1565187741174096,
+                "mse": 0.10130432486587129,
+                "squared_error_sum": 369610.9566639536
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 193728.3731627466,
+                "coordinates": 1216689,
+                "mae": 0.15922587708341787,
+                "mse": 0.10392018076635223,
+                "squared_error_sum": 126438.54081643233
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          }
+        },
+        "eligible": true,
+        "final_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/selected.pt",
+        "final_checkpoint_sha256": "a0d132f362a4cb57528ef9bb476f76bca70aef9a43d1ed172de84ac9d2aa01ae",
+        "frozen_prefix_and_library_verified": true,
+        "observed_binding": {
+          "arm": "A0",
+          "coarse_sha256": "387678a492e7808229135bf2b352eba46b0092c1ff0197fc7c1664084d39569c",
+          "library_sha256": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "optimizer_and100epoch_selection_verified": true,
+        "original_protocol_and_training_config_verified": true,
+        "source_plan_sha256": "3b231e87a6e34102903119200d6c846c1a541e38f4a0cdf410407ce1c0a1cd8e"
+      },
+      "phase": "calibration256",
+      "resources": {
+        "max_allocated_gib": 19.704172134399414,
+        "max_reserved_gib": 20.333984375,
+        "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable"
+      },
+      "reused": true,
+      "selected_epoch": 23,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A0",
+        "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A0/seed_2023/stage1/coarse_selected.pt",
+        "coarse_frozen_prefix_sha256": "5cf79ba1a9b6797896da070f9cdf9a9413242744b0e7b236c469d31609ff5ec0",
+        "coarse_selected_epoch": 96,
+        "coarse_sha256": "387678a492e7808229135bf2b352eba46b0092c1ff0197fc7c1664084d39569c",
+        "library_sha256": "5b60e8aa2d53f5d730f4bc2c0efeffb2e4b26eef4daf84517e71774aa2c44d74",
+        "model_seed": 2023,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 1931.5628218017519
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.1547310868000264,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A0/seed_2024/calibration64/selected.pt",
+      "checkpoint_sha256": "e79ac8fd34a613f6dd5cc50c8fedf9bc523b09a447464355451f44151972fcd1",
+      "complete_initialization_sha256": "0a35af9abbfcc2249850cb05b3f4d770e876a2ceb7856b227b0c1bab7f65f382",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "633eb503178e8b09820d1c00c4de96c1471d0429a6192b861cd5ed799256f312",
+      "history_snapshot_hash": "dea1294ec5b28da76e892ca7866bc830e927d57ffabb8999e09577cc8a2265e1",
+      "learning_rate": 0.001,
+      "loop_seconds": 2041.4039400955662,
+      "novel_initialization_sha256": "7e9e67df03b8cb8f145cb827f8f9d58e3e400d2391002a74898df50436bb6309",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration64",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "0",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.301877975463867,
+        "max_reserved_gib": 8.123046875,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2049.4567852858454,
+          "pid": 633387,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "0",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.301877975463867,
+            "max_reserved_gib": 8.123046875,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2049.456872179173,
+          "started_unix": 1792488240.2290633,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 100,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A0",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A0/seed_2024/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "33c01a370d3bc7b9654de7f44134d746bc20a11c34ca5d1dfe49f6444936a6b0",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "dfb169523c7b989d91d8fac00ecc106a0c03274a41a8a52eceafff8d61652ee6",
+        "library_sha256": "dea1294ec5b28da76e892ca7866bc830e927d57ffabb8999e09577cc8a2265e1",
+        "model_seed": 2024,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 2049.456872179173,
+      "weight_decay": 0.0
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.155726848538259,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A0/seed_2024/calibration256/selected.pt",
+      "checkpoint_sha256": "d643ab9984b1ea29254424674b0e7341d0f7a020068242c2f7f52434db4879ae",
+      "complete_initialization_sha256": "41947648764da9dbca8ba5ae4ad41845aba21bf31e96eaae6aab722303af8524",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "13ff3a81a00d94544b6d4b04fe06f2fd9fe0882dbf33654ba7cf0d275c68f58f",
+      "history_snapshot_hash": "dea1294ec5b28da76e892ca7866bc830e927d57ffabb8999e09577cc8a2265e1",
+      "learning_rate": 0.001,
+      "loop_seconds": 2093.298650966026,
+      "novel_initialization_sha256": "1b6d5c36d36cc54a9a354bf9a8da2d485cd01625476f7742774fe4fa299c9c1b",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration256",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "0",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.315087795257568,
+        "max_reserved_gib": 8.1328125,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2101.8922604708932,
+          "pid": 633387,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "0",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.315087795257568,
+            "max_reserved_gib": 8.1328125,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2101.8923552478664,
+          "started_unix": 1792490290.9897554,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 20,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A0",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A0/seed_2024/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "33c01a370d3bc7b9654de7f44134d746bc20a11c34ca5d1dfe49f6444936a6b0",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "dfb169523c7b989d91d8fac00ecc106a0c03274a41a8a52eceafff8d61652ee6",
+        "library_sha256": "dea1294ec5b28da76e892ca7866bc830e927d57ffabb8999e09577cc8a2265e1",
+        "model_seed": 2024,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 2101.8923552478664,
+      "weight_decay": 0.0
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.1576281286964321,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A0/seed_2025/calibration64/selected.pt",
+      "checkpoint_sha256": "f395d94c7ba6b76cc34513f84d1e336d93e0986a722f9329be359c94af6ea6cd",
+      "complete_initialization_sha256": "b41710cfcb6fa0644d9ac0de566feeec64760b0051f4912233471cdda97be2c5",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "fd5b495020f7b5878a5de89bf011d567b46ec1259cdf5aaf0cfbbc462eb19130",
+      "history_snapshot_hash": "682e838ddc791d15ce22ef16ccb88ffc80852b20d6cdc77a3d38fc3db710af03",
+      "learning_rate": 0.001,
+      "loop_seconds": 2058.9055094486102,
+      "novel_initialization_sha256": "badf136f67aa06a5cab5616775d498be3b1bf93ad3f940702a045de7e2a3422b",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration64",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "1",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.315121650695801,
+        "max_reserved_gib": 8.029296875,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2067.2566394661553,
+          "pid": 635835,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "1",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.315121650695801,
+            "max_reserved_gib": 8.029296875,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2067.256730717141,
+          "started_unix": 1792491182.2077715,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 82,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A0",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A0/seed_2025/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "f31ce6f050cfe7c035bfa08d40c75e2aa461c1786aec1b4c4b8e8293517cc1f5",
+        "coarse_selected_epoch": 99,
+        "coarse_sha256": "082171b3b49283a3c3502e2910e24f82048fb825ba54d4172b591bd6203e54e1",
+        "library_sha256": "682e838ddc791d15ce22ef16ccb88ffc80852b20d6cdc77a3d38fc3db710af03",
+        "model_seed": 2025,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 2067.256730717141,
+      "weight_decay": 0.0
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.15406079549857593,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A0/seed_2025/calibration256/selected.pt",
+      "checkpoint_sha256": "1581e98d542b75a16caf09a3a8579164424fcef6cac346f0e84aebf8972b6a74",
+      "complete_initialization_sha256": "0f09793c32eaa058d35c570c1566084ee1d925bc9a2bd043a2e9cd42ee37e4f1",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "1083dd60fdfd8dee1a5ff6c533964aa81983396a69ae9ebd2dcbe995be4363d0",
+      "history_snapshot_hash": "682e838ddc791d15ce22ef16ccb88ffc80852b20d6cdc77a3d38fc3db710af03",
+      "learning_rate": 0.001,
+      "loop_seconds": 2105.144955812022,
+      "novel_initialization_sha256": "7301621685ed349fa60764250dd66d1259a28f4aa0720a9136646ededa9ae0b4",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration256",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "1",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.326792240142822,
+        "max_reserved_gib": 8.0390625,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2114.089942918159,
+          "pid": 635835,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "1",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.326792240142822,
+            "max_reserved_gib": 8.0390625,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2114.090039520059,
+          "started_unix": 1792493251.3143053,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 31,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A0",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A0/seed_2025/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "f31ce6f050cfe7c035bfa08d40c75e2aa461c1786aec1b4c4b8e8293517cc1f5",
+        "coarse_selected_epoch": 99,
+        "coarse_sha256": "082171b3b49283a3c3502e2910e24f82048fb825ba54d4172b591bd6203e54e1",
+        "library_sha256": "682e838ddc791d15ce22ef16ccb88ffc80852b20d6cdc77a3d38fc3db710af03",
+        "model_seed": 2025,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 2114.090039520059,
+      "weight_decay": 0.0
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.16475800731520862,
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/calibration64_selected.pt",
+      "checkpoint_sha256": "f19748ce0558c0ff151401e9bd3188130fe2ec4ef949b771a6f39f1788e3c7fa",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "history_snapshot_hash": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "incremental_training_seconds": 0.0,
+      "optimizer_steps": 8500,
+      "original_audit": {
+        "binding": {
+          "arm": "A1",
+          "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/coarse_selected.pt",
+          "coarse_frozen_prefix_sha256": "1f812679379e3d4f6c8a2c4050352e8839ce4c1707cede9dbc5bd4168ddfbce6",
+          "coarse_selected_epoch": 100,
+          "coarse_sha256": "b8f92d3464de3e144753231bc11102a74f52b7d276d893e01ac15bcff76e934b",
+          "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "branches": {
+          "256": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/calibration256_selected.pt",
+            "checkpoint_sha256": "71ebbd0674ac81429fb54a95d0f76d0756620895c29a682e5916f48a8d9dff1b",
+            "curve_sha256": "0fe45ada27735d1280038c3713f0028f343de8df69232d68069b33c3eacab942",
+            "epochs": 100,
+            "max_allocated_gib": 14.209679126739502,
+            "max_reserved_gib": 14.626953125,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "d66baff08e2a2ea609a19a1301817fe771139a87d911b47d906bf987deb294f1",
+            "seconds": 1341.1030520019121,
+            "selected_epoch": 23,
+            "selection_json_sha256": "23970a06ccf0ed6eaa64949639708d06eaf279b833a3178c1cd72d3a449954c0",
+            "tensor_sha256": "2f24dc4181793ce9508ed300332a4fe1f393cc208b91e198b2d6fce876bd0af8",
+            "trainable_parameters": 1252562,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 591676.2128276497,
+                "coordinates": 3648521,
+                "mae": 0.16216878368732143,
+                "mse": 0.11196570716972506,
+                "squared_error_sum": 408509.23388859245
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 199862.2633177125,
+                "coordinates": 1216689,
+                "mae": 0.1642673380935576,
+                "mse": 0.11551046965127806,
+                "squared_error_sum": 140540.31780954386
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          },
+          "64": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/calibration64_selected.pt",
+            "checkpoint_sha256": "f19748ce0558c0ff151401e9bd3188130fe2ec4ef949b771a6f39f1788e3c7fa",
+            "curve_sha256": "0fe45ada27735d1280038c3713f0028f343de8df69232d68069b33c3eacab942",
+            "epochs": 100,
+            "max_allocated_gib": 14.209679126739502,
+            "max_reserved_gib": 14.626953125,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "2aa954bcf959dbd2c4d1045f99a37e4914be5a03acecf5f377d4716f7b0956df",
+            "seconds": 1293.6951966383494,
+            "selected_epoch": 70,
+            "selection_json_sha256": "23970a06ccf0ed6eaa64949639708d06eaf279b833a3178c1cd72d3a449954c0",
+            "tensor_sha256": "2dcf9f750a4d366f0945006e218af294ac208326c9ec565eec9d841a04f9924e",
+            "trainable_parameters": 129362,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 601123.0496076923,
+                "coordinates": 3648521,
+                "mae": 0.16475800731520862,
+                "mse": 0.11078482222170395,
+                "squared_error_sum": 404200.75035715353
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 203158.31358734024,
+                "coordinates": 1216689,
+                "mae": 0.16697637077950095,
+                "mse": 0.11393752683012252,
+                "squared_error_sum": 138626.53558141494
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          }
+        },
+        "eligible": true,
+        "final_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/selected.pt",
+        "final_checkpoint_sha256": "8eeb3ecd47f5c8788a4838797053f147dcf0bdb819ac7c47f478854658d8e53e",
+        "frozen_prefix_and_library_verified": true,
+        "observed_binding": {
+          "arm": "A1",
+          "coarse_sha256": "b8f92d3464de3e144753231bc11102a74f52b7d276d893e01ac15bcff76e934b",
+          "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "optimizer_and100epoch_selection_verified": true,
+        "original_protocol_and_training_config_verified": true,
+        "source_plan_sha256": "9206fb524c4e3e15bf607bf8820d03aa039709ec6a114567c50613532ebe8e51"
+      },
+      "phase": "calibration64",
+      "resources": {
+        "max_allocated_gib": 14.209679126739502,
+        "max_reserved_gib": 14.626953125,
+        "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable"
+      },
+      "reused": true,
+      "selected_epoch": 70,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A1",
+        "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/coarse_selected.pt",
+        "coarse_frozen_prefix_sha256": "1f812679379e3d4f6c8a2c4050352e8839ce4c1707cede9dbc5bd4168ddfbce6",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "b8f92d3464de3e144753231bc11102a74f52b7d276d893e01ac15bcff76e934b",
+        "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+        "model_seed": 2023,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 1293.6951966383494
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.16216878368732143,
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/calibration256_selected.pt",
+      "checkpoint_sha256": "71ebbd0674ac81429fb54a95d0f76d0756620895c29a682e5916f48a8d9dff1b",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "history_snapshot_hash": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "incremental_training_seconds": 0.0,
+      "optimizer_steps": 8500,
+      "original_audit": {
+        "binding": {
+          "arm": "A1",
+          "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/coarse_selected.pt",
+          "coarse_frozen_prefix_sha256": "1f812679379e3d4f6c8a2c4050352e8839ce4c1707cede9dbc5bd4168ddfbce6",
+          "coarse_selected_epoch": 100,
+          "coarse_sha256": "b8f92d3464de3e144753231bc11102a74f52b7d276d893e01ac15bcff76e934b",
+          "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "branches": {
+          "256": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/calibration256_selected.pt",
+            "checkpoint_sha256": "71ebbd0674ac81429fb54a95d0f76d0756620895c29a682e5916f48a8d9dff1b",
+            "curve_sha256": "0fe45ada27735d1280038c3713f0028f343de8df69232d68069b33c3eacab942",
+            "epochs": 100,
+            "max_allocated_gib": 14.209679126739502,
+            "max_reserved_gib": 14.626953125,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "d66baff08e2a2ea609a19a1301817fe771139a87d911b47d906bf987deb294f1",
+            "seconds": 1341.1030520019121,
+            "selected_epoch": 23,
+            "selection_json_sha256": "23970a06ccf0ed6eaa64949639708d06eaf279b833a3178c1cd72d3a449954c0",
+            "tensor_sha256": "2f24dc4181793ce9508ed300332a4fe1f393cc208b91e198b2d6fce876bd0af8",
+            "trainable_parameters": 1252562,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 591676.2128276497,
+                "coordinates": 3648521,
+                "mae": 0.16216878368732143,
+                "mse": 0.11196570716972506,
+                "squared_error_sum": 408509.23388859245
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 199862.2633177125,
+                "coordinates": 1216689,
+                "mae": 0.1642673380935576,
+                "mse": 0.11551046965127806,
+                "squared_error_sum": 140540.31780954386
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          },
+          "64": {
+            "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/calibration64_selected.pt",
+            "checkpoint_sha256": "f19748ce0558c0ff151401e9bd3188130fe2ec4ef949b771a6f39f1788e3c7fa",
+            "curve_sha256": "0fe45ada27735d1280038c3713f0028f343de8df69232d68069b33c3eacab942",
+            "epochs": 100,
+            "max_allocated_gib": 14.209679126739502,
+            "max_reserved_gib": 14.626953125,
+            "optimizer_steps": 8500,
+            "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable",
+            "resume_sha256": "2aa954bcf959dbd2c4d1045f99a37e4914be5a03acecf5f377d4716f7b0956df",
+            "seconds": 1293.6951966383494,
+            "selected_epoch": 70,
+            "selection_json_sha256": "23970a06ccf0ed6eaa64949639708d06eaf279b833a3178c1cd72d3a449954c0",
+            "tensor_sha256": "2dcf9f750a4d366f0945006e218af294ac208326c9ec565eec9d841a04f9924e",
+            "trainable_parameters": 129362,
+            "validation": {
+              "full96": {
+                "absolute_error_sum": 601123.0496076923,
+                "coordinates": 3648521,
+                "mae": 0.16475800731520862,
+                "mse": 0.11078482222170395,
+                "squared_error_sum": 404200.75035715353
+              },
+              "mask_seed": 2021,
+              "recent32": {
+                "absolute_error_sum": 203158.31358734024,
+                "coordinates": 1216689,
+                "mae": 0.16697637077950095,
+                "mse": 0.11393752683012252,
+                "squared_error_sum": 138626.53558141494
+              },
+              "split": "validation",
+              "windows": 1306
+            }
+          }
+        },
+        "eligible": true,
+        "final_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/selected.pt",
+        "final_checkpoint_sha256": "8eeb3ecd47f5c8788a4838797053f147dcf0bdb819ac7c47f478854658d8e53e",
+        "frozen_prefix_and_library_verified": true,
+        "observed_binding": {
+          "arm": "A1",
+          "coarse_sha256": "b8f92d3464de3e144753231bc11102a74f52b7d276d893e01ac15bcff76e934b",
+          "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+          "model_seed": 2023,
+          "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+          "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+        },
+        "optimizer_and100epoch_selection_verified": true,
+        "original_protocol_and_training_config_verified": true,
+        "source_plan_sha256": "9206fb524c4e3e15bf607bf8820d03aa039709ec6a114567c50613532ebe8e51"
+      },
+      "phase": "calibration256",
+      "resources": {
+        "max_allocated_gib": 14.209679126739502,
+        "max_reserved_gib": 14.626953125,
+        "peak_memory_scope": "historical cumulative stage1 allocator peak, not isolated branch; exact historical branch-only peak unavailable"
+      },
+      "reused": true,
+      "selected_epoch": 23,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A1",
+        "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A1/seed_2023/stage1/coarse_selected.pt",
+        "coarse_frozen_prefix_sha256": "1f812679379e3d4f6c8a2c4050352e8839ce4c1707cede9dbc5bd4168ddfbce6",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "b8f92d3464de3e144753231bc11102a74f52b7d276d893e01ac15bcff76e934b",
+        "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+        "model_seed": 2023,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 1341.1030520019121
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.16469821729756867,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A1/seed_2024/calibration64/selected.pt",
+      "checkpoint_sha256": "b32e20beec392647558df57fbe9c0d52d21980593e006771cf8b349ee5e02c90",
+      "complete_initialization_sha256": "2fbe14f375d5cee024038e00ea5486ab9d24bd300c97a03efacfb4ec70163f1a",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "5b381f402e3ceff9d7c99104b6d7762202ba8e65c59141ab289b4db92b2fc263",
+      "history_snapshot_hash": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "learning_rate": 0.001,
+      "loop_seconds": 1297.8787181512453,
+      "novel_initialization_sha256": "7e9e67df03b8cb8f145cb827f8f9d58e3e400d2391002a74898df50436bb6309",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration64",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "1",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 2.7638864517211914,
+        "max_reserved_gib": 3.69921875,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 1299.858919964172,
+          "pid": 633388,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "1",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 2.7638864517211914,
+            "max_reserved_gib": 3.69921875,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 1299.8589994641952,
+          "started_unix": 1792488234.7480674,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 92,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A1",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A1/seed_2024/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "c467b290a58d2289077ebfae16e8be56b3d49001d296d6dd6812514a385ed9ea",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "dcc94bb86382979f8646ee9765cc9bf3fc5055aadb081800291ffb64b60f2200",
+        "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+        "model_seed": 2024,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 1299.8589994641952,
+      "weight_decay": 0.0
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.16125255072558287,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A1/seed_2024/calibration256/selected.pt",
+      "checkpoint_sha256": "ac1b4b8eecea5b1982ea3c97ab14b68a9cdcf464f44af18272aa696f5b870dad",
+      "complete_initialization_sha256": "9b65143cf0a706c47756c065bc6c00df281ad64c55ed2ebc35ac5da689a047cd",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "d5ef3bff7ca720b8de6d761a8e37cf275d073134e884c61e71726a464fc8bbb1",
+      "history_snapshot_hash": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "learning_rate": 0.001,
+      "loop_seconds": 1344.9562944825739,
+      "novel_initialization_sha256": "1b6d5c36d36cc54a9a354bf9a8da2d485cd01625476f7742774fe4fa299c9c1b",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration256",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "1",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 2.7764334678649902,
+        "max_reserved_gib": 3.708984375,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 1347.9709317130037,
+          "pid": 633388,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "1",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 2.7764334678649902,
+            "max_reserved_gib": 3.708984375,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 1347.9710190673359,
+          "started_unix": 1792489534.6222541,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 21,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A1",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A1/seed_2024/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "c467b290a58d2289077ebfae16e8be56b3d49001d296d6dd6812514a385ed9ea",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "dcc94bb86382979f8646ee9765cc9bf3fc5055aadb081800291ffb64b60f2200",
+        "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+        "model_seed": 2024,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 1347.9710190673359,
+      "weight_decay": 0.0
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.16409895722944173,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A1/seed_2025/calibration64/selected.pt",
+      "checkpoint_sha256": "a9495553aa09880a1c18b79fc30d9580fb2b603b395c4413328cd0443db1ae5a",
+      "complete_initialization_sha256": "e5786e0cf36197c4d1e63a26d03b5bc84e9ebfd48c9ebb0d87058419f427dd0a",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "06396d71d9c5557798a7aea9fb9fd5f5cdd86541755aa107881a6aa825be9b70",
+      "history_snapshot_hash": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "learning_rate": 0.001,
+      "loop_seconds": 1289.167853616178,
+      "novel_initialization_sha256": "badf136f67aa06a5cab5616775d498be3b1bf93ad3f940702a045de7e2a3422b",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration64",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "0",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 2.7638864517211914,
+        "max_reserved_gib": 3.69921875,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 1291.0927149420604,
+          "pid": 636085,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "0",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 2.7638864517211914,
+            "max_reserved_gib": 3.69921875,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 1291.0927960448898,
+          "started_unix": 1792492798.2323325,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 89,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A1",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A1/seed_2025/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "b90c3945e7d6274fb54c624476d8af2bffa97becb20d251cbec3ae5115b440f8",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "da756b7561ec8e422bc09322fcf6457013e3f2e51d0cf66272a12086ae6687d9",
+        "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+        "model_seed": 2025,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 1291.0927960448898,
+      "weight_decay": 0.0
+    },
+    {
+      "batch_size": 128,
+      "best_validation_mae": 0.16111558004689736,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/A1/seed_2025/calibration256/selected.pt",
+      "checkpoint_sha256": "c4913cca3e4b6cca45ac4b4c8053e05bc6abb40f2f7ec0f9eb7588f41f9a3d79",
+      "complete_initialization_sha256": "32fec6dd4e9cb6b2dc933a4be36bbde5c95a6ed612d4c92e16cd2c36e699b19b",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "f90394267dd32e902525c8178429d1cbbf81b47127d02ac1cae8b11e9b9e8c35",
+      "history_snapshot_hash": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "learning_rate": 0.001,
+      "loop_seconds": 1336.365028290078,
+      "novel_initialization_sha256": "7301621685ed349fa60764250dd66d1259a28f4aa0720a9136646ededa9ae0b4",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration256",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "0",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 2.7764334678649902,
+        "max_reserved_gib": 3.708984375,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 1339.2697507841513,
+          "pid": 636085,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "0",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 2.7764334678649902,
+            "max_reserved_gib": 3.708984375,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 1339.269839740824,
+          "started_unix": 1792494089.3394458,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 24,
+      "selection": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A1",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/A1/seed_2025/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "b90c3945e7d6274fb54c624476d8af2bffa97becb20d251cbec3ae5115b440f8",
+        "coarse_selected_epoch": 100,
+        "coarse_sha256": "da756b7561ec8e422bc09322fcf6457013e3f2e51d0cf66272a12086ae6687d9",
+        "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+        "model_seed": 2025,
+        "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 1339.269839740824,
+      "weight_decay": 0.0
+    }
+  ],
   "source_audit_sha256": "8d6ac5c1a4bc899d4034b5f622ec4e78fab5982ea3722a1357c862bced6607e8"
 }

@@ -1,0 +1,41 @@
+{
+  "all_saved_deviations_below_2e5": true,
+  "checks": [
+    {
+      "arm": "A0",
+      "max_deviation_from_audited_saved_validation": 0.0,
+      "path": "calibration64"
+    },
+    {
+      "arm": "A0",
+      "max_deviation_from_audited_saved_validation": 0.0,
+      "path": "calibration256"
+    },
+    {
+      "arm": "A0",
+      "max_deviation_from_audited_saved_validation": 0.0,
+      "path": "ensemble"
+    },
+    {
+      "arm": "A1",
+      "max_deviation_from_audited_saved_validation": 0.0,
+      "path": "calibration64"
+    },
+    {
+      "arm": "A1",
+      "max_deviation_from_audited_saved_validation": 0.0,
+      "path": "calibration256"
+    },
+    {
+      "arm": "A1",
+      "max_deviation_from_audited_saved_validation": 0.0,
+      "path": "ensemble"
+    }
+  ],
+  "formal_batch_size": 128,
+  "full_composed_tensor_state_equals_historical_final": true,
+  "original_half_half_combination_deviations_checked": true,
+  "own_coarse_frozen_prefix_and_library_verified": true,
+  "passed": true,
+  "probe_note": "An8-sample quick probe failed the strict per-element saved-array threshold. Repeating at the locked formal batch128 reproduced all6 historical outputs bit-for-bit; full composed tensor states also matched. Formal batch128 remains unchanged."
+}
