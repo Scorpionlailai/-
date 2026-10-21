@@ -1,0 +1,42 @@
+{"phase": "waiting_for_A4_and_idle_GPU", "pid": 656334, "A4_busy": true, "wait_seconds": 0.008834362030029297, "updated_unix": 1792556487.1878855, "run_id": "server_xyw_20261021"}
+{"phase": "waiting_for_A4_and_idle_GPU", "pid": 656334, "A4_busy": true, "wait_seconds": 240.0875587463379, "updated_unix": 1792556727.26661, "run_id": "server_xyw_20261021"}
+{"phase": "waiting_for_A4_and_idle_GPU", "pid": 656334, "A4_busy": true, "wait_seconds": 480.16751861572266, "updated_unix": 1792556967.3465698, "run_id": "server_xyw_20261021"}
+[acceptance/pamap2-shared-prefix-server-20261021 c00b63f2] Record bounded PAMAP2 shared-prefix acceptance results and exact-state audits
+ 38 files changed, 28922 insertions(+), 31 deletions(-)
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/command.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/report.md
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/epoch_audit.csv
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/identity.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/idle_gpu_probe.txt
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/metrics.csv
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/nvidia-smi.txt
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/paired_checks.csv
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/pip-freeze.txt
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/priority_scheduling.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/reference/branch256_epoch1_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/reference/branch256_epoch2_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/reference/branch64_epoch1_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/reference/branch64_epoch2_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/reference/inference.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/reference/result.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/reference/selected_dual_and_coarse_metrics.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/report.md
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/resources.csv
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/result_manifest.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/resume/branch256_epoch2_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/resume/branch64_epoch2_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/resume/result.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/shared/branch256_epoch1_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/shared/branch256_epoch2_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/shared/branch64_epoch1_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/shared/branch64_epoch2_audit.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/shared/inference.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/shared/result.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/shared/selected_dual_and_coarse_metrics.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/single_batch_preflight.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/source_lock.json
+ create mode 100644 experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021/run/status.json
+To https://github.com/Scorpionlailai/-.git
+   17343373..c00b63f2  acceptance/pamap2-shared-prefix-server-20261021 -> acceptance/pamap2-shared-prefix-server-20261021
+branch 'acceptance/pamap2-shared-prefix-server-20261021' set up to track 'origin/acceptance/pamap2-shared-prefix-server-20261021'.
+{"phase": "completed", "exit_code": 0, "completed_unix": 1792557541.56495, "gpu_shared_detected": false, "publication": {"commit_sha": "c00b63f2284ec99b30e8007ba8aa2a66484e9443", "remote_verified": true, "branch": "acceptance/pamap2-shared-prefix-server-20261021", "directory_url": "https://github.com/Scorpionlailai/-/tree/c00b63f2284ec99b30e8007ba8aa2a66484e9443/experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021", "published_unix": 1792557545.0402515}}
