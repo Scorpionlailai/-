@@ -1,0 +1,20 @@
+{
+  "kind": "postprocessing_verifier_assertion_correction",
+  "registered_unix": 1792574262.4100144,
+  "reason": "Paired observations cover3 seeds x2 splits x4 paths x2 sections x2 metrics=96; original verifier asserted48.",
+  "original_sealed_verifier": "/home/xyw/paper/E24/artifacts/v125_a4_seed_recheck_20261021/tools/verify3.py",
+  "original_verifier_sha256": "8ef096dc49eb8bf7329a20ab0a62e446bdaccd8f9466e253865e08907e5308ae",
+  "corrected_verifier": "/home/xyw/paper/E24/artifacts/v125_a4_seed_recheck_20261021/postprocessing/verify3_rowcount_corrected.py",
+  "corrected_verifier_sha256": "b130ecbe9a787605f8e41c55216b112ed0c4dea748505a1d8c9c8b7176b5ece4",
+  "original_failure": {
+    "pid": 659009,
+    "time": 1792565659.6287224,
+    "traceback": "Traceback (most recent call last):\n  File \"/home/xyw/paper/E24/artifacts/v125_a4_seed_recheck_20261021/tools/supervisor3.py\", line 66, in <module>\n    try:main()\n        ^^^^^^\n  File \"/home/xyw/paper/E24/artifacts/v125_a4_seed_recheck_20261021/tools/supervisor3.py\", line 61, in main\n    assert verify()['passed'];build(final=True)\n           ^^^^^^^^\n  File \"/home/xyw/paper/E24/artifacts/v125_a4_seed_recheck_20261021/tools/verify3.py\", line 89, in verify\n    pairs=list(csv.DictReader(open(DEST/'round3_paired_differences.csv')));assert len(pairs)==48\n                                                                                  ^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "expected_rows": 96,
+  "actual_rows": 96,
+  "all_cartesian_keys_present_unique": true,
+  "numerical_data_changed": false,
+  "training_sources_protocol_locks_unchanged": true,
+  "no_training_or_evaluation_rerun": true
+}
