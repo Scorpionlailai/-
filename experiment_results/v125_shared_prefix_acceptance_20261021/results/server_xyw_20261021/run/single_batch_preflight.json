@@ -1,0 +1,37 @@
+{
+  "batch_size": 128,
+  "checks": [
+    {
+      "branch": 64,
+      "finite": true,
+      "gradient_tensor_hash": "34373c6270bd4805dc03e45dca222f599da4d81ab36a85135d59f43cd26048b9",
+      "independent_rng_exact": true,
+      "main_gradient_norm": 0.055047684532836046,
+      "max_abs_difference": 0.0,
+      "output_and_main_MAE_gradients_exact": true
+    },
+    {
+      "branch": 256,
+      "finite": true,
+      "gradient_tensor_hash": "838d99a0d70ca9ded2f9e68ca3639663b77cd990a0dd79f8aaff3f58e207d7ef",
+      "independent_rng_exact": true,
+      "main_gradient_norm": 0.09101399237259972,
+      "max_abs_difference": 0.0,
+      "output_and_main_MAE_gradients_exact": true
+    }
+  ],
+  "optimizer_updates": 0,
+  "passed": true,
+  "resources": {
+    "cpu_threads": 4,
+    "cuda": "12.4",
+    "cuda_visible_devices": "0",
+    "gpu": "NVIDIA GeForce RTX 4090 D",
+    "max_allocated_gib": 6.528299331665039,
+    "max_reserved_gib": 8.087890625,
+    "python": "3.11.17",
+    "torch": "2.5.1+cu124"
+  },
+  "seconds": 5.957757008261979,
+  "source_scale_wrapper_operation_order_preserved": true
+}

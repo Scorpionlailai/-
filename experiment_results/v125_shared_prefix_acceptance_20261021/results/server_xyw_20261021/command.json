@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "/home/xyw/.local/share/mamba/envs/paper-timesnet/bin/python",
+    "-u",
+    "/home/xyw/v125-shared-prefix-acceptance-20261021/src/run_acceptance.py",
+    "--asset-lock",
+    "/home/xyw/v125-shared-prefix-acceptance-20261021/inventory/verified-assets.json",
+    "--arm",
+    "A0",
+    "--seed",
+    "2023",
+    "--epochs",
+    "2",
+    "--batch-size",
+    "128",
+    "--modes",
+    "reference",
+    "shared",
+    "resume",
+    "--output",
+    "/home/xyw/v125-shared-prefix-acceptance-20261021/runs/server_xyw_20261021"
+  ],
+  "environment_overrides": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "PYTHONUNBUFFERED": "1",
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "PYTHONPATH": "/home/xyw/paper-e23-v125-ablation/E24:/home/xyw/paper-e23-v125-ablation/E24/src:/home/xyw/paper-v125-shared-prefix-acceptance/experiment_results/v125_shared_prefix_acceptance_20261021/code/local_worktree"
+  },
+  "cwd": "/home/xyw/paper-v125-shared-prefix-acceptance",
+  "run_id": "server_xyw_20261021"
+}
