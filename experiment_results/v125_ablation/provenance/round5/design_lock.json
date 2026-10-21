@@ -1,0 +1,156 @@
+{
+  "baseline_commit": "171f074157264df7f228a5b54de658e99c6af589",
+  "calibration_selection": "validation_full96_mae",
+  "calibration_weights": [
+    0.5,
+    0.5
+  ],
+  "coarse_selection": "validation_full96_mse",
+  "dataset": "PAMAP2",
+  "epochs_per_phase": 100,
+  "external_tools": {
+    "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/tools/calibration_worker.py": "840b7b25ee074a5014da768dd910e4b6212abfdc69321486c0b8989f8763564e",
+    "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/tools/policy.py": "cd004cc6b0e9b217f9031b75c20f630989be3f4d40a71e08c80b392ce906ca05",
+    "/home/xyw/paper/E24/artifacts/v125_contribution_diagnostics_20261019/tools/evaluate.py": "e2270e2c60296d0d355a01d8ad24ce2478eb0376727a2e0da6f1e639b9a5e296",
+    "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/tools/worker.py": "625dcd235bcaa60871ca017eaab468df685fc0b1e0a9eda0dfbd418fe6276983"
+  },
+  "forbidden": [
+    "Stage2",
+    "other variants",
+    "other datasets",
+    "architecture changes",
+    "test-driven selection",
+    "extra A2 or A4 seeds",
+    "search for significance"
+  ],
+  "mandatory_order": [
+    "audit",
+    "all_coarse",
+    "coarse_validation_resource_report",
+    "all_calibration",
+    "all_checkpoint_lock",
+    "all_validation_test_strata",
+    "sameGPUcapacity",
+    "verify",
+    "publish"
+  ],
+  "new_training": "A3seeds2024/2025 each100coarse+100cal64+100cal256;A0reused;A3_2023reusedafteraudit",
+  "no_new_test_before_all_checkpoint_lock": true,
+  "original_losses_and_Adam_lr001_preserved": true,
+  "publication": {
+    "authorized": true,
+    "branch": "experiments/e23-v125-ablation-20261018",
+    "directory": "experiment_results/v125_ablation",
+    "large_assets": false
+  },
+  "scene": "sr015_bl8",
+  "source_lock_sha256": "0d35bcca5efe3c0a93eec970a8749a3b9cea024361517acff604af784d0cb62e",
+  "train_batch": 128,
+  "training_mask_seed": 2023,
+  "training_order_seed": 2023,
+  "training_seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "updates_per_phase": 8500,
+  "variants": [
+    "A0",
+    "A4"
+  ],
+  "budget_unchanged": true,
+  "closed_A2_commit": "171f074157264df7f228a5b54de658e99c6af589",
+  "closed_A4_commit": "41617b8f31a8d419e2b13d3cd63cdf280c7d990b",
+  "A2_frozen_manifest_sha256": "587f064953c03f25da297112d68ef3fae62c3823c8991cbbd9b15cef79ae2488",
+  "no_further_A2_or_A4_training": true,
+  "tools": {
+    "audit5.py": "7dcdd53c1a805faccbdb7f309b82b9b5a9d83fe5b114f3fb2330033fff89c4bd",
+    "comparison5.py": "0a012e094d564fc287d934b2f6591008bd9b46c734c8007b971be22718d60698",
+    "export5.py": "db46f83e60206792bdad5c22d13bd0fc7ee22d16b1f6877674de4c336a7f4597",
+    "isolation5.py": "7e92c9dda63069fed5f4d755b0b90eaa4772fec758be875b616fba131ea11cea",
+    "policy5.py": "7b7dd68fa8cac5296ad1a6c0cf9ce3b05be3d02c594e68b232a6469b4e8c5ff7",
+    "run5.py": "64f9300ef441146214ce379ab91923a4b1419e72c1a3b23e14178fd08a5b41a9",
+    "supervisor5.py": "f1936eb3b06e8238cbdeb0da06350526f766c296215349adb56f1ada3597e124",
+    "test_comparison5.py": "5c298be74cf211dc1355362e45b4180abf335f8253655d031daa0a28e9e92677",
+    "test_policy5.py": "513efcaa56618f9955e570855066c5df133d37ec14a4a0441ef095efa5c9940f",
+    "verify5.py": "bf8064c346268f482c9150d0da32841bdb3f5de1d12be06cafb0f1ef79917c43"
+  },
+  "audit_sha256": "bb8818e1a0e49abee78cfe34c3ee404085839b28421149d28544149ccdfac3a0",
+  "baseline_tables": {
+    "README.md": "016a3a43a73e7dc4139950eeff7e76ade22075943bac2c35f0ebe137057ea283",
+    "capacity.csv": "89d6b4f4540de2169443b8da73e726f49ffc827f163a0737138db81d16c9aba8",
+    "contributions_per_seed.csv": "f40abf33d457926ee3359b7b09ae52b7f7a3f7dc43e80eb585610aab52cace15",
+    "contributions_summary.csv": "bb15c6d707fac44548e5ed0bae4581de1435cde4e2a2e79ee844f68c3c246632",
+    "per_mask.csv": "276102f4b1d14792419151fc4eefd59eead8d1b460b73e38477bca59f0d15f55",
+    "per_seed.csv": "cf95f56caf0a212a55b37b4cb206bfed497e8b567650c293b18959cdfb30e8cd",
+    "position_dispersion.csv": "7c1234bb9797254e7c7926f47ad6087baf5b263bdb3e1660ab458fa6452077a4",
+    "protocol.json": "ce767e6fdb2e57ebf51969c5f29beea11b48c0ca7e56268c5c4b02c4bdff7e29",
+    "resources.csv": "667e18ce9a05970749f04a19cfb6f8b1faa2967ac063a31f74662c89316cb97e",
+    "round3_paired_differences.csv": "0364a5cc4071850b7949826bf337abd1e18abea1564de389dbdac224d3837740",
+    "round3_paired_summary.csv": "4d4180e752d61dbfc4feeef3f669098100e4ac00797e069950f1b421d2bb1b4f",
+    "round3_resources.csv": "6ffe67cb6adab4d981ae5b2559093d3688d8ba742284113674602189953ef927",
+    "round3_stratified_differences.csv": "d5df6d90c2d2267c578f505005c3e78079247d3ab64b9d3ad20ca3453148687f",
+    "round4_capacity.csv": "3239d8fbe1ba09e6652347ea4e2bf38cdefafc76d3a1ca6c9f3a6513a25032a3",
+    "round4_paired_differences.csv": "9eda722a35cacadb12918515aa04717f591dbc9b39d4228884e384976c8aede1",
+    "round4_paired_summary.csv": "478d27d388240cf4d953681cf7c826f663d29413b35eb97fba5ba5e5edd529d5",
+    "round4_resources.csv": "d7b53ecaa00cd3d6e7a48eaa584dd7f6039275200086d06e2815ed8a520e935c",
+    "round4_stratified_differences.csv": "4ded8e825c7839d09915811b2cac932d0312b7d4c34bb036e8d351de17042dae",
+    "stratified.csv": "1c506678ef42496871d4dd8d935ae44c23a609ec580a437f0869dc457e1e6e77",
+    "stratified_contributions_per_seed.csv": "c9f1964364af8d83660338656eed3aa7ea917fab18bf7a200b51c25c49c0401f",
+    "stratified_per_seed.csv": "4b669cc3cf78ecb225c9072800ab099d51e6bcf03f3324cba01857317e42cef3",
+    "stratified_summary.csv": "a2f5d56780ae9153069dde905bb57e37ff12eccfd45163a8dac467312122b831",
+    "summary.csv": "0271cff5e078d7aad5db35e93a291c5559af071eda4e6491f8807a75cc9bc795"
+  },
+  "registered_unix": 1792593226.2025604,
+  "tests": {
+    "policy": "2passed after2expectedmissingimplementation failures:9checkpointbarrier and3seedfirstaggregation/sign",
+    "combined_comparison": "3passed after3expectedmissingimplementation failures: all64contrasts, strict3seeds/20positions, duplicate/missingrejection",
+    "runtime": "4originalpaths realbatch128:noVpreparation/message/modulecalls;zeroVroutes/candidates/statecontribution;parameter+sharedVembeddingrowpoisonexactinvariant;frontcrossvariableandHTactive",
+    "training_preflight": "1discardedoptimizerupdate;Vnoforwardandnograd;frontHTnonzero;originalsignaturefirststepzeroexplainedbyzerohead,trainedcoarse43signaturetensorsnonzero;Hloss/memorystagingretained",
+    "source_and_asset_reuse": "all3historicalphases100epochs/Adam/owncheckpoint+library/standardization/controlledinitializationpassed",
+    "review": {
+      "passed": true,
+      "reviewer": "read_only_review_a3_setup",
+      "scope": "all10executiontools/spec/plan; original training workers; independent combinedcontrast coverage check; no GPU execution or mutation by reviewer",
+      "important_findings_resolved": [
+        "capacity proof metadata standardized to variable_execution_proof in producer and verifier before lock"
+      ],
+      "remaining_important_findings": [],
+      "unit_tests": "5passed",
+      "registered_unix": 1792593226.201987
+    }
+  },
+  "V_removal": "DisabledVcontrollercache/message/delta/preview/stateupdate/route/pointcandidate;allVspecialistsubmodulesguardedformally;publicfrontsignature_plain_pos_v3retained;HretrievalandTremainoriginal;point_variable_readoutnone;historyadapternone",
+  "combined_source_comparison": {
+    "variants": [
+      "A1",
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "reference": "A0",
+    "n_contrasts": 64,
+    "training_seeds": [
+      2023,
+      2024,
+      2025
+    ],
+    "paths": [
+      "coarse",
+      "ensemble"
+    ],
+    "splits": [
+      "validation",
+      "test"
+    ],
+    "sections": [
+      "full96",
+      "recent32"
+    ],
+    "metrics": [
+      "mse",
+      "mae"
+    ],
+    "no_additive_causal_claim": true
+  }
+}

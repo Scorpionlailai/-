@@ -1,0 +1,67 @@
+{
+  "hypothesis": "Original shared front output projection and point output residual heads are zero initialized; first-step gradient into upstream signature block can be zero while downstream projectors learn.",
+  "evidence": [
+    {
+      "stage": "fresh",
+      "gradients": {
+        "front": {
+          "tensors": 69,
+          "nonzero_tensors": 2,
+          "l1": 2.082436315715313
+        },
+        "front_variable": {
+          "tensors": 43,
+          "nonzero_tensors": 0,
+          "l1": 0.0
+        },
+        "H": {
+          "tensors": 4,
+          "nonzero_tensors": 4,
+          "l1": 2.080563545227051
+        },
+        "T": {
+          "tensors": 17,
+          "nonzero_tensors": 15,
+          "l1": 0.004369061430615009
+        },
+        "V": {
+          "tensors": 0,
+          "nonzero_tensors": 0,
+          "l1": 0
+        }
+      },
+      "optimizer_updates": 0
+    },
+    {
+      "stage": "trained_coarse",
+      "gradients": {
+        "front": {
+          "tensors": 69,
+          "nonzero_tensors": 69,
+          "l1": 16.408055160660297
+        },
+        "front_variable": {
+          "tensors": 43,
+          "nonzero_tensors": 43,
+          "l1": 11.092965435702354
+        },
+        "H": {
+          "tensors": 14,
+          "nonzero_tensors": 14,
+          "l1": 0.6607574991357978
+        },
+        "T": {
+          "tensors": 17,
+          "nonzero_tensors": 17,
+          "l1": 1.7036613762177168
+        },
+        "V": {
+          "tensors": 0,
+          "nonzero_tensors": 0,
+          "l1": 0
+        }
+      },
+      "optimizer_updates": 0
+    }
+  ]
+}
