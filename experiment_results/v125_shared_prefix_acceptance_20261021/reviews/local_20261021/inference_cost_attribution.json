@@ -1,0 +1,28 @@
+{
+  "rows": [
+    {
+      "execution": "reference",
+      "coarse_ms_per_window": 1.303346154600149,
+      "dual_ms_per_window": 1.3408458871708717,
+      "dual_minus_coarse_ms": 0.0374997325707227,
+      "coarse_to_dual_latency_ratio": 0.9720327795091757,
+      "single64_path_relative_latency_reduction": 0.021936578910205506,
+      "single256_path_relative_latency_reduction": 0.014257168315533808,
+      "total_loaded_parameters": 2042578,
+      "standalone_branch_memory_measured": false
+    },
+    {
+      "execution": "shared",
+      "coarse_ms_per_window": 1.303492215811275,
+      "dual_ms_per_window": 1.3405386671365704,
+      "dual_minus_coarse_ms": 0.03704645132529549,
+      "coarse_to_dual_latency_ratio": 0.9723645037375701,
+      "single64_path_relative_latency_reduction": 0.02194475971704679,
+      "single256_path_relative_latency_reduction": 0.014385092269141309,
+      "total_loaded_parameters": 2042578,
+      "standalone_branch_memory_measured": false
+    }
+  ],
+  "scope": "Original retained full model with inference-path selection; path differences, not separately pruned deployed architectures; fixed prefix includes coarse calibration and adapter preprocessing",
+  "decision": "Do not expect substantial end-to-end inference gains merely removing one calibration branch; maintain evidence-supported dual; structural parameter reduction is a separate objective requiring matched training"
+}
