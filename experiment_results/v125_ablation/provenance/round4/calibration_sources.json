@@ -1,0 +1,971 @@
+{
+  "generated_only_after_all_coarse_selected": true,
+  "initializations": {
+    "A2_2023": {
+      "256": {
+        "complete_initial_tensor_hash": "999b7bb5de6ea2ecf32465bc0a9a673d080e42975cc706ab710d4abe55cfa85f",
+        "inherited_keys": [
+          "global_level_network.0.bias",
+          "global_level_network.0.weight",
+          "global_level_network.2.bias",
+          "global_level_network.2.weight",
+          "network.0.bias",
+          "network.0.weight",
+          "network.2.bias",
+          "network.2.weight"
+        ],
+        "inherited_tensor_hash": "4c6ec5232714201a39eaafdf52da3b605f1f0601afc85de57a9df6b596a4fb57",
+        "model_seed": 2023,
+        "novel_keys": [
+          "global_dense_refiner.channel_mix.bias",
+          "global_dense_refiner.channel_mix.weight",
+          "global_dense_refiner.depthwise.bias",
+          "global_dense_refiner.depthwise.weight",
+          "global_dense_refiner.guide_gate.bias",
+          "global_dense_refiner.guide_gate.weight",
+          "global_dense_refiner.input.bias",
+          "global_dense_refiner.input.weight",
+          "global_dense_refiner.input_norm.bias",
+          "global_dense_refiner.input_norm.weight",
+          "global_dense_refiner.output.bias",
+          "global_dense_refiner.output.weight",
+          "global_dense_refiner.position",
+          "global_dense_refiner.temporal.layers.0.linear1.bias",
+          "global_dense_refiner.temporal.layers.0.linear1.weight",
+          "global_dense_refiner.temporal.layers.0.linear2.bias",
+          "global_dense_refiner.temporal.layers.0.linear2.weight",
+          "global_dense_refiner.temporal.layers.0.norm1.bias",
+          "global_dense_refiner.temporal.layers.0.norm1.weight",
+          "global_dense_refiner.temporal.layers.0.norm2.bias",
+          "global_dense_refiner.temporal.layers.0.norm2.weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.weight",
+          "global_dense_refiner.temporal.layers.1.linear1.bias",
+          "global_dense_refiner.temporal.layers.1.linear1.weight",
+          "global_dense_refiner.temporal.layers.1.linear2.bias",
+          "global_dense_refiner.temporal.layers.1.linear2.weight",
+          "global_dense_refiner.temporal.layers.1.norm1.bias",
+          "global_dense_refiner.temporal.layers.1.norm1.weight",
+          "global_dense_refiner.temporal.layers.1.norm2.bias",
+          "global_dense_refiner.temporal.layers.1.norm2.weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.weight"
+        ],
+        "novel_tensor_hash": "d6bb10c7e46b35798921c65e8438185ca476794e793eb4254289e40d24cf1d2b",
+        "source_coarse_mean_tensor_hash": "4c6ec5232714201a39eaafdf52da3b605f1f0601afc85de57a9df6b596a4fb57",
+        "trainable_parameters": 1252562
+      },
+      "64": {
+        "complete_initial_tensor_hash": "80ed0215adde88c59243f798d06249067ec85719dccc83b4e74f154e51269914",
+        "inherited_keys": [
+          "global_level_network.0.bias",
+          "global_level_network.0.weight",
+          "global_level_network.2.bias",
+          "global_level_network.2.weight",
+          "network.0.bias",
+          "network.0.weight",
+          "network.2.bias",
+          "network.2.weight"
+        ],
+        "inherited_tensor_hash": "4c6ec5232714201a39eaafdf52da3b605f1f0601afc85de57a9df6b596a4fb57",
+        "model_seed": 2023,
+        "novel_keys": [
+          "global_dense_refiner.channel_mix.bias",
+          "global_dense_refiner.channel_mix.weight",
+          "global_dense_refiner.depthwise.bias",
+          "global_dense_refiner.depthwise.weight",
+          "global_dense_refiner.guide_gate.bias",
+          "global_dense_refiner.guide_gate.weight",
+          "global_dense_refiner.input.bias",
+          "global_dense_refiner.input.weight",
+          "global_dense_refiner.input_norm.bias",
+          "global_dense_refiner.input_norm.weight",
+          "global_dense_refiner.output.bias",
+          "global_dense_refiner.output.weight",
+          "global_dense_refiner.position",
+          "global_dense_refiner.temporal.layers.0.linear1.bias",
+          "global_dense_refiner.temporal.layers.0.linear1.weight",
+          "global_dense_refiner.temporal.layers.0.linear2.bias",
+          "global_dense_refiner.temporal.layers.0.linear2.weight",
+          "global_dense_refiner.temporal.layers.0.norm1.bias",
+          "global_dense_refiner.temporal.layers.0.norm1.weight",
+          "global_dense_refiner.temporal.layers.0.norm2.bias",
+          "global_dense_refiner.temporal.layers.0.norm2.weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.weight",
+          "global_dense_refiner.temporal.layers.1.linear1.bias",
+          "global_dense_refiner.temporal.layers.1.linear1.weight",
+          "global_dense_refiner.temporal.layers.1.linear2.bias",
+          "global_dense_refiner.temporal.layers.1.linear2.weight",
+          "global_dense_refiner.temporal.layers.1.norm1.bias",
+          "global_dense_refiner.temporal.layers.1.norm1.weight",
+          "global_dense_refiner.temporal.layers.1.norm2.bias",
+          "global_dense_refiner.temporal.layers.1.norm2.weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.weight"
+        ],
+        "novel_tensor_hash": "c0580210df39e4b17c0fbf98bc83ce752a6d71380532a821a481110711af6ffb",
+        "source_coarse_mean_tensor_hash": "4c6ec5232714201a39eaafdf52da3b605f1f0601afc85de57a9df6b596a4fb57",
+        "trainable_parameters": 129362
+      }
+    },
+    "A2_2024": {
+      "256": {
+        "complete_initial_tensor_hash": "dabaf8c1237b1607d03bc18ce0e1eb39cc017c85af3762cc220a40624194dc13",
+        "inherited_keys": [
+          "global_level_network.0.bias",
+          "global_level_network.0.weight",
+          "global_level_network.2.bias",
+          "global_level_network.2.weight",
+          "network.0.bias",
+          "network.0.weight",
+          "network.2.bias",
+          "network.2.weight"
+        ],
+        "inherited_tensor_hash": "7ddef98633eb134a9acb770ffdabc193580f1ff932d7816b12df087e37d6257d",
+        "model_seed": 2024,
+        "novel_keys": [
+          "global_dense_refiner.channel_mix.bias",
+          "global_dense_refiner.channel_mix.weight",
+          "global_dense_refiner.depthwise.bias",
+          "global_dense_refiner.depthwise.weight",
+          "global_dense_refiner.guide_gate.bias",
+          "global_dense_refiner.guide_gate.weight",
+          "global_dense_refiner.input.bias",
+          "global_dense_refiner.input.weight",
+          "global_dense_refiner.input_norm.bias",
+          "global_dense_refiner.input_norm.weight",
+          "global_dense_refiner.output.bias",
+          "global_dense_refiner.output.weight",
+          "global_dense_refiner.position",
+          "global_dense_refiner.temporal.layers.0.linear1.bias",
+          "global_dense_refiner.temporal.layers.0.linear1.weight",
+          "global_dense_refiner.temporal.layers.0.linear2.bias",
+          "global_dense_refiner.temporal.layers.0.linear2.weight",
+          "global_dense_refiner.temporal.layers.0.norm1.bias",
+          "global_dense_refiner.temporal.layers.0.norm1.weight",
+          "global_dense_refiner.temporal.layers.0.norm2.bias",
+          "global_dense_refiner.temporal.layers.0.norm2.weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.weight",
+          "global_dense_refiner.temporal.layers.1.linear1.bias",
+          "global_dense_refiner.temporal.layers.1.linear1.weight",
+          "global_dense_refiner.temporal.layers.1.linear2.bias",
+          "global_dense_refiner.temporal.layers.1.linear2.weight",
+          "global_dense_refiner.temporal.layers.1.norm1.bias",
+          "global_dense_refiner.temporal.layers.1.norm1.weight",
+          "global_dense_refiner.temporal.layers.1.norm2.bias",
+          "global_dense_refiner.temporal.layers.1.norm2.weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.weight"
+        ],
+        "novel_tensor_hash": "1b6d5c36d36cc54a9a354bf9a8da2d485cd01625476f7742774fe4fa299c9c1b",
+        "source_coarse_mean_tensor_hash": "7ddef98633eb134a9acb770ffdabc193580f1ff932d7816b12df087e37d6257d",
+        "trainable_parameters": 1252562
+      },
+      "64": {
+        "complete_initial_tensor_hash": "92c9bfa6bb73414990cec5f6469c062c4eaa2764a835c11226492bb9929658d7",
+        "inherited_keys": [
+          "global_level_network.0.bias",
+          "global_level_network.0.weight",
+          "global_level_network.2.bias",
+          "global_level_network.2.weight",
+          "network.0.bias",
+          "network.0.weight",
+          "network.2.bias",
+          "network.2.weight"
+        ],
+        "inherited_tensor_hash": "7ddef98633eb134a9acb770ffdabc193580f1ff932d7816b12df087e37d6257d",
+        "model_seed": 2024,
+        "novel_keys": [
+          "global_dense_refiner.channel_mix.bias",
+          "global_dense_refiner.channel_mix.weight",
+          "global_dense_refiner.depthwise.bias",
+          "global_dense_refiner.depthwise.weight",
+          "global_dense_refiner.guide_gate.bias",
+          "global_dense_refiner.guide_gate.weight",
+          "global_dense_refiner.input.bias",
+          "global_dense_refiner.input.weight",
+          "global_dense_refiner.input_norm.bias",
+          "global_dense_refiner.input_norm.weight",
+          "global_dense_refiner.output.bias",
+          "global_dense_refiner.output.weight",
+          "global_dense_refiner.position",
+          "global_dense_refiner.temporal.layers.0.linear1.bias",
+          "global_dense_refiner.temporal.layers.0.linear1.weight",
+          "global_dense_refiner.temporal.layers.0.linear2.bias",
+          "global_dense_refiner.temporal.layers.0.linear2.weight",
+          "global_dense_refiner.temporal.layers.0.norm1.bias",
+          "global_dense_refiner.temporal.layers.0.norm1.weight",
+          "global_dense_refiner.temporal.layers.0.norm2.bias",
+          "global_dense_refiner.temporal.layers.0.norm2.weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.weight",
+          "global_dense_refiner.temporal.layers.1.linear1.bias",
+          "global_dense_refiner.temporal.layers.1.linear1.weight",
+          "global_dense_refiner.temporal.layers.1.linear2.bias",
+          "global_dense_refiner.temporal.layers.1.linear2.weight",
+          "global_dense_refiner.temporal.layers.1.norm1.bias",
+          "global_dense_refiner.temporal.layers.1.norm1.weight",
+          "global_dense_refiner.temporal.layers.1.norm2.bias",
+          "global_dense_refiner.temporal.layers.1.norm2.weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.weight"
+        ],
+        "novel_tensor_hash": "7e9e67df03b8cb8f145cb827f8f9d58e3e400d2391002a74898df50436bb6309",
+        "source_coarse_mean_tensor_hash": "7ddef98633eb134a9acb770ffdabc193580f1ff932d7816b12df087e37d6257d",
+        "trainable_parameters": 129362
+      }
+    },
+    "A2_2025": {
+      "256": {
+        "complete_initial_tensor_hash": "7ae35648776100f94a698bfcb6f342b9fa521e8866bc2b8162cbd94aa6297dc0",
+        "inherited_keys": [
+          "global_level_network.0.bias",
+          "global_level_network.0.weight",
+          "global_level_network.2.bias",
+          "global_level_network.2.weight",
+          "network.0.bias",
+          "network.0.weight",
+          "network.2.bias",
+          "network.2.weight"
+        ],
+        "inherited_tensor_hash": "2a48732cedea44d173f3b1a192e992a596e92cd45475c6f96659a4965cea35e8",
+        "model_seed": 2025,
+        "novel_keys": [
+          "global_dense_refiner.channel_mix.bias",
+          "global_dense_refiner.channel_mix.weight",
+          "global_dense_refiner.depthwise.bias",
+          "global_dense_refiner.depthwise.weight",
+          "global_dense_refiner.guide_gate.bias",
+          "global_dense_refiner.guide_gate.weight",
+          "global_dense_refiner.input.bias",
+          "global_dense_refiner.input.weight",
+          "global_dense_refiner.input_norm.bias",
+          "global_dense_refiner.input_norm.weight",
+          "global_dense_refiner.output.bias",
+          "global_dense_refiner.output.weight",
+          "global_dense_refiner.position",
+          "global_dense_refiner.temporal.layers.0.linear1.bias",
+          "global_dense_refiner.temporal.layers.0.linear1.weight",
+          "global_dense_refiner.temporal.layers.0.linear2.bias",
+          "global_dense_refiner.temporal.layers.0.linear2.weight",
+          "global_dense_refiner.temporal.layers.0.norm1.bias",
+          "global_dense_refiner.temporal.layers.0.norm1.weight",
+          "global_dense_refiner.temporal.layers.0.norm2.bias",
+          "global_dense_refiner.temporal.layers.0.norm2.weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.weight",
+          "global_dense_refiner.temporal.layers.1.linear1.bias",
+          "global_dense_refiner.temporal.layers.1.linear1.weight",
+          "global_dense_refiner.temporal.layers.1.linear2.bias",
+          "global_dense_refiner.temporal.layers.1.linear2.weight",
+          "global_dense_refiner.temporal.layers.1.norm1.bias",
+          "global_dense_refiner.temporal.layers.1.norm1.weight",
+          "global_dense_refiner.temporal.layers.1.norm2.bias",
+          "global_dense_refiner.temporal.layers.1.norm2.weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.weight"
+        ],
+        "novel_tensor_hash": "7301621685ed349fa60764250dd66d1259a28f4aa0720a9136646ededa9ae0b4",
+        "source_coarse_mean_tensor_hash": "2a48732cedea44d173f3b1a192e992a596e92cd45475c6f96659a4965cea35e8",
+        "trainable_parameters": 1252562
+      },
+      "64": {
+        "complete_initial_tensor_hash": "52ebec7126cade777dc305180af6de35dc224fcd245e2564ee48cde7822a200b",
+        "inherited_keys": [
+          "global_level_network.0.bias",
+          "global_level_network.0.weight",
+          "global_level_network.2.bias",
+          "global_level_network.2.weight",
+          "network.0.bias",
+          "network.0.weight",
+          "network.2.bias",
+          "network.2.weight"
+        ],
+        "inherited_tensor_hash": "2a48732cedea44d173f3b1a192e992a596e92cd45475c6f96659a4965cea35e8",
+        "model_seed": 2025,
+        "novel_keys": [
+          "global_dense_refiner.channel_mix.bias",
+          "global_dense_refiner.channel_mix.weight",
+          "global_dense_refiner.depthwise.bias",
+          "global_dense_refiner.depthwise.weight",
+          "global_dense_refiner.guide_gate.bias",
+          "global_dense_refiner.guide_gate.weight",
+          "global_dense_refiner.input.bias",
+          "global_dense_refiner.input.weight",
+          "global_dense_refiner.input_norm.bias",
+          "global_dense_refiner.input_norm.weight",
+          "global_dense_refiner.output.bias",
+          "global_dense_refiner.output.weight",
+          "global_dense_refiner.position",
+          "global_dense_refiner.temporal.layers.0.linear1.bias",
+          "global_dense_refiner.temporal.layers.0.linear1.weight",
+          "global_dense_refiner.temporal.layers.0.linear2.bias",
+          "global_dense_refiner.temporal.layers.0.linear2.weight",
+          "global_dense_refiner.temporal.layers.0.norm1.bias",
+          "global_dense_refiner.temporal.layers.0.norm1.weight",
+          "global_dense_refiner.temporal.layers.0.norm2.bias",
+          "global_dense_refiner.temporal.layers.0.norm2.weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.0.self_attn.out_proj.weight",
+          "global_dense_refiner.temporal.layers.1.linear1.bias",
+          "global_dense_refiner.temporal.layers.1.linear1.weight",
+          "global_dense_refiner.temporal.layers.1.linear2.bias",
+          "global_dense_refiner.temporal.layers.1.linear2.weight",
+          "global_dense_refiner.temporal.layers.1.norm1.bias",
+          "global_dense_refiner.temporal.layers.1.norm1.weight",
+          "global_dense_refiner.temporal.layers.1.norm2.bias",
+          "global_dense_refiner.temporal.layers.1.norm2.weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.in_proj_weight",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.bias",
+          "global_dense_refiner.temporal.layers.1.self_attn.out_proj.weight"
+        ],
+        "novel_tensor_hash": "badf136f67aa06a5cab5616775d498be3b1bf93ad3f940702a045de7e2a3422b",
+        "source_coarse_mean_tensor_hash": "2a48732cedea44d173f3b1a192e992a596e92cd45475c6f96659a4965cea35e8",
+        "trainable_parameters": 129362
+      }
+    }
+  },
+  "parent_audit_sha256": "0a3eaaf4865c9bdf1e13812db4be48578dc4ef1fc14656e40b5a21c01674e12a",
+  "protocol": {
+    "aggregation": "mean20positions per trainingseed, then mean and sampleSD(ddof1) across3 trainingseeds; positionSD stored separately",
+    "caveats": [
+      "phase contribution diagnosis; unequal training cost/capacity",
+      "differences are not additive independent causal effects",
+      "three trainingseeds are preliminary stability evidence, not significance",
+      "overlapping windows and20masks are not independent training replicates",
+      "historical phase-only GPU memory cannot be recovered; historical cumulative peaks explicitly labeled"
+    ],
+    "current_round": "round3_A4_three_seed_recheck",
+    "data_manifest_sha256": "da4825fe5bacbc0642eb246c647ffc080b8abcd9b801603bbd401ac3e830cbd6",
+    "dataset": "PAMAP2",
+    "grouping": {
+      "counts": [
+        "scored_coordinates",
+        "windows_with_scored_coordinates",
+        "unique_records",
+        "unique_continuous_segments",
+        "native_missing_input_coordinates",
+        "native_and_artificial_overlap_coordinates",
+        "artificial_hidden_valid_coordinates"
+      ],
+      "fraction_boundaries": "left closed, right open, except last bin includes1",
+      "history_intervals": [
+        [
+          0,
+          32
+        ],
+        [
+          32,
+          64
+        ],
+        [
+          64,
+          96
+        ]
+      ],
+      "invisible_run": [
+        {
+          "hi": 8,
+          "lo": 1
+        },
+        {
+          "hi": 16,
+          "lo": 9
+        },
+        {
+          "hi": 32,
+          "lo": 17
+        },
+        {
+          "hi": 96,
+          "lo": 33
+        }
+      ],
+      "invisible_run_definition": "per variable within the actual 96-point model input; consecutive NOT(originally-visible AND artificial-visible), truncated at input window edges",
+      "keep_empty_groups": true,
+      "other_variable_visibility": "fraction of the other C-1 variables actually visible at the same input time",
+      "other_variable_visible_fraction_edges": [
+        0,
+        0.25,
+        0.5,
+        0.75,
+        1
+      ],
+      "score": "native valid AND artificially hidden only, after 96-point reconstruction; no repeated patch copies",
+      "window_visible_fraction_edges": [
+        0,
+        0.25,
+        0.5,
+        0.75,
+        1
+      ]
+    },
+    "initialization": "own coarse-inherited mean allowed to differ; novel64/256 parameters identical within modelseed acrossA0/A1",
+    "masks": [
+      {
+        "actual_artificial_missing_fraction": 0.7273176177594572,
+        "content_sha256": "5a505eda098bf1f73ba4f935d8885ceb6d837e8ad73744e59a2c2cd50bb96526",
+        "path": "validation_2021.npz",
+        "record_local": true,
+        "seed": 2021,
+        "sha256": "ef3d51f8861d75818e7787b71bf5d3732a78b96c60206921c131c5fb0260d622",
+        "split": "validation",
+        "support": [
+          191344,
+          214633
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7270636070436868,
+        "content_sha256": "1a0361289712850bea9b769d01f47788a98259db045f68e1d18b0bd2b5a444f2",
+        "path": "test_2026101801.npz",
+        "record_local": true,
+        "seed": 2026101801,
+        "sha256": "7675f9d3949d46ed92b3015e37b3c26b750cbfb0f76efc6c68c45e932cfc89e4",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7271813180179714,
+        "content_sha256": "1f5e222430d1377cf45ca468c5237eb68c38ad8ac5706f34b381528b4f177ba7",
+        "path": "test_2026101802.npz",
+        "record_local": true,
+        "seed": 2026101802,
+        "sha256": "da483c2cd3b923c5a18b95b7a09d412fc5e31fab3ebbebe8e379045d852d2757",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7269355478518825,
+        "content_sha256": "7b2808cbe0a77355e1df7f48d2041a1ee869fef5bfe40e8af300bb7059ec84db",
+        "path": "test_2026101803.npz",
+        "record_local": true,
+        "seed": 2026101803,
+        "sha256": "88e3b999aaf61824ae1eafe68aff96177ba232e25603a32ad36a20d08a1fec8c",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7269109708352737,
+        "content_sha256": "f10e888d29cfd763cd799690998f9e624044fe5499917ca308893ab2eaa36baa",
+        "path": "test_2026101804.npz",
+        "record_local": true,
+        "seed": 2026101804,
+        "sha256": "9725d0ab3a01ce701a3eb97e6042bc5645759b41d5fddd5c105e693bdf0d6228",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7278160086925027,
+        "content_sha256": "c1beb2758e5ea029b4f19a18edb6a844e66c4d7bd5389928b58b57e87fefb1da",
+        "path": "test_2026101805.npz",
+        "record_local": true,
+        "seed": 2026101805,
+        "sha256": "81ea078c221396dffda1e4ba861f529aea1060d2ad69e37cdb48907bdb4b6801",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7269648678015211,
+        "content_sha256": "677fe42457ad4026f6245fd4ec4438f2f162c2f75c1da65d02f871df2e66b7e4",
+        "path": "test_2026101806.npz",
+        "record_local": true,
+        "seed": 2026101806,
+        "sha256": "766d7150702f5ba4c8b1f5f541aa7de38524dcd1155a837da3748ff0ac6ee88e",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7275236715475759,
+        "content_sha256": "303a45b302b1bfe69223e536b82dd2edd8cf5b819ab66fbbfe39e705bc082534",
+        "path": "test_2026101807.npz",
+        "record_local": true,
+        "seed": 2026101807,
+        "sha256": "5f15608afbd0faa8624d6ea6cb24c53461f75cd8d29bdc9dda9b3d561b482e0d",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7288008140597783,
+        "content_sha256": "d6123ac8df46571593c59b48bd348ac6f2e3ef6ca1cc501df43cc4c2d6a63e51",
+        "path": "test_2026101808.npz",
+        "record_local": true,
+        "seed": 2026101808,
+        "sha256": "305ee4715ddf0e3f4543d77e81f65ed6dbc09a82e39dda1c684de56b2a505e87",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7278160086925027,
+        "content_sha256": "89cf7ec87aefd16ed170a7e671c2be8000fd6735d5f2e3c23b246bc17ad7c326",
+        "path": "test_2026101809.npz",
+        "record_local": true,
+        "seed": 2026101809,
+        "sha256": "74e54597de2d2085f0fa4c8392bb57fe99e3623afc479757a59d4bb900837e90",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7275499732671047,
+        "content_sha256": "98c20f41c418e8c4662b4bd3cda8b36dedfb7897015a0823100556fa667cb47e",
+        "path": "test_2026101810.npz",
+        "record_local": true,
+        "seed": 2026101810,
+        "sha256": "a5fc4a9fcb824dfbca63cbedb37e511b7f72d62e7c53a914cab5f3e3b48c43d5",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7279065555957986,
+        "content_sha256": "7fae4e10094ab9ceeb18daf2ca06414263cf78510cbf7fac0740d91064ae3219",
+        "path": "test_2026101811.npz",
+        "record_local": true,
+        "seed": 2026101811,
+        "sha256": "0a33ae6904423b3863f045327750aec54b5895bb547566ee52e92c968e8daf39",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.727897500905469,
+        "content_sha256": "2f4c8f755d1d28ef2ebc4621fee96f2481d971168a684ab2f16df71db9e69f6f",
+        "path": "test_2026101812.npz",
+        "record_local": true,
+        "seed": 2026101812,
+        "sha256": "e54e7bf64afb842b2250aa3ebbad1d440d5c99f3013583e8bbf03b4a6faaa6f5",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7266013866611476,
+        "content_sha256": "30f5454e88ca62edc428836388a2463da991dd687b74b6252e0a5cdc60106057",
+        "path": "test_2026101813.npz",
+        "record_local": true,
+        "seed": 2026101813,
+        "sha256": "e31677397c3ca4c51709a4e0a6a2ab6898a44bde79130a78dc772f450163447b",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7276892430278884,
+        "content_sha256": "fd9fe4e2f90c877797e6b595ccbc5d35c6ebb58424b0bdecbeb697f29b4954e6",
+        "path": "test_2026101814.npz",
+        "record_local": true,
+        "seed": 2026101814,
+        "sha256": "6fd7b4b71110e4e8bb4bc3de2abcc6adc2a956b7fcd26b5dccb08619fd50315d",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.727387851192632,
+        "content_sha256": "94b97f0b8fcd1e413a069e3c5e992987ad2f4e33c593c0080ee5adb659e39b20",
+        "path": "test_2026101815.npz",
+        "record_local": true,
+        "seed": 2026101815,
+        "sha256": "e4b2c7a9e5ae3e14bf4678e92640b9b114c3fed4f51c8a616a96bbd217566345",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7279169038133182,
+        "content_sha256": "6f42a8a346bdd2f1cbff3c7e10c4f81a66df054621047e7c607938544c7fe9e7",
+        "path": "test_2026101816.npz",
+        "record_local": true,
+        "seed": 2026101816,
+        "sha256": "ac22e9ebb1bf9870ecf3174f50b4d238eeec3d34f3d953cd21920e400ce1785f",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.727722443559097,
+        "content_sha256": "cffe139e47f9b26299499b4693a18eb66983fb6697058957dad58eeb86485f6a",
+        "path": "test_2026101817.npz",
+        "record_local": true,
+        "seed": 2026101817,
+        "sha256": "6469f28e7e582adcd2d09c01a31d53cc58daf4042f4872c074f53d6c23fa4ca8",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7274495093220192,
+        "content_sha256": "8b2f6bd918a013c29dcb6ba92b0e940ce5c281ccd59a29313e6817fac7eed3e4",
+        "path": "test_2026101818.npz",
+        "record_local": true,
+        "seed": 2026101818,
+        "sha256": "af889394c6f1bfe2d3f024ab8930ecbf2aa5adf8adda7a81280a58cd556c0475",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.7265673237784791,
+        "content_sha256": "852f41cc411a240e7e55a474f98cc88a984783b19c3852766e561b950b12108d",
+        "path": "test_2026101819.npz",
+        "record_local": true,
+        "seed": 2026101819,
+        "sha256": "44c605db6c75c647d3ce44d6f1303a87f2742f198f6d04adeca064ac9b54bf8a",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      },
+      {
+        "actual_artificial_missing_fraction": 0.726880357358445,
+        "content_sha256": "b8bfee7b66e0a3ea1f7ee97a473007fbfae28f246c77048777821f79c3c1f2c5",
+        "path": "test_2026101820.npz",
+        "record_local": true,
+        "seed": 2026101820,
+        "sha256": "d6b2673c30e7d4e62834da8a1b9a2bd0ff161308588e593be82a4919c33a20a1",
+        "split": "test",
+        "support": [
+          214633,
+          272614
+        ]
+      }
+    ],
+    "model_seeds": [
+      2023,
+      2024,
+      2025
+    ],
+    "native_observation_sha256": "85c948f3e66bfbf3e74ba62ca48208e9d121b22821efb4cb8e54dec8db175493",
+    "protocol_sha256": "cf3e694c10c5b4cd8256971bbd5a1783cd2b4abe32eca53caa6f74532273a110",
+    "reuse": "strict source coarse/library/protocol/training config hash audit; seed2023 only currently eligible",
+    "round3": {
+      "all_checkpoints_locked_before_new_test_replay": true,
+      "baseline_commit": "b5a72ddbf66d9822f53efa96b07354e2bd120b4d",
+      "history_pairing_limit": "2023 source/config identical and shared data generator; historical actual input fingerprints were not recorded;2024/2025 require per-epoch actual fingerprints",
+      "matched_capacity_causal_claim": false,
+      "model_seeds": [
+        2023,
+        2024,
+        2025
+      ],
+      "paired_difference": "A4minusA0;positive=T beneficial;relative difference denominator=A0",
+      "scope": "PAMAP2 sr015_bl8 coarse+original64/256+fixed.5/.5;noStage2",
+      "source_audit_sha256": "383ab140908fc2e1eb076c21630571e7813e3b2c522da5b6b1f8a912fab81807",
+      "test_seeds": [
+        2026101801,
+        2026101802,
+        2026101803,
+        2026101804,
+        2026101805,
+        2026101806,
+        2026101807,
+        2026101808,
+        2026101809,
+        2026101810,
+        2026101811,
+        2026101812,
+        2026101813,
+        2026101814,
+        2026101815,
+        2026101816,
+        2026101817,
+        2026101818,
+        2026101819,
+        2026101820
+      ],
+      "training_mask_seed": 2023,
+      "training_order_seed": 2023,
+      "variants": [
+        "A0",
+        "A4"
+      ]
+    },
+    "scaler": {
+      "fit_rows": [
+        0,
+        191344
+      ],
+      "fit_series": "training_only_segment_filled",
+      "mean": [
+        104.3075926080776,
+        32.92364161079749,
+        -3.7244256086770715,
+        5.076508207667831,
+        3.851093432698508,
+        -3.646355331256445,
+        5.067476851440665,
+        4.041359273951171,
+        0.015743393394935308,
+        0.03431702895571465,
+        -0.0008618869260689757,
+        17.929420466436028,
+        -20.07455542293982,
+        -23.68872269646682,
+        35.87096736661187,
+        0.36089446444831175,
+        7.988358533609782,
+        -1.3843032996282822,
+        0.21908602052000267,
+        7.991330343712661,
+        -1.0704853874999638,
+        0.005110764780767965,
+        0.008685749675210819,
+        -0.02107608041507886,
+        3.3043963712054945,
+        -30.69230613774809,
+        4.967798891742247,
+        34.03831103929798,
+        8.88028694551907,
+        -0.40476187808601516,
+        -2.6127776040648962,
+        8.859527483519736,
+        -0.30570196627020624,
+        -2.1733333374296824,
+        0.003817576739061233,
+        -0.02792569066946193,
+        0.012025570070943604,
+        -29.489207205974544,
+        1.695989795351365,
+        17.65421019941533
+      ],
+      "std": [
+        24.838140564438795,
+        1.8352679701312125,
+        5.984663351072586,
+        4.7437299537232,
+        3.8974121034203124,
+        6.033193653352557,
+        4.630191879226312,
+        3.928691768445055,
+        1.1258514920738631,
+        0.9297523522336154,
+        1.4339400340871755,
+        23.40912778139769,
+        23.159355663764046,
+        22.26700537580027,
+        1.532326781147441,
+        1.4407990033820106,
+        4.030074365225639,
+        4.840041424640747,
+        1.4488141323443215,
+        4.045778868025549,
+        4.85511739620572,
+        0.3255614157912924,
+        0.5102391803576337,
+        0.27646726507344127,
+        17.23230924617396,
+        19.52951022225739,
+        21.803354518742843,
+        1.1835461179966664,
+        4.741378391580186,
+        5.044296533344826,
+        2.5541038593357888,
+        4.74110434996109,
+        5.061105256078202,
+        2.5726619137216518,
+        0.7711070441107291,
+        0.4665372836254461,
+        1.6310338548264642,
+        21.125192014614658,
+        22.943941881401145,
+        21.700804096585472
+      ]
+    },
+    "scene": "sr015_bl8",
+    "schema_version": 1,
+    "scope": "A0/A1 coarse + original64/256 + fixed.5/.5; three modelseeds; noStage2 orA4",
+    "scoring": "train-global-standardized; native_valid AND artificially hidden; unique96points per window; observed untouched",
+    "source_lock_sha256": "0d35bcca5efe3c0a93eec970a8749a3b9cea024361517acff604af784d0cb62e",
+    "split_independence": "train subjects101-106; validation107; test108-109",
+    "splits": {
+      "test": [
+        214633,
+        272614
+      ],
+      "train": [
+        0,
+        191344
+      ],
+      "validation": [
+        191344,
+        214633
+      ]
+    },
+    "subjects": {
+      "test": [
+        108,
+        109
+      ],
+      "train": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "validation": [
+        107
+      ]
+    },
+    "test_seeds": [
+      2026101801,
+      2026101802,
+      2026101803,
+      2026101804,
+      2026101805,
+      2026101806,
+      2026101807,
+      2026101808,
+      2026101809,
+      2026101810,
+      2026101811,
+      2026101812,
+      2026101813,
+      2026101814,
+      2026101815,
+      2026101816,
+      2026101817,
+      2026101818,
+      2026101819,
+      2026101820
+    ],
+    "test_usage": "report stability only, never pick epoch/seed/path/weight",
+    "training": {
+      "batch_size": 128,
+      "branch_widths": [
+        64,
+        256
+      ],
+      "epochs_per_branch": 100,
+      "forward": "unchanged V125Adapter branch path; frozen front/base/experts/tail, branch replaces original coarse level as originalv125",
+      "initialization": "own frozen coarse mean copied with strict=False; original novel parameters retained from own coarse checkpoint; seed_all(model_seed) per branch",
+      "learning_rate": 0.001,
+      "loss": "hidden_valid_MAE + .25*recent32_hidden_valid_MAE",
+      "optimizer": "Adam",
+      "precision": "float32",
+      "requires_grad": "ONLY entire selected original calibration member; original coarse_projector, other branch, retrieval encoders and memory frozen",
+      "scheduler": null,
+      "selection": "validation_full96_mae",
+      "selection_strict_improvement": true,
+      "source_run_sha256": "631a56e5456c570e750cabe2c2d208b23ee28d6844e0faa07c0153585e03ab42",
+      "updates_per_branch": 8500,
+      "weight_decay": 0.0,
+      "weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78",
+    "training_mask_seed": 2023,
+    "training_order_seed": 2023,
+    "validation_mask_seed": 2021
+  },
+  "registered_unix": 1792579489.416554,
+  "sources": {
+    "A2_2023": {
+      "arm": "A2",
+      "coarse_checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A2/seed_2023/stage1/coarse_selected.pt",
+      "coarse_frozen_prefix_sha256": "0380edd8eec3caba3a670c6bfe10d6ea389c1c475e66440b92ca3d033c137a05",
+      "coarse_selected_epoch": 100,
+      "coarse_sha256": "b5c647f98997825c7c9a860a52eb4b865e4cce993beb8f1374570691fcc88ddd",
+      "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "model_seed": 2023,
+      "protocol_sha256": "048afe9cc00308f8f93284b51d3808a86cd1505abd1edfc6bedcb93fa4676761",
+      "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+    },
+    "A2_2024": {
+      "arm": "A2",
+      "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_a2_seed_recheck_20261021/A2/seed_2024/coarse/selected.pt",
+      "coarse_frozen_prefix_sha256": "d092953dec438ce9d7f2f6f8bea364e5f299d692a2a6adf530bd37e8db0baa31",
+      "coarse_selected_epoch": 95,
+      "coarse_sha256": "efc66033428255875c1ba7c61d06fc50d89fe602d28beeca19912e233e69933b",
+      "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "model_seed": 2024,
+      "protocol_sha256": "048afe9cc00308f8f93284b51d3808a86cd1505abd1edfc6bedcb93fa4676761",
+      "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+    },
+    "A2_2025": {
+      "arm": "A2",
+      "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_a2_seed_recheck_20261021/A2/seed_2025/coarse/selected.pt",
+      "coarse_frozen_prefix_sha256": "a626464ff47ea793760e6a6b88b4429be73c3e26bb88d97a4ebe68516b92edc6",
+      "coarse_selected_epoch": 98,
+      "coarse_sha256": "ee7248a3492ddb60b6bd1df70a3815fc0620131c60000c70f4f34d977be61292",
+      "library_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+      "model_seed": 2025,
+      "protocol_sha256": "048afe9cc00308f8f93284b51d3808a86cd1505abd1edfc6bedcb93fa4676761",
+      "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+    }
+  }
+}
