@@ -1,0 +1,40 @@
+{
+  "dataset": "Weather",
+  "scene": "sr015_bl8",
+  "parent": "sealed_original_v125",
+  "parent_checkpoint_sha256": "168b1460a5b9f23d3385a86a8b301c176c4f82a879babfbc303ecb9f7970ba4a",
+  "source_sha256": "d15cb30ef5c7116842fe17357ae0b60c3db53ca8c24d8da0208218a87f0ecbe0",
+  "updates_per_branch": 128,
+  "branches": 2,
+  "selected_checkpoints": false,
+  "train_windows": 4096,
+  "epochs": 4,
+  "mask_epochs": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "execution_order": "shared_first",
+  "source_weights_reused": true,
+  "optimizer": "Adam",
+  "lr": 0.001,
+  "weight_decay": 0.0,
+  "objective": "Original full96MAE +.25recent32MAE, unchanged",
+  "prefix": "all frozen/eval, including original recentCNN; independent full original cal members train",
+  "schedule": {
+    "reference": "branch64 all batches then branch256 all batches",
+    "shared": "batchwise one deterministic prefix then independent64/256 updates"
+  },
+  "branch_rng": "Separate cpu/cuda streams each seeded2023; no global branch stream mixing",
+  "label": "Computational equivalence/cost audit. Not formal model training or efficacy selection",
+  "PAMAP2_run": false,
+  "test_read": false,
+  "Stage2": false,
+  "prospective_gate": {
+    "training_seconds_reduction_min": 0.15,
+    "memory_increase_max": 0.05,
+    "validation_mae_relative_max": 0.01,
+    "validation_mse_relative_max": 0.02
+  }
+}

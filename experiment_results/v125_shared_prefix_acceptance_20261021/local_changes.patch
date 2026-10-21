@@ -1,0 +1,925 @@
+--- /dev/null
++++ b/integrations/e23/shared_frozen_calibration.py
+@@ -0,0 +1,57 @@
++"""Reuse a deterministic frozen repair prefix across independent calibrators.
++
++No network parameters, optimizer, loss, branch weights or inference rule change.
++Captured inputs live for one training batch only. Caller owns separate branch
++optimizer and RNG states; a stochastic prefix is explicitly unsupported.
++"""
++import torch
++
++
++def capture_frozen_calibration_inputs(model, run_prefix):
++    cal = model.recent_mean_projector
++    if cal is None or not hasattr(cal, 'members') or len(cal.members) != 2:
++        raise ValueError('Expected original dual calibration')
++    calibration_parameters = {id(p) for p in cal.parameters()}
++    if any(p.requires_grad for p in model.parameters() if id(p) not in calibration_parameters):
++        raise ValueError('Shared prefix must be fully frozen')
++    calibration_modules = {id(m) for m in cal.modules()}
++    if any(m.training for m in model.modules() if id(m) not in calibration_modules):
++        raise ValueError('Shared frozen prefix must be in eval mode')
++    devices = {p.device for p in model.parameters() if p.device.type == 'cuda'}
++    if len(devices) > 1:
++        raise ValueError('Expected one device for shared calibration')
++    device = next(iter(devices), None)
++    cpu_rng = torch.get_rng_state().clone()
++    cuda_rng = torch.cuda.get_rng_state(device).clone() if device is not None else None
++    captured = []
++    had_local = 'forward' in cal.__dict__
++    previous = cal.__dict__.get('forward')
++
++    def capture(*args):
++        if len(args) != 5:
++            raise ValueError('Unexpected calibration input interface')
++        captured.append(args)
++        return args[0], torch.zeros_like(args[3])
++
++    cal.forward = capture
++    try:
++        with torch.no_grad():
++            run_prefix()
++    finally:
++        if had_local:
++            cal.forward = previous
++        else:
++            del cal.forward
++    cpu_unchanged = torch.equal(cpu_rng, torch.get_rng_state())
++    cuda_unchanged = device is None or torch.equal(cuda_rng, torch.cuda.get_rng_state(device))
++    if not cpu_unchanged or not cuda_unchanged:
++        torch.set_rng_state(cpu_rng)
++        if device is not None:
++            torch.cuda.set_rng_state(cuda_rng, device)
++        raise ValueError('Frozen prefix consumed RNG; independent branch streams would change')
++    if len(captured) != 1:
++        raise ValueError('Expected exactly one frozen prefix forward per batch')
++    args = captured[0]
++    if args[0].normalized_sequence.requires_grad:
++        raise ValueError('Captured coarse recovery must be frozen')
++    return args
+--- /dev/null
++++ b/scripts/probe_v125_shared_prefix_equivalence.py
+@@ -0,0 +1,220 @@
++"""Bounded execution equivalence/cost audit, not architecture fitting.
++
++Sealed Weather v125 weights, unchanged recent structure/loss. Two independently
++optimized calibrators: original sequential schedule versus one frozen prefix per
++shared batch with independent dropout RNG streams. Fixed bounded updates;
++no test access and no checkpoint selection. PAMAP2 claims require its assets.
++"""
++import os
++os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG', ':4096:8')
++import argparse
++import gc
++import hashlib
++import json
++from pathlib import Path
++from time import perf_counter
++
++import numpy as np
++import torch
++from integrations.e23.shared_frozen_calibration import capture_frozen_calibration_inputs
++from integrations.e23.level_shape_pilot_data import iter_pilot_batches
++from integrations.e23.global_only_adaptation import RepairBandMetrics
++from scripts.probe_v125_calibration_consolidation import load_original_pilot, build, core_forward, state_sha, profile
++from scripts.run_v125_H_soft_memory_heads import frozen_hash
++
++
++def branch_loss(explicit, batch):
++    hidden = explicit.sequence_validity & ~explicit.sequence_observed
++    error = (explicit.normalized_sequence-batch.normalized_target)*batch.query_std[:, None]
++    main = error[hidden].abs().mean()
++    return main, main+.25*error[:, -32:][hidden[:, -32:]].abs().mean()
++
++
++def full_branch(model, batch, index):
++    cal = model.recent_mean_projector
++    model.recent_mean_projector = cal.members[index]
++    try:
++        return core_forward(model, batch, 0).explicit
++    finally:
++        model.recent_mean_projector = cal
++
++
++def stream_call(state, device, function):
++    cpu, cuda = torch.get_rng_state(), torch.cuda.get_rng_state(device)
++    try:
++        torch.set_rng_state(state['cpu'])
++        torch.cuda.set_rng_state(state['cuda'], device)
++        result = function()
++        state['cpu'] = torch.get_rng_state().clone()
++        state['cuda'] = torch.cuda.get_rng_state(device).clone()
++        return result
++    finally:
++        torch.set_rng_state(cpu)
++        torch.cuda.set_rng_state(cuda, device)
++
++
++def write(path, value):
++    temp = path.with_suffix(path.suffix+'.tmp')
++    temp.write_text(json.dumps(value, indent=2, allow_nan=False)+'\n')
++    temp.replace(path)
++
++
++@torch.no_grad()
++def validate(model, protocol, device):
++    model.eval()
++    acc = RepairBandMetrics(device)
++    windows = 0
++    for cpu in iter_pilot_batches(protocol, dict(validation=np.arange(5175)), split='validation', epoch=None, batch_size=128):
++        b = cpu.to(device)
++        e = core_forward(model, b, 0).explicit
++        assert torch.equal(e.normalized_sequence[e.sequence_observed], b.normalized_observed[e.sequence_observed])
++        acc.update(e.normalized_sequence, b.normalized_target, e.sequence_observed, e.sequence_validity, b.query_std)
++        windows += len(b.refs)
++    assert windows == 5175
++    return acc.finalize()
++
++
++def main():
++    start = perf_counter()
++    ap = argparse.ArgumentParser()
++    ap.add_argument('--output', type=Path, required=True)
++    ap.add_argument('--train-windows', type=int, choices=[1024, 4096], default=1024)
++    ap.add_argument('--epochs', type=int, choices=[1, 4], default=1)
++    ap.add_argument('--shared-first', action='store_true')
++    args = ap.parse_args()
++    out = args.output
++    out.mkdir(exist_ok=False)
++    def status(**kw):
++        write(out/'status.json', dict(pid=os.getpid(), elapsed_seconds=perf_counter()-start, **kw))
++    status(status='loading')
++    torch.set_num_threads(4)
++    torch.use_deterministic_algorithms(True)
++    torch.backends.cuda.matmul.allow_tf32 = False
++    torch.backends.cudnn.allow_tf32 = False
++    device = torch.device('cuda:1')
++    torch.cuda.set_device(device)
++    bundle = load_original_pilot()
++    protocol = bundle['protocol']
++    indices = dict(train=np.linspace(0, len(protocol.refs['train'])-1, args.train_windows, dtype=np.int64))
++    batches = [batch for epoch in range(args.epochs) for batch in
++        iter_pilot_batches(protocol, indices, split='train', epoch=epoch, batch_size=128)]
++    updates = args.train_windows//128*args.epochs
++    assert len(batches) == updates
++    identity = dict(dataset='Weather', scene='sr015_bl8', parent='sealed_original_v125',
++        parent_checkpoint_sha256=bundle['parent']['checkpoint_sha256'],
++        source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
++        updates_per_branch=updates, branches=2, selected_checkpoints=False,
++        train_windows=args.train_windows, epochs=args.epochs, mask_epochs=list(range(args.epochs)),
++        execution_order='shared_first' if args.shared_first else 'reference_first',
++        source_weights_reused=True, optimizer='Adam', lr=.001, weight_decay=0.,
++        objective='Original full96MAE +.25recent32MAE, unchanged',
++        prefix='all frozen/eval, including original recentCNN; independent full original cal members train',
++        schedule=dict(reference='branch64 all batches then branch256 all batches', shared='batchwise one deterministic prefix then independent64/256 updates'),
++        branch_rng='Separate cpu/cuda streams each seeded2023; no global branch stream mixing',
++        label='Computational equivalence/cost audit. Not formal model training or efficacy selection',
++        PAMAP2_run=False, test_read=False, Stage2=False,
++        prospective_gate=dict(training_seconds_reduction_min=.15, memory_increase_max=.05,
++                              validation_mae_relative_max=.01, validation_mse_relative_max=.02))
++    write(out/'identity.json', identity)
++    results = {}
++    for arm in (['shared', 'reference'] if args.shared_first else ['reference', 'shared']):
++        arm_start = perf_counter()
++        status(status='building', arm=arm)
++        model = build(bundle, 'sealed_v125', 'dual', device)
++        cal = model.recent_mean_projector
++        for member in cal.members:
++            member.train().requires_grad_(True)
++        frozen = frozen_hash(model)
++        optimizers = [torch.optim.Adam(m.parameters(), lr=.001, weight_decay=0.) for m in cal.members]
++        streams = [dict(cpu=torch.Generator().manual_seed(2023).get_state(),
++                        cuda=torch.Generator(device=device).manual_seed(2023).get_state()) for _ in range(2)]
++        # Count actual backbone calls independently from the schedule label.
++        counter = [0]
++        handle = model.front_context.register_forward_hook(lambda *unused: counter.__setitem__(0, counter[0]+1))
++        torch.cuda.reset_peak_memory_stats(device)
++        training_seconds = 0.
++        histories = [[], []]
++        def update(index, batch, shared_args=None):
++            member = cal.members[index]
++            optimizer = optimizers[index]
++            optimizer.zero_grad(set_to_none=True)
++            explicit = member(*shared_args)[0] if shared_args is not None else full_branch(model, batch, index)
++            main, loss = branch_loss(explicit, batch)
++            assert torch.isfinite(loss)
++            if not histories[index]:
++                gradients = torch.autograd.grad(main, tuple(member.parameters()), retain_graph=True, allow_unused=True)
++                norm = sum(float(g.detach().double().square().sum()) for g in gradients if g is not None)**.5
++                assert np.isfinite(norm) and norm > 0
++                write(out/f'{arm}_member{index}_main_gradient.json', dict(main_only_gradient_norm=norm, independent_of_recent_aux=True))
++            loss.backward()
++            assert all(p.grad is None for p in model.parameters() if not p.requires_grad)
++            optimizer.step()
++            histories[index].append(dict(main=float(main.detach()), total=float(loss.detach())))
++            optimizer.zero_grad(set_to_none=True)
++        if arm == 'reference':
++            for index in (0, 1):
++                for step, cpu in enumerate(batches):
++                    batch = cpu.to(device)
++                    torch.cuda.synchronize(device)
++                    tick = perf_counter()
++                    stream_call(streams[index], device, lambda: update(index, batch))
++                    torch.cuda.synchronize(device)
++                    training_seconds += perf_counter()-tick
++                    status(status='matching_updates', arm=arm, branch=index, updates=step+1)
++        else:
++            for step, cpu in enumerate(batches):
++                batch = cpu.to(device)
++                torch.cuda.synchronize(device)
++                tick = perf_counter()
++                context = capture_frozen_calibration_inputs(model, lambda: core_forward(model, batch, 0))
++                for index in (0, 1):
++                    stream_call(streams[index], device, lambda: update(index, batch, context))
++                torch.cuda.synchronize(device)
++                training_seconds += perf_counter()-tick
++                status(status='matching_updates', arm=arm, updates_per_branch=step+1)
++        handle.remove()
++        assert counter[0] == (2*updates if arm == 'reference' else updates)
++        assert frozen_hash(model) == frozen
++        peak = dict(allocated_GiB=torch.cuda.max_memory_allocated(device)/2**30,
++                    reserved_GiB=torch.cuda.max_memory_reserved(device)/2**30)
++        torch.save(dict(model_state=model.state_dict(), optimizer_states=[o.state_dict() for o in optimizers],
++                        streams=streams, identity=identity, arm=arm), out/(arm+f'_after{updates}.pt'))
++        fingerprint = state_sha(model)
++        tick = perf_counter()
++        validation = validate(model, protocol, device)
++        validation_seconds = perf_counter()-tick
++        sample = batches[0].to(device)
++        inference = profile(model, sample, core_forward, device)
++        results[arm] = dict(training_seconds=training_seconds, actual_prefix_calls=counter[0],
++            training_peak_memory=peak, validation=validation, validation_seconds=validation_seconds,
++            inference=inference, weight_state_sha256=fingerprint, histories=histories,
++            total_parameters=sum(p.numel() for p in model.parameters()),
++            frozen_state_bank_keys_unchanged=True, arm_workflow_seconds=perf_counter()-arm_start)
++        write(out/(arm+'_result.json'), results[arm])
++        del model, cal, optimizers, batch, sample
++        if arm == 'shared':
++            del context
++        gc.collect()
++        torch.cuda.empty_cache()
++    ref, shared = results['reference'], results['shared']
++    saved = [torch.load(out/(a+f'_after{updates}.pt'), map_location='cpu', weights_only=False) for a in ['reference', 'shared']]
++    exact = ref['weight_state_sha256'] == shared['weight_state_sha256']
++    max_delta = max(float((saved[0]['model_state'][k]-saved[1]['model_state'][k]).abs().max())
++                    for k in saved[0]['model_state'] if saved[0]['model_state'][k].is_floating_point())
++    assert exact, f'Matching execution changed weights, max delta {max_delta}'
++    assert ref['histories'] == shared['histories'] and ref['validation'] == shared['validation']
++    for i in (0, 1):
++        for key in ['cpu', 'cuda']:
++            assert torch.equal(saved[0]['streams'][i][key], saved[1]['streams'][i][key])
++    report = dict(identity=identity, results=results, exact_states=True, max_weight_delta=max_delta,
++        exact_losses=True, exact_branch_RNG=True, exact_full5175_validation=True,
++        training_seconds_reduction=1-shared['training_seconds']/ref['training_seconds'],
++        workflow_seconds=perf_counter()-start,
++        limitation='Bounded update accounting includes independent main-gradient preflight and early optimizer allocation. Not a full100epoch time or a new model efficacy result.')
++    write(out/'report.json', report)
++    status(status='completed')
++    print(json.dumps({k:v for k,v in report.items() if k not in ['results','identity']}), flush=True)
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ b/scripts/probe_v125_calibration_consolidation.py
+@@ -0,0 +1,291 @@
++"""Frozen full-validation branch audit; no training or test-set access.
++
++Two separate identities: sealed v125 and the locked seed2023 VC1 warm candidate.
++Core probes use one neural pass and no LSV/V postprocessing. Deployed VC1 is
++reported separately, never silently treated as the dual-core output.
++"""
++import os
++os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
++import argparse
++import gc
++import hashlib
++import json
++from pathlib import Path
++import shutil
++from time import perf_counter
++
++import numpy as np
++import torch
++from torch import nn
++
++from integrations.e23.calibration_ensemble import build_calibration_repair
++from integrations.e23.direct_variable_transport import materialize_transport_recipe
++from integrations.e23.global_only_adaptation import RepairBandMetrics
++from integrations.e23.level_shape_pilot_data import iter_pilot_batches
++from integrations.e23.no_recent_specialization import remove_recent_specialization
++from integrations.e23.train import _new_memory
++from malr.evaluation.report import file_sha256
++from scripts.run_v125_H_soft_memory_heads import forward as deployed_forward
++from scripts.run_v125_level_shape_pilot import forward as core_forward
++from scripts.v125_original_pilot_setup import (
++    load_original_pilot, build_original_pilot, PARENT, MANIFEST, SELECTION)
++
++PERF = Path("/home/xyw/paper/E23/artifacts/performance")
++CANDIDATE = PERF / "v125_no_recent_uniformCNN_validation_candidate_20261020/selected-mae.pt"
++RECIPE = PERF / "v125_VC1_mode_supported_variable_transport_repair_candidate_20261020/direct_variable_transport_recipe.json"
++
++
++def write(path, value):
++    tmp = path.with_suffix(path.suffix + ".tmp")
++    tmp.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
++    tmp.replace(path)
++
++
++def gap_lengths(hidden):
++    """Lengths of contiguous hidden runs, clipped by window edges."""
++    t = torch.arange(hidden.shape[1], device=hidden.device)[None, :, None]
++    left = torch.where(~hidden, t, -1).cummax(1).values
++    right = torch.where(~hidden, t, hidden.shape[1]).flip(1).cummin(1).values.flip(1)
++    return torch.where(hidden, right - left - 1, 0)
++
++
++class GapMetrics:
++    def __init__(self, device):
++        self.total = torch.zeros(4, 4, dtype=torch.float64, device=device)
++
++    def update(self, error, hidden):
++        length = gap_lengths(hidden)
++        for i, (lo, hi) in enumerate(((1, 8), (9, 16), (17, 32), (33, 96))):
++            active = hidden & (length >= lo) & (length <= hi)
++            e = error[active].double()
++            self.total[i] += torch.stack((e.square().sum(), e.abs().sum(),
++                torch.as_tensor(e.numel(), device=e.device),
++                active.flatten(1).any(1).sum()))
++
++    def finalize(self):
++        return {name: dict(mse=float(v[0]/v[2]) if v[2] else None,
++                           mae=float(v[1]/v[2]) if v[2] else None,
++                           count=int(v[2]), windows=int(v[3]))
++                for name, v in zip(("1-8", "9-16", "17-32", "33-96"), self.total.cpu())}
++
++
++def state_sha(model):
++    h = hashlib.sha256()
++    for name, value in model.state_dict().items():
++        h.update(name.encode())
++        h.update(value.detach().cpu().contiguous().numpy().tobytes())
++    return h.hexdigest()
++
++
++def build(bundle, origin, variant, device):
++    if origin == "sealed_v125":
++        p = bundle["payload"]
++        model = build_calibration_repair(bundle["protocol"], bundle["settings"],
++            bundle["parent"]["calibration_ensemble_spec"], device=device)
++        model.load_state_dict(p["model_state"], strict=True)
++        model.historical.retrieval.load_state_dict(p["retrieval_state"])
++        memory = _new_memory(bundle["protocol"])
++        memory.load_state_dict(p["memory_state"])
++        model.historical.refresh_snapshot(memory.snapshot())
++    else:
++        model = build_original_pilot(bundle, device)
++        remove_recent_specialization(model, point_scope="full96")
++        model.load_state_dict(torch.load(CANDIDATE, map_location=device,
++                                        weights_only=False)["model_state"], strict=True)
++        model.H_transport_runtime = "legacy"
++        model.H_transport_pairs = materialize_transport_recipe(json.loads(RECIPE.read_text()), device)
++    if variant == "coarse":
++        model.recent_mean_projector = None
++    elif variant in ("single64", "single256"):
++        cal = model.recent_mean_projector
++        index = 0 if variant == "single64" else 1
++        cal.members = nn.ModuleList([cal.members[index]])
++        cal.member_widths = (64 if index == 0 else 256,)
++        cal.weights = torch.ones(1, dtype=cal.weights.dtype, device=device)
++    model.eval().requires_grad_(False)
++    return model
++
++
++@torch.no_grad()
++def profile(model, batch, call, device):
++    # Timing excludes data loading/transfer/metric calculation, includes dispatch.
++    for _ in range(5):
++        call(model, batch, 0)
++    torch.cuda.synchronize(device)
++    torch.cuda.reset_peak_memory_stats(device)
++    timings = []
++    for _ in range(20):
++        t = perf_counter()
++        call(model, batch, 0)
++        torch.cuda.synchronize(device)
++        timings.append(perf_counter() - t)
++    peaks = dict(allocated_GiB=torch.cuda.max_memory_allocated(device)/2**30,
++                 reserved_GiB=torch.cuda.max_memory_reserved(device)/2**30)
++    # A separate instrumented pass attributes GPU time. Nested rows overlap.
++    events, handles, starts = {}, [], {}
++    selected = {"": model}
++    selected.update(dict(model.named_children()))
++    cal = model.recent_mean_projector
++    if cal is not None:
++        selected.update({f"calibration_width_{w}": m
++                         for w, m in zip(cal.member_widths, cal.members)})
++    for name, module in selected.items():
++        if module is None:
++            continue
++        def before(m, args, key=name):
++            event = torch.cuda.Event(enable_timing=True)
++            event.record()
++            starts.setdefault(key, []).append(event)
++        def after(m, args, output, key=name):
++            end = torch.cuda.Event(enable_timing=True)
++            end.record()
++            events.setdefault(key, []).append((starts[key].pop(), end))
++        handles.extend([module.register_forward_pre_hook(before),
++                        module.register_forward_hook(after)])
++    begin, end = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
++    begin.record()
++    call(model, batch, 0)
++    end.record()
++    torch.cuda.synchronize(device)
++    for h in handles:
++        h.remove()
++    attributed = {name or "whole_neural_network": dict(
++        calls=len(pairs), gpu_ms=sum(a.elapsed_time(b) for a, b in pairs))
++        for name, pairs in events.items()}
++    root_ms = attributed["whole_neural_network"]["gpu_ms"]
++    median = float(np.median(timings))
++    return dict(batch_size=len(batch.refs), warmups=5, repetitions=20,
++        median_batch_seconds=median, p10_batch_seconds=float(np.quantile(timings, .1)),
++        p90_batch_seconds=float(np.quantile(timings, .9)),
++        windows_per_second=len(batch.refs)/median,
++        ms_per_window=median*1000/len(batch.refs), peak_memory=peaks,
++        component_gpu_profile=attributed,
++        whole_pipeline_gpu_ms=begin.elapsed_time(end),
++        outside_neural_forward_gpu_ms=begin.elapsed_time(end)-root_ms,
++        component_times_are_nested_not_additive=True)
++
++
++@torch.no_grad()
++def main():
++    start = perf_counter()
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--output", type=Path, required=True)
++    args = ap.parse_args()
++    out = args.output
++    out.mkdir(exist_ok=False)
++    shutil.copyfile(__file__, out / "executed_probe.py")
++    def status(**kw):
++        write(out/"status.json", dict(pid=os.getpid(), elapsed_seconds=perf_counter()-start, **kw))
++    status(status="loading")
++    torch.set_num_threads(4)
++    torch.use_deterministic_algorithms(True)
++    torch.backends.cuda.matmul.allow_tf32 = False
++    torch.backends.cudnn.allow_tf32 = False
++    device = torch.device("cuda:1")
++    torch.cuda.set_device(device)
++    bundle = load_original_pilot()
++    protocol = bundle["protocol"]
++    indices = dict(validation=np.arange(len(protocol.refs["validation"])))
++    assert len(indices["validation"]) == 5175
++    np.save(out/"validation_indices.npy", indices["validation"])
++    write(out/"identity.json", dict(dataset="Weather", scene="sr015_bl8", seq_len=96,
++        manifest_sha256=file_sha256(MANIFEST),
++        sealed_selection=str(SELECTION), sealed_selection_sha256=file_sha256(SELECTION),
++        sealed_checkpoint_sha256=bundle["parent"]["checkpoint_sha256"],
++        AT0_parent=str(PARENT), AT0_sha256=file_sha256(PARENT),
++        VC1_warm_candidate=str(CANDIDATE), VC1_warm_sha256=file_sha256(CANDIDATE),
++        V_recipe_sha256=file_sha256(RECIPE),
++        probe_sha256=file_sha256(Path(__file__)), training_updates=0, test_read=False,
++        subset_selection=False, validation_windows=5175,
++        interpretation="Frozen output intervention only, NOT independently trained single calibrators",
++        coarse_cut="Input to original dual calibrator; includes original point CNN (32 sealed /96 warm)",
++        core_policy="One neural pass. No LSV or fixed numerical variable transport in all four core arms",
++        deployed_policy="Separate VC1_warm deployed reference retains LSV3 neural passes and fixed V",
++        single_branch_policy="Retain entire selected original member, including its level path when present; weight1; preserve atom and no-source/known policies",
++        gap_policy="Contiguous valid hidden runs within96, all96 scored. Weather has no native missing target; this script is not a PAMAP2 data adapter",
++        parameters_policy="Resident named neural parameters; detached retrieval bank/key storage not counted as trainable parameters",
++        GPU=str(device), precision="FP32", batch=128))
++    results = {}
++    for origin in ("sealed_v125", "VC1_warm_seed2023"):
++        for variant in ("coarse", "single64", "single256", "dual", "deployed"):
++            if origin == "sealed_v125" and variant == "deployed":
++                continue
++            key = origin + "/" + variant
++            status(status="building", candidate=key)
++            model = build(bundle, origin, variant, device)
++            fingerprint = state_sha(model)
++            call = deployed_forward if variant == "deployed" else core_forward
++            batch = next(iter_pilot_batches(protocol, indices, split="validation",
++                         epoch=None, batch_size=128)).to(device)
++            params = sum(p.numel() for p in model.parameters())
++            components = {n: sum(p.numel() for p in m.parameters())
++                          for n, m in model.named_children()}
++            resources = profile(model, batch, call, device)
++            bands, gaps = RepairBandMetrics(device), GapMetrics(device)
++            torch.cuda.reset_peak_memory_stats(device)
++            validation_start = perf_counter()
++            forward_seconds = 0.
++            mask_hash = hashlib.sha256()
++            windows = 0
++            for cpu in iter_pilot_batches(protocol, indices, split="validation", epoch=None, batch_size=128):
++                mask_hash.update(cpu.observed_mask.numpy().tobytes())
++                batch = cpu.to(device)
++                tick = perf_counter()
++                explicit = call(model, batch, 0).explicit
++                torch.cuda.synchronize(device)
++                forward_seconds += perf_counter()-tick
++                assert torch.isfinite(explicit.normalized_sequence).all()
++                assert torch.equal(explicit.normalized_sequence[explicit.sequence_observed],
++                                   batch.normalized_observed[explicit.sequence_observed])
++                bands.update(explicit.normalized_sequence, batch.normalized_target,
++                    explicit.sequence_observed, explicit.sequence_validity, batch.query_std)
++                hidden = explicit.sequence_validity & ~explicit.sequence_observed
++                gaps.update((explicit.normalized_sequence-batch.normalized_target)*batch.query_std[:,None], hidden)
++                windows += len(batch.refs)
++                if windows % 1024 == 0:
++                    status(status="validating", candidate=key, windows=windows)
++            metrics, stratified = bands.finalize(), gaps.finalize()
++            assert windows == 5175
++            assert sum(v["count"] for v in stratified.values()) == metrics["full96"]["count"]
++            assert state_sha(model) == fingerprint
++            results[key] = dict(parameters=params, parameters_by_component=components,
++                metrics=metrics, gap_metrics=stratified, inference=resources,
++                full_validation_wall_seconds=perf_counter()-validation_start,
++                full_validation_forward_seconds=forward_seconds,
++                full_validation_peak_allocated_GiB=torch.cuda.max_memory_allocated(device)/2**30,
++                full_validation_peak_reserved_GiB=torch.cuda.max_memory_reserved(device)/2**30,
++                mask_sha256=mask_hash.hexdigest(), weights_sha256=fingerprint, weights_unchanged=True,
++                incremental_training_seconds=0., ancestor_training_cost_included=False)
++            write(out/"results.json", results)
++            print(json.dumps(dict(candidate=key, parameters=params, full96=metrics["full96"],
++                                  inference_ms_per_window=resources["ms_per_window"])), flush=True)
++            del model, batch, explicit, bands, gaps
++            gc.collect()
++            torch.cuda.empty_cache()
++    assert len({r["mask_sha256"] for r in results.values()}) == 1
++    # Original archived runs allowed cuDNN TF32. Replay that identity separately;
++    # all nine comparative probes above deliberately share TF32=False.
++    torch.backends.cudnn.allow_tf32 = True
++    original = build(bundle, "sealed_v125", "dual", device)
++    source_metrics = RepairBandMetrics(device)
++    for cpu in iter_pilot_batches(protocol, indices, split="validation", epoch=None, batch_size=128):
++        batch = cpu.to(device)
++        explicit = core_forward(original, batch, 0).explicit
++        source_metrics.update(explicit.normalized_sequence, batch.normalized_target,
++            explicit.sequence_observed, explicit.sequence_validity, batch.query_std)
++    archived_replay = source_metrics.finalize()
++    for metric in ("mse", "mae"):
++        assert archived_replay["full96"][metric] == bundle["parent"]["validation_repair_metrics"]["global_"+metric]
++    torch.backends.cudnn.allow_tf32 = False
++    locked = json.loads((CANDIDATE.parent/"selection.json").read_text())["primary"]["validation"]
++    for metric in ("mse", "mae"):
++        assert abs(results["VC1_warm_seed2023/deployed"]["metrics"]["full96"][metric] -
++                   locked["full96"][metric]) < 1e-10
++    write(out/"report.json", dict(results=results, elapsed_seconds=perf_counter()-start,
++        archived_cudnn_TF32_true_replay=archived_replay,
++        locked_source_replay_verified=True, interpretation="Read-only validation intervention; no candidate training or promotion"))
++    status(status="completed")
++
++
++if __name__ == "__main__":
++    main()
+--- /dev/null
++++ b/scripts/run_v125_single_calibrator_matched.py
+@@ -0,0 +1,236 @@
++"""Registered finite Stage1 matching: one64 calibrator versus original dual.
++
++Both share the locked VC1 warm prefix and one-pass inference. No LSV/fixedV,
++predictor, test set, new module or new loss recipe. Not full-budget training.
++"""
++import os
++os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
++import argparse
++import gc
++import hashlib
++import json
++from pathlib import Path
++import shutil
++from time import perf_counter
++
++import numpy as np
++import torch
++from torch.nn import functional as F
++from integrations.e23.aligned_stage2 import reset_training_rng
++from integrations.e23.global_only_adaptation import RepairBandMetrics
++from integrations.e23.level_shape_pilot_data import iter_pilot_batches
++from scripts.probe_v125_calibration_consolidation import (
++    load_original_pilot, build, core_forward, state_sha, GapMetrics, profile,
++    CANDIDATE, MANIFEST, file_sha256)
++from scripts.run_v125_H_soft_memory_heads import frozen_hash
++
++
++def objective(model, batch):
++    explicit = core_forward(model, batch, 0).explicit
++    hidden = explicit.sequence_validity & ~explicit.sequence_observed
++    error = (explicit.normalized_sequence-batch.normalized_target)*batch.query_std[:, None]
++    main = error[hidden].abs().mean()
++    cal = model.recent_mean_projector
++    weights = cal.weights.to(error)
++    proposals = sum(w*m.global_dense_refiner.atom_proposal for w, m in zip(weights, cal.members))
++    logits = sum(w*m.global_dense_refiner.atom_logits for w, m in zip(weights, cal.members))
++    selected = cal.atom_semantics["selected"].to(error.device)[None, None]
++    atom = cal.atom_semantics["atoms"].to(error)[None, None]
++    truth = batch.normalized_target*batch.query_std[:, None]+batch.query_mean[:, None]
++    with torch.no_grad():
++        atom_error = (atom-truth).abs()
++        proposal_error = (proposals.detach()-truth).abs()
++        action = (atom_error <= proposal_error).to(logits)
++        cost = (atom_error-proposal_error).abs()
++    aux = (F.binary_cross_entropy_with_logits(logits, action, reduction="none")*cost)[hidden & selected].mean()
++    return explicit, main, main+.1*aux
++
++
++def write(path, value):
++    path.parent.mkdir(exist_ok=True, parents=True)
++    temp = path.with_suffix(path.suffix+".tmp")
++    temp.write_text(json.dumps(value, indent=2, allow_nan=False)+"\n")
++    temp.replace(path)
++
++
++@torch.no_grad()
++def evaluate(model, protocol, indices, device):
++    bands, gaps = RepairBandMetrics(device), GapMetrics(device)
++    windows = 0
++    for cpu in iter_pilot_batches(protocol, indices, split="validation", epoch=None, batch_size=128):
++        batch = cpu.to(device)
++        explicit = core_forward(model, batch, 0).explicit
++        assert torch.isfinite(explicit.normalized_sequence).all()
++        assert torch.equal(explicit.normalized_sequence[explicit.sequence_observed],
++                           batch.normalized_observed[explicit.sequence_observed])
++        bands.update(explicit.normalized_sequence, batch.normalized_target,
++                     explicit.sequence_observed, explicit.sequence_validity, batch.query_std)
++        hidden = explicit.sequence_validity & ~explicit.sequence_observed
++        gaps.update((explicit.normalized_sequence-batch.normalized_target)*batch.query_std[:, None], hidden)
++        windows += len(batch.refs)
++    assert windows == 5175
++    return dict(**bands.finalize(), gaps=gaps.finalize())
++
++
++def main():
++    started = perf_counter()
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--output", required=True, type=Path)
++    args = ap.parse_args()
++    out = args.output
++    out.mkdir(exist_ok=False)
++    shutil.copyfile(__file__, out/"executed_runner.py")
++    def status(**kw):
++        write(out/"status.json", dict(pid=os.getpid(), elapsed_seconds=perf_counter()-started, **kw))
++    status(status="loading")
++    torch.set_num_threads(4)
++    torch.use_deterministic_algorithms(True)
++    torch.backends.cuda.matmul.allow_tf32 = False
++    torch.backends.cudnn.allow_tf32 = False
++    device = torch.device("cuda:1")
++    torch.cuda.set_device(device)
++    bundle = load_original_pilot()
++    protocol = bundle["protocol"]
++    assert protocol.training_seed == 2023
++    indices = dict(train=np.linspace(0, len(protocol.refs["train"])-1, 4096, dtype=np.int64),
++                   validation=np.arange(len(protocol.refs["validation"])))
++    for split, ix in indices.items():
++        np.save(out/(split+"_indices.npy"), ix)
++    identity = dict(
++        label="VC1暖启动结构收敛 / single64 matched Stage1",
++        parent=str(CANDIDATE), parent_sha256=file_sha256(CANDIDATE),
++        manifest_sha256=file_sha256(MANIFEST),
++        runner_sha256=file_sha256(Path(__file__)),
++        dataset="Weather", scene="sr015_bl8", seq_len=96, pred_len=96,
++        arms={"D": "one-pass dual64/256 weight0.5/0.5", "S": "one-pass single64"},
++        parent_warm_seed=2023, training_seed=2023, train_windows=4096,
++        validation_windows=5175, epochs=20, batch_size=128, updates_per_arm=640,
++        mask_epochs=[7301, 7320], optimizer="Adam", lr=1e-5, weight_decay=0.,
++        clip_norm=1., precision="FP32", TF32=False, mode="all eval, calibrator gradients enabled",
++        objective="full96 MAE +0.1 original full96 atom-risk BCE, no recent weighting",
++        primary="full96 complete validation MAE", secondary="full96 complete validation MSE",
++        epoch0_included=True,
++        train_scope="Only retained original global_dense_refiner; whole common CNN/HVT/prefix/bank/key frozen",
++        inference="One main forward, both no LSV/fixedV. Same frozen probe core semantics",
++        history="Inherited weights previously trained with recent emphasis; not from-scratch bias-free training",
++        test_read=False, Stage2=False, official_PAMAP2_ablation_modified=False,
++        accuracy_guards_relative={"mae": .01, "mse": .02},
++        resource_goals={"parameter_reduction": .4, "latency_reduction": .2},
++        cost_scope="This entire warm run incremental only; ancestor costs required",
++    )
++    write(out/"identity.json", identity)
++    results, initial_common = {}, None
++    for arm, variant in (("D", "dual"), ("S", "single64")):
++        status(status="building", arm=arm)
++        arm_start = perf_counter()
++        model = build(bundle, "VC1_warm_seed2023", variant, device)
++        for member in model.recent_mean_projector.members:
++            member.global_dense_refiner.requires_grad_(True)
++        names = [n for n, p in model.named_parameters() if p.requires_grad]
++        params = [p for p in model.parameters() if p.requires_grad]
++        assert all(n.startswith("recent_mean_projector.members.") and ".global_dense_refiner." in n for n in names)
++        common = state_sha(model.recent_mean_projector.members[0])
++        if initial_common is None:
++            initial_common = common
++        assert common == initial_common
++        frozen = frozen_hash(model)
++        write(out/arm/"model_identity.json", dict(parameters=sum(p.numel() for p in model.parameters()),
++            trainable_parameters=sum(p.numel() for p in params), trainable_names=names,
++            common64_initial_sha256=common, frozen_state_bank_key_sha256=frozen))
++        reset_training_rng(2023)
++        optimizer = torch.optim.Adam(params, lr=1e-5, weight_decay=0.)
++        torch.cuda.reset_peak_memory_stats(device)
++        train_seconds = validation_seconds = save_seconds = 0.
++        selected, history = {}, []
++        digest = hashlib.sha256()
++        for epoch in range(21):
++            if epoch:
++                assert not any(m.training for m in model.modules())
++                for step, cpu in enumerate(iter_pilot_batches(protocol, indices, split="train",
++                                            epoch=7300+epoch, batch_size=128)):
++                    digest.update(cpu.observed_mask.numpy().tobytes())
++                    digest.update(np.asarray([r.target_start for r in cpu.refs], dtype=np.int64).tobytes())
++                    batch = cpu.to(device)
++                    tick = perf_counter()
++                    optimizer.zero_grad(set_to_none=True)
++                    explicit, main_loss, loss = objective(model, batch)
++                    assert torch.isfinite(main_loss) and torch.isfinite(loss)
++                    if epoch == 1 and step == 0:
++                        gradients = torch.autograd.grad(main_loss, params, retain_graph=True, allow_unused=True)
++                        norms = {str(i): sum(float(g.detach().double().square().sum())
++                            for n, g in zip(names, gradients) if g is not None and
++                            n.startswith(f"recent_mean_projector.members.{i}."))**.5
++                            for i in range(len(model.recent_mean_projector.members))}
++                        assert all(np.isfinite(v) and v > 0 for v in norms.values())
++                        assert all(g is None or torch.isfinite(g).all() for g in gradients)
++                        write(out/arm/"main_loss_gradient_preflight.json",
++                              dict(main_MAE_independently_checked=True, member_gradient_norms=norms,
++                                   auxiliary_excluded=True, full96_no_recent_weight=True))
++                        del gradients
++                    loss.backward()
++                    assert all(p.grad is None for p in model.parameters() if not p.requires_grad)
++                    assert all(p.grad is None or torch.isfinite(p.grad).all() for p in params)
++                    torch.nn.utils.clip_grad_norm_(params, 1.)
++                    optimizer.step()
++                    torch.cuda.synchronize(device)
++                    train_seconds += perf_counter()-tick
++                    if step % 8 == 0:
++                        status(status="training", arm=arm, epoch=epoch, updates=(epoch-1)*32+step+1)
++                assert step == 31
++            assert frozen_hash(model) == frozen
++            tick = perf_counter()
++            metrics = evaluate(model, protocol, indices, device)
++            validation_seconds += perf_counter()-tick
++            row = dict(epoch=epoch, updates=32*epoch, metrics=metrics)
++            history.append(row)
++            def save(path):
++                nonlocal save_seconds
++                tick = perf_counter()
++                torch.save(dict(model_state=model.state_dict(), optimizer_state=optimizer.state_dict(),
++                    identity=identity, arm=arm, torch_rng=torch.get_rng_state(),
++                    cuda_rng=torch.cuda.get_rng_state(device), numpy_rng=np.random.get_state(),
++                    frozen_state_bank_key_sha256=frozen, **row), path)
++                save_seconds += perf_counter()-tick
++            if epoch == 0:
++                save(out/arm/"epoch0.pt")
++            for metric in ("mae", "mse"):
++                if metric not in selected or metrics["full96"][metric] < selected[metric]["metrics"]["full96"][metric]:
++                    selected[metric] = row
++                    save(out/arm/("selected-"+metric+".pt"))
++            write(out/arm/"history.json", history)
++            status(status="epoch_completed", arm=arm, **row)
++            print(json.dumps(dict(arm=arm, epoch=epoch, full96=metrics["full96"])), flush=True)
++        save(out/arm/"terminal.pt")
++        for metric in ("mae", "mse"):
++            path = out/arm/("selected-"+metric+".pt")
++            checkpoint = torch.load(path, map_location=device, weights_only=False)
++            model.load_state_dict(checkpoint["model_state"], strict=True)
++            tick = perf_counter()
++            replay = evaluate(model, protocol, indices, device)
++            validation_seconds += perf_counter()-tick
++            assert replay == selected[metric]["metrics"]
++            selected[metric] = dict(selected[metric], checkpoint=str(path), sha256=file_sha256(path))
++        peaks = dict(allocated_GiB=torch.cuda.max_memory_allocated(device)/2**30,
++                     reserved_GiB=torch.cuda.max_memory_reserved(device)/2**30)
++        model.load_state_dict(torch.load(out/arm/"selected-mae.pt", map_location=device,
++                                        weights_only=False)["model_state"], strict=True)
++        assert frozen_hash(model) == frozen
++        batch = next(iter_pilot_batches(protocol, indices, split="validation", epoch=None, batch_size=128)).to(device)
++        inference = profile(model, batch, core_forward, device)
++        results[arm] = dict(epoch0=history[0], primary=selected["mae"], secondary=selected["mse"],
++            training_seconds=train_seconds, validation_seconds=validation_seconds, save_seconds=save_seconds,
++            arm_seconds=perf_counter()-arm_start, training_peak_memory=peaks, inference=inference,
++            mask_order_sha256=digest.hexdigest(), common64_initial_sha256=common, updates=640,
++            frozen_parameters_bank_keys_unchanged=True)
++        write(out/arm/"result.json", results[arm])
++        del model, optimizer, params, batch, explicit, loss, main_loss, checkpoint
++        gc.collect()
++        torch.cuda.empty_cache()
++    assert results["D"]["mask_order_sha256"] == results["S"]["mask_order_sha256"]
++    write(out/"report.json", dict(identity=identity, results=results,
++        workflow_seconds=perf_counter()-started, no_automatic_promotion=True))
++    status(status="completed")
++
++
++if __name__ == "__main__":
++    main()
+--- /dev/null
++++ b/tests/unit/test_v125_shared_frozen_calibration.py
+@@ -0,0 +1,106 @@
++"""Catch duplicated-prefix reuse that changes gradients, RNG or model state."""
++import importlib.util
++from types import SimpleNamespace
++
++import pytest
++import torch
++from torch import nn
++
++
++class Member(nn.Module):
++    def __init__(self):
++        super().__init__()
++        self.net = nn.Sequential(nn.Linear(4, 7), nn.Dropout(.4), nn.Linear(7, 4))
++
++    def forward(self, explicit, router, points, mean, std):
++        return SimpleNamespace(normalized_sequence=self.net(explicit.normalized_sequence)), mean * 0
++
++
++class Pair(nn.Module):
++    def __init__(self):
++        super().__init__()
++        self.members = nn.ModuleList([Member(), Member()])
++
++    def forward(self, *args):
++        result = [m(*args)[0].normalized_sequence for m in self.members]
++        return SimpleNamespace(normalized_sequence=sum(result) / 2), args[3] * 0
++
++
++class Repair(nn.Module):
++    def __init__(self):
++        super().__init__()
++        self.prefix = nn.Linear(4, 4)
++        self.recent_mean_projector = Pair()
++        self.random_prefix = False
++
++    def forward(self, values):
++        x = self.prefix(values)
++        if self.random_prefix:
++            x = x + torch.rand_like(x)
++        return self.recent_mean_projector(SimpleNamespace(normalized_sequence=x),
++            None, None, torch.zeros_like(x), torch.ones_like(x))
++
++
++def capture_function():
++    # An intentional missing-feature assertion gives a readable RED run.
++    name = 'integrations.e23.shared_frozen_calibration'
++    assert importlib.util.find_spec(name) is not None, 'frozen-prefix capture not implemented'
++    from integrations.e23.shared_frozen_calibration import capture_frozen_calibration_inputs
++    return capture_frozen_calibration_inputs
++
++
++def make_model():
++    torch.manual_seed(41)
++    model = Repair().eval().requires_grad_(False)
++    for member in model.recent_mean_projector.members:
++        member.train().requires_grad_(True)
++    return model
++
++
++def test_shared_prefix_preserves_independent_dropout_outputs_and_main_gradients():
++    capture = capture_function()
++    model = make_model()
++    values = torch.arange(12, dtype=torch.float32).reshape(3, 4) / 10
++    states = {k: v.clone() for k, v in model.state_dict().items()}
++    shared = capture(model, lambda: model(values))
++    assert not shared[0].normalized_sequence.requires_grad
++    for index, member in enumerate(model.recent_mean_projector.members):
++        torch.manual_seed(90 + index)
++        args = (SimpleNamespace(normalized_sequence=model.prefix(values)),
++                None, None, torch.zeros_like(values), torch.ones_like(values))
++        reference = member(*args)[0].normalized_sequence
++        expected_rng = torch.get_rng_state().clone()
++        expected_grads = torch.autograd.grad(reference.abs().mean(), tuple(member.parameters()))
++        torch.manual_seed(90 + index)
++        actual = member(*shared)[0].normalized_sequence
++        actual_grads = torch.autograd.grad(actual.abs().mean(), tuple(member.parameters()))
++        assert torch.equal(actual, reference)
++        assert torch.equal(torch.get_rng_state(), expected_rng)
++        assert all(torch.equal(a, b) for a, b in zip(actual_grads, expected_grads))
++    assert all(torch.equal(v, states[k]) for k, v in model.state_dict().items())
++    assert 'forward' not in model.recent_mean_projector.__dict__
++
++
++def test_rejects_live_prefix_gradients_and_restores_forward_on_failure():
++    capture = capture_function()
++    model = make_model()
++    model.prefix.requires_grad_(True)
++    with pytest.raises(ValueError, match='frozen'):
++        capture(model, lambda: model(torch.ones(3, 4)))
++    model.prefix.requires_grad_(False)
++    def broken():
++        model(torch.ones(3, 4))
++        raise RuntimeError('actual prefix failure')
++    with pytest.raises(RuntimeError, match='actual prefix failure'):
++        capture(model, broken)
++    assert 'forward' not in model.recent_mean_projector.__dict__
++    assert model(torch.ones(3, 4))[0].normalized_sequence.shape == (3, 4)
++
++
++def test_rejects_stochastic_prefix_instead_of_changing_branch_rng():
++    capture = capture_function()
++    model = make_model()
++    model.random_prefix = True
++    with pytest.raises(ValueError, match='RNG'):
++        capture(model, lambda: model(torch.ones(3, 4)))
++    assert 'forward' not in model.recent_mean_projector.__dict__
