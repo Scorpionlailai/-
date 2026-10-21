@@ -11,9 +11,9 @@ A0三seed沿用基准；A2 seed2023粗/64/256严格审计后复用，新增2024/
 |划分|阶段|范围|变体|seed数|MSE均值±训练SD|MAE均值±训练SD|
 |---|---|---|---|---|---|---|
 |validation|coarse|full96|A0|3|0.108396 ± 0.001010|0.166040 ± 0.001062|
-|validation|coarse|full96|A2|1|0.111485（仅1次）|0.168123（仅1次）|
+|validation|coarse|full96|A2|3|0.110824 ± 0.000650|0.167457 ± 0.000591|
 |validation|coarse|recent32|A0|3|0.109811 ± 0.000980|0.169539 ± 0.001039|
-|validation|coarse|recent32|A2|1|0.112569（仅1次）|0.171724（仅1次）|
+|validation|coarse|recent32|A2|3|0.111962 ± 0.000649|0.171117 ± 0.000533|
 |validation|calibration64|full96|A0|3|0.100860 ± 0.001471|0.156293 ± 0.001462|
 |validation|calibration64|full96|A2|1|0.101733（仅1次）|0.157489（仅1次）|
 |validation|calibration64|recent32|A0|3|0.103680 ± 0.001364|0.159073 ± 0.001638|
@@ -45,14 +45,14 @@ A0三seed沿用基准；A2 seed2023粗/64/256严格审计后复用，新增2024/
 |validation|calibration64|full96|mse|1|0.000428|0.423%|[0.000428]|
 |validation|calibration64|recent32|mae|1|0.001558|0.978%|[0.001558]|
 |validation|calibration64|recent32|mse|1|0.001186|1.141%|[0.001186]|
-|validation|coarse|full96|mae|1|0.000951|0.569%|[0.000951]|
-|validation|coarse|full96|mse|1|0.001923|1.755%|[0.001923]|
-|validation|coarse|recent32|mae|1|0.001033|0.605%|[0.001033]|
-|validation|coarse|recent32|mse|1|0.001627|1.467%|[0.001627]|
+|validation|coarse|full96|mae|3|0.001417|0.854%|[0.000951, 0.001929, 0.001371]|
+|validation|coarse|full96|mse|3|0.002428|2.240%|[0.001923, 0.002333, 0.003027]|
+|validation|coarse|recent32|mae|3|0.001577|0.930%|[0.001033, 0.002056, 0.001643]|
+|validation|coarse|recent32|mse|3|0.002151|1.959%|[0.001627, 0.00206, 0.002766]|
 
 ## 资源与核验
 
-当前新增训练成本：0.000 GPU小时（复用成本另列）。资源明细见round4_resources.csv，本轮推理/参数明细见round4_capacity.csv，capacity.csv保留历轮测量。
+当前新增训练成本：2.282 GPU小时（复用成本另列）。资源明细见round4_resources.csv，本轮推理/参数明细见round4_capacity.csv，capacity.csv保留历轮测量。
 分配参数仍保留同构模块以控制随机初始化；H参数冻结且H专属路由实际禁用，历史查询/键编码/原型更新均由运行时哨兵确认跳过；保留空库容器和载入空索引的初始化开销。训练可更新参数、推理调用参数和实测时间分开报告，不作为容量匹配的纯机制因果实验。
 同一GPU、FP32 eval、batch128，1次预热和5次同步计时；每模型/阶段均报告。历史显存仅有累计阶段峰值时明确标注，不能冒充独立阶段峰值。
 2023的历史输入顺序/掩码由同一封存源码和协议支撑，历史实际输入哈希未记录；2024/2025逐轮核验与配对A0实际输入一致。
