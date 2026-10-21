@@ -1,0 +1,105 @@
+{
+  "baseline_commit": "41617b8f31a8d419e2b13d3cd63cdf280c7d990b",
+  "calibration_selection": "validation_full96_mae",
+  "calibration_weights": [
+    0.5,
+    0.5
+  ],
+  "coarse_selection": "validation_full96_mse",
+  "dataset": "PAMAP2",
+  "epochs_per_phase": 100,
+  "external_tools": {
+    "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/tools/calibration_worker.py": "840b7b25ee074a5014da768dd910e4b6212abfdc69321486c0b8989f8763564e",
+    "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/tools/policy.py": "cd004cc6b0e9b217f9031b75c20f630989be3f4d40a71e08c80b392ce906ca05",
+    "/home/xyw/paper/E24/artifacts/v125_contribution_diagnostics_20261019/tools/evaluate.py": "e2270e2c60296d0d355a01d8ad24ce2478eb0376727a2e0da6f1e639b9a5e296",
+    "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/tools/worker.py": "625dcd235bcaa60871ca017eaab468df685fc0b1e0a9eda0dfbd418fe6276983"
+  },
+  "forbidden": [
+    "Stage2",
+    "other variants",
+    "other datasets",
+    "architecture changes",
+    "test-driven selection",
+    "extra A4 seeds",
+    "search for significance"
+  ],
+  "mandatory_order": [
+    "audit",
+    "all_coarse",
+    "coarse_validation_resource_report",
+    "all_calibration",
+    "all_checkpoint_lock",
+    "all_validation_test_strata",
+    "sameGPUcapacity",
+    "verify",
+    "publish"
+  ],
+  "new_training": "A2seeds2024/2025 each100coarse+100cal64+100cal256;A0reused;A2_2023reusedafteraudit",
+  "no_new_test_before_all_checkpoint_lock": true,
+  "original_losses_and_Adam_lr001_preserved": true,
+  "publication": {
+    "authorized": true,
+    "branch": "experiments/e23-v125-ablation-20261018",
+    "directory": "experiment_results/v125_ablation",
+    "large_assets": false
+  },
+  "scene": "sr015_bl8",
+  "source_lock_sha256": "0d35bcca5efe3c0a93eec970a8749a3b9cea024361517acff604af784d0cb62e",
+  "train_batch": 128,
+  "training_mask_seed": 2023,
+  "training_order_seed": 2023,
+  "training_seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "updates_per_phase": 8500,
+  "variants": [
+    "A0",
+    "A4"
+  ],
+  "closed_A4_commit": "41617b8f31a8d419e2b13d3cd63cdf280c7d990b",
+  "A4_frozen_manifest_sha256": "3171765da8188cc47ff12940e079b94e017195150f486ab2556d27140cd8a3cc",
+  "no_further_A4_training": true,
+  "tools": {
+    "audit4.py": "744a3fcd54e824f172c2999b2a2e95ba571c59bf5c5c9eb488495caffb186ed3",
+    "export4.py": "ffb5e15b3b4ad4d4d25d8d306a7ef6b78316cb2047ee2718ba2a03a129beda0b",
+    "isolation4.py": "7394b229afceee9f2cc168bb80c8a00204f950007563fbeb20318499d3115a5b",
+    "policy4.py": "ea737d6ff62c947bb2a80a5968da65c26349d2ba5a4db27a168bf5c4bf309cee",
+    "run4.py": "e1e5ae3f1c3e29269808a6bac181c5ce168c2de5b79c8ac76b26b0fe262f534a",
+    "supervisor4.py": "5c5e485f4a95ff96c61178a176d90eea6ef251cb1c6326fb34e13182d911337f",
+    "test_policy4.py": "6acc99c76acab3205a581513aa22c58da6477eaf330b941552f258446d38ae5e",
+    "verify4.py": "cacc14cbec656bde46eeba5afed147480336325c790af89265144c8239e95760"
+  },
+  "audit_sha256": "0a3eaaf4865c9bdf1e13812db4be48578dc4ef1fc14656e40b5a21c01674e12a",
+  "baseline_tables": {
+    "README.md": "d5b66e902d4dbf498db239296359e6ad6ac58150d90d6ba13861c4ccada9fb36",
+    "capacity.csv": "f479f200e71392d188cb555f6bb4fdde03376ac21e56ffd8e70d56bc77cfa39a",
+    "contributions_per_seed.csv": "f40abf33d457926ee3359b7b09ae52b7f7a3f7dc43e80eb585610aab52cace15",
+    "contributions_summary.csv": "bb15c6d707fac44548e5ed0bae4581de1435cde4e2a2e79ee844f68c3c246632",
+    "per_mask.csv": "11bcde4b30a59406bbdb59062abc37928608442fbc7a1a8d9f14a37dfc483026",
+    "per_seed.csv": "aa0f26d7e9c9eeae35c724e61e8cfdf894abf02d62b2283471bfc0d2c0a9acdc",
+    "position_dispersion.csv": "373a00e9b190be88cacba3b2e0407816b501a6af7a41bea4c8a5a13aa1d8bacf",
+    "protocol.json": "8a322cf85e7c22c541bf1f4ef36dd9fc8da76b796ff84602be57a5f2a6bab348",
+    "resources.csv": "63c365779db04c43712bdb5977fe7b8702ba4df0d81f85d0b8cd44d9c5f38cc1",
+    "round3_paired_differences.csv": "0364a5cc4071850b7949826bf337abd1e18abea1564de389dbdac224d3837740",
+    "round3_paired_summary.csv": "4d4180e752d61dbfc4feeef3f669098100e4ac00797e069950f1b421d2bb1b4f",
+    "round3_resources.csv": "6ffe67cb6adab4d981ae5b2559093d3688d8ba742284113674602189953ef927",
+    "round3_stratified_differences.csv": "d5df6d90c2d2267c578f505005c3e78079247d3ab64b9d3ad20ca3453148687f",
+    "stratified.csv": "4978d9ec3371c71c62003a3f76ad20dec1dfbe4534d69118f74149b0e5677ec3",
+    "stratified_contributions_per_seed.csv": "c9f1964364af8d83660338656eed3aa7ea917fab18bf7a200b51c25c49c0401f",
+    "stratified_per_seed.csv": "d5cbaf651957a3541b63afab37d52e7fd8baaef48550e875e617f6b78a4a5e70",
+    "stratified_summary.csv": "be96f695b3094f6d6a1185affba0d4c6707d25f9f5578cd06c7e05715336502b",
+    "summary.csv": "b226deb969fadf866d0659cd40ab177598e9ac0465685247f68685b15b7d9fbc"
+  },
+  "registered_unix": 1792575302.7531555,
+  "tests": {
+    "policy": "2passed: complete checkpoint barrier; paired seed means and A2-A0 sign",
+    "runtime": "4original A2 paths on real128 validation windows;H messages/routes/point candidates zero;H parameter+inaccessible bank/index poisoning invariant;frontVT positive",
+    "training_preflight": "1discarded real128 update;H keys/EMA/index/loss/memory updates forbidden andzero;H gradients absent;frontVT gradients nonzero;H weights+emptybank unchanged",
+    "original_source_and_2023_asset_reuse": "passed all100epochsperphase/Adam/budget/owncheckpoint-library/global-scale/initialization checks"
+  },
+  "H_removal": "Hdisabled in controller cache/message/delta/route and latercandidate+pointreadouts;noHretrievalloss/keyencoding/EMA/prototypemutations;formaltrain+eval runtime sentinels and selected-path capacity isolation recorded",
+  "empty_history_snapshot_sha256": "88b0577fbfc20b31d73f40bc2812044a3a8a340444b9286a342b3fa96cde8d1a",
+  "budget_unchanged": true
+}
