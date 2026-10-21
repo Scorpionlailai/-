@@ -1,0 +1,91 @@
+{
+  "audit_sha256": "383ab140908fc2e1eb076c21630571e7813e3b2c522da5b6b1f8a912fab81807",
+  "baseline_commit": "b5a72ddbf66d9822f53efa96b07354e2bd120b4d",
+  "baseline_tables": {
+    "README.md": "60c67768ef113ed1d488a03acf14e55b803dec868e06375d14300fdb2beac026",
+    "contributions_per_seed.csv": "f40abf33d457926ee3359b7b09ae52b7f7a3f7dc43e80eb585610aab52cace15",
+    "contributions_summary.csv": "bb15c6d707fac44548e5ed0bae4581de1435cde4e2a2e79ee844f68c3c246632",
+    "per_mask.csv": "b7f26ce69a1ca2aeb52c5ae12c7f2286baafd849871e0193b8d3ec93fd2d666b",
+    "per_seed.csv": "0485dca0e76c1627b51f7fc630a41eea41cc894f9b50d32afabbbfa89761e9db",
+    "position_dispersion.csv": "6f4e9456f7503ea932739e7e379bbf22430fbe8cb4716dacee3d7787af2496e3",
+    "protocol.json": "a599f6b556c4a0bc3b7de576fa85f5e70c21f04bd1c16b92d78ed93f6169dd48",
+    "resources.csv": "7355388091cc1d1fdf670041607c2f37f71ea3bd80538738914b2f817643fb87",
+    "stratified.csv": "3293619335f6a23d84e91e40e1a64cd4ff3e5c788c5b0071b1be7a0da2055dfb",
+    "stratified_contributions_per_seed.csv": "c9f1964364af8d83660338656eed3aa7ea917fab18bf7a200b51c25c49c0401f",
+    "stratified_per_seed.csv": "4d8f614f5c933959489ebde90ad8450c9fe2eac35f03803db6bc5e4e9756c4bb",
+    "stratified_summary.csv": "c89957c4aa43112a5aab66d15a2f278d2af9e99f61aeb4a3f5cbf0330ab7bdc7",
+    "summary.csv": "7f41d9043be251ed5a25815c10e753e76696ff5d30bb166b43f96d4e852f1a63"
+  },
+  "calibration_selection": "validation_full96_mae",
+  "calibration_weights": [
+    0.5,
+    0.5
+  ],
+  "coarse_selection": "validation_full96_mse",
+  "dataset": "PAMAP2",
+  "epochs_per_phase": 100,
+  "external_tools": {
+    "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/tools/calibration_worker.py": "840b7b25ee074a5014da768dd910e4b6212abfdc69321486c0b8989f8763564e",
+    "/home/xyw/paper/E24/artifacts/v125_calibration_confirmation_20261020/tools/policy.py": "cd004cc6b0e9b217f9031b75c20f630989be3f4d40a71e08c80b392ce906ca05",
+    "/home/xyw/paper/E24/artifacts/v125_contribution_diagnostics_20261019/tools/evaluate.py": "e2270e2c60296d0d355a01d8ad24ce2478eb0376727a2e0da6f1e639b9a5e296",
+    "/home/xyw/paper/E24/artifacts/v125_pamap2_coarse_seed_stability_20261019/tools/worker.py": "625dcd235bcaa60871ca017eaab468df685fc0b1e0a9eda0dfbd418fe6276983"
+  },
+  "forbidden": [
+    "Stage2",
+    "other variants",
+    "other datasets",
+    "architecture changes",
+    "test-driven selection"
+  ],
+  "mandatory_order": [
+    "audit",
+    "all_coarse",
+    "coarse_validation_resource_report",
+    "all_calibration",
+    "all_checkpoint_lock",
+    "all_validation_test_strata",
+    "sameGPUcapacity",
+    "verify",
+    "publish"
+  ],
+  "new_training": "A4seeds2024/2025 each100coarse+100cal64+100cal256;A0reused;A4_2023reusedafteraudit",
+  "no_new_test_before_all_checkpoint_lock": true,
+  "original_losses_and_Adam_lr001_preserved": true,
+  "publication": {
+    "authorized": true,
+    "branch": "experiments/e23-v125-ablation-20261018",
+    "directory": "experiment_results/v125_ablation",
+    "large_assets": false
+  },
+  "registered_unix": 1792553205.6222343,
+  "scene": "sr015_bl8",
+  "source_lock_sha256": "0d35bcca5efe3c0a93eec970a8749a3b9cea024361517acff604af784d0cb62e",
+  "tests": {
+    "PAMAP2_native_scoring_and_record_protocol": "12 passed;existing autocast deprecation warning",
+    "exporter": "all1008 baseline observations preserved verbatim;newA4validation-only untilbarrier;A4minusA0 sign verified",
+    "policy": "2 passed after2 initial expected failures",
+    "runtime": "all4 A4 paths:noT methods,candidates/deltas/attention/serialupdate zero;poison invariant;frontHV active;realbatch128 gradient check passed"
+  },
+  "tools": {
+    "audit3.py": "aba6744eae02b857398f732f71670c5bed585b640d93a72bb225447596120936",
+    "export3.py": "cfa863208e8bfb2dffbcaf6aa0165e57a19fd94af767013c38514167c0974729",
+    "policy3.py": "9b485a2b1843bacd3c1d1c7c3650de6b14f03790a451863cee3d09f6841569e9",
+    "run3.py": "86ba659b8c68b56677df263387e340d63f8a2f6f62fb568454699c42724bd330",
+    "supervisor3.py": "3ffe7f68e9ef78df7688c19d732476240b62bac32bb198bb8dc5e6c531e68ccc",
+    "test_policy3.py": "28c8a29aa8232c45df03d99739330e43e5c5d1438f8a3e0bbe0a0c7fcfedb9f1",
+    "verify3.py": "8ef096dc49eb8bf7329a20ab0a62e446bdaccd8f9466e253865e08907e5308ae"
+  },
+  "train_batch": 128,
+  "training_mask_seed": 2023,
+  "training_order_seed": 2023,
+  "training_seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "updates_per_phase": 8500,
+  "variants": [
+    "A0",
+    "A4"
+  ]
+}

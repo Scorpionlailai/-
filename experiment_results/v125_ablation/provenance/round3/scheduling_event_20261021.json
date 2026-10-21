@@ -1,0 +1,67 @@
+{
+  "event": "User-prioritized finite acceptance followed by A4 resumption",
+  "numerical_protocol_changed": false,
+  "original_100_epochs_per_phase_preserved": true,
+  "acceptance_final_commit": "4721b3076d3a98292b417d001e151aa51d5622a0",
+  "pause": {
+    "authorized_by": "User: 你先把要上传的任务优先处理了",
+    "started_unix": 1792557187.974091,
+    "numerical_protocol_changed": false,
+    "resume_original_A4_after_upload": true,
+    "workers": {
+      "2024": {
+        "pid": 647981,
+        "committed_epoch": 57,
+        "optimizer_steps": 4845,
+        "resume_path": "/home/xyw/v125-shared-prefix-acceptance-20261021/priority_local_assets/seed_2024/resume.pt",
+        "resume_sha256": "670f6eb94cdf2c79268ac7ff0070698927f1e5c98f3ac0e603a8263a40708475",
+        "selected_path": "/home/xyw/v125-shared-prefix-acceptance-20261021/priority_local_assets/seed_2024/selected.pt",
+        "selected_sha256": "bd8f7deaf83ff6b79de9358631bb497d889e790ee93f0243c24e03d524f78202",
+        "scope": "Original epoch checkpoint contains model/Adam/Python-NumPy-CPU-CUDA RNG/retrieval EMA/best/selected/cursors; original worker resumes it. Any uncommitted work after checkpoint is discarded and not selected."
+      },
+      "2025": {
+        "pid": 647982,
+        "committed_epoch": 57,
+        "optimizer_steps": 4845,
+        "resume_path": "/home/xyw/v125-shared-prefix-acceptance-20261021/priority_local_assets/seed_2025/resume.pt",
+        "resume_sha256": "b2151b0e4fe48bcbe700dcf88786f6297f170d1b428d3ac28645c66caa1f351f",
+        "selected_path": "/home/xyw/v125-shared-prefix-acceptance-20261021/priority_local_assets/seed_2025/selected.pt",
+        "selected_sha256": "39bdf7f8a5bf161ad609fde45c3318f86e0ede1d171e8b1cc7c90d9e32047517",
+        "scope": "Original epoch checkpoint contains model/Adam/Python-NumPy-CPU-CUDA RNG/retrieval EMA/best/selected/cursors; original worker resumes it. Any uncommitted work after checkpoint is discarded and not selected."
+      }
+    }
+  },
+  "resumption": {
+    "phase": "acceptance_finished_A4_resumed",
+    "A4_supervisor_pid": 659009,
+    "A4_command": [
+      "/home/xyw/.local/share/mamba/envs/paper-timesnet/bin/python",
+      "-u",
+      "/home/xyw/paper/E24/artifacts/v125_a4_seed_recheck_20261021/tools/supervisor3.py"
+    ],
+    "A4_cwd": "/home/xyw/paper-e23-v125-ablation",
+    "resumed_unix": 1792557545.6066878,
+    "numerical_protocol_changed": false,
+    "acceptance_publication": {
+      "commit_sha": "c00b63f2284ec99b30e8007ba8aa2a66484e9443",
+      "remote_verified": true,
+      "branch": "acceptance/pamap2-shared-prefix-server-20261021",
+      "directory_url": "https://github.com/Scorpionlailai/-/tree/c00b63f2284ec99b30e8007ba8aa2a66484e9443/experiment_results/v125_shared_prefix_acceptance_20261021/results/server_xyw_20261021",
+      "published_unix": 1792557545.0402515
+    },
+    "acceptance_waiter_failure": null
+  },
+  "reverification": {
+    "original_source_protocol_locks_passed": true,
+    "actual_window_order_masks_and_steps_paired_with_A0_at_epochs": [
+      57,
+      58,
+      85
+    ],
+    "seeds": [
+      2024,
+      2025
+    ]
+  },
+  "note": "Only scheduling changed. Retain this event with round3; resource timing for acceptance is separate. Original A4 source locks and validation-only selection remain in force."
+}
