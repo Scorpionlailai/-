@@ -1,0 +1,66 @@
+{
+  "time_unix": 1792556454.7618876,
+  "checks": [
+    {
+      "name": "adapter_unit_tests",
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/paper-timesnet/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "src",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/home/xyw/v125-shared-prefix-acceptance-20261021",
+      "exit_code": 0,
+      "log": "inventory/adapter_unit_tests.txt"
+    },
+    {
+      "name": "package_helper_unit_tests",
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/paper-timesnet/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/unit/test_v125_shared_frozen_calibration.py"
+      ],
+      "cwd": "/home/xyw/paper-v125-shared-prefix-acceptance/experiment_results/v125_shared_prefix_acceptance_20261021/code/local_worktree",
+      "exit_code": 0,
+      "log": "inventory/package_helper_unit_tests.txt"
+    },
+    {
+      "name": "asset_reverification",
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/paper-timesnet/bin/python",
+        "/home/xyw/paper-v125-shared-prefix-acceptance/experiment_results/v125_shared_prefix_acceptance_20261021/check_assets.py",
+        "--dependency-lock",
+        "/home/xyw/v125-shared-prefix-acceptance-20261021/inventory/dependency-lock.json",
+        "--path-map",
+        "/home/xyw/v125-shared-prefix-acceptance-20261021/inventory/path-map.json",
+        "--output",
+        "/home/xyw/v125-shared-prefix-acceptance-20261021/inventory/reverified-assets.json"
+      ],
+      "cwd": "/home/xyw/paper-v125-shared-prefix-acceptance/experiment_results/v125_shared_prefix_acceptance_20261021",
+      "exit_code": 0,
+      "log": "inventory/asset_reverification.txt"
+    },
+    {
+      "name": "real_PAMAP2_CPU_preflight",
+      "passed": true,
+      "branches": 2,
+      "batch_size": 8,
+      "optimizer_updates": 0,
+      "artifact": "cpu_coordinate_preflight.json",
+      "sha256": "ce9283ea6b6a16c8c606785557971f897b00c0562a9f353c690cff83785f7908"
+    }
+  ],
+  "passed": true,
+  "GPU_acceptance_executed": false,
+  "notes": [
+    "All source files compile. CPU checks do not establish GPU equality or performance.",
+    "The first standalone unit invocation omitted original E24 from PYTHONPATH; corrected invocation and all 4 tests passed."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "batch_size": 8,
+  "CPU_only": true,
+  "optimizer_updates": 0,
+  "checks": [
+    {
+      "branch": 64,
+      "exact_equal": true,
+      "max_abs_difference": 0.0,
+      "failures": []
+    },
+    {
+      "branch": 256,
+      "exact_equal": true,
+      "max_abs_difference": 0.0,
+      "failures": []
+    }
+  ],
+  "pilot_probe_note": "Initial one-off CPU probe omitted resetting dropout RNG and correctly showed output-head gradient differences; fixed probe uses the full independent stream contexts already required in the runner."
+}
