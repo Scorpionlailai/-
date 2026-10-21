@@ -11,9 +11,9 @@ A0三seed沿用基准；A3 seed2023粗/64/256严格审计后复用，新增2024/
 |划分|阶段|范围|变体|seed数|MSE均值±训练SD|MAE均值±训练SD|
 |---|---|---|---|---|---|---|
 |validation|coarse|full96|A0|3|0.108396 ± 0.001010|0.166040 ± 0.001062|
-|validation|coarse|full96|A3|1|0.108844（仅1次）|0.166336（仅1次）|
+|validation|coarse|full96|A3|3|0.109280 ± 0.000453|0.166637 ± 0.000388|
 |validation|coarse|recent32|A0|3|0.109811 ± 0.000980|0.169539 ± 0.001039|
-|validation|coarse|recent32|A3|1|0.110512（仅1次）|0.170535（仅1次）|
+|validation|coarse|recent32|A3|3|0.110996 ± 0.000480|0.170320 ± 0.000402|
 |validation|calibration64|full96|A0|3|0.100860 ± 0.001471|0.156293 ± 0.001462|
 |validation|calibration64|full96|A3|1|0.101443（仅1次）|0.156298（仅1次）|
 |validation|calibration64|recent32|A0|3|0.103680 ± 0.001364|0.159073 ± 0.001638|
@@ -45,14 +45,14 @@ A0三seed沿用基准；A3 seed2023粗/64/256严格审计后复用，新增2024/
 |validation|calibration64|full96|mse|1|0.000139|0.137%|[0.000139]|
 |validation|calibration64|recent32|mae|1|-0.000111|-0.069%|[-0.000111]|
 |validation|calibration64|recent32|mse|1|0.000271|0.261%|[0.000271]|
-|validation|coarse|full96|mae|1|-0.000836|-0.500%|[-0.000836]|
-|validation|coarse|full96|mse|1|-0.000718|-0.655%|[-0.000718]|
-|validation|coarse|recent32|mae|1|-0.000155|-0.091%|[-0.000155]|
-|validation|coarse|recent32|mse|1|-0.000429|-0.387%|[-0.000429]|
+|validation|coarse|full96|mae|3|0.000598|0.360%|[-0.000836, 0.002009, 0.00062]|
+|validation|coarse|full96|mse|3|0.000884|0.816%|[-0.000718, 0.001896, 0.001474]|
+|validation|coarse|recent32|mae|3|0.000781|0.461%|[-0.000155, 0.001897, 0.000601]|
+|validation|coarse|recent32|mse|3|0.001184|1.079%|[-0.000429, 0.002255, 0.001728]|
 
 ## 资源与核验
 
-当前新增训练成本：0.000 GPU小时（复用成本另列）。资源明细见round5_resources.csv，本轮推理/参数明细见round5_capacity.csv，capacity.csv保留历轮测量。
+当前新增训练成本：3.829 GPU小时（复用成本另列）。资源明细见round5_resources.csv，本轮推理/参数明细见round5_capacity.csv，capacity.csv保留历轮测量。
 分配参数仍保留同构模块以控制随机初始化；V参数冻结且V专属路由实际禁用；来源准备/消息子模块由运行时哨兵确认跳过。公共前端跨变量signature模块、H检索及原型更新仍保留。训练可更新参数、推理调用参数和实测时间分开报告，不作为容量匹配的纯机制因果实验。
 同一GPU、FP32 eval、batch128，1次预热和5次同步计时；每模型/阶段均报告。历史显存仅有累计阶段峰值时明确标注，不能冒充独立阶段峰值。
 2023的历史输入顺序/掩码由同一封存源码和协议支撑，历史实际输入哈希未记录；2024/2025逐轮核验与配对A0实际输入一致。
