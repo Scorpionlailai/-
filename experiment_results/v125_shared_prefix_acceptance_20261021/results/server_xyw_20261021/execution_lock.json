@@ -8,7 +8,8 @@
     "run_acceptance.py": "00347dc3f39e2351c1985eb1ce70abdd817c098a7ea0c69919d8bf8c85b1a184",
     "test_acceptance_utils.py": "bad1ecad191372cb9de8472fedd245ba52183aed7821e3371571dccb517fc56d",
     "test_waiter.py": "7a0979e44dc0580a207336c8ede4231901637c48616e2d8bf5f3588a833c61ab",
-    "wait_and_publish.py": "438a80b3c38b4b5a8e2111894a2045a0be9289107b35b16ed0976e5e45cdbc77"
+    "wait_and_publish.py": "438a80b3c38b4b5a8e2111894a2045a0be9289107b35b16ed0976e5e45cdbc77",
+    "priority_dispatch.py": "7969106e941fadb40297cf044ccfaeae6154a5b1e1028552f63561c284228e60"
   },
   "external_files": {
     "/home/xyw/paper-e23-v125-ablation/E24/integrations/v125_ablation/common.py": "52eb672c015d2753d0b2f0fa330202b4efa403d84f74d36a5bc7dfab9dd76f33",
@@ -39,7 +40,9 @@
     "package_helper_unit_tests.txt": "e28348f298153fd9bb66c0b476b6bb90e6f3d02f437d279acc268a89bc5c73e3",
     "path-map.json": "20eef1a1c7f9d42959bef5fe38d2cb92f30170c518eae603faec8b8ea50bff02",
     "reverified-assets.json": "b3f21b680f9ba5b24d40ed33311e92e89e06611dbd7e7864cf6146afeeaa9fa4",
-    "verified-assets.json": "b3f21b680f9ba5b24d40ed33311e92e89e06611dbd7e7864cf6146afeeaa9fa4"
+    "verified-assets.json": "b3f21b680f9ba5b24d40ed33311e92e89e06611dbd7e7864cf6146afeeaa9fa4",
+    "pre_priority_execution_lock.json": "e33811a1f1235cccbbba7b4d3b2ce77fc31cd5d8f5f9c4c85e7da790bafb03b8",
+    "priority_amendment.json": "0b4f09986994608860edbab3a2ae3a5c83634fa031ede82cf9b37dffd89c5090"
   },
   "gates": {
     "exact_max_tensor_difference": 0,
@@ -60,5 +63,15 @@
     "no other variants or seeds",
     "no changes to original A4 or ablation assets",
     "no automatic rerun"
-  ]
+  ],
+  "scheduling_amendment": {
+    "authorized_by": "User: \u4f60\u5148\u628a\u8981\u4e0a\u4f20\u7684\u4efb\u52a1\u4f18\u5148\u5904\u7406\u4e86",
+    "registered_unix": 1792557170.481154,
+    "change": "Schedule acceptance before A4 completion. Pause A4 at committed epoch boundaries, archive/verify resumable states, release GPU contexts, run existing one-shot acceptance and upload, then restart original sealed A4 supervisor from its checkpoints.",
+    "numerical_runner_changed": false,
+    "all_original_thresholds_unchanged": true,
+    "total_acceptance_optimizer_updates": 850,
+    "parent_execution_lock_sha256": "e33811a1f1235cccbbba7b4d3b2ce77fc31cd5d8f5f9c4c85e7da790bafb03b8",
+    "priority_dispatch_sha256": "7969106e941fadb40297cf044ccfaeae6154a5b1e1028552f63561c284228e60"
+  }
 }
