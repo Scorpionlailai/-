@@ -11,9 +11,9 @@ A0三seed沿用基准；A5 seed2023粗/64/256严格审计后复用，新增2024/
 |划分|阶段|范围|变体|seed数|MSE均值±训练SD|MAE均值±训练SD|
 |---|---|---|---|---|---|---|
 |validation|coarse|full96|A0|3|0.108396 ± 0.001010|0.166040 ± 0.001062|
-|validation|coarse|full96|A5|1|0.109391（仅1次）|0.167450（仅1次）|
+|validation|coarse|full96|A5|3|0.108427 ± 0.000836|0.165972 ± 0.001280|
 |validation|coarse|recent32|A0|3|0.109811 ± 0.000980|0.169539 ± 0.001039|
-|validation|coarse|recent32|A5|1|0.111003（仅1次）|0.170847（仅1次）|
+|validation|coarse|recent32|A5|3|0.109783 ± 0.001079|0.169206 ± 0.001422|
 |validation|calibration64|full96|A0|3|0.100860 ± 0.001471|0.156293 ± 0.001462|
 |validation|calibration64|full96|A5|1|0.101676（仅1次）|0.157224（仅1次）|
 |validation|calibration64|recent32|A0|3|0.103680 ± 0.001364|0.159073 ± 0.001638|
@@ -45,16 +45,16 @@ A0三seed沿用基准；A5 seed2023粗/64/256严格审计后复用，新增2024/
 |validation|calibration64|full96|mse|1|0.000371|0.367%|[0.000371]|
 |validation|calibration64|recent32|mae|1|0.000597|0.375%|[0.000597]|
 |validation|calibration64|recent32|mse|1|0.000321|0.309%|[0.000321]|
-|validation|coarse|full96|mae|1|0.000278|0.166%|[0.000278]|
-|validation|coarse|full96|mse|1|-0.000171|-0.156%|[-0.000171]|
-|validation|coarse|recent32|mae|1|0.000157|0.092%|[0.000157]|
-|validation|coarse|recent32|mse|1|0.000061|0.055%|[6.1e-05]|
+|validation|coarse|full96|mae|3|-0.000068|-0.041%|[0.000278, 0.000198, -0.000679]|
+|validation|coarse|full96|mse|3|0.000031|0.028%|[-0.000171, 4.3e-05, 0.00022]|
+|validation|coarse|recent32|mae|3|-0.000333|-0.196%|[0.000157, -0.000248, -0.000908]|
+|validation|coarse|recent32|mse|3|-0.000028|-0.026%|[6.1e-05, 0.000173, -0.000319]|
 
 启动监控曾保留调用历史而导致首轮前OOM；两组未产生粗checkpoint，失败日志及成本保存在provenance/round6/monitor_recovery.json及round6_overhead_resources.csv。仅修改监控包装并做连续批次/对照预检，随后按原seed从同一初始化重启，正式仍为100轮/8500更新。原登记3bdc426a与其旧源码保留在Git历史；不把这次实现问题当作A5效果。
 
 ## 资源与核验
 
-当前新增训练成本：0.000 GPU小时（复用成本另列）。资源明细见round6_resources.csv，本轮推理/参数明细见round6_capacity.csv，capacity.csv保留历轮测量。
+当前新增训练成本：4.151 GPU小时（复用成本另列）。资源明细见round6_resources.csv，本轮推理/参数明细见round6_capacity.csv，capacity.csv保留历轮测量。
 保持同构分配参数和公共参数初始化。质量输出在融合处被常量替换，其上游投影可能不再收到主损失梯度；内部消息及检索路径仍训练。分配参数、阶段可训练参数、推理调用参数和实测时间分别报告，不包装为严格机制因果效应。
 同一GPU、FP32 eval、batch128，1次预热和5次同步计时；每模型/阶段均报告。历史显存仅有累计阶段峰值时明确标注，不能冒充独立阶段峰值。
 2023的历史输入顺序/掩码由同一封存源码和协议支撑，历史实际输入哈希未记录；2024/2025逐轮核验与配对A0实际输入一致。
