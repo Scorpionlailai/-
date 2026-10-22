@@ -54,13 +54,13 @@ def monitor_quality(model,detailed=False):
             expert=getattr(model.core,name);original=expert.from_cache
             def read(*args,_name=name,_original=original,**kw):
                 result=_original(*args,**kw);raw[_name]=result;count('internal_expert_'+_name);return result
-            stack.enter_context(patch.object(expert,'from_cache',side_effect=read))
+            stack.enter_context(patch.object(expert,'from_cache',new=read))
             handles.append(expert.quality_projector.register_forward_pre_hook(lambda *a,_name=name:count('internal_quality_projector_'+_name)))
             handles.append(model.core.point_router.quality[name].register_forward_pre_hook(zero_hook('point_router_quality_zero_'+name)))
             handles.append(model.core.point_candidate_readout.quality[name].register_forward_pre_hook(zero_hook('point_candidate_quality_zero_'+name)))
         original=model.core.router.expert_delta
         def delta(inputs,name,item):item_check(name,item);return original(inputs,name,item)
-        stack.enter_context(patch.object(model.core.router,'expert_delta',side_effect=delta))
+        stack.enter_context(patch.object(model.core.router,'expert_delta',new=delta))
         handles.append(model.core.router.shared_score.register_forward_pre_hook(shared_score))
         handles.append(model.core.point_router.register_forward_pre_hook(point_router))
         handles.append(model.core.point_candidate_readout.register_forward_hook(point_candidates))
@@ -94,7 +94,7 @@ def isolation(model,data,device,path):
             expert=getattr(model.core,name);original=expert.from_cache
             def capture(*args,_name=name,_original=original,**kw):
                 expert_inputs[_name]=(args,kw);return _original(*args,**kw)
-            stack.enter_context(patch.object(expert,'from_cache',side_effect=capture))
+            stack.enter_context(patch.object(expert,'from_cache',new=capture))
         result,_,_=model.output(visible,obs,starts)
     assert all(counts.get('internal_expert_'+name,0)>0 for name in NAMES)
     assert all(counts.get('point_candidate_quality_zero_'+name,0)>0 for name in NAMES)
@@ -115,7 +115,7 @@ def isolation(model,data,device,path):
                 item=_original(*args,**kw)
                 return replace(item,quality=torch.full_like(item.quality,123.),
                     candidates=replace(item.candidates,quality=torch.full_like(item.candidates.quality,321.)))
-            stack.enter_context(patch.object(getattr(model.core,name),'from_cache',side_effect=poison))
+            stack.enter_context(patch.object(getattr(model.core,name),'from_cache',new=poison))
         poisoned,_,_=model.output(visible,obs,starts)
     assert torch.equal(poisoned.explicit.standardized_sequence,result.explicit.standardized_sequence)
     # No-source protection: all experts unavailable and all candidate masks false must leave only the legal null token.
@@ -126,7 +126,7 @@ def isolation(model,data,device,path):
                 item=_original(*args,**kw);c=item.candidates
                 return replace(item,message=torch.zeros_like(item.message),available=torch.zeros_like(item.available),
                     candidates=replace(c,valid=torch.zeros_like(c.valid),weights=torch.zeros_like(c.weights)))
-            stack.enter_context(patch.object(getattr(model.core,name),'from_cache',side_effect=unavailable))
+            stack.enter_context(patch.object(getattr(model.core,name),'from_cache',new=unavailable))
         null_result,_,_=model.output(visible,obs,starts)
     assert not null_result.router.available[...,1:].any() and not null_result.point_candidate_attention['valid'].any()
     assert torch.equal(null_result.point_candidate_attention['weights'][...,0],torch.ones_like(null_result.point_candidate_attention['weights'][...,0]))

@@ -183,10 +183,17 @@ def _build(coarse_milestone,final):
         intervention='original A5:explicit fusion quality fixed0;all experts/internal quality/ranking/candidate validity retained;not uniform fusion',feature_inventory_sha256=file_sha256(OUT/'quality_features.json'),source_audit_sha256=file_sha256(OUT/'audit.json'),history_pairing_limit=audit['historical_input_pairing_evidence'])
     write_json(DEST/'protocol.json',protocol)
     prov=DEST/'provenance/round6';prov.mkdir(parents=True,exist_ok=True)
-    for name in ('audit.json','design_lock.json','calibration_sources.json','calibration_sources_lock.json','all_checkpoint_lock.json','final_verification.json','capacity_complete.json','A1_A4_frozen_manifest.json','quality_features.json','preflight_diagnostic_fix.json','source_review.json'):
+    for name in ('audit.json','design_lock.json','registration_publication.json','recovery_publication.json','launch.json','calibration_sources.json','calibration_sources_lock.json','all_checkpoint_lock.json','final_verification.json','capacity_complete.json','A1_A4_frozen_manifest.json','quality_features.json','preflight_diagnostic_fix.json','source_review.json','memory_probe.json','monitor_recovery.json'):
         if (OUT/name).exists():shutil.copyfile(OUT/name,prov/name)
     for name in ('quality_features.md',):
         if (OUT/name).exists():shutil.copyfile(OUT/name,prov/name)
+    if (OUT/'monitor_recovery.json').exists():
+        recovery=json.loads((OUT/'monitor_recovery.json').read_text())
+        overhead=[dict(dataset='PAMAP2',scene='sr015_bl8',variant=x['variant'],training_seed=x['training_seed'],phase=x['phase'],seconds=x['training_seconds'],completed_epochs=0,updates='not recorded beforeOOM;noresume/checkpoint;discarded',max_allocated_gib=x['resources']['max_allocated_gib'],included_in_formal100epochs=False) for x in recovery['failed_attempts']]
+        if (OUT/'memory_probe.json').exists():
+            probe=json.loads((OUT/'memory_probe.json').read_text())
+            overhead.extend(dict(dataset='PAMAP2',scene='sr015_bl8',variant='A5',training_seed=2024,phase='discarded_memory_preflight_'+k,seconds=probe[k]['seconds'],updates=12,completed_epochs=0,max_allocated_gib=probe[k]['resources']['max_allocated_gib'],included_in_formal100epochs=False) for k in ('control','repeat_control','monitored'))
+        csv_write(DEST/'round6_overhead_resources.csv',overhead)
     for seed in (2023,2024,2025):
         for phase in ('coarse','calibration64','calibration256','coarse_evaluation','calibration64_evaluation','calibration256_evaluation','ensemble_evaluation'):
             evidence=OUT/'A5'/f'seed_{seed}'/f'{phase}_quality_execution.json'
@@ -253,6 +260,8 @@ def _build(coarse_milestone,final):
                                 lines.append(f"|{split}|{phase}|{family}:{group}|{metric}|{a:.6f}|{b:.6f}|{b-a:.6f}|{[round(x['A5_minus_A0'],6) for x in available]}|")
                             else:lines.append(f'|{split}|{phase}|{family}:{group}|{metric}|空组|空组|空组|[]|')
     newcost=sum(float(x['incremental_training_seconds_round6']) for x in newresources)/3600
+    if (OUT/'monitor_recovery.json').exists():
+        lines+=['','启动监控曾保留调用历史而导致首轮前OOM；两组未产生粗checkpoint，失败日志及成本保存在provenance/round6/monitor_recovery.json及round6_overhead_resources.csv。仅修改监控包装并做连续批次/对照预检，随后按原seed从同一初始化重启，正式仍为100轮/8500更新。原登记3bdc426a与其旧源码保留在Git历史；不把这次实现问题当作A5效果。']
     lines+=['','## 资源与核验','',f'当前新增训练成本：{newcost:.3f} GPU小时（复用成本另列）。资源明细见round6_resources.csv，本轮推理/参数明细见round6_capacity.csv，capacity.csv保留历轮测量。',
         '保持同构分配参数和公共参数初始化。质量输出在融合处被常量替换，其上游投影可能不再收到主损失梯度；内部消息及检索路径仍训练。分配参数、阶段可训练参数、推理调用参数和实测时间分别报告，不包装为严格机制因果效应。',
         '同一GPU、FP32 eval、batch128，1次预热和5次同步计时；每模型/阶段均报告。历史显存仅有累计阶段峰值时明确标注，不能冒充独立阶段峰值。',

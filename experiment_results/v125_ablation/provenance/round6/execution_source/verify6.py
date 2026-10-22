@@ -13,7 +13,7 @@ from policy import frozen_hash,tensor_hash
 
 
 def verify():
-    audit=check_lock();barrier=require_actual_barrier();sources=json.loads((OUT/'calibration_sources.json').read_text());predictions=0;strata=0;paired_epochs=0
+    audit=check_lock();assert json.loads((OUT/'memory_probe.json').read_text())['passed'];barrier=require_actual_barrier();sources=json.loads((OUT/'calibration_sources.json').read_text());predictions=0;strata=0;paired_epochs=0
     base=list(csv.DictReader(open(OUT/'baseline_tables/per_mask.csv')))
     index={(int(x['training_seed']),x['split'],int(x['mask_seed']),x['phase'],x['section']):x for x in base if x['variant']=='A0'}
     for seed in (2023,2024,2025):
@@ -108,6 +108,6 @@ def verify():
         historical_A5_seed2023_audit_passed=True,baseline_A0_A1_A2_A3_A4_results_unchanged=True,own_frozen_prefixes_libraries_verified=True,
         source_initializations_and_constant_explicit_quality_verified=True,selection_and_actual_updates_verified=True,
         aggregation_and_A5minusA0_sign_independently_verified=True,inference_capacity_paths_verified=24,
-        no_Stage2_or_other_variants=True,audit_sha256=file_sha256(OUT/'audit.json'),all_checkpoint_lock_sha256=file_sha256(OUT/'all_checkpoint_lock.json'))
+        monitoring_memory_regression_passed=True,discarded_failure_logs_preserved=True,no_Stage2_or_other_variants=True,audit_sha256=file_sha256(OUT/'audit.json'),all_checkpoint_lock_sha256=file_sha256(OUT/'all_checkpoint_lock.json'))
     write_json(OUT/'final_verification.json',result);return result
 if __name__=='__main__':print(json.dumps(verify()))

@@ -1,7 +1,7 @@
 {
   "A1_A4_frozen_manifest_sha256": "2948bec4245b8dea52d7fd3d31cfda6d2a903bb63e04245f27f0133cc3911523",
   "A5_definition": "Original A5 ONLY: fusion ExpertEvidence.quality=0 after internal generation, CandidateEvidence.quality=0 at point readout. All experts, internal quality/ranking/message/candidate weights, availability/native validity/null masks retained. Content-driven fusion remains adaptive;not uniform fusion.",
-  "audit_sha256": "fa4b4c207cb9b0a80d21e2cc15be8b6ff5c79621e91e32c2bb5a42782a0da38a",
+  "audit_sha256": "b89d5ca44a7b2a04c3d945d9708c91b8f81eb5be1de7e6e262224f36b1171e07",
   "baseline_commit": "50a2eb84dbeeec3e559a1f551091bdc034fb06ac",
   "baseline_tables": {
     "README.md": "2f3be7319aa3bbc65f4500317529d1c510b6032284eb74cec470516faa4d7ba4",
@@ -80,12 +80,33 @@
     "large_assets": false
   },
   "quality_features_sha256": "cb46141a8271dcf6594ac7728706ef5645c956b0c5c2e46c7bcd0ce56c9eabf4",
-  "registered_unix": 1792670035.5134757,
+  "registered_evidence": {
+    "A1_A4_frozen_manifest.json": "2948bec4245b8dea52d7fd3d31cfda6d2a903bb63e04245f27f0133cc3911523",
+    "memory_probe.json": "d50ad1b653900efa445e24a69eb6c9678aa1530c6eac27dd678bd70d8583c5e5",
+    "monitor_recovery.json": "c8bf8f9e2adfbf7edaabad69d9d730487ae1b5b0789fb21778d8c94b4a9bbdba",
+    "quality_features.json": "cb46141a8271dcf6594ac7728706ef5645c956b0c5c2e46c7bcd0ce56c9eabf4",
+    "source_review.json": "c8262cab149c4df356f95b26c1def903c5b7547359b51b5ce05960c509a2a44a"
+  },
+  "registered_unix": 1792670418.7930033,
+  "revision": 2,
   "scene": "sr015_bl8",
   "source_lock_sha256": "0d35bcca5efe3c0a93eec970a8749a3b9cea024361517acff604af784d0cb62e",
-  "source_review_sha256": "25fae28ea31e6a7e2479b0fe5b005737af467a84aeb35e6cc709fd3aac91b151",
+  "source_review_sha256": "c8262cab149c4df356f95b26c1def903c5b7547359b51b5ce05960c509a2a44a",
+  "supersedes_registration_commit": "3bdc426a4c91165218c69067c656cbbb9aca65b1",
   "tests": {
+    "memory_preflight": {
+      "control_steps": 12,
+      "discarded_updates": 36,
+      "final5_allocation_bytes": 34062336,
+      "maximum_loss_difference": 2.384185791015625e-07,
+      "monitored_steps": 12,
+      "original_determinism_settings_unchanged": true,
+      "passed": true,
+      "repeat_control_steps": 12
+    },
     "review": {
+      "delta_review_passed": true,
+      "delta_scope": "Direct function wrappers eliminate Mock call history; CPU weakreference regression; repeated12batch control/memory probe; results-only baseline descendants retain sealed source lock",
       "minor_findings_resolved": [
         "MainMSE gradient checked globally; expert/module gradients from full loss wording corrected",
         "Unit test metadata updated4passed"
@@ -98,23 +119,25 @@
       ],
       "reviewer": "read_only_review_a5_setup",
       "scope": "all executiontools, original sealed A5+trainingworkers, exactintervention/retainedinternalranking/masks, ownprefixlibrary/init/order/masks/barrier/stats/reportviability",
-      "unit_tests": "4passed"
+      "unit_tests": "5passed",
+      "updated_unix": 1792670418.7926855
     },
     "runtime": "Four original paths actualbatch128: qualityzero at allfusionconsumers; fixedinput internalexpert replay invariant; qualityreportpoison invariant; no-source nullprotection; hidden-truth perturbation invariant; originalobservations unchanged",
     "source_and_asset_reuse": "3original A5_2023phases100epochs8500steps/Adam/selection/checkpoint+library;initialization3seedsmatchA0",
     "training_preflight": "1 discarded original-loss optimizerupdate; realbatch128主MSEnonzero finite gradients and allthreeexpert/publicfront full-loss gradients; Hretrievalloss retained",
-    "unit": "4passed: ninecheckpointbarrier;seedfirstpairedaggregation;invalidattention/NaN/normalization;resumeevidencepreservation"
+    "unit": "5passed: barrier;seedfirstpairedaggregation;invalidattention/NaN/normalization;resumeevidencepreservation;oldinputweakreferencefreed"
   },
   "tools": {
-    "audit6.py": "7abaed6e62e8c694dd6d7da9389a6c2330e95f80981692e67e69ab2704abe130",
-    "export6.py": "c0536f851faf7923b2c29c2babc9839695329a3e2ced3c03559cab2bc05f7232",
+    "audit6.py": "9060eac2ff602d1f4291e8548092d6294bc59b2e3c4e8183eee1f7834be7b68e",
+    "export6.py": "16f1d8402313dfde9cda245ef0fe24ab5f04eb77a57c36eb507ff2309748ecf3",
+    "memory_probe6.py": "c442a21def4de4673af3e4efef2503412fc6101286340582f3e52c84c655f4a6",
     "policy6.py": "5b24dc18de72fb7dccbf652e22fa39a7cff4c5c0c441e989765c9a6026fc7902",
-    "quality6.py": "d29ac4ac87af328704a6b5cb965e5b3815a62264e0c4fc7440cc0343114aace5",
-    "run6.py": "c4274da01d3c5affc05be73488ca2e5db254e69ec1e4580351b83d45ae6002f6",
+    "quality6.py": "4cd355bbbfc9d8930714c15db883bcee784ed5d0c8e7b185ac5972ade36c725c",
+    "run6.py": "aed34c9ea00ffdde1f89be408163965566ef511043b50f7d6b15d0f469e29b14",
     "supervisor6.py": "b59aa715049e0f9688993c06cdb6927b0a2d65689cd3678aeba359739bcdc841",
     "test_policy6.py": "013ad8ce3aac212b832bdca29fbed2a4a0ce8d4c90fee3492059135ff55a4482",
-    "test_quality6.py": "2fcac492f413e59c70ad94bcc70e296e03aece04ecc326178a0eedbca1e780ac",
-    "verify6.py": "da7817083cc5d02e51c83f7e35c14a97b93e7b00f595daee2af5f3bd32ce4246"
+    "test_quality6.py": "ef9fd9d75a80e678b79201b2f4d11173322e2d5fc27e32d898886bf85f7f09e3",
+    "verify6.py": "1860d969d359fcc697d42ab57d2c0bcdbb8486d3ffa2bc68505147596026e255"
   },
   "train_batch": 128,
   "training_mask_seed": 2023,

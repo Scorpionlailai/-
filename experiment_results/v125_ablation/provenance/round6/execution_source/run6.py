@@ -23,6 +23,7 @@ def check_lock():
     assert file_sha256(OUT/'audit.json')==lock['audit_sha256']
     for name,digest in lock['tools'].items():assert file_sha256(OUT/'tools'/name)==digest,('changed round6 tool',name)
     for name,digest in lock['external_tools'].items():assert file_sha256(Path(name))==digest,('changed reused source',name)
+    for name,digest in lock.get('registered_evidence',{}).items():assert file_sha256(OUT/name)==digest,('changed registered evidence',name)
     for name,digest in lock['baseline_tables'].items():assert file_sha256(OUT/'baseline_tables'/name)==digest
     return json.loads((OUT/'audit.json').read_text())
 

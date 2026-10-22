@@ -22,7 +22,9 @@ from quality6 import isolation,monitor_quality
 
 def main():
     torch.set_num_threads(4);verify_lock(STUDY)
-    assert subprocess.run(['git','rev-parse','HEAD'],cwd=REPO,capture_output=True,text=True,check=True).stdout.strip()==BASE
+    subprocess.run(['git','merge-base','--is-ancestor',BASE,'HEAD'],cwd=REPO,check=True)
+    changed=subprocess.run(['git','diff','--name-only',BASE,'HEAD'],cwd=REPO,capture_output=True,text=True,check=True).stdout.splitlines()
+    assert all(x.startswith('experiment_results/v125_ablation/') for x in changed)
     base=OUT/'baseline_tables';base.mkdir(exist_ok=True)
     names=['README.md','protocol.json','summary.csv','per_seed.csv','per_mask.csv','stratified.csv','resources.csv',
         'position_dispersion.csv','contributions_per_seed.csv','contributions_summary.csv','stratified_per_seed.csv','stratified_summary.csv','stratified_contributions_per_seed.csv','capacity.csv','round3_paired_differences.csv','round3_paired_summary.csv','round3_resources.csv','round3_stratified_differences.csv','round4_paired_differences.csv','round4_paired_summary.csv','round4_resources.csv','round4_stratified_differences.csv','round4_capacity.csv','round5_capacity.csv','round5_paired_differences.csv','round5_paired_summary.csv','round5_resources.csv','round5_stratified_differences.csv','source_evidence_comparison.csv']

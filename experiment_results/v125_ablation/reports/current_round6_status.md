@@ -50,6 +50,8 @@ A0三seed沿用基准；A5 seed2023粗/64/256严格审计后复用，新增2024/
 |validation|coarse|recent32|mae|1|0.000157|0.092%|[0.000157]|
 |validation|coarse|recent32|mse|1|0.000061|0.055%|[6.1e-05]|
 
+启动监控曾保留调用历史而导致首轮前OOM；两组未产生粗checkpoint，失败日志及成本保存在provenance/round6/monitor_recovery.json及round6_overhead_resources.csv。仅修改监控包装并做连续批次/对照预检，随后按原seed从同一初始化重启，正式仍为100轮/8500更新。原登记3bdc426a与其旧源码保留在Git历史；不把这次实现问题当作A5效果。
+
 ## 资源与核验
 
 当前新增训练成本：0.000 GPU小时（复用成本另列）。资源明细见round6_resources.csv，本轮推理/参数明细见round6_capacity.csv，capacity.csv保留历轮测量。
