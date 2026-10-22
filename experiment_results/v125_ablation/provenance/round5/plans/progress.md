@@ -11,3 +11,5 @@ Task1: complete — A3_2023 all300epochs/25500updates/checkpoints/protocol/libra
 Task2 setup: complete — unchangedworkers reused; first exporter preserved every prior numerical column and23baselinearchives. RED→GREEN policy2tests andcomparison3tests green; entirebranch read-only reviewer no remaining important findings.
 Task3 implementation: complete — strict64contrast report generator ready, finalactualdata generation pendingA3completion.
 Remaining: commitandlaunch, verifyfirstepoch, automaticoriginaltraining/eval/resource/finalgatesandpublish. No new phases beyondauthorizedreplication.
+
+2026-10-22 recovery: Both newcoarse100epochs completed with100actualpairedinputhashes. Original supervisor stopped at milestoneGitHubpush because localhostproxy unavailable; no calibration/test newly run. Failure preserved andsource/checkpoints reverified. Resume original supervisor only after milestonepublication succeeds; markers prevent coarse retraining.
