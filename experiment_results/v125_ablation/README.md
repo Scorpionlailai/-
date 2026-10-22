@@ -1,3 +1,20 @@
+# v125消融：第六轮A5显式融合质量置常量复验
+
+基准commit：`50a2eb84dbeeec3e559a1f551091bdc034fb06ac`。当前范围PAMAP2 0.15/8、A0/A5各3seed、粗/64/256/固定双校准。
+**当前进度**：运行中；先全部粗阶段、再校准，所有checkpoint锁定后统一新测试/分层。
+**实现与复用**：全部专家及公共前端保持；仅原A5规定的显式融合质量置0，内部质量/排序/候选及合法掩码保持。内容权重仍可变化，不称均匀融合。A0复用基准结果；A5 seed2023严格审计后复用，新增2024/2025。
+**判断规则**：A5−A0为正表示显式质量信息有益，负表示置常量更好；不隐藏负结果和跨阶段反转，不宣称容量匹配因果效应或三seed显著性。
+**文件更新**：原A0/A1/A2/A3/A4表格保留并追加A5；A1—A4以50a2eb84封存，不再追加训练；round6_paired_*.csv为三对差值/汇总，round6_stratified_differences.csv为全部分层差值；round6_resources.csv区分本轮新增与复用成本，round6_capacity.csv为本轮同GPU推理计时/参数/显存；capacity.csv追加保留历史。
+**协议变化**：仅新增A5多seed复验及全checkpoint锁定后测试的调度约束；原数据、掩码、损失、学习率、选模和0.5/0.5均不变。历史输入哈希缺失和历史累计显存限制已注明。
+**待办**：完成新增A5粗权重、校准、锁定、统一回放、资源测量及最终第六轮报告上传。
+A1—A4封存；A6/A7及其他数据集暂停；Stage2未启动。完整历史报告保留，未上传权重、缓存或数据。
+[已封存A1—A4来源证据汇总](reports/source_evidence_A1_A2_A3_A4_20261021.md)
+[第六轮报告](reports/current_round6_status.md) · [第二轮校准报告](reports/round2_calibration_confirmation_20261020.md)
+
+---
+
+以下保留上一轮审核记录：
+
 # v125消融：第五轮A3去V复验
 
 基准commit：`171f074157264df7f228a5b54de658e99c6af589`。当前范围PAMAP2 0.15/8、A0/A3各3seed、粗/64/256/固定双校准。
@@ -71,6 +88,3 @@ A2/A3/A5–A7及其他数据集暂停；Stage2未启动。完整历史报告保�
 **上传边界**：仅文本、CSV、JSON及执行脚本。权重、数据、预测缓存留在实验服务器；源码hash和checkpoint/library hash足以审计来源，完整复现仍需对应本地资产。
 
 [当前校准报告](reports/current_calibration_status.md) · [粗阶段三seed报告](reports/round1_coarse_three_seeds_20261020.md) · [最初只读诊断](reports/round0_readonly_diagnosis_20261019.md)
-
-
-

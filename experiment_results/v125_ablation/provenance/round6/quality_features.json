@@ -1,0 +1,198 @@
+{
+  "definition": "Original sealed A5; same expert modules and source policies; only explicit quality operands at these fusion consumers fixed0",
+  "features": [
+    {
+      "name": "H.ExpertEvidence.quality[0:64]",
+      "dimension": 64,
+      "original_role": "Weighted raw quality projected to learned64D expert reliability used in preview/final/point fusion",
+      "constant": 0,
+      "replace_at": "IterativeTVHController.neutral after original from_cache",
+      "consumers": [
+        "ExpertRouter.preview_gate/expert_logit (T/V)",
+        "ExpertRouter.route_precomputed.shared_score (H/V/T)",
+        "PointEvidenceRouter.quality[expert]"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "H.CandidateEvidence.quality[0]=key_similarity",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[H] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "H.CandidateEvidence.quality[1]=negative_visible_error",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[H] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "H.CandidateEvidence.quality[2]=top_two_similarity_margin",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[H] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "H.CandidateEvidence.quality[3]=target_observed_fraction",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[H] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "H.CandidateEvidence.quality[4]=log1p_group_support",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[H] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "V.ExpertEvidence.quality[0:64]",
+      "dimension": 64,
+      "original_role": "Weighted raw quality projected to learned64D expert reliability used in preview/final/point fusion",
+      "constant": 0,
+      "replace_at": "IterativeTVHController.neutral after original from_cache",
+      "consumers": [
+        "ExpertRouter.preview_gate/expert_logit (T/V)",
+        "ExpertRouter.route_precomputed.shared_score (H/V/T)",
+        "PointEvidenceRouter.quality[expert]"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "V.CandidateEvidence.quality[0]=selected_prior",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[V] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "V.CandidateEvidence.quality[1]=source_observed_fraction",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[V] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "V.CandidateEvidence.quality[2]=overlap_times_consistency",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[V] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "V.CandidateEvidence.quality[3]=signed_lag",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[V] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "T.ExpertEvidence.quality[0:64]",
+      "dimension": 64,
+      "original_role": "Weighted raw quality projected to learned64D expert reliability used in preview/final/point fusion",
+      "constant": 0,
+      "replace_at": "IterativeTVHController.neutral after original from_cache",
+      "consumers": [
+        "ExpertRouter.preview_gate/expert_logit (T/V)",
+        "ExpertRouter.route_precomputed.shared_score (H/V/T)",
+        "PointEvidenceRouter.quality[expert]"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "T.CandidateEvidence.quality[0]=source_observed_fraction",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[T] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "T.CandidateEvidence.quality[1]=relative_patch_distance",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[T] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "T.CandidateEvidence.quality[2]=visible_consistency",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[T] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "T.CandidateEvidence.quality[3]=target_observed_fraction",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[T] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    },
+    {
+      "name": "T.CandidateEvidence.quality[4]=is_local",
+      "original_role": "Original per-candidate explicit quality for point readout key/value encoding",
+      "constant": 0,
+      "replace_at": "PointCandidateReadout.forward after legality masking, before quality[expert] linear",
+      "consumers": [
+        "PointCandidateReadout.quality[T] then key/value projections"
+      ],
+      "internal_raw_quality_preserved": true
+    }
+  ],
+  "retained_signals": [
+    "candidate weights from original internal ranking",
+    "expert messages/candidate messages including internally used quality features",
+    "query/latent/content embeddings",
+    "point visible context and coarse values",
+    "query observation geometry/rho",
+    "candidate/source availability and native validity",
+    "null token/no-source protection",
+    "overlap disagreement and repair values",
+    "source/candidate counts and original selection policy"
+  ],
+  "nuance": "Same operands mean raw candidate values/ranking preserved at each intervention and fixed-input expert replay; different A0/A5 trained parameters and quality-altered sequential states may naturally yield different contextual messages. Not candidate-pool redesign, capacity-matched causal effect or uniform fusion.",
+  "leftover_quality_consumers": "PointEvidenceRouter gets already-zeroed ExpertEvidence.quality; OverlapConfidence has no raw explicit-quality input but retains content/weights/availability/disagreement. Calibrators consume repairs/router latents/visiblepoints/statistics, not raw quality directly. Original internal cand.weights and message-embedded raw quality remain deliberately, so this is not total information erasure.",
+  "biases": "Zero is the fixed input; downstream learned Linear biases remain in original A5, so projected constants can differ across experts and training. We do not zero parameters or force uniform weights."
+}
