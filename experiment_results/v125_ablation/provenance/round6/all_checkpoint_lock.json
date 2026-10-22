@@ -1,0 +1,520 @@
+{
+  "baseline_commit": "50a2eb84dbeeec3e559a1f551091bdc034fb06ac",
+  "calibration_sources_sha256": "4763bbbc1140d91338a47fbd7d8c997600f7230010eeadcfa7b44ef0244c7450",
+  "checkpoint_hashes": {
+    "A5_2023_calibration256": "75d073983eb68a66cd72138d0e30c45116bb7f72e9ed533849265871adacfcab",
+    "A5_2023_calibration64": "82c53dc78c9b17e362618f7a59906dcd10ea57c0e8b0648aba0924d0bbad0654",
+    "A5_2023_coarse": "d8a60f3b9bf9b683b7a2dba0ca9b19d14fa4973bd30e69a4cff53d35ed04cb85",
+    "A5_2024_calibration256": "69ea363e490c279616c41c5a80d634a8366ba2a66154ae39dc90152f07fed689",
+    "A5_2024_calibration64": "4f155f7dd13931cf0a7071a0fb536d44dfcac2b90b0df99ca83d564328664f9c",
+    "A5_2024_coarse": "a9fa06362da07eaf919b75af2b753f510d4029470d5abc797272cb59dca14079",
+    "A5_2025_calibration256": "34a2c18a3b806c55bb78aa683baa9bc42dd58d7573b569ab7a12f0428504ed15",
+    "A5_2025_calibration64": "0faa7e41b42fedab662c5e2ebe18e4366790ad4373d5cae8805a8b9c2c41067d",
+    "A5_2025_coarse": "6b83186c93cf8ce8818ea2cd0737d318b4016e84f5daea15b1d10e515b0c9d7a"
+  },
+  "complete": true,
+  "details": {
+    "A5_2023_calibration256": {
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A5/seed_2023/stage1/calibration256_selected.pt",
+      "checkpoint_sha256": "75d073983eb68a66cd72138d0e30c45116bb7f72e9ed533849265871adacfcab",
+      "curve_sha256": "363197cb7b4c7bb7f498250345c4bec06e76e639dda466c7884405dd91bd1cf5",
+      "epochs": 100,
+      "optimizer_steps": 8500,
+      "resources": {
+        "max_allocated_gib": 19.643422603607178,
+        "max_reserved_gib": 20.29296875,
+        "peak_memory_scope": "historical cumulative stage1 allocator; independent phase peak unavailable"
+      },
+      "resume_sha256": "75cdbee571045390a8ece535f155aee00e78c390f48208b10f0743840f456f2f",
+      "selected_epoch": 23,
+      "selection_rule": "validation_full96_mae",
+      "trainable_parameters": 1252562,
+      "training_seconds": 1933.9113072818145,
+      "validation": {
+        "full96": {
+          "absolute_error_sum": 566238.6891420407,
+          "coordinates": 3648521,
+          "mae": 0.15519677401940146,
+          "mse": 0.10149646135184238,
+          "squared_error_sum": 370311.9706678853
+        },
+        "mask_seed": 2021,
+        "recent32": {
+          "absolute_error_sum": 192052.04473139334,
+          "coordinates": 1216689,
+          "mae": 0.15784809818400047,
+          "mse": 0.10411386398159551,
+          "squared_error_sum": 126674.19305390347
+        },
+        "split": "validation",
+        "windows": 1306
+      }
+    },
+    "A5_2023_calibration64": {
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A5/seed_2023/stage1/calibration64_selected.pt",
+      "checkpoint_sha256": "82c53dc78c9b17e362618f7a59906dcd10ea57c0e8b0648aba0924d0bbad0654",
+      "curve_sha256": "363197cb7b4c7bb7f498250345c4bec06e76e639dda466c7884405dd91bd1cf5",
+      "epochs": 100,
+      "optimizer_steps": 8500,
+      "resources": {
+        "max_allocated_gib": 19.643422603607178,
+        "max_reserved_gib": 20.29296875,
+        "peak_memory_scope": "historical cumulative stage1 allocator; independent phase peak unavailable"
+      },
+      "resume_sha256": "29edf030012fcd0fa070c2d764d3e7d55d02947dd1f2ce40187c0e3d84a1fb0d",
+      "selected_epoch": 52,
+      "selection_rule": "validation_full96_mae",
+      "trainable_parameters": 129362,
+      "training_seconds": 1884.3290297011845,
+      "validation": {
+        "full96": {
+          "absolute_error_sum": 573635.8980355699,
+          "coordinates": 3648521,
+          "mae": 0.15722422812848547,
+          "mse": 0.10167575033563264,
+          "squared_error_sum": 370966.11029031273
+        },
+        "mask_seed": 2021,
+        "recent32": {
+          "absolute_error_sum": 194454.55311602447,
+          "coordinates": 1216689,
+          "mae": 0.15982272636312522,
+          "mse": 0.10424087772000896,
+          "squared_error_sum": 126828.72927227999
+        },
+        "split": "validation",
+        "windows": 1306
+      }
+    },
+    "A5_2023_coarse": {
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A5/seed_2023/stage1/coarse_selected.pt",
+      "checkpoint_sha256": "d8a60f3b9bf9b683b7a2dba0ca9b19d14fa4973bd30e69a4cff53d35ed04cb85",
+      "curve_sha256": "363197cb7b4c7bb7f498250345c4bec06e76e639dda466c7884405dd91bd1cf5",
+      "epochs": 100,
+      "optimizer_steps": 8500,
+      "resources": {
+        "max_allocated_gib": 19.643422603607178,
+        "max_reserved_gib": 20.29296875,
+        "peak_memory_scope": "historical cumulative stage1 allocator; independent phase peak unavailable"
+      },
+      "resume_sha256": "935268096a28cf531c863cd513acff361851b81e90e51fce5301026f16d8c699",
+      "selected_epoch": 99,
+      "selection_rule": "validation_full96_mse",
+      "trainable_parameters": 648110,
+      "training_seconds": 7396.209365871735,
+      "validation": {
+        "full96": {
+          "absolute_error_sum": 610944.4227067853,
+          "coordinates": 3648521,
+          "mae": 0.16744988522932588,
+          "mse": 0.10939056398151821,
+          "squared_error_sum": 399113.7698884128
+        },
+        "mask_seed": 2021,
+        "recent32": {
+          "absolute_error_sum": 207868.09787187335,
+          "coordinates": 1216689,
+          "mae": 0.17084735529940137,
+          "mse": 0.1110032119969047,
+          "squared_error_sum": 135056.38700130198
+        },
+        "split": "validation",
+        "windows": 1306
+      }
+    },
+    "A5_2023_ensemble": {
+      "checkpoint": "/home/xyw/paper-e23-v125-ablation/E24/artifacts/v125_ablation_20261018/PAMAP2/sr015_bl8/A5/seed_2023/stage1/selected.pt",
+      "checkpoint_sha256": "bc45ac1e69ecad272525dc3039dd8eb7123e38ecda498f457dbdc8746fcbf0e1",
+      "weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "A5_2024_calibration256": {
+      "batch_size": 128,
+      "best_validation_mae": 0.15660312097245505,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2024/calibration256/selected.pt",
+      "checkpoint_sha256": "69ea363e490c279616c41c5a80d634a8366ba2a66154ae39dc90152f07fed689",
+      "complete_initialization_sha256": "925baa27e8fbaa095a7874a1989bf149db5084d42dd5667a40017e87310f9a17",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "49178e42c3023caae56e96556c68084cd221f0e08fd57dd728b7f8b6f8534aa4",
+      "history_snapshot_hash": "47963060a9b8bea1089e6cbbdd8fa15b0514a6d2bc2aa6b55115fc561ce40d99",
+      "learning_rate": 0.001,
+      "loop_seconds": 2101.669623520007,
+      "novel_initialization_sha256": "1b6d5c36d36cc54a9a354bf9a8da2d485cd01625476f7742774fe4fa299c9c1b",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration256",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "0",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.3599019050598145,
+        "max_reserved_gib": 8.1328125,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2109.657595075001,
+          "pid": 35719,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "0",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.3599019050598145,
+            "max_reserved_gib": 8.1328125,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2109.657687318002,
+          "started_unix": 1792680064.6298418,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 14,
+      "selection": "validation_full96_mae",
+      "selection_rule": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A5",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2024/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "b7a57ef8e2bd821623f6911179ff296d16a87e03fec5ec8dc84ec8a5206b7af5",
+        "coarse_selected_epoch": 95,
+        "coarse_sha256": "a9fa06362da07eaf919b75af2b753f510d4029470d5abc797272cb59dca14079",
+        "library_sha256": "47963060a9b8bea1089e6cbbdd8fa15b0514a6d2bc2aa6b55115fc561ce40d99",
+        "model_seed": 2024,
+        "protocol_sha256": "6efaade88b56b964b459d6f90f9ef652c47fbe0a3dfb5b45d4aaddf462e39339",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 2109.657687318002,
+      "weight_decay": 0.0
+    },
+    "A5_2024_calibration64": {
+      "batch_size": 128,
+      "best_validation_mae": 0.15701804045806883,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2024/calibration64/selected.pt",
+      "checkpoint_sha256": "4f155f7dd13931cf0a7071a0fb536d44dfcac2b90b0df99ca83d564328664f9c",
+      "complete_initialization_sha256": "bfb92b57de6bf0ee30118b8b144fa4fd15fbe385a0cbbb8efe7d17da3251866f",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "ff7174527af86ea50e3201e973ed8187d594b2a7723eca6aa181e1f35dbd5e10",
+      "history_snapshot_hash": "47963060a9b8bea1089e6cbbdd8fa15b0514a6d2bc2aa6b55115fc561ce40d99",
+      "learning_rate": 0.001,
+      "loop_seconds": 2052.9315616320164,
+      "novel_initialization_sha256": "7e9e67df03b8cb8f145cb827f8f9d58e3e400d2391002a74898df50436bb6309",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration64",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "0",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.346259117126465,
+        "max_reserved_gib": 8.123046875,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2060.3019580420005,
+          "pid": 35719,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "0",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.346259117126465,
+            "max_reserved_gib": 8.123046875,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2060.302050926999,
+          "started_unix": 1792678002.680424,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 52,
+      "selection": "validation_full96_mae",
+      "selection_rule": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A5",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2024/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "b7a57ef8e2bd821623f6911179ff296d16a87e03fec5ec8dc84ec8a5206b7af5",
+        "coarse_selected_epoch": 95,
+        "coarse_sha256": "a9fa06362da07eaf919b75af2b753f510d4029470d5abc797272cb59dca14079",
+        "library_sha256": "47963060a9b8bea1089e6cbbdd8fa15b0514a6d2bc2aa6b55115fc561ce40d99",
+        "model_seed": 2024,
+        "protocol_sha256": "6efaade88b56b964b459d6f90f9ef652c47fbe0a3dfb5b45d4aaddf462e39339",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 2060.302050926999,
+      "weight_decay": 0.0
+    },
+    "A5_2024_coarse": {
+      "batch_size": 128,
+      "best_validation_mse": 0.10789563244874603,
+      "calibration_execution_count": 0,
+      "calibration_parameters_unchanged": true,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2024/coarse/selected.pt",
+      "checkpoint_sha256": "a9fa06362da07eaf919b75af2b753f510d4029470d5abc797272cb59dca14079",
+      "coarse_original_mean_layer_retained": true,
+      "epochs": 100,
+      "lr": 0.001,
+      "model_seed": 2024,
+      "optimizer": "Adam",
+      "optimizer_steps": 8500,
+      "phase": "coarse",
+      "precision": "float32",
+      "segments": [
+        {
+          "last_seconds": 7446.658909259999,
+          "pid": 26044,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "0",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 19.688955307006836,
+            "max_reserved_gib": 22.66015625,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 7446.659021180001,
+          "started_unix": 1792670457.6175926,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 95,
+      "selection": "validation_full96_mse",
+      "selection_rule": "validation_full96_mse",
+      "trainable_parameters": 648110,
+      "training_mask_seed": 2023,
+      "training_seconds": 7438.843032375975,
+      "weight_decay": 0.0
+    },
+    "A5_2024_ensemble": {
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2024/selected.pt",
+      "checkpoint_sha256": "16ea80d16a4cf097dd800b0e896e13c2856dde962727640e18825fc70e3e167e",
+      "weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "A5_2025_calibration256": {
+      "batch_size": 128,
+      "best_validation_mae": 0.15396378112144862,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2025/calibration256/selected.pt",
+      "checkpoint_sha256": "34a2c18a3b806c55bb78aa683baa9bc42dd58d7573b569ab7a12f0428504ed15",
+      "complete_initialization_sha256": "c1d6bc98be8eb2e0d97c4d23a2a08bda0b97f97036c085daf90f0130f716533d",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "9652a22c83f284b61de2dc2782bfd2d194954af5aecdbc4e74bb9f6ac2239cb8",
+      "history_snapshot_hash": "704cee32c66c1687a0ec6b7fed4538ec327c926dbe3112b140dd095462ac1c7b",
+      "learning_rate": 0.001,
+      "loop_seconds": 2122.707062502999,
+      "novel_initialization_sha256": "7301621685ed349fa60764250dd66d1259a28f4aa0720a9136646ededa9ae0b4",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration256",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "1",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.370822429656982,
+        "max_reserved_gib": 8.0390625,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2131.4971508069975,
+          "pid": 35720,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "1",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.370822429656982,
+            "max_reserved_gib": 8.0390625,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2131.4972437709985,
+          "started_unix": 1792680084.6697257,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 24,
+      "selection": "validation_full96_mae",
+      "selection_rule": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A5",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2025/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "5d587b3e7400073116f18804cfd08c29f9f874d17b5342fd3d8fe348a4e90de0",
+        "coarse_selected_epoch": 98,
+        "coarse_sha256": "6b83186c93cf8ce8818ea2cd0737d318b4016e84f5daea15b1d10e515b0c9d7a",
+        "library_sha256": "704cee32c66c1687a0ec6b7fed4538ec327c926dbe3112b140dd095462ac1c7b",
+        "model_seed": 2025,
+        "protocol_sha256": "6efaade88b56b964b459d6f90f9ef652c47fbe0a3dfb5b45d4aaddf462e39339",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 1252562,
+      "training_seconds": 2131.4972437709985,
+      "weight_decay": 0.0
+    },
+    "A5_2025_calibration64": {
+      "batch_size": 128,
+      "best_validation_mae": 0.15784190260217154,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2025/calibration64/selected.pt",
+      "checkpoint_sha256": "0faa7e41b42fedab662c5e2ebe18e4366790ad4373d5cae8805a8b9c2c41067d",
+      "complete_initialization_sha256": "ef3ae9e075690ead5afcbb3f028b610ae5070088692f906a15cc90dfac794e79",
+      "epochs": 100,
+      "frozen_state_unchanged": true,
+      "frozen_tensor_sha256": "cf7328e7452624a9d197cdd99360d1790e380bde5182b8c8d966f3567db484d6",
+      "history_snapshot_hash": "704cee32c66c1687a0ec6b7fed4538ec327c926dbe3112b140dd095462ac1c7b",
+      "learning_rate": 0.001,
+      "loop_seconds": 2071.995143205022,
+      "novel_initialization_sha256": "badf136f67aa06a5cab5616775d498be3b1bf93ad3f940702a045de7e2a3422b",
+      "optimizer": "Adam",
+      "optimizer_step_values": [
+        8500
+      ],
+      "optimizer_steps": 8500,
+      "original_coarse_mean_frozen": true,
+      "parameters_with_optimizer_state": 45,
+      "phase": "calibration64",
+      "precision": "float32",
+      "prototype_mutations": 0,
+      "resources": {
+        "cpu_threads": 4,
+        "cuda": "12.4",
+        "cuda_visible_devices": "1",
+        "gpu": "NVIDIA GeForce RTX 4090 D",
+        "max_allocated_gib": 6.3595499992370605,
+        "max_reserved_gib": 8.029296875,
+        "python": "3.11.17",
+        "torch": "2.5.1+cu124"
+      },
+      "reused": false,
+      "segments": [
+        {
+          "last_seconds": 2080.0949056050013,
+          "pid": 35720,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "1",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 6.3595499992370605,
+            "max_reserved_gib": 8.029296875,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 2080.0950369109996,
+          "started_unix": 1792678002.9504447,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 62,
+      "selection": "validation_full96_mae",
+      "selection_rule": "validation_full96_mae",
+      "source_binding": {
+        "arm": "A5",
+        "coarse_checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2025/coarse/selected.pt",
+        "coarse_frozen_prefix_sha256": "5d587b3e7400073116f18804cfd08c29f9f874d17b5342fd3d8fe348a4e90de0",
+        "coarse_selected_epoch": 98,
+        "coarse_sha256": "6b83186c93cf8ce8818ea2cd0737d318b4016e84f5daea15b1d10e515b0c9d7a",
+        "library_sha256": "704cee32c66c1687a0ec6b7fed4538ec327c926dbe3112b140dd095462ac1c7b",
+        "model_seed": 2025,
+        "protocol_sha256": "6efaade88b56b964b459d6f90f9ef652c47fbe0a3dfb5b45d4aaddf462e39339",
+        "training_config_sha256": "aec45ad27d8d0e3be7351facb53385195319ada52294319ca5fc58ff897a2e78"
+      },
+      "trainable_parameters": 129362,
+      "training_seconds": 2080.0950369109996,
+      "weight_decay": 0.0
+    },
+    "A5_2025_coarse": {
+      "batch_size": 128,
+      "best_validation_mse": 0.10799399220954134,
+      "calibration_execution_count": 0,
+      "calibration_parameters_unchanged": true,
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2025/coarse/selected.pt",
+      "checkpoint_sha256": "6b83186c93cf8ce8818ea2cd0737d318b4016e84f5daea15b1d10e515b0c9d7a",
+      "coarse_original_mean_layer_retained": true,
+      "epochs": 100,
+      "lr": 0.001,
+      "model_seed": 2025,
+      "optimizer": "Adam",
+      "optimizer_steps": 8500,
+      "phase": "coarse",
+      "precision": "float32",
+      "segments": [
+        {
+          "last_seconds": 7497.184281971002,
+          "pid": 26045,
+          "resources": {
+            "cpu_threads": 4,
+            "cuda": "12.4",
+            "cuda_visible_devices": "1",
+            "gpu": "NVIDIA GeForce RTX 4090 D",
+            "max_allocated_gib": 19.703327178955078,
+            "max_reserved_gib": 22.66015625,
+            "python": "3.11.17",
+            "torch": "2.5.1+cu124"
+          },
+          "seconds": 7497.184384294002,
+          "started_unix": 1792670457.5301652,
+          "status": "complete"
+        }
+      ],
+      "selected_epoch": 98,
+      "selection": "validation_full96_mse",
+      "selection_rule": "validation_full96_mse",
+      "trainable_parameters": 648110,
+      "training_mask_seed": 2023,
+      "training_seconds": 7488.786225020989,
+      "weight_decay": 0.0
+    },
+    "A5_2025_ensemble": {
+      "checkpoint": "/home/xyw/paper/E24/artifacts/v125_a5_seed_recheck_20261022/A5/seed_2025/selected.pt",
+      "checkpoint_sha256": "5bca11c9e078f7daa6287cf1c567e762f77452efada3e56a51db8084aa61adc3",
+      "weights": [
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "locked_unix": 1792682231.503888,
+  "parent_design_lock_sha256": "b601dd9afc7c3d9c1bc822ae47ca5eb4e231e3975534c510b9f185aa60fdcfb0"
+}
