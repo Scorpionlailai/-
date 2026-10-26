@@ -1,0 +1,32 @@
+{
+  "dataset": "selected_by_cli",
+  "scenes": [
+    "sr015_bl8",
+    "sr020_bl8"
+  ],
+  "seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "variants": [
+    "FULL",
+    "CTX",
+    "SUM"
+  ],
+  "epochs": 100,
+  "updates_each_stage": 6600,
+  "batch_size": 128,
+  "mask_order_seed": 2023,
+  "main_selection": "validation_full96_MSE",
+  "calibration_selection": "validation_full96_MAE",
+  "tolerance": 0.01,
+  "criterion": "both three-seed validation MSE and MAE <= FULL*1.01 on the single exploration scene",
+  "timing": "GPU1 batch128 5warmup25synchronized p50; exclusive experiment use",
+  "replacement_cost": "no p50 increase; least effective parameters, p50,validation MAE",
+  "H": "preserve audited legacy_v1 coordinate mismatch, no H correctness claim",
+  "test": "20 masks within each model; 3 independent paired training seeds; tests after seal",
+  "capacity_match": "active inference, CTX +8 vs FULL=353248; analytic width385; no unused params",
+  "future_datasets": "Caller-selected supported datasets; no automatic experiment expansion",
+  "reuse": "None: all variants train their own local main and calibration"
+}
