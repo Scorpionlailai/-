@@ -1,0 +1,77 @@
+{
+  "python": "3.11.17",
+  "torch": "2.5.1+cu124",
+  "numpy": "1.26.4",
+  "pandas": "2.2.3",
+  "device": "CPU",
+  "relocated_copy_with_data_only_root": true,
+  "original_server_imports_required": false,
+  "pipelines": {
+    "FULL": {
+      "effective_parameters": 353248,
+      "stages": [
+        {
+          "stage": "main",
+          "epochs": 2,
+          "updates": 2,
+          "frozen_ok": true
+        },
+        {
+          "stage": "calibration",
+          "epochs": 2,
+          "updates": 2,
+          "frozen_ok": true
+        }
+      ],
+      "export_exact": true,
+      "test_masks": 1,
+      "smoke_only": true
+    },
+    "CTX": {
+      "effective_parameters": 353256,
+      "stages": [
+        {
+          "stage": "main",
+          "epochs": 2,
+          "updates": 2,
+          "frozen_ok": true
+        },
+        {
+          "stage": "calibration",
+          "epochs": 2,
+          "updates": 2,
+          "frozen_ok": true
+        }
+      ],
+      "export_exact": true,
+      "test_masks": 1,
+      "smoke_only": true
+    },
+    "SUM": {
+      "effective_parameters": 353248,
+      "stages": [
+        {
+          "stage": "main",
+          "epochs": 2,
+          "updates": 2,
+          "frozen_ok": true
+        },
+        {
+          "stage": "calibration",
+          "epochs": 2,
+          "updates": 2,
+          "frozen_ok": true
+        }
+      ],
+      "export_exact": true,
+      "test_masks": 1,
+      "smoke_only": true
+    }
+  },
+  "PAMAP2_load_forward_backward_selfcheck_pass": true,
+  "migration_preflight_fixes": [
+    "Single-mask smoke reports undefined sample SD as null instead of NaN.",
+    "Explicit data-root works when package is copied to a shallow directory."
+  ],
+  "limits": "Smoke checks only. Full100 published baseline scores come from preceding experiments; not fresh full100 migration training."
+}

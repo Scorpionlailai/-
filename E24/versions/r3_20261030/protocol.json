@@ -1,0 +1,31 @@
+{
+  "dataset": "selected_by_cli",
+  "scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "seeds": [
+    2023
+  ],
+  "variants": [
+    "H_GLOBAL"
+  ],
+  "epochs": 100,
+  "updates_each_stage": "100 * floor(training_windows / 128); ETTh1=6600",
+  "batch_size": 128,
+  "mask_order_seed": 2023,
+  "main_selection": "validation_full96_MSE",
+  "calibration_selection": "validation_full96_MAE",
+  "tolerance": 0.01,
+  "criterion": "Final model frozen by user 2026-10-30; no architecture selection using new tests",
+  "timing": "GPU1 batch128 5warmup25synchronized p50; exclusive experiment use",
+  "replacement_cost": "no p50 increase; least effective parameters, p50,validation MAE",
+  "H": "H_GLOBAL: train-global query and auxiliary labels; legacy_v1 bank lifecycle unchanged",
+  "test": "20 fixed position masks per selected model; training seeds reported separately",
+  "capacity_match": "active inference, CTX +8 vs FULL=353248; analytic width385; no unused params",
+  "future_datasets": "Six datasets; per-server preflight and smoke required",
+  "reuse": "From-scratch runs in fresh output-root; old checkpoints require explicit migration, not binding bypass",
+  "model": "R3"
+}

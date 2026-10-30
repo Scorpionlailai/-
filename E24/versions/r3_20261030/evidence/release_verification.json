@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "model": "R3 / H_GLOBAL",
+  "old_checkpoint_replay": {
+    "dataset": "ETTh1",
+    "scene": "sr015_bl8",
+    "seed": 2023,
+    "windows": 8,
+    "coarse_max_abs_difference": 0.0,
+    "final_max_abs_difference": 0.0,
+    "library_hash_equal": true,
+    "main_sha256": "ffad8a7ce99bc58403588f33476c60dead781e21f0ff498c6ab42dc886551179",
+    "calibration_sha256": "f3875d532d40b7373c11fd629e0891d8e38a12fd84cbe96530fa079902dda99c"
+  },
+  "model_files_byte_identical_to_original": true,
+  "exchange_protocol_comparison": [
+    {
+      "scene": "sr010_bl8",
+      "mask_arrays_equal": 21,
+      "source_hash_equal": true,
+      "train_scaler_equal": true
+    },
+    {
+      "scene": "sr015_bl8",
+      "mask_arrays_equal": 21,
+      "source_hash_equal": true,
+      "train_scaler_equal": true
+    },
+    {
+      "scene": "sr020_bl8",
+      "mask_arrays_equal": 21,
+      "source_hash_equal": true,
+      "train_scaler_equal": true
+    },
+    {
+      "scene": "sr010_bl16",
+      "mask_arrays_equal": 21,
+      "source_hash_equal": true,
+      "train_scaler_equal": true
+    }
+  ],
+  "note": "Replay bypasses old source binding only in isolated audit, never in production training/resume. No new full-budget training or six-dataset performance claim."
+}
