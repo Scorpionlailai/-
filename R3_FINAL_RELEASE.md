@@ -10,3 +10,7 @@
 - 数据、checkpoint不上传；各数据集先做 selfcheck 和 smoke，再正式四场景训练。
 - 当前默认单训练 seed2023；正式多种子另行统一。20组测试mask与训练seed分开统计。
 - 本次发布不代表六数据集已经重跑完成，不包含预测Stage2。
+
+## 已完成结果（2026-10-31）
+
+[四数据集、四场景、三训练seed：48模型结果归档](E23/artifacts/performance/R3_final_four_datasets_3seed_20261031/README.md)。包含校准前后精度、完整资源和逐轮证据；模型代码不变。

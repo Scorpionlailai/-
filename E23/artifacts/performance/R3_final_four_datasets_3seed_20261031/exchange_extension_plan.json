@@ -1,0 +1,27 @@
+{
+  "dataset": "Exchange-Rate",
+  "training_seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "n_additional_models": 12,
+  "n_total_models": 48,
+  "epochs_per_stage": 100,
+  "batch_size": 128,
+  "coarse_frozen_during_calibration": true,
+  "forecast_stage2": false,
+  "gpus": [
+    0,
+    1
+  ],
+  "start_gate": "All original 36 models across ETTh1, BeijingAirQuality, PhysioNet2012 must finish successfully on both GPU queues before either Exchange queue starts",
+  "test_masks": 20,
+  "mask_bank_commit": "836f3c4bb65867a6a21863cb9aaacfd05cfa769a"
+}

@@ -1,0 +1,116 @@
+{
+  "model": "Final R3 / H_GLOBAL",
+  "release_commit": "59419e9bbc8f2e8833c8265505d0e84fa2b04de4",
+  "baseline_reference_commit": "639633f1cd7e214b30866f821a1779e726836f1f",
+  "datasets": [
+    "ETTh1",
+    "BeijingAirQuality",
+    "PhysioNet2012"
+  ],
+  "scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "training_seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "n_models": 36,
+  "n_training_stages": 72,
+  "epochs_per_stage": 100,
+  "batch_size": 128,
+  "main_selection": "validation full96 MSE",
+  "calibration_selection": "validation full96 MAE",
+  "coarse_frozen_during_calibration": true,
+  "forecast_stage2": false,
+  "gpus": [
+    0,
+    1
+  ],
+  "test_mask_groups_per_seed": 20,
+  "test_seeds": {
+    "ETTh1": [
+      2026100401,
+      2026100402,
+      2026100403,
+      2026100404,
+      2026100405,
+      2026100406,
+      2026100407,
+      2026100408,
+      2026100409,
+      2026100410,
+      2026100411,
+      2026100412,
+      2026100413,
+      2026100414,
+      2026100415,
+      2026100416,
+      2026100417,
+      2026100418,
+      2026100419,
+      2026100420
+    ],
+    "BeijingAirQuality": [
+      2026101301,
+      2026101302,
+      2026101303,
+      2026101304,
+      2026101305,
+      2026101306,
+      2026101307,
+      2026101308,
+      2026101309,
+      2026101310,
+      2026101311,
+      2026101312,
+      2026101313,
+      2026101314,
+      2026101315,
+      2026101316,
+      2026101317,
+      2026101318,
+      2026101319,
+      2026101320
+    ],
+    "PhysioNet2012": [
+      2026101501,
+      2026101502,
+      2026101503,
+      2026101504,
+      2026101505,
+      2026101506,
+      2026101507,
+      2026101508,
+      2026101509,
+      2026101510,
+      2026101511,
+      2026101512,
+      2026101513,
+      2026101514,
+      2026101515,
+      2026101516,
+      2026101517,
+      2026101518,
+      2026101519,
+      2026101520
+    ]
+  },
+  "statistical_unit": "Independent training seed; first average 20 masks, then mean and sample SD across 3 training seeds",
+  "runtime_loader_changes": [
+    "PhysioNet artificial test masks use baseline 2026101501..1520 rather than later ablation 2026101801..1820",
+    "Beijing dates object compatibility handled in separate canonical sidecar; original observed mask retained"
+  ],
+  "model_files": {
+    "aligned_h_model.py": "07adf14e268fbaa60a634bce487d62a19d2f1823c47b911f1839cad241618a58",
+    "aligned_h_candidates.py": "a48205d78a8ebc763be64c70868b70397fd2fa47b30949ab70a12ebab955e996",
+    "source_content.py": "d2c16d24985ef946001937de3f4a51b62723dbd232a4e01482401f24343b5364",
+    "interfaces.py": "eae9f925079c847be7116ebd0cd91913ad715383aec079b1ba576c33b7a7c4aa",
+    "r2_variants.py": "d3b5356046c9e157443535e65a179e66c8c995ae469ec54fad44925c393f9c33",
+    "variants.py": "2a5f5316c95ee650a995d2828fbb654d93b32bd59be423423168b869a625afc2",
+    "single.py": "5a4d28b149b7db94ac757d955704fe147bf621c6ed6bea3bd920cf2ef893dc07"
+  }
+}

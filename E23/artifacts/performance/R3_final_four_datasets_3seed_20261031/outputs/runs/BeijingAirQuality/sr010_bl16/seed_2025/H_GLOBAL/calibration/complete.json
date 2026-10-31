@@ -1,0 +1,98 @@
+{
+  "status": "complete",
+  "epochs": 100,
+  "updates": 19000,
+  "updates_per_epoch": 190,
+  "seconds": 965.9034862349508,
+  "binding": {
+    "files": {
+      "aligned_h_candidates.py": "a48205d78a8ebc763be64c70868b70397fd2fa47b30949ab70a12ebab955e996",
+      "aligned_h_model.py": "07adf14e268fbaa60a634bce487d62a19d2f1823c47b911f1839cad241618a58",
+      "baseline_physionet_data.py": "91242765a1368ed33d1ce796b469b41c67abfaefe58c394744a136e0efa3cc68",
+      "bootstrap.py": "c75737ebbd4dd162f45db35ced0ab097b0f9045528f05b3687d482a46001f4fd",
+      "candidates.py": "556feadaea650fc0351bfe40c62600cadd8f8da1e2018eb6dfd6cf39c4027823",
+      "coordinate_check.py": "54dcf1954dbf6ffa1a1fbfbc82dc4f638d3a2aef6a6b4648eeb21a51ef6192d9",
+      "data.py": "86c55a0e5040d5b472c3f534ab4095ddb54ada108c9736180e97d1864c9fa317",
+      "evaluate.py": "2f36cd85ac3bf65e0254cff8690a2edce7816fba8acf506dddaa2d75f9188a70",
+      "exchange_data.py": "92dc2aa9a2372f7aa052804b5901bc2c3a1435fe359c19d63d5aaac7e0c0a259",
+      "history.py": "0f80c9157eea2cfc369105c63832dda932283596fff1e6b7e9070744e7230ced",
+      "interfaces.py": "eae9f925079c847be7116ebd0cd91913ad715383aec079b1ba576c33b7a7c4aa",
+      "legacy_model.py": "419ae12b39c8274d644056f313008d4ba4c8ea0aa41d5edbe00845a3305098c3",
+      "prepare_data.py": "0cd9fe1701f8ac8d291c05f17bab2d20014a31f6fe2324ee295d1f10b911747f",
+      "protocol_data.py": "f99065919cace295ab943f17b1daca3bee5ba4bcfa4972a5d667349fbf5fed7c",
+      "r2_variants.py": "d3b5356046c9e157443535e65a179e66c8c995ae469ec54fad44925c393f9c33",
+      "reader.py": "302bba85b0b1badc57a1aa53efb156a0f20ac320499d629f878f61b19cb087e1",
+      "reuse.py": "cb6a37bb09f7f69b2ce309fae67cddb0b035d0216631ee9b54ad73c0a67c4d85",
+      "run_scenes.py": "b989be719bac89a2fce1284f44eaf739548bb893c11c64cae45dc2fba341efff",
+      "selfcheck.py": "d14a2ed4d1a18259105b968048c6d1e916e373a1d77f574deefb56cf4d683f4a",
+      "single.py": "5a4d28b149b7db94ac757d955704fe147bf621c6ed6bea3bd920cf2ef893dc07",
+      "source_content.py": "d2c16d24985ef946001937de3f4a51b62723dbd232a4e01482401f24343b5364",
+      "support.py": "d441f457e7a9f685b66e5cf3993c6c0ca336f5d282c154a2e51ea6f4ac730c7f",
+      "train.py": "7221f96b0490d900c214626fec74182312ab93f255d7927901cec00e09834b82",
+      "variants.py": "2a5f5316c95ee650a995d2828fbb654d93b32bd59be423423168b869a625afc2"
+    },
+    "source_lock": "1b9a77e3c7f3effad079e9092a1c7720d59970766b56d0643a290d2b2a849c87",
+    "task": "a8540ff91799dc43fcf857820ae307713c833fbe643393a700d50d9123c4edab",
+    "protocol": "c944294a0a7683615d2239e86c41e0da2d408b8cc740a0f73df7edda4ff42739",
+    "dataset": "6e508d02e1391070567e1ab3e638864058da21cc06a6647a18783a51f01e8f63",
+    "dataset_name": "BeijingAirQuality",
+    "variant": "H_GLOBAL",
+    "seed": 2025,
+    "scene": "sr010_bl16",
+    "stage": "calibration",
+    "epochs": 100,
+    "batch_size": 128,
+    "smoke_batches": null,
+    "coarse": "1fbf09e2989843aa2cd7e735a921656da879fd616165228d3540ed9037347f0f",
+    "mask_order_seed": 2023,
+    "lr": 0.001
+  },
+  "best_epoch": {
+    "mse": 84,
+    "mae": 75
+  },
+  "checkpoints": {
+    "mse": "3326a2d498f66f04bf1b3509883136985291257353df1d2bab97f25bb17c549b",
+    "mae": "119978c2508e5819c530536007ea2775ebcb256bde7aae32578ab3b45c46f7be"
+  },
+  "resources": {
+    "python": "3.10.21",
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "cuda_visible_devices": "1",
+    "cpu_threads": 4,
+    "max_allocated_gib": 1.9105076789855957,
+    "max_reserved_gib": 5.75
+  },
+  "frozen_before": "0b7378c21c5137c1938c65b95994ed183eec4d4b43b4e3badcd608b618f37fcf",
+  "frozen_after": "0b7378c21c5137c1938c65b95994ed183eec4d4b43b4e3badcd608b618f37fcf",
+  "prefix_seconds": 525.1557649424649,
+  "update_seconds": 53.714795812848024,
+  "coarse": {
+    "file": "/home/xyw/paper/E23/artifacts/performance/R3_final_three_datasets_3seed_20261030/outputs/runs/BeijingAirQuality/sr010_bl16/seed_2025/H_GLOBAL/main/best.pt",
+    "sha256": "1fbf09e2989843aa2cd7e735a921656da879fd616165228d3540ed9037347f0f",
+    "epoch": 99,
+    "validation": {
+      "split": "validation",
+      "mask_seed": 2021,
+      "windows": 3411,
+      "full96": {
+        "mse": 0.3502616036034606,
+        "mae": 0.31605779609376783,
+        "coordinates": 3122414,
+        "squared_error_sum": 1093661.7347538958,
+        "absolute_error_sum": 986863.2873323259
+      },
+      "recent32": {
+        "mse": 0.35455605360880604,
+        "mae": 0.3146938439421021,
+        "coordinates": 1041613,
+        "squared_error_sum": 369310.1946676293,
+        "absolute_error_sum": 327789.1988700648
+      }
+    },
+    "reused": false,
+    "training_seconds": 2190.719995445048
+  }
+}
