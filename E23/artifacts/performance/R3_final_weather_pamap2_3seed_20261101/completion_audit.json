@@ -1,0 +1,43 @@
+{
+  "model": "R3/H_GLOBAL",
+  "model_commit": "59419e9bbc8f2e8833c8265505d0e84fa2b04de4",
+  "datasets": [
+    "Weather",
+    "PAMAP2"
+  ],
+  "scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "training_seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "completed_models": 24,
+  "complete_training_stages": 48,
+  "epochs_per_stage": 100,
+  "total_epoch_records": 4800,
+  "per_model_test_masks": 20,
+  "per_mask_records": 480,
+  "all_full_budgets": true,
+  "all_main_and_calibration_checkpoints_selected_by_predefined_validation_metric": true,
+  "all_paired_training_batch_fingerprints_match": true,
+  "all_calibration_freeze_checks_pass": true,
+  "all_24_exports_verified": true,
+  "all_168_validation_test_mask_files_equal_baseline": true,
+  "all_published_release_and_vendor_source_hashes_verified": true,
+  "mask_std_not_training_seed_std": true,
+  "exchange_excluded": true,
+  "stage2_executed": false,
+  "inference_latency_measured_in_this_run": false,
+  "excluded_assets": [
+    "raw and processed data",
+    "mask npz files",
+    "checkpoints",
+    "repair predictions or input values",
+    "training memory contents"
+  ]
+}

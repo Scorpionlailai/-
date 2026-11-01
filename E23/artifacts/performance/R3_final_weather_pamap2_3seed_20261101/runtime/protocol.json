@@ -1,0 +1,39 @@
+{
+  "commit": "59419e9bbc8f2e8833c8265505d0e84fa2b04de4",
+  "model": "R3/H_GLOBAL full learned confidence, original candidates, single64 calibration",
+  "datasets": [
+    "Weather",
+    "PAMAP2",
+    "Exchange-Rate"
+  ],
+  "scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "training_seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "mask_training_order_seed": 2023,
+  "epochs_main": 100,
+  "epochs_calibration": 100,
+  "batch_size": 128,
+  "optimizer": "Adam lr.001 wd0",
+  "main_selection": "validation full96 MSE",
+  "calibration_selection": "validation full96 MAE",
+  "evaluation": "20 baseline masks per model, then mean/sample SD across three training seeds; no stage2",
+  "GPUs": [
+    0,
+    1
+  ],
+  "mask_alignment": {
+    "Weather": "repair_reproduction_20261010/shared_assets/Weather verbatim arrays",
+    "PAMAP2": "pamap2_reproduction_20261014/shared_assets/PAMAP2, bank2026101401..20 rather than release2026101801..20",
+    "Exchange-Rate": "pending exact baseline mask bank; no formal training until aligned"
+  },
+  "model_source_changes": false,
+  "execution_adapter": "PAMAP2 bank only; bind execution-lock SHA into every checkpoint; restore missing reference JSON only when matching release-declared hash"
+}

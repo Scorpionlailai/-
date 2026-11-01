@@ -14,3 +14,7 @@
 ## 已完成结果（2026-10-31）
 
 [四数据集、四场景、三训练seed：48模型结果归档](E23/artifacts/performance/R3_final_four_datasets_3seed_20261031/README.md)。包含校准前后精度、完整资源和逐轮证据；模型代码不变。
+
+## Weather / PAMAP2 结果（2026-11-01）
+
+[两数据集、四场景、三训练seed：24模型结果归档](E23/artifacts/performance/R3_final_weather_pamap2_3seed_20261101/README.md)。包含480组逐mask指标、4800轮记录及48阶段选模/资源检查。使用原基线遮挡，原R3模型代码不变；本归档不包含本机中途停跑的Exchange-Rate结果。
