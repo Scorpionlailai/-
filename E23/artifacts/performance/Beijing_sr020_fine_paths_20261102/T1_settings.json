@@ -1,0 +1,32 @@
+{
+  "task_name": "imputation",
+  "seq_len": 96,
+  "pred_len": 96,
+  "enc_in": 7,
+  "n_heads": 128,
+  "patch_size": 2,
+  "patch_stride": 1,
+  "n_blocks": [
+    2,
+    2
+  ],
+  "kernel_size_large": [
+    71,
+    31
+  ],
+  "kernel_size_small": 5,
+  "ffn_ratio": 1.0,
+  "downsample_ratio": 2,
+  "positional_encoding": true,
+  "qkv_bias": true,
+  "cosine_attention": false,
+  "use_head_reconstruction": true,
+  "head_params_shared": true,
+  "imputation_use_mask_embedding": false,
+  "drop_attn": 0.1,
+  "drop_ffn": 0.0,
+  "drop_proj": 0.0,
+  "drop_path": 0.1,
+  "drop_head": 0.0,
+  "SACA": false
+}

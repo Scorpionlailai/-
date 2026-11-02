@@ -1,0 +1,52 @@
+{
+  "dataset": "BeijingAirQuality",
+  "scene": "sr020_bl8",
+  "seeds": [
+    2023
+  ],
+  "variants": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6",
+    "E8"
+  ],
+  "reuse_E0": "/home/xyw/paper/E23/artifacts/performance/R3_final_three_datasets_3seed_20261030",
+  "data_root": "/home/xyw/paper/E23/artifacts/performance/R3_final_three_datasets_3seed_20261030/data_root",
+  "epochs_each_stage": 100,
+  "updates_each_stage": 19000,
+  "batch_size": 128,
+  "test_masks": 20,
+  "validation_mask_seed": 2021,
+  "mask_order_seed": 2023,
+  "main_selection": "validation full96 MSE",
+  "calibration_selection": "validation full96 MAE",
+  "calibration_frozen_entire_coarse": true,
+  "forecast": false,
+  "T1_reference_mse": 0.22552305693429445,
+  "T1_not_retrained": true,
+  "ignored": [
+    "E7"
+  ],
+  "interpretation": "Ablation deltas are conditional R3 component effects, not additive attribution of the R3-T1 gap.",
+  "allocation": {
+    "0": [
+      "E6",
+      "E1",
+      "E3",
+      "E5"
+    ],
+    "1": [
+      "E2",
+      "E4",
+      "E8"
+    ]
+  },
+  "scope": "single training seed development explanation, not multi-seed formal confirmation",
+  "new_models": 7,
+  "reuse_E0_seeds": [
+    2023
+  ]
+}

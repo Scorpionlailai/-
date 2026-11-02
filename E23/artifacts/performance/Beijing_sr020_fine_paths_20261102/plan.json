@@ -1,0 +1,78 @@
+{
+  "dataset": "BeijingAirQuality",
+  "scene": "sr020_bl8",
+  "seed": 2023,
+  "data_root": "/home/xyw/paper/E23/artifacts/performance/R3_final_three_datasets_3seed_20261030/data_root",
+  "R3_root": "/home/xyw/paper/E23/artifacts/performance/R3_final_three_datasets_3seed_20261030",
+  "T1_root": "/home/xyw/paper/E23/artifacts/performance/Beijing_sr020_T1_R3_calibration_20261101",
+  "E6_root": "/home/xyw/paper/E23/artifacts/performance/R3_Beijing_sr020_E_ablation_20261101/context/outputs",
+  "S0_S1_root": "/home/xyw/paper/E23/artifacts/performance/Beijing_sr020_S0_S1_fine_recovery_20261101",
+  "T1_checkpoint": "/home/xyw/paper/E23/artifacts/performance/Beijing_sr020_fine_paths_20261102/original_T1.pt",
+  "T1_sha256": "42b4503250affe8ab8ff95367a8d62ce2079918b1f9b5c5bec0e147e9f846dde",
+  "R3_main_checkpoint": "/home/xyw/paper/E23/artifacts/performance/R3_final_three_datasets_3seed_20261030/outputs/runs/BeijingAirQuality/sr020_bl8/seed_2023/H_GLOBAL/main/best.pt",
+  "epochs": 100,
+  "batch_size": 128,
+  "updates": 19000,
+  "lr": 0.001,
+  "optimizer": "Adam",
+  "weight_decay": 0,
+  "precision": "FP32",
+  "gradient_clip": null,
+  "early_stop": false,
+  "schedule": "constant",
+  "loss": "full96 hidden originally-valid MAE + .25 recent32 same MAE",
+  "selection": "validation full96 MAE",
+  "head_seed": 2023,
+  "training_mask_order_seed": 2023,
+  "validation_mask_seed": 2021,
+  "test_masks": [
+    2026101301,
+    2026101302,
+    2026101303,
+    2026101304,
+    2026101305,
+    2026101306,
+    2026101307,
+    2026101308,
+    2026101309,
+    2026101310,
+    2026101311,
+    2026101312,
+    2026101313,
+    2026101314,
+    2026101315,
+    2026101316,
+    2026101317,
+    2026101318,
+    2026101319,
+    2026101320
+  ],
+  "allocations": {
+    "0": [
+      "R3_P1",
+      "R3_P3"
+    ],
+    "1": [
+      "R3_P2",
+      "T1_P2"
+    ]
+  },
+  "variants": {
+    "P0": "existing5inputs, value correction + signed guide correction",
+    "P1": "existing5inputs, value correction only",
+    "P2": "coarse+visible+mask, neighbor2groups fixedzero, value only, no neighbor arithmetic",
+    "P3": "existing5inputs, signed guide correction only"
+  },
+  "new_models": 4,
+  "reuse_models": [
+    "R3_P0",
+    "T1_P0"
+  ],
+  "no_forecast": true,
+  "no_new_candidate_ablation": true,
+  "network_output_bound": 2,
+  "source_init": "all shared backbone and retained outputs exactly same seed2023 P0 initialization; then remove unused output layer",
+  "P2_constant_input_columns": 24,
+  "stopping": "fixed100; no selection or architecture changes based on test",
+  "R3_main_sha256": "bb7ddb65939c6b512acfeb7282f4f5e37f717a99f3cd647f11dc02f61f0df83e"
+}

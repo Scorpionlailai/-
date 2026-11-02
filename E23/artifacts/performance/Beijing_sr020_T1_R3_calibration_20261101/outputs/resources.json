@@ -1,0 +1,37 @@
+{
+  "latency": {
+    "T1": {
+      "p50_batch_ms": 13.413756969384849,
+      "registered_parameters": 597961,
+      "batch_size": 128,
+      "resources": {
+        "python": "3.10.21",
+        "torch": "2.7.1+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cuda_visible_devices": "0",
+        "cpu_threads": 4,
+        "max_allocated_gib": 0.6662054061889648,
+        "max_reserved_gib": 0.740234375
+      }
+    },
+    "T1_calibrated": {
+      "p50_batch_ms": 14.9932149797678,
+      "registered_parameters": 647841,
+      "batch_size": 128,
+      "resources": {
+        "python": "3.10.21",
+        "torch": "2.7.1+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cuda_visible_devices": "0",
+        "cpu_threads": 4,
+        "max_allocated_gib": 0.6667547225952148,
+        "max_reserved_gib": 0.75
+      }
+    }
+  },
+  "calibrator_parameters": 49880,
+  "process_seconds": 692.9678073700052,
+  "timing": "same GPU FP32 batch128 5warmup25synchronized, 20mask evaluation included in process time"
+}

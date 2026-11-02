@@ -1,0 +1,41 @@
+{
+  "nominal_trainable_parameters": 49880,
+  "head_parameters": 49880,
+  "phase_one_network_parameters": 0,
+  "phase_one_training_seconds": 0,
+  "latency": {
+    "initialization_only": {
+      "p50_batch_ms": 0.13036595191806555,
+      "resources": {
+        "python": "3.10.21",
+        "torch": "2.7.1+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cuda_visible_devices": "1",
+        "cpu_threads": 4,
+        "max_allocated_gib": 0.03237104415893555,
+        "max_reserved_gib": 0.052734375
+      }
+    },
+    "initialization_and_fine": {
+      "p50_batch_ms": 1.5732579631730914,
+      "resources": {
+        "python": "3.10.21",
+        "torch": "2.7.1+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cuda_visible_devices": "1",
+        "cpu_threads": 4,
+        "max_allocated_gib": 0.09543180465698242,
+        "max_reserved_gib": 0.1328125
+      }
+    }
+  },
+  "batch_size": 128,
+  "warmup": 5,
+  "timing_samples": 25,
+  "exclusive_gpu_verified": true,
+  "process_seconds": 397.1360597750172,
+  "scope": "imports excluded; data+head training+validation+checkpoint+20mask pre/post test+export+latency included",
+  "S1_gate_note": "guide equals initialization, so guide-coarse and suggested_delta are mathematically zero (apart from FP32 roundoff); retain exact existing gate, report conditional inactivity"
+}

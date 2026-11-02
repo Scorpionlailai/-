@@ -1,0 +1,65 @@
+{
+  "registered_parameters": 399402,
+  "effective_parameters": 365066,
+  "module_parameters": {
+    "base_encoder": 2112,
+    "front_context": 222016,
+    "decoder": 1040,
+    "temporal": 31488,
+    "variable": 24512,
+    "historical": 21184,
+    "point_candidate_readout": 31681,
+    "overlap_confidence": 2881
+  },
+  "disabled": [
+    "historical"
+  ],
+  "coverage_validation": {
+    "historical": {
+      "valid_candidates": 0,
+      "slots": 1951400,
+      "available_targets": 0,
+      "damaged_targets": 487850,
+      "mean_valid_candidates_per_damaged_patch": 0.0,
+      "damaged_patch_coverage": 0.0,
+      "valid_slot_fraction": 0.0,
+      "source_share": 0.0
+    },
+    "variable": {
+      "valid_candidates": 4165310,
+      "slots": 5854200,
+      "available_targets": 487850,
+      "damaged_targets": 487850,
+      "mean_valid_candidates_per_damaged_patch": 8.53809572614533,
+      "damaged_patch_coverage": 1.0,
+      "valid_slot_fraction": 0.7115079771787777,
+      "source_share": 0.7019115175360341
+    },
+    "temporal": {
+      "valid_candidates": 1768928,
+      "slots": 4878500,
+      "available_targets": 486931,
+      "damaged_targets": 487850,
+      "mean_valid_candidates_per_damaged_patch": 3.62596699805268,
+      "damaged_patch_coverage": 0.998116224249257,
+      "valid_slot_fraction": 0.362596699805268,
+      "source_share": 0.2980884824639659
+    }
+  },
+  "budget_matching_verified": true,
+  "p50_batch_ms": 26.514125987887383,
+  "batch_size": 128,
+  "warmup": 5,
+  "timing_samples": 25,
+  "synchronized": true,
+  "exclusive_gpu_verified": true,
+  "competing_gpu_pids": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "physical_gpu": "0",
+  "torch": "2.7.1+cu128",
+  "cuda": "12.8",
+  "peak_allocated_GiB": 1.8053655624389648,
+  "peak_reserved_GiB": 2.263671875,
+  "source_model_unchanged": true,
+  "library_unchanged": true
+}

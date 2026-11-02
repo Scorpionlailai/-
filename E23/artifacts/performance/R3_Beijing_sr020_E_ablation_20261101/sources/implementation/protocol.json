@@ -1,0 +1,35 @@
+{
+  "dataset": "BeijingAirQuality",
+  "scenes": [
+    "sr020_bl8"
+  ],
+  "seeds": [
+    2023,
+    2024,
+    2025
+  ],
+  "variants": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5"
+  ],
+  "epochs": 100,
+  "updates_each_stage": 19000,
+  "batch_size": 128,
+  "mask_order_seed": 2023,
+  "main_selection": "validation_full96_MSE",
+  "calibration_selection": "validation_full96_MAE",
+  "tolerance": 0.01,
+  "criterion": "No architecture selection using tests. Report every arm including negative results.",
+  "timing": "GPU1 batch128 5warmup25synchronized p50; exclusive experiment use",
+  "replacement_cost": "no p50 increase; least effective parameters, p50,validation MAE",
+  "H": "aligned train-global; E3 removes H, E4/E5 expand ranking pool while preserving training-only causal eligibility",
+  "test": "20 paired test masks per model after complete fixed-budget training; three training seeds",
+  "capacity_match": "active inference, CTX +8 vs FULL=353248; analytic width385; no unused params",
+  "future_datasets": "Six datasets; per-server preflight and smoke required",
+  "reuse": "E0 only: original 12 completed H_GLOBAL models; all new arms train from scratch",
+  "model": "R3",
+  "experiment": "source removals and matched-budget candidate selectors"
+}

@@ -1,0 +1,26 @@
+{
+  "key_policy": "legacy_v1",
+  "query_capture_equals_window_local_values": true,
+  "cached_key_global_raw_recompute_max_abs_error": 1.1930970289508736e-07,
+  "EMA_and_frozen_equal_at_selected_checkpoint": true,
+  "synthetic_known_match": {
+    "current_full_visible": {
+      "exact_raw_member": 0.7094218730926514,
+      "different_member_equal_to_local_values": 1.0000001192092896
+    },
+    "current_masked": {
+      "exact_raw_member": 0.6988605260848999,
+      "different_member_equal_to_local_values": 0.998029887676239
+    },
+    "common_global_masked_diagnostic": {
+      "exact_raw_member": 0.9957880973815918,
+      "different_member_equal_to_local_values": 0.712866485118866
+    }
+  },
+  "full_missing_patch_fraction": 0.25047450363974866,
+  "H_unavailable_patch_fraction": 0.25047450363974866,
+  "H_unavailable_window_fraction": 0.0,
+  "memory_train_only": true,
+  "evaluation_no_memory_or_parameter_writes": true,
+  "finding": "query uses local-normalized observed values while stored member keys use train-global standardized values; encoder does not normalize input scale/level internally."
+}

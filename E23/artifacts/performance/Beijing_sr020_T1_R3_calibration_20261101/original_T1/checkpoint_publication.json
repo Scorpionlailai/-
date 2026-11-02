@@ -1,0 +1,45 @@
+{
+  "dataset": "BeijingAirQuality",
+  "scene": "sr020_bl8",
+  "model": "T1 baseline, not R3",
+  "training_seed": 2023,
+  "channels": 12,
+  "stage1_epochs_trained": 100,
+  "stage2_epochs_trained": 100,
+  "stage2_parent_stage1_sha256": "42b4503250affe8ab8ff95367a8d62ce2079918b1f9b5c5bec0e147e9f846dde",
+  "weights": [
+    {
+      "path": "stage1/selected.pt",
+      "role": "T1\u4fee\u590d\u5668\uff0c\u6309\u9a8c\u8bc1MSE\u9009\u62e9",
+      "selected_epoch": 90,
+      "sha256": "42b4503250affe8ab8ff95367a8d62ce2079918b1f9b5c5bec0e147e9f846dde",
+      "bytes": 2428448,
+      "tensor_count": 93,
+      "tensor_elements": 597961,
+      "torch_weights_only_load_verified": true
+    },
+    {
+      "path": "stage2/selected_mae.pt",
+      "role": "\u51bb\u7ed3T1\u540e\u8bad\u7ec3\u7684\u516c\u5171\u9884\u6d4b\u5934\uff0c\u6309\u9a8c\u8bc1MAE\u9009\u62e9",
+      "selected_epoch": 69,
+      "sha256": "a8eb4d179938d9456c6176e8914dcf0f2415be69f311aa9a72326b146c67e1c8",
+      "bytes": 173376,
+      "tensor_count": 75,
+      "tensor_elements": 35625,
+      "torch_weights_only_load_verified": true
+    },
+    {
+      "path": "stage2/selected_mse.pt",
+      "role": "\u540c\u4e00\u9884\u6d4b\u8bad\u7ec3\u7684\u9a8c\u8bc1MSE\u6b21\u9009\u5934",
+      "selected_epoch": 69,
+      "sha256": "7b7e9e8f09c2bbee81b268b07c60fb445f4973d4ed2a07dbcfa541cfdbad57d8",
+      "bytes": 173376,
+      "tensor_count": 75,
+      "tensor_elements": 35625,
+      "torch_weights_only_load_verified": true
+    }
+  ],
+  "stage2_selected_heads_tensor_equal": true,
+  "note": "Same selected epoch can yield different torch ZIP file hashes; original bytes preserved",
+  "data_and_prediction_caches_uploaded": false
+}

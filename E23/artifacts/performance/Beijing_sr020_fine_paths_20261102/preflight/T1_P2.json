@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "validation_only": true,
+  "epochs": 2,
+  "updates_each_epoch": 1,
+  "frozen_exact": true,
+  "export_exact": true,
+  "interface": {
+    "status": "passed",
+    "job": "T1_P2",
+    "head_init_shared_exact": true,
+    "P0_output_exact_original": true,
+    "P0_input_exact_P1_P3": true,
+    "P2_first_three_groups_exact": true,
+    "P2_neighbor_groups_zero": true,
+    "path_decomposition_max_error": 9.5367431640625e-07,
+    "hidden_value_invariance": true,
+    "visible_exact": true,
+    "P0_full_validation_reuse_passed": true,
+    "P0_head_sha256": "db11abc2b63b95162b457ad0b658925e29fb5bb9a0bfdc772c1c39d7545bc4fe",
+    "P0_validation": {
+      "split": "validation",
+      "mask_seed": 2021,
+      "windows": 3411,
+      "full96": {
+        "mse": 0.18407341448731823,
+        "mae": 0.20884623003302552,
+        "coordinates": 3217813,
+        "squared_error_sum": 592313.8260916809,
+        "absolute_error_sum": 672028.1140012599
+      },
+      "recent32": {
+        "mse": 0.19827360035197078,
+        "mae": 0.21248426327860778,
+        "coordinates": 1072221,
+        "squared_error_sum": 212593.11804299045,
+        "absolute_error_sum": 227830.0892568521
+      }
+    },
+    "head_registered_parameters": 49100,
+    "constant_input_weights": 1536,
+    "removed_output_head_parameters": 780,
+    "coarse_hash": "42b4503250affe8ab8ff95367a8d62ce2079918b1f9b5c5bec0e147e9f846dde"
+  }
+}

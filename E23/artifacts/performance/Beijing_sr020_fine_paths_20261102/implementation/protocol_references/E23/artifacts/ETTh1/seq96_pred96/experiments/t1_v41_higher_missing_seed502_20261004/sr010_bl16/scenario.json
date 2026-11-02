@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scenario": "sr010_bl16",
+  "start_rate": 0.1,
+  "block_len": 16,
+  "allow_block_overlap": true,
+  "source_csv_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+  "base_config_sha256": "6805b1c785e884411e85895104b927c815a75dea96d09a53728c916bcf61c9e5",
+  "config_path": "protocol.yaml",
+  "config_sha256": "ce759818cf491611eba3f8a9ea10cc33f619fcbcb5da27cef31fde2b3bfe0477",
+  "masks": {
+    "validation": {
+      "path": "masks/ETTh1_validation.npz",
+      "sha256": "3ef60101b0071b8afb6a884be21d7bfde12fa832e24ba526f0cd9e7c9204e950",
+      "seed": 2021,
+      "missing_fraction": 0.813508064516129
+    },
+    "test": {
+      "path": "masks/ETTh1_test.npz",
+      "sha256": "f64e3e6ad0e2c1d85402bc72e1c8c22330a626af761d40d556ece3da8ea0d708",
+      "seed": 2021,
+      "missing_fraction": 0.813508064516129
+    }
+  }
+}
