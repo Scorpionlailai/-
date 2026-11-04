@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "dataset": "Exchange-Rate",
+    "seq_len": 96,
+    "pred_len": 96,
+    "n_vars": 8,
+    "boundaries": [
+      0,
+      5311,
+      6070,
+      7588
+    ],
+    "start_rate": 0.1,
+    "block_len": 8,
+    "allow_block_overlap": true,
+    "mask_seed": 2021,
+    "model_seed": 2021,
+    "validation": "original fixed mask only",
+    "test": "20 sealed masks shared with v125",
+    "extra_test_seeds": [
+      2026101001,
+      2026101002,
+      2026101003,
+      2026101004,
+      2026101005,
+      2026101006,
+      2026101007,
+      2026101008,
+      2026101009,
+      2026101010,
+      2026101011,
+      2026101012,
+      2026101013,
+      2026101014,
+      2026101015,
+      2026101016,
+      2026101017,
+      2026101018,
+      2026101019,
+      2026101020
+    ],
+    "evaluation_windows": 1423,
+    "metric_space": "train_standardized",
+    "control_notes": "P4 data, mask generator seed, model RNG seed and evaluation scope are shared experiment controls. Validation checkpoint selection is added where the author release has none. No test draw affects selection."
+  },
+  "shared_forecast_stage": {
+    "epochs": 100,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "precision": "float32",
+    "loss": "forecast_mse",
+    "selection_metric": "mae",
+    "patience": null,
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "lradj": "constant"
+  },
+  "models": {
+    "TimesNet": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/TimesNet",
+      "revision": "4e938a1767106324dd753b2a44832bf870a0252e",
+      "version": "Official ETT imputation example and run.py defaults; Exchange-specific configuration not published",
+      "seed": 2021,
+      "model": {
+        "d_model": 16,
+        "d_ff": 32,
+        "e_layers": 2,
+        "top_k": 3,
+        "num_kernels": 6,
+        "dropout": 0.1,
+        "embed": "timeF",
+        "freq": "h"
+      },
+      "training": {
+        "epochs": 10,
+        "batch_size": 16,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float32",
+        "patience": 3,
+        "selection_metric": "mse",
+        "loss": "hidden_reconstruction_mse",
+        "lradj": "official_type1"
+      },
+      "sources": [
+        "scripts/imputation/ETT_script/TimesNet_ETTh1.sh",
+        "run.py",
+        "exp/exp_imputation.py"
+      ],
+      "notes": "Author base configuration, not an Exchange optimum. Shared block masks,8 variables,96 steps. No artificial calendar inputs. Observed-count denominator clamped only for wholly missing channels; author formula unchanged for nonempty channels."
+    }
+  }
+}

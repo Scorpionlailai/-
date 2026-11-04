@@ -1,0 +1,46 @@
+{
+  "amp": true,
+  "batch_size": 32,
+  "checkpoint_sha256": "3ceb7adf257f203e55ef1012f6d9851fb70f39c332fb7a496b3c954b6df53dc2",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": "GPU-1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:0",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b"
+  },
+  "epochs_completed": 23,
+  "finished_utc": "2026-10-10T11:21:42.080486+00:00",
+  "full_workflow_seconds": 47.64221677090973,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "ImputeFormer",
+  "peak_allocated_bytes": 949895168,
+  "peak_reserved_bytes": 1109393408,
+  "precision": "float16",
+  "preparation_and_reporting_seconds": 1.017241045832634,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runs/ImputeFormer/sr010_bl16/stage1/selection.json",
+  "selection_manifest_sha256": "c3481cd1a2efafd32a8efbe1d78a00fda21c0a8caf79f8f4ae5b71b263307783",
+  "stages": {
+    "repair": {
+      "peak_allocated_bytes": 949895168,
+      "peak_reserved_bytes": 1109393408,
+      "status": "completed",
+      "wall_seconds": 46.62497572507709
+    }
+  },
+  "started_utc": "2026-10-10T11:20:55.454982+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 46.62497572507709
+}

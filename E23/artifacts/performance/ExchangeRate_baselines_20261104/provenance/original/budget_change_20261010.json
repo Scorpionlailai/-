@@ -1,0 +1,54 @@
+{
+  "reason": "user-approved CSDI Stage1 max100, Stage2 train1sample/eval5sample, unchanged dynamic masks and Stage2 100epochs",
+  "stopped_old_workers": [
+    {
+      "pid": 1757970,
+      "scene": "sr010_bl8",
+      "phase": "stage2",
+      "command": [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "-u",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runners/CSDI/worker.py",
+        "train",
+        "--stage",
+        "forecast",
+        "--parent",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runs/CSDI/sr010_bl8/stage1/selection.json",
+        "--output",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runs/CSDI/sr010_bl8/stage2",
+        "--model",
+        "CSDI",
+        "--dataset-manifest",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_fixed_four_scenes_20261010/sr010_bl8/shared_protocol/dataset_manifest.json",
+        "--profiles",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runners/CSDI/profiles.json",
+        "--device",
+        "cuda:0"
+      ]
+    },
+    {
+      "pid": 1758686,
+      "scene": "sr015_bl8",
+      "phase": "repair_test20",
+      "command": [
+        "/home/xyw/miniforge3/envs/malr/bin/python",
+        "-u",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runners/CSDI/worker.py",
+        "evaluate",
+        "--selection",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runs/CSDI/sr015_bl8/stage1/selection.json",
+        "--output",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runs/CSDI/sr015_bl8/repair_evaluation",
+        "--model",
+        "CSDI",
+        "--dataset-manifest",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_fixed_four_scenes_20261010/sr015_bl8/shared_protocol/dataset_manifest.json",
+        "--profiles",
+        "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runners/CSDI/profiles.json",
+        "--device",
+        "cuda:0"
+      ]
+    }
+  ],
+  "old_artifacts_retained": true
+}

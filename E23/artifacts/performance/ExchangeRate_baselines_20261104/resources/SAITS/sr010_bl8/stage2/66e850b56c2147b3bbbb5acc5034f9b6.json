@@ -1,0 +1,46 @@
+{
+  "amp": false,
+  "batch_size": 128,
+  "checkpoint_sha256": "802d29958ed8da1622a1907d25914a8ac64eb3a336c81f0633cefff40b8891c8",
+  "cpu_threads": 4,
+  "cuda_version": "12.8",
+  "cuda_visible_devices": "GPU-1315e15c-d657-e61f-bde5-6e0b38e6e54b",
+  "cudnn_allow_tf32": true,
+  "cudnn_benchmark": false,
+  "cudnn_version": 90701,
+  "device": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 5090",
+    "requested": "cuda:0",
+    "total_memory_bytes": 33671348224,
+    "type": "cuda",
+    "uuid": "1315e15c-d657-e61f-bde5-6e0b38e6e54b"
+  },
+  "epochs_completed": 100,
+  "finished_utc": "2026-10-10T10:06:08.330049+00:00",
+  "full_workflow_seconds": 78.32429652661085,
+  "matmul_allow_tf32": false,
+  "memory_scope": "PyTorch CUDA allocator peaks for this process, not whole-device usage",
+  "mode": "training",
+  "model": "SAITS",
+  "peak_allocated_bytes": 194646016,
+  "peak_reserved_bytes": 260046848,
+  "precision": "float32",
+  "preparation_and_reporting_seconds": 1.094939660280943,
+  "schema_version": 1,
+  "selection_manifest": "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/v125_baselines_20261010/runs/SAITS/sr010_bl8/stage2/selection.json",
+  "selection_manifest_sha256": "c00eba5b95600a45ff7a7ac26f0fd53e818fc6cdbcf4dd857138973bc38d3dbe",
+  "stages": {
+    "forecast": {
+      "peak_allocated_bytes": 194646016,
+      "peak_reserved_bytes": 260046848,
+      "status": "completed",
+      "wall_seconds": 77.22935686632991
+    }
+  },
+  "started_utc": "2026-10-10T10:04:51.100174+00:00",
+  "status": "completed",
+  "timing_scope": "entrypoint imports, data preparation, model/optimizer setup, all training epochs, validation and checkpoint/selection saving; excludes final test and the resource sidecar write",
+  "torch_version": "2.7.1+cu128",
+  "training_stages_seconds": 77.22935686632991
+}

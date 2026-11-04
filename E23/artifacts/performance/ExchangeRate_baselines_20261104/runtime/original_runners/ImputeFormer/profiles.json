@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "dataset": "Exchange-Rate",
+    "seq_len": 96,
+    "pred_len": 96,
+    "n_vars": 8,
+    "boundaries": [
+      0,
+      5311,
+      6070,
+      7588
+    ],
+    "start_rate": 0.1,
+    "block_len": 8,
+    "allow_block_overlap": true,
+    "mask_seed": 2021,
+    "model_seed": 2021,
+    "validation": "original fixed mask only",
+    "test": "20 sealed masks shared with v125",
+    "extra_test_seeds": [
+      2026101001,
+      2026101002,
+      2026101003,
+      2026101004,
+      2026101005,
+      2026101006,
+      2026101007,
+      2026101008,
+      2026101009,
+      2026101010,
+      2026101011,
+      2026101012,
+      2026101013,
+      2026101014,
+      2026101015,
+      2026101016,
+      2026101017,
+      2026101018,
+      2026101019,
+      2026101020
+    ],
+    "evaluation_windows": 1423,
+    "metric_space": "train_standardized",
+    "control_notes": "P4 data, mask generator seed, model RNG seed and evaluation scope are shared experiment controls. Validation checkpoint selection is added where the author release has none. No test draw affects selection."
+  },
+  "shared_forecast_stage": {
+    "epochs": 100,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "precision": "float32",
+    "loss": "forecast_mse",
+    "selection_metric": "mae",
+    "patience": null,
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "lradj": "constant"
+  },
+  "models": {
+    "ImputeFormer": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/ImputeFormer",
+      "revision": "1c3868cf499951ac43b4fc7280593fbb745f58c7",
+      "seed": 42,
+      "version": "Official imputeformer_la.yaml base; Exchange geometry adaptation",
+      "model": {
+        "input_embedding_dim": 32,
+        "learnable_embedding_dim": 96,
+        "feed_forward_dim": 256,
+        "num_temporal_heads": 4,
+        "num_layers": 3,
+        "dim_proj": 8,
+        "dropout": 0.1
+      },
+      "training": {
+        "epochs": 300,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float16",
+        "patience": 20,
+        "selection_metric": "mae",
+        "loss": "hidden_l1 + .01*official_Freg",
+        "lradj": "official_magic",
+        "grad_clip_val": 5.0,
+        "batches_epoch_limit": 300
+      },
+      "sources": [
+        "config/imputation/imputeformer_la.yaml",
+        "experiments/imputeformer/models/ImputeFormer.py",
+        "experiments/imputeformer/imputers/imputeformer_imputer.py"
+      ],
+      "notes": "Official LA base, no Exchange optimum. Input_dim1 because no calendar covariates.96steps8nodes. Official model,Dense,MLP,attention and scheduler loaded without unrelated TSL graph dependencies. Freg executes in FP32 for non-power-of-two FFT; original_mask alltrue.160available train batches, author limit300 does not oversample."
+    }
+  }
+}

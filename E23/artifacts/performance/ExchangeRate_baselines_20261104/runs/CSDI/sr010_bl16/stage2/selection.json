@@ -1,0 +1,113 @@
+{
+  "actual_training_batches_per_epoch": 40,
+  "actual_training_windows_per_epoch": 5120,
+  "adapter_sha256": "ef602005e6fc8a001b19cd50cc70f23b9e1c0f75a27c814eb5ae55b70c24841e",
+  "author_profiles_sha256": "8f2845c4bb9e310be5c389f2ce8555361c4b60ef6ccc2727ef0726cbb24c73b1",
+  "best_epoch": 73,
+  "best_validation": {
+    "hidden32_coordinates": 139718,
+    "hidden96_coordinates": 418753,
+    "mae": 0.33008178128832344,
+    "mse": 0.2579929764988594,
+    "repair32_mae": 0.22415381839465043,
+    "repair32_mse": 0.2858775897854201,
+    "repair96_mae": 0.21793519821344087,
+    "repair96_mse": 0.2934044917547774,
+    "target_elements": 509952,
+    "windows": 664
+  },
+  "checkpoint": "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/csdi_budget_100ep_train1_eval5_20261010/runs/CSDI/sr010_bl16/stage2/selected.pt",
+  "checkpoint_sha256": "f3ee50e88a13468e04acab35ed6c5b0fb734ac44e55f3c4356ef81f090d99dcb",
+  "dataset_identity": "Exchange-Rate",
+  "dataset_manifest_sha256": "2ce3a653d2789cac2539bfb1365fb9cf81ad1f44321a718657d9ed41768bb095",
+  "epochs_completed": 100,
+  "evaluation_drop_last": false,
+  "model": "CSDI",
+  "optimizer_updates": 4000,
+  "original_test_mask_sha256": "c45153a00c56f178c3a28913c957da51351bb699880b2c020d3d0820c523741f",
+  "parent_selection": "/home/xyw/paper/E23/artifacts/Exchange-Rate/seq96_pred96/experiments/csdi_budget_100ep_train1_eval5_20261010/runs/CSDI/sr010_bl16/stage1/selection.json",
+  "parent_selection_sha256": "0eeb4a596a7b3ffbc6157bfa1060303519fcb5e3628ddee55b14616b22123793",
+  "predictor_initial_sha256": "fbbe8cde92c6417f1b5f67db888e20437dae434709b9e2adc834ce91118f6561",
+  "profile": {
+    "kind": "imputer",
+    "model": {
+      "diffusion": {
+        "beta_end": 0.5,
+        "beta_start": 0.0001,
+        "channels": 64,
+        "diffusion_embedding_dim": 128,
+        "is_linear": false,
+        "layers": 4,
+        "nheads": 8,
+        "num_steps": 50,
+        "schedule": "quad"
+      },
+      "model": {
+        "featureemb": 16,
+        "is_unconditional": 0,
+        "target_strategy": "random",
+        "timeemb": 128
+      }
+    },
+    "notes": "Stage1 final epoch100,lr drops after75 and90; completed200epoch weights reused where already available and actual budget retained. Stage2 dynamic training masks unchanged,100epochs,pureMSE,frozen repair. One repair sample per training batch;five samples and median for validation/test. Official50stepquad reverse equations and architecture retained.",
+    "revision": "7f24a436f08d98853a6b43d4f7f04e5a65ecdf27",
+    "root": "/home/xyw/paper/CSDI",
+    "sampling": {
+      "diffusion_steps": 50,
+      "evaluation_samples": 5,
+      "forecast_training_samples": 1,
+      "parallel_samples_per_batch": 5,
+      "sampling_seed": 2026101000
+    },
+    "seed": 2023,
+    "sources": [
+      "config/base.yaml",
+      "main_model.py",
+      "diff_models.py",
+      "utils.py"
+    ],
+    "training": {
+      "batch_size": 16,
+      "epochs": 100,
+      "learning_rate": 0.001,
+      "loss": "official_hidden_noise_mse",
+      "lradj": "csdi_75_90",
+      "patience": null,
+      "precision": "float32",
+      "selection_metric": "mse",
+      "weight_decay": 1e-06
+    },
+    "version": "CSDI"
+  },
+  "profile_seed": 2023,
+  "protocol_base_seed": 2023,
+  "protocol_config_sha256": "441a2efa917d5e82b915c4bac0849cc38f486f32468ea63eb9f429e3b00f1859",
+  "repair_final_sha256": "add42c2dfc56889b92eaf42db0f31653e51ff874a4ee85523c97ac8406c39b92",
+  "repair_initial_sha256": "add42c2dfc56889b92eaf42db0f31653e51ff874a4ee85523c97ac8406c39b92",
+  "repair_update_policy": "frozen_v1",
+  "s4m_first_batch_warmup_only": false,
+  "source_csv_sha256": "19d2f3c150513271f0f3ff9e855d15d333ce954911215fc6492453ad3edecca8",
+  "stage": "forecast",
+  "stage2_loss": "forecast_mse_only",
+  "stage2_seed": 2023,
+  "status": "validation_finalized",
+  "test_metrics_seen": false,
+  "training": {
+    "batch_size": 128,
+    "epochs": 100,
+    "learning_rate": 0.0001,
+    "loss": "forecast_mse",
+    "lradj": "constant",
+    "patience": null,
+    "precision": "float32",
+    "selection_metric": "mae",
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "weight_decay": 0.0
+  },
+  "training_seed": 2023,
+  "upstream_revision": "7f24a436f08d98853a6b43d4f7f04e5a65ecdf27",
+  "upstream_source_sha256": "3383cafc68f3f781d4467eab3815c997521a1489c0a92470e952ab467294df84",
+  "validation_mask_sha256": "11370b43313d63f9636115dcea48d4f681993e257552422fef3f326d55c2968d",
+  "weather_adapter_sha256": "1e61bbc0c577eb2eee82a9ca7525ad1e76472390e3a3272c8866731bb116f4fb",
+  "weather_model_adapter_sha256": "badf9a72b5d8b8e0f9babeb58443991ccf51b2dbd058a22087f219463bb2cd75"
+}

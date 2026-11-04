@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "dataset": "Exchange-Rate",
+    "seq_len": 96,
+    "pred_len": 96,
+    "n_vars": 8,
+    "boundaries": [
+      0,
+      5311,
+      6070,
+      7588
+    ],
+    "start_rate": 0.1,
+    "block_len": 8,
+    "allow_block_overlap": true,
+    "mask_seed": 2021,
+    "model_seed": 2021,
+    "validation": "original fixed mask only",
+    "test": "20 sealed masks shared with v125",
+    "extra_test_seeds": [
+      2026101001,
+      2026101002,
+      2026101003,
+      2026101004,
+      2026101005,
+      2026101006,
+      2026101007,
+      2026101008,
+      2026101009,
+      2026101010,
+      2026101011,
+      2026101012,
+      2026101013,
+      2026101014,
+      2026101015,
+      2026101016,
+      2026101017,
+      2026101018,
+      2026101019,
+      2026101020
+    ],
+    "evaluation_windows": 1423,
+    "metric_space": "train_standardized",
+    "control_notes": "P4 data, mask generator seed, model RNG seed and evaluation scope are shared experiment controls. Validation checkpoint selection is added where the author release has none. No test draw affects selection."
+  },
+  "shared_forecast_stage": {
+    "epochs": 100,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "precision": "float32",
+    "loss": "forecast_mse",
+    "selection_metric": "mae",
+    "patience": null,
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "lradj": "constant"
+  },
+  "models": {
+    "CSDI": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/CSDI",
+      "revision": "7f24a436f08d98853a6b43d4f7f04e5a65ecdf27",
+      "seed": 2023,
+      "version": "CSDI",
+      "model": {
+        "diffusion": {
+          "layers": 4,
+          "channels": 64,
+          "nheads": 8,
+          "diffusion_embedding_dim": 128,
+          "beta_start": 0.0001,
+          "beta_end": 0.5,
+          "num_steps": 50,
+          "schedule": "quad",
+          "is_linear": false
+        },
+        "model": {
+          "is_unconditional": 0,
+          "timeemb": 128,
+          "featureemb": 16,
+          "target_strategy": "random"
+        }
+      },
+      "training": {
+        "epochs": 100,
+        "batch_size": 16,
+        "learning_rate": 0.001,
+        "weight_decay": 1e-06,
+        "precision": "float32",
+        "patience": null,
+        "selection_metric": "mse",
+        "loss": "official_hidden_noise_mse",
+        "lradj": "csdi_75_90"
+      },
+      "sources": [
+        "config/base.yaml",
+        "main_model.py",
+        "diff_models.py",
+        "utils.py"
+      ],
+      "notes": "Stage1 final epoch100,lr drops after75 and90; completed200epoch weights reused where already available and actual budget retained. Stage2 dynamic training masks unchanged,100epochs,pureMSE,frozen repair. One repair sample per training batch;five samples and median for validation/test. Official50stepquad reverse equations and architecture retained.",
+      "sampling": {
+        "forecast_training_samples": 1,
+        "evaluation_samples": 5,
+        "diffusion_steps": 50,
+        "parallel_samples_per_batch": 5,
+        "sampling_seed": 2026101000
+      }
+    }
+  }
+}

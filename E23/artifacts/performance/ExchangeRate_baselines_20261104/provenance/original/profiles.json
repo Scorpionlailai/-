@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "dataset": "Exchange-Rate",
+    "seq_len": 96,
+    "pred_len": 96,
+    "n_vars": 8,
+    "boundaries": [
+      0,
+      5311,
+      6070,
+      7588
+    ],
+    "start_rate": 0.1,
+    "block_len": 8,
+    "allow_block_overlap": true,
+    "mask_seed": 2021,
+    "model_seed": 2021,
+    "validation": "original fixed mask only",
+    "test": "20 sealed masks shared with v125",
+    "extra_test_seeds": [
+      2026101001,
+      2026101002,
+      2026101003,
+      2026101004,
+      2026101005,
+      2026101006,
+      2026101007,
+      2026101008,
+      2026101009,
+      2026101010,
+      2026101011,
+      2026101012,
+      2026101013,
+      2026101014,
+      2026101015,
+      2026101016,
+      2026101017,
+      2026101018,
+      2026101019,
+      2026101020
+    ],
+    "evaluation_windows": 1423,
+    "metric_space": "train_standardized",
+    "control_notes": "P4 data, mask generator seed, model RNG seed and evaluation scope are shared experiment controls. Validation checkpoint selection is added where the author release has none. No test draw affects selection."
+  },
+  "shared_forecast_stage": {
+    "epochs": 100,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "precision": "float32",
+    "loss": "forecast_mse",
+    "selection_metric": "mae",
+    "patience": null,
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "lradj": "constant"
+  },
+  "models": {
+    "T1": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/T1",
+      "revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+      "version": "official T1_Exchange.sh and run.py defaults; shared block masks/task interface",
+      "model": {
+        "n_heads": 128,
+        "patch_size": 2,
+        "patch_stride": 1,
+        "n_blocks": [
+          2,
+          2
+        ],
+        "kernel_size_large": [
+          71,
+          31
+        ],
+        "kernel_size_small": 5,
+        "ffn_ratio": 1.0,
+        "downsample_ratio": 2,
+        "imputation_use_mask_embedding": false
+      },
+      "training": {
+        "epochs": 300,
+        "batch_size": 16,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "bfloat16",
+        "patience": 30,
+        "selection_metric": "mse",
+        "loss": "hidden_reconstruction_mse",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://arxiv.org/html/2602.21043",
+        "scripts/imputation/T1_Exchange.sh",
+        "exp/exp_imputation.py",
+        "utils/tools.py"
+      ],
+      "notes": "Official type3 means constant LR. Mask embedding false is the released script/default, despite the paper's mask-aware description. Stage 2 uses the common P4 forecast interface. Exchange-Rate official script matches these parameters; input dimensions8.",
+      "seed": 502
+    },
+    "SAITS": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/SAITS",
+      "revision": "a3cd8de756c4de8a16bebb9d228deef7d71eb718",
+      "version": "SAITS-base (not an ETTh1-specific optimum); pinned core 660b87f19c1277065f314f24134f646229e89ca9",
+      "model": {
+        "n_groups": 2,
+        "n_group_inner_layers": 1,
+        "d_model": 256,
+        "d_inner": 128,
+        "n_head": 4,
+        "d_k": 64,
+        "d_v": 64,
+        "dropout": 0.1
+      },
+      "training": {
+        "epochs": 10000,
+        "batch_size": 128,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float32",
+        "patience": 30,
+        "selection_metric": "mae",
+        "loss": "observed_reconstruction_mae + hidden_imputation_mae",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://arxiv.org/html/2202.08516",
+        "configs/Electricity_SAITS_base.ini"
+      ],
+      "notes": "No unique ETTh1 paper configuration found: use publicly specified SAITS-base, not the Electricity best model. Epoch-level fixed P4 validation replaces the original step validation frequency; no extra test-derived tuning. Global train standardization feeds the imputer. Exchange-Rate uses documented SAITS-base; no dataset-specific optimum claimed.",
+      "seed": 2023
+    },
+    "BRITS": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/BRITS",
+      "revision": "fc0a3a472a6d99a6934e471d40c25ed0b029b501",
+      "version": "user-confirmed TorchScript accelerated BRITS, maximum200/patience20",
+      "model": {
+        "hidden_size": 108,
+        "impute_weight": 0.3,
+        "label_weight": 0.0
+      },
+      "training": {
+        "epochs": 200,
+        "batch_size": 64,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "float32",
+        "patience": 20,
+        "selection_metric": "mae",
+        "loss": "0.3*(forward_ORT_sum + backward_ORT_sum) + 0.1*consistency_mae",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://github.com/caow13/BRITS",
+        "README.md",
+        "main.py",
+        "models/rits.py",
+        "models/brits.py"
+      ],
+      "notes": "No ETTh1-specific configuration: README example supplies hidden size, weight and batch omitted from default parser. Necessary adaptations are 48->96, 35->7, device-safe tensors, unused legacy import removal, and classification label_weight=0 because P4 has no labels. Preserve original summed ORT and consistency weights; do not use the SAITS-repository BRITS normalization. Validation checkpoint selection and shared forecast head are P4 extensions. Acceleration must pass eager vs compiled equivalence before launch.",
+      "seed": 2023
+    }
+  }
+}

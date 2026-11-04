@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "dataset": "Exchange-Rate",
+    "seq_len": 96,
+    "pred_len": 96,
+    "n_vars": 8,
+    "boundaries": [
+      0,
+      5311,
+      6070,
+      7588
+    ],
+    "start_rate": 0.1,
+    "block_len": 8,
+    "allow_block_overlap": true,
+    "mask_seed": 2021,
+    "model_seed": 2021,
+    "validation": "original fixed mask only",
+    "test": "20 sealed masks shared with v125",
+    "extra_test_seeds": [
+      2026101001,
+      2026101002,
+      2026101003,
+      2026101004,
+      2026101005,
+      2026101006,
+      2026101007,
+      2026101008,
+      2026101009,
+      2026101010,
+      2026101011,
+      2026101012,
+      2026101013,
+      2026101014,
+      2026101015,
+      2026101016,
+      2026101017,
+      2026101018,
+      2026101019,
+      2026101020
+    ],
+    "evaluation_windows": 1423,
+    "metric_space": "train_standardized",
+    "control_notes": "P4 data, mask generator seed, model RNG seed and evaluation scope are shared experiment controls. Validation checkpoint selection is added where the author release has none. No test draw affects selection."
+  },
+  "shared_forecast_stage": {
+    "epochs": 100,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "precision": "float32",
+    "loss": "forecast_mse",
+    "selection_metric": "mae",
+    "patience": null,
+    "source": "existing P4 PatchTST interface, same structure as E23; task extension for imputation methods",
+    "lradj": "constant"
+  },
+  "models": {
+    "T1": {
+      "kind": "imputer",
+      "root": "/home/xyw/paper/T1",
+      "revision": "823b76aab57a2e60eb5029caab06fdfec8b19256",
+      "version": "official T1_Exchange.sh and run.py defaults; shared block masks/task interface",
+      "model": {
+        "n_heads": 128,
+        "patch_size": 2,
+        "patch_stride": 1,
+        "n_blocks": [
+          2,
+          2
+        ],
+        "kernel_size_large": [
+          71,
+          31
+        ],
+        "kernel_size_small": 5,
+        "ffn_ratio": 1.0,
+        "downsample_ratio": 2,
+        "imputation_use_mask_embedding": false
+      },
+      "training": {
+        "epochs": 300,
+        "batch_size": 16,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "precision": "bfloat16",
+        "patience": 30,
+        "selection_metric": "mse",
+        "loss": "hidden_reconstruction_mse",
+        "lradj": "constant"
+      },
+      "sources": [
+        "https://arxiv.org/html/2602.21043",
+        "scripts/imputation/T1_Exchange.sh",
+        "exp/exp_imputation.py",
+        "utils/tools.py"
+      ],
+      "notes": "Official type3 means constant LR. Mask embedding false is the released script/default, despite the paper's mask-aware description. Stage 2 uses the common P4 forecast interface. Exchange-Rate official script matches these parameters; input dimensions8.",
+      "seed": 502
+    }
+  }
+}

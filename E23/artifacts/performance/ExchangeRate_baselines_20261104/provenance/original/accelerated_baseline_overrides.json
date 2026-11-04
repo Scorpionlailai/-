@@ -1,0 +1,64 @@
+{
+  "dataset": "Exchange-Rate",
+  "requested_date": "2026-10-10",
+  "configuration_status": "confirmed_by_user",
+  "implementation_status": "cpu_equivalence_passed_gpu_preflight_required",
+  "BRITS": {
+    "network": "bidirectional_RITS",
+    "hidden_size": 108,
+    "seq_len": 96,
+    "maximum_epochs": 200,
+    "batch_size": 64,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "learning_rate_schedule": "fixed",
+    "precision": "float32",
+    "early_stopping": true,
+    "patience": 20,
+    "selection_metric": "validation_hidden_global_mae",
+    "checkpoint_policy": "restore_best",
+    "acceleration": "TorchScript_time_recurrence",
+    "bidirectional_merge": "official",
+    "verification": "eager/scripted outputs,loss,gradients passed"
+  },
+  "CSDI": {
+    "network": "conditional_diffusion",
+    "layers": 4,
+    "channels": 64,
+    "heads": 8,
+    "seq_len": 96,
+    "epochs": 200,
+    "batch_size": 16,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 1e-06,
+    "learning_rate_schedule": {
+      "milestone_epochs": [
+        150,
+        180
+      ],
+      "gamma": 0.1
+    },
+    "precision": "float32",
+    "early_stopping": false,
+    "checkpoint_policy": "last_epoch_200",
+    "diffusion_steps": 50,
+    "total_samples": 10,
+    "samples_per_parallel_batch": 5,
+    "sampling_batches": 2,
+    "aggregation": "official_torch_median",
+    "sampling_seed_policy": "predeclared_fixed_and_recorded",
+    "verification": "parallel reverse sampler versus official impute passed; finite backward, label isolation and deterministic replay passed",
+    "sampling_seed": 2026101000,
+    "sampling_order": "per batch: groups2, within group sample-major adjacent to each window via repeat_interleave5"
+  },
+  "reporting": {
+    "label": "user_confirmed_accelerated_configuration",
+    "record_actual_epochs": true,
+    "record_optimizer_updates": true,
+    "record_sampling_seed": true,
+    "record_training_and_inference_resources": true
+  },
+  "github_upload": "only_after_explicit_user_review"
+}

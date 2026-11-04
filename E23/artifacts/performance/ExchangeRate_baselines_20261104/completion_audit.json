@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "dataset": "Exchange-Rate",
+  "models": [
+    "SAITS",
+    "BRITS",
+    "CSDI",
+    "ImputeFormer",
+    "TimesNet",
+    "T1"
+  ],
+  "scenes": [
+    "sr010_bl8",
+    "sr015_bl8",
+    "sr020_bl8",
+    "sr010_bl16"
+  ],
+  "repair_rows": 24,
+  "forecast_primary_mae_rows": 24,
+  "forecast_secondary_mse_rows": 24,
+  "test_masks_each": 20,
+  "test_windows_per_mask": 1423,
+  "per_mask_metric_rows": 1440,
+  "summary_mean_and_sample_std_recomputed": true,
+  "test_and_validation_mask_sha_match_published_bank": true,
+  "source_csv_sha_match_published_bank": true,
+  "evaluation_model_state_unchanged": true,
+  "all_forecast_repair_frozen": true,
+  "all_forecast_pure_mse_loss": true,
+  "all_forecast_100epochs_4000updates": true,
+  "single_training_seed_per_model": true,
+  "new_training_started": false,
+  "new_weights_uploaded": false,
+  "publication_requested_date": "2026-11-04"
+}
