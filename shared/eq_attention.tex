@@ -1,0 +1,10 @@
+\begin{equation}
+ \begin{split}
+  a^{(h)}_{p,k}&=\frac{\exp(\ell^{(h)}_{p,k})}
+   {1+\sum_{v\in\mathcal C_{j,c}}\exp(\ell^{(h)}_{p,v})},\\
+  \ell^{(h)}_{p,k}&=\frac{\langle q^{(h)}_{p},K^{(h)}_k\rangle}{\sqrt{d_h}}
+      +\log\pi_k+\eta_k,\\
+  r_p&=\operatorname{Concat}_h\!\left(\sum_k a^{(h)}_{p,k}V^{(h)}_k\right),\\
+  \delta_p&=\mathbf{1}_{\exists k\in\mathcal C_{j,c}:\eta_k=0}\,g_\theta([q_p;r_p]).
+ \end{split}\label{eq:attention}
+\end{equation}

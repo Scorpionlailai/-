@@ -1,0 +1,9 @@
+\section{Related Work}\label{sec:related}
+\paragraph{Multivariate time-series imputation.}
+Deep imputation models exploit temporal dependencies and cross-variable relationships through different reconstruction mechanisms. BRITS uses bidirectional recurrent estimation~\cite{brits}, and SAITS employs diagonally masked self-attention~\cite{saits}. CSDI models conditional distributions with score-based diffusion~\cite{csdi}, while ImputeFormer introduces low-rank spatiotemporal attention~\cite{imputeformer}. Our framework integrates contextual estimation with explicit patch evidence and a subsequent observation-conditioned correction stage.
+
+\paragraph{Temporal and cross-variable representation.}
+PatchTST represents local trajectories using temporal patches~\cite{patchtst}; iTransformer models dependencies between variate tokens~\cite{itransformer}. T1 binds temporal feature channels to variable-attention heads~\cite{t1}. TVCE adopts this channel--head geometry as its variable-signature attention building block. MPER and PEGR extend contextual reconstruction with source-organized fragments and pointwise reading, while OCRR revisits the resulting numerical estimate using visible observations.
+
+\paragraph{Structured temporal modeling.}
+TimeMixer++ combines multiple representation and mixing operations to capture temporal patterns and analyzes its components through ablation, representation, efficiency and sensitivity studies~\cite{timemixerpp}. For imputation, we organize information around point context, patch evidence and observation-conditioned correction. Capacity-matched controls, shared refinement and mask-defined error strata connect these design choices to measured reconstruction behavior.

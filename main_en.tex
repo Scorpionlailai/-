@@ -1,0 +1,35 @@
+% English submission-style working draft; official CVPR style is unmodified.
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[review]{cvpr}
+\usepackage{mathtools}
+\usepackage{array}
+\usepackage{iftex}
+\ifPDFTeX\else
+  \usepackage{fontspec}
+  \setmainfont{texgyretermes-regular.otf}[BoldFont=texgyretermes-bold.otf,ItalicFont=texgyretermes-italic.otf,BoldItalicFont=texgyretermes-bolditalic.otf]
+  \setsansfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+  \setmonofont{texgyrecursor-regular.otf}
+\fi
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+\newcommand{\Lang}[2]{#2}
+\usepackage{placeins}
+\input{shared/macros}
+\def\confName{CVPR}
+\def\confYear{2027}
+\title{EviRefine: Evidence-Guided Coarse-to-Fine\\Multivariate Time-Series Imputation}
+\author{Anonymous authors}
+\begin{document}
+\maketitle
+\begin{center}\small\textbf{Working draft v0.1}\end{center}
+\input{sections/en/abstract}
+\input{sections/en/introduction}
+\input{sections/en/related_work}
+\input{sections/en/method}
+\input{sections/en/experiments}
+\input{sections/en/analysis}
+\FloatBarrier
+\input{sections/en/conclusion}
+\input{sections/en/llm_statement}
+{\small\bibliographystyle{ieeenat_fullname}\bibliography{references}}
+\end{document}

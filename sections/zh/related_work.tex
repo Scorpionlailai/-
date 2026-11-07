@@ -1,0 +1,9 @@
+\section{相关工作}\label{sec:related}
+\paragraph{多变量时间序列缺失修复。}
+深度修复模型利用时间依赖与变量关系重建缺失观测。BRITS采用双向循环估计~\cite{brits}，SAITS采用对角掩码自注意力~\cite{saits}；CSDI通过分数扩散建模条件分布~\cite{csdi}，ImputeFormer引入低秩时空注意力~\cite{imputeformer}。本文将上下文估计、显式Patch证据以及后续观测条件化修正整合为统一恢复流程。
+
+\paragraph{时间与跨变量表示。}
+PatchTST使用时间Patch表示局部轨迹~\cite{patchtst}，iTransformer建模变量Token之间的依赖~\cite{itransformer}。T1将时间特征通道与变量注意力头绑定~\cite{t1}。TVCE采用这一通道--注意力头交互几何构建变量签名注意力；MPER和PEGR通过按来源组织的片段与逐点读取增强上下文重建；OCRR则利用真实可见观测修正数值估计。
+
+\paragraph{结构化时间建模。}
+TimeMixer++结合多种表示与混合操作捕捉时间模式，并通过消融、表示、效率和敏感性实验分析组件~\cite{timemixerpp}。面向缺失修复，本文围绕点级上下文、Patch证据与观测条件化修正组织信息，通过容量匹配对照、公共精恢复以及掩码定义的误差分层，分析设计选择与重建表现之间的联系。

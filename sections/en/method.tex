@@ -1,0 +1,53 @@
+\section{EviRefine}\label{sec:method}
+\subsection{Problem Formulation and Architecture Overview}
+Let $\X\in\mathbb R^{L\times C}$ denote a multivariate window, $\V$ its native observation mask, and $\M\leq\V$ the observations retained after artificial masking. Native missing values have no supervised target. We write $\X_{\rm obs}$ for the visible values with all unavailable entries set to zero. The evaluation support and observed-value preservation are
+\input{shared/eq_task}
+Batch indices are omitted. Inference uses the visible observations in the input window and the eligible training memory.
+
+\Model{} has two imputation stages (Fig.~\ref{fig:architecture}): evidence-guided coarse recovery and observation-conditioned residual refinement. Coarse recovery produces an explicit estimate $\X^{\rm c}$ in training-standardized coordinates. The refiner receives this estimate as a fixed input and returns $\widehat\X$. The coarse stage integrates TVCE, MPER and PEGR; OCRR performs the second-stage numerical correction. Both stages recover the incomplete input window.
+
+\subsection{Temporal--Variable Context Encoding (TVCE)}\label{sec:tvce}
+TVCE establishes a contextual representation for each target point by combining local temporal dynamics with cross-variable dependencies.
+We first standardize each variable using training-set statistics. A visible-only window normalization then supplies a mean $\mu_c$ and standard deviation $\sigma_c$, with training-statistic fallbacks when necessary. Masks are applied before numerical transformations. A residual temporal CNN processes variables with shared filters, using visible values, masks, temporal position and distances to visible observations. Global level features supplement this local representation.
+
+Variable-signature attention exchanges information between entire temporal signatures. Following the channel--head geometry of T1~\cite{t1}, each feature channel provides an attention pathway over variables. We use two temporal residual blocks and two variable-attention blocks. The resulting point features are pooled over overlapping patches:
+\input{shared/eq_context}
+Here $\operatorname{VSAttn}$ denotes variable-signature attention, $\mathcal P_j$ is the $j$th patch, $P^x,P^m$ are its visible values and mask, and $\psi$ includes the projection of pooled context. We use $L=96$, patch length 16, stride 8 and feature width 64. A base reconstruction head produces a vector $b_{j,c}\in\mathbb R^{16}$ from $z_{j,c}$.
+
+\subsection{Multi-Source Patch Evidence Retrieval (MPER)}\label{sec:mper}
+MPER supplements the target context with identifiable fragments from complementary sources.
+For each damaged target patch, we construct $\mathcal C_{j,c}$ from three source families. Each member carries an encoded message, quality features, a source-type identity, a nonnegative within-source prior and an eligibility flag.
+
+\paragraph{Temporal patch evidence.}
+Candidates come from other patches of the same variable in the current window. Separate distance bands on either side organize near and distant context. The nearest band favors proximity; farther bands use a learned match. Patches without visible support are ineligible. The five bands in each direction yield at most ten candidates.
+
+\paragraph{Cross-variable patch evidence.}
+A window-dependent selector combines learned variable relationships with current source context to select at most four other variables. For each source, patches at offsets $-1,0,1$ provide up to twelve candidates. Visibility and agreement on commonly visible positions contribute to candidate quality. Candidate encoders include the target latent and contextual source representations.
+
+\paragraph{Historical patch evidence.}
+A training-only memory stores eligible patch members and retrieval keys. The query and key-supervision coordinates are aligned to the training-standardized scale; a locally normalized query is mapped back to this scale before key encoding. Retrieval respects source-variable and temporal eligibility, then returns up to four members from the selected prototype group. Member values are converted to the target's working scale for message construction. Published memory snapshots and their retrieval encoders are fixed during evaluation and refinement training.
+
+The common bank retains individual patch members, their source identities and their support features. Its quality features and priors represent observable support and compatibility. Target conditioning is used in candidate construction as well as in the point query; the full pathway is evaluated against a context-only capacity control in Sec.~\ref{sec:analysis}.
+
+\subsection{Pointwise Evidence-Guided Reconstruction (PEGR)}\label{sec:pegr}
+PEGR converts patch evidence into point-specific corrections of the contextual base estimate.
+A target position forms a query $q_p$ from its point context, patch latent $z_{j,c}$, visible features, relative position, base value and source availability. Candidate messages are normalized and augmented with projected quality features and source-type embeddings, then projected into keys and values. For eight heads of width $d_h=8$, reading and residual prediction are
+\input{shared/eq_attention}
+where $\pi_k$ is a source prior and $\eta_k$ is zero for a legal candidate and $-\infty$ otherwise. A null entry with zero logit and zero value accounts for the constant 1 in the denominator. It attenuates the evidence readout when support is weak. The residual head jointly uses the query and concatenated readout; its correction is zero when no candidate is legal.
+
+Patch estimates are converted to the training-standardized scale and merged by Confidence-Weighted Overlap Fusion using positive learned weights:
+\input{shared/eq_overlap}
+The numerical floor in $s_c$ prevents a nearly constant visible window from collapsing the residual scale. $h_{j,p,c}$ is the output of the confidence network using point context, visible features, position, base/candidate values and source availability. These weights determine the contribution of each overlapping patch estimate. Padding is excluded from the sums and visible entries are restored after fusion.
+
+\subsection{Observation-Conditioned Residual Refinement (OCRR)}\label{sec:ocrr}
+OCRR corrects the initial trajectory by combining temporal context with the numerical anchors supplied by visible observations.
+The second stage combines the fixed coarse estimate with original visible observations. At each variable and time, a reference $R_{t,c}$ is obtained by interpolation between nearest visible neighbors, or by the available neighbor when only one side exists. A support feature $U_{t,c}$ decreases with interpolation span or one-sided distance. Unavailable references have zero support.
+
+The refiner projects five input groups into width 64, applies a local residual convolution and one temporal Transformer layer~\cite{attention}, and produces two corrections:
+\input{shared/eq_refinement}
+All numerical features in this equation use training-standardized coordinates. $\sg$ denotes stop-gradient; in implementation the entire coarse model is frozen. The activation indicators are $A_{\rm win}=\mathbf{1}[\sum_{t,c}M_{t,c}>0]$ and $A_{{\rm var},c}=\mathbf{1}[\sum_tM_{t,c}>0]$, broadcast over time and channels as appropriate. The first head predicts a bounded free residual, whereas the signed gate $G$ controls the correction associated with the reference. Reference corrections are active only when that variable has visible support. Network corrections are disabled for wholly unobserved windows. The final mask operation exactly preserves visible values.
+
+\subsection{Training and Selection}
+We train coarse recovery first and then train the refiner for the fixed coarse checkpoint. The principal reconstruction terms on native-valid artificially hidden positions are
+\input{shared/eq_objectives}
+Training combines these reconstruction terms with auxiliary regularization. Retrieval-key supervision aligns masked and complete keys and applies normalized contrastive supervision in training-global coordinates. Complete native-valid targets are used only as training labels. Both stages run 100 epochs with Adam, learning rate$10^{-3}$, zero weight decay, FP32 and batch 128. Coarse selection minimizes fixed-validation full-window MSE; refinement selection minimizes fixed-validation full-window MAE. The coarse network, memory members and retrieval encoders remain frozen throughout refinement training.

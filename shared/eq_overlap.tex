@@ -1,0 +1,9 @@
+\begin{equation}
+ \begin{split}
+ u_{j,p,c}&=\mu_c+\sigma_c b_{j,p,c}+s_c\delta_{j,p,c},\\
+ s_c&=\sqrt{\sigma_c^2+0.1^2},\\
+ w_{j,p,c}&=\exp\!\left(2\tanh\!\frac{h_{j,p,c}}2\right),\\
+ X^{\rm c}_{t,c}&=\frac{\sum_{j:t\in\mathcal P_j}w_{j,t-jS,c}u_{j,t-jS,c}}
+ {\sum_{j:t\in\mathcal P_j}w_{j,t-jS,c}}.
+ \end{split}\label{eq:overlap}
+\end{equation}

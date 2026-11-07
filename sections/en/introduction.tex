@@ -1,0 +1,30 @@
+\section{Introduction}\label{sec:introduction}
+Multivariate time series record interacting processes in environmental monitoring, physiological sensing, industrial systems and financial markets. Missing observations interrupt these processes at different locations and durations, obscuring both local dynamics and relationships across variables. Recovering the missing values calls for a representation that integrates available information across these complementary dimensions.
+
+Recent methods model incomplete observations through recurrent estimation, self-attention, diffusion and structured spatiotemporal representations~\cite{brits,saits,csdi,imputeformer}. Temporal patches provide a useful unit for representing local trajectories~\cite{patchtst}, while variable-wise attention captures dependencies among measured processes~\cite{itransformer,t1}. These advances motivate two complementary requirements for imputation: identifying informative fragments beyond a damaged local context, and converting contextual representations into numerical estimates consistent with visible measurements.
+
+The availability of useful information changes with each missing pattern. A same-variable fragment can reveal a temporal continuation, a related variable can expose a shared transition, and a training-history fragment can supply a recurring trajectory. Their relevance also varies within a target patch: points close to a visible boundary and points deep inside a gap receive different local support. This motivates organizing patch-level evidence by source and reading it at the granularity of individual missing points.
+
+Numerical correction provides a second opportunity for recovery. Once an initial estimate is available, the remaining visible observations anchor its level and local transitions. A dedicated refinement stage can use this joint representation to correct residual errors across the window. This leads to a coarse-to-fine design in which contextual reconstruction establishes an initial trajectory and observation-conditioned refinement improves its pointwise values.
+
+Building on these considerations, we introduce \Model, an evidence-guided coarse-to-fine imputation framework with four components: (1) Temporal--Variable Context Encoding (TVCE), (2) Multi-Source Patch Evidence Retrieval (MPER), (3) Pointwise Evidence-Guided Reconstruction (PEGR), and (4) Observation-Conditioned Residual Refinement (OCRR). TVCE combines residual temporal convolution with variable-signature attention. MPER organizes temporal, cross-variable and training-history patches into a common bank. PEGR reads this bank separately for each target point and combines the readout with its query to correct a base estimate. OCRR then integrates the fixed coarse estimate with visible observations and reference features to produce the refined window.
+
+Our contributions are summarized as follows:
+\begin{itemize}
+ \item We introduce \Model, a coarse-to-fine framework that integrates contextual reconstruction, explicit patch evidence and observation-conditioned correction for multivariate time-series imputation.
+ \item We develop multi-source patch evidence retrieval and pointwise reconstruction, enabling target-specific access to complementary temporal, cross-variable and historical fragments through a common reading interface.
+ \item We design an observation-conditioned residual refiner that combines temporal correction with visible-observation references. Experiments across six datasets and paired component studies evaluate the resulting framework and its recovery mechanisms.
+\end{itemize}
+
+\begin{figure*}[t]
+ \centering
+ \IfFileExists{figures/evirefine_architecture.pdf}{\includegraphics[width=\textwidth]{figures/evirefine_architecture.pdf}}{%
+ \fbox{\parbox{.95\textwidth}{\centering\vspace{4mm}
+ \textbf{\Model{} architecture}\\[2mm]
+ TVCE + MPER\\
+ $\longrightarrow$ PEGR + confidence-weighted overlap fusion\\
+ $\longrightarrow$ OCRR
+ \vspace{4mm}}}}
+ \caption{Overview of \Model. TVCE encodes point context, MPER constructs patch evidence, PEGR produces the coarse reconstruction, and OCRR refines it using visible observations.}
+ \label{fig:architecture}
+\end{figure*}
