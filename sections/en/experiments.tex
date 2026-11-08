@@ -1,31 +1,18 @@
+% Declare the main table early so the two-column float appears with the evaluation protocol.
+\begin{table*}[!t]
+ \centering\scriptsize\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.03}
+ \input{tables/generated/formal_results}
+ \caption{Imputation results across six datasets and four missingness configurations. Each training run averages twenty shared test masks; \Model{} reports the average over training seeds2023,2024 and 2025, while baselines retain their original training seeds. Best results are red; second-best results are blue and underlined.}
+ \label{tab:formal}
+\end{table*}
+
 \section{Experiments}\label{sec:experiments}
 \subsection{Datasets and Evaluation Protocol}
 We evaluate \Model{} on ETTh1, Weather, Exchange-Rate, BeijingAirQuality, PhysioNet2012 and PAMAP2, covering industrial, meteorological, financial, environmental, clinical and wearable-sensor measurements. The prepared data use 7,21,8,12,35 and 40 variables, respectively. BeijingAirQuality treats the twelve stations as related channels. Native observation masks are retained; patient, subject and record boundaries are respected when constructing windows. All statistics used for scaling and history construction come from training data.
 
-Four fixed missingness configurations combine block-start parameter$p_s$ and block length $b$: $(.10,8)$, $(.15,8)$, $(.20,8)$ and $(.10,16)$. Realized missing coverage depends on the start parameter, overlapping blocks and boundary handling. All methods within a comparison receive identical held-out masks and are scored only at originally observed values that were artificially hidden.
+Artificial missingness is controlled by $p_s$ and $b$. The parameter $p_s$ controls the number of missing-event starts, while $b$ specifies how many consecutive time points each event hides. For each variable over a timeline of length $L$, we uniformly sample $\operatorname{round}(p_sL)$ distinct starts from positions that can accommodate a complete missing block. An event starting at $t$ hides the $b$ consecutive values from $t$ to $t+b-1$. Blocks from different starts may overlap, so the realized missing fraction depends jointly on $p_s$, $b$ and block overlap. For example, $p_s=10\%$ and $b=8$ sample a number of starts equal to $10\%$ of the timeline length and hide eight consecutive values per start. We evaluate four configurations: $10\%/8$, $15\%/8$, $20\%/8$ and $10\%/16$. Averaged across the six datasets and twenty test masks, these configurations produce approximately $57\%$, $73\%$, $83\%$ and $81\%$ artificial missingness, respectively, excluding native missingness.
 
-We use three training seeds,2023,2024 and 2025, and twenty fixed test-mask realizations per trained model. For MSE, aggregation is
-\input{shared/eq_metrics}
-MAE uses the corresponding absolute error. We report the mean and sample standard deviation of the three training-seed averages $\overline m_s$. Errors are measured in training-standardized coordinates. The main results and dedicated mechanism cohorts each use fixed, shared masks within their comparisons.
+For each dataset and missingness configuration, twenty fixed random seeds generate twenty distinct sets of missing positions using this procedure. All models are evaluated on the same twenty test masks for a fair comparison. Hash digests verify shared-mask identity, and the masks remain fixed across models and test outcomes. Native missingness is retained; MSE and MAE are computed only at originally observed values that are artificially hidden. Errors are measured in coordinates standardized using training-set statistics and averaged over the twenty test masks.
 
-\subsection{Formal Six-Dataset Results}
-Table~\ref{tab:formal} records the complete \Model{} evaluation across the six datasets and four masking configurations. It reports both MSE and MAE, enabling squared-error accuracy and absolute-error accuracy to be assessed together. The long-block and higher-start-rate cases test the model with reduced visible support. Dedicated paired studies below locate the contribution of patch evidence and refinement within this system.
-
-\begin{table*}[t]
- \centering\small\setlength{\tabcolsep}{5pt}
- \input{tables/generated/formal_results}
- \caption{Formal \Model{} results over six datasets. Each cell is the mean$\pm$sample SD over three training seeds, after averaging twenty shared test masks per model. $p_s$ is the block-start parameter and $b$ is the block length. The table reports measured \Model{} performance across all configurations.}
- \label{tab:formal}
-\end{table*}
-
-\subsection{Controlled Comparisons}
-The full candidate pathway is compared with a capacity-matched context-only model that retains the same front-end, base prediction, overlap fusion and refinement structure. Its contextual recovery network uses an analytically chosen hidden width to match effective inference parameters within 1\%; all added parameters participate in prediction. The context-only model is independently trained with the same data, masks, optimizer budget and checkpoint-selection criteria.
-
-We further remove temporal, cross-variable or historical evidence individually; replace selection with source-wise random legal candidates; use a unified visible-value similarity search; or share one read across each target patch. Random and unified selection match the reference effective candidate budget. Other structures and the refinement training protocol remain fixed. Source removals measure conditional gains of one pathway within the complete system.
-
-An additional BeijingAirQuality study applies the same refinement architecture and training budget to T1, the matched context-only model and \Model. It separates raw backbone outputs from outputs receiving a common second-stage correction. Backbone weights stay frozen during this comparison.
-
-\subsection{Implementation}
-The main width is 64, with eight point-readout heads and one width 64, four-head temporal refinement layer. Patch length and stride are 16 and 8. Each imputation stage runs 100 epochs; there is no training early stop in these \Model{} comparisons. The first stage is selected by validation MSE, and the refiner by validation MAE. No test metric is used for checkpoint selection.
-
-For efficiency, we time fixed batch 128 inputs on a single exclusive RTX5090 in FP32, using twenty warm-up iterations and one hundred synchronized measurements. We report median latency, effective parameter count and peak allocated GPU memory. Training-loop time includes validation and saving; it is recorded separately from full experiment wall time.
+\subsection{Main Results}
+Table~\ref{tab:formal} compares \Model{} with five baselines across six datasets and four masking configurations. Each model has adjacent MSE and MAE columns; rows group the four scenarios within each dataset. The long-block and higher-start-rate cases test the model with reduced visible support.

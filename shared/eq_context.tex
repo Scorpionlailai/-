@@ -1,7 +1,7 @@
+\begingroup
+\small
 \begin{equation}
- \begin{split}
-  \F&=\operatorname{VSAttn}\bigl(\operatorname{CNN}(\X_{\rm obs},\M)\bigr),\\
-  z_{j,c}&=\phi_{\rm patch}([P^x_{j,c};P^m_{j,c}])
-    +\psi\bigl(\operatorname{Pool}(\F_{\mathcal P_j,c})\bigr).
- \end{split}\label{eq:context}
+ \F^{(1)}=H+\operatorname{MATC}(H),\;\F^{(2)}=\F^{(1)}+\operatorname{TSVA}(\F^{(1)}).
+ \label{eq:context}
 \end{equation}
+\endgroup

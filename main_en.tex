@@ -2,7 +2,7 @@
 \documentclass[10pt,twocolumn,letterpaper]{article}
 \usepackage[review]{cvpr}
 \usepackage{mathtools}
-\usepackage{array}
+\usepackage{array,multirow}
 \usepackage{iftex}
 \ifPDFTeX\else
   \usepackage{fontspec}
@@ -17,19 +17,18 @@
 \input{shared/macros}
 \def\confName{CVPR}
 \def\confYear{2027}
-\title{EviRefine: Evidence-Guided Coarse-to-Fine\\Multivariate Time-Series Imputation}
+\title{PRISM: A General Reconstruction--Refinement Framework\\for Time Series Imputation}
 \author{Anonymous authors}
 \begin{document}
 \maketitle
-\begin{center}\small\textbf{Working draft v0.1}\end{center}
 \input{sections/en/abstract}
 \input{sections/en/introduction}
 \input{sections/en/related_work}
 \input{sections/en/method}
 \input{sections/en/experiments}
-\input{sections/en/analysis}
+% Deferred: sections/en/analysis
 \FloatBarrier
-\input{sections/en/conclusion}
-\input{sections/en/llm_statement}
+% Deferred: sections/en/conclusion
+% Deferred: sections/en/llm_statement
 {\small\bibliographystyle{ieeenat_fullname}\bibliography{references}}
 \end{document}

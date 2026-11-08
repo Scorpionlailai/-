@@ -1,30 +1,37 @@
-\begin{tabular}{llcrr}
+\begin{tabular}{@{}c@{\hspace{2pt}}|@{\hspace{2pt}}c@{\hspace{2pt}}|rr|rr|rr|rr|rr|rr@{}}
 \toprule
-\Lang{数据集}{Dataset} & $p_s$ & $b$ & MSE $\downarrow$ & MAE $\downarrow$ \\
+\Lang{数据集}{Dataset} & \shortstack{\Lang{块缺失}{Block}\\\Lang{配置}{masking}} & \multicolumn{2}{c}{\shortstack{\Model{}\\\Lang{（本文）}{(Ours)}}} & \multicolumn{2}{c}{\shortstack{BRITS\\(2018)}} & \multicolumn{2}{c}{\shortstack{CSDI\\(2021)}} & \multicolumn{2}{c}{\shortstack{ImputeFormer\\(2024)}} & \multicolumn{2}{c}{\shortstack{TimesNet\\(2023)}} & \multicolumn{2}{c}{\shortstack{T1\\(2026)}} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}\cmidrule(lr){11-12}\cmidrule(lr){13-14}
+ & $p_s\,/\,b$ & MSE & MAE & MSE & MAE & MSE & MAE & MSE & MAE & MSE & MAE & MSE & MAE \\
 \midrule
-ETTh1 & .10 & 8 & $0.116781\,\pm\,0.001319$ & $0.205465\,\pm\,0.001606$ \\
-ETTh1 & .15 & 8 & $0.172229\,\pm\,0.001825$ & $0.256546\,\pm\,0.001479$ \\
-ETTh1 & .20 & 8 & $0.261890\,\pm\,0.001713$ & $0.322662\,\pm\,0.001965$ \\
-ETTh1 & .10 & 16 & $0.334986\,\pm\,0.006672$ & $0.372039\,\pm\,0.004057$ \\
-Weather & .10 & 8 & $0.042431\,\pm\,0.000577$ & $0.043479\,\pm\,0.000306$ \\
-Weather & .15 & 8 & $0.052501\,\pm\,0.000742$ & $0.053946\,\pm\,0.000418$ \\
-Weather & .20 & 8 & $0.064593\,\pm\,0.001175$ & $0.070304\,\pm\,0.000500$ \\
-Weather & .10 & 16 & $0.078572\,\pm\,0.000796$ & $0.092897\,\pm\,0.000638$ \\
-Exchange & .10 & 8 & $0.009212\,\pm\,0.002400$ & $0.057764\,\pm\,0.012104$ \\
-Exchange & .15 & 8 & $0.015368\,\pm\,0.002077$ & $0.073880\,\pm\,0.007749$ \\
-Exchange & .20 & 8 & $0.054194\,\pm\,0.001231$ & $0.098458\,\pm\,0.001036$ \\
-Exchange & .10 & 16 & $0.162275\,\pm\,0.004526$ & $0.172044\,\pm\,0.001131$ \\
-Beijing AQ & .10 & 8 & $0.077236\,\pm\,0.000584$ & $0.144566\,\pm\,0.000524$ \\
-Beijing AQ & .15 & 8 & $0.094839\,\pm\,0.000677$ & $0.163089\,\pm\,0.000209$ \\
-Beijing AQ & .20 & 8 & $0.122833\,\pm\,0.001111$ & $0.188204\,\pm\,0.000303$ \\
-Beijing AQ & .10 & 16 & $0.146832\,\pm\,0.000833$ & $0.206913\,\pm\,0.000600$ \\
-PhysioNet & .10 & 8 & $0.386760\,\pm\,0.003590$ & $0.343365\,\pm\,0.001006$ \\
-PhysioNet & .15 & 8 & $0.476532\,\pm\,0.001034$ & $0.403849\,\pm\,0.000135$ \\
-PhysioNet & .20 & 8 & $0.564794\,\pm\,0.000846$ & $0.455283\,\pm\,0.000148$ \\
-PhysioNet & .10 & 16 & $0.581826\,\pm\,0.001249$ & $0.469871\,\pm\,0.000192$ \\
-PAMAP2 & .10 & 8 & $0.227562\,\pm\,0.002636$ & $0.181577\,\pm\,0.001163$ \\
-PAMAP2 & .15 & 8 & $0.326661\,\pm\,0.001309$ & $0.230819\,\pm\,0.000952$ \\
-PAMAP2 & .20 & 8 & $0.466878\,\pm\,0.004067$ & $0.292715\,\pm\,0.000651$ \\
-PAMAP2 & .10 & 16 & $0.532003\,\pm\,0.003002$ & $0.334631\,\pm\,0.001549$ \\
+\multirow{4}{*}{\rotatebox[origin=c]{90}{ETTh1}} & $10\%\,/\,8$ & \textcolor{red}{0.1168} & \textcolor{red}{0.2055} & 0.5188 & 0.4990 & 0.1872 & 0.2473 & 0.2164 & 0.2914 & 0.3029 & 0.3517 & \textcolor{blue}{\underline{0.1323}} & \textcolor{blue}{\underline{0.2278}} \\
+ & $15\%\,/\,8$ & \textcolor{red}{0.1722} & \textcolor{red}{0.2565} & 0.6529 & 0.5788 & 0.3038 & 0.3277 & 0.3057 & 0.3512 & 0.4208 & 0.4121 & \textcolor{blue}{\underline{0.1936}} & \textcolor{blue}{\underline{0.2805}} \\
+ & $20\%\,/\,8$ & \textcolor{red}{0.2619} & \textcolor{red}{0.3227} & 0.7771 & 0.6397 & 0.3834 & 0.3945 & 0.4797 & 0.4410 & 0.5825 & 0.4817 & \textcolor{blue}{\underline{0.3125}} & \textcolor{blue}{\underline{0.3520}} \\
+ & $10\%\,/\,16$ & \textcolor{red}{0.3350} & \textcolor{red}{0.3720} & 0.8855 & 0.6801 & 0.4517 & 0.4291 & 0.5322 & 0.5002 & 0.6397 & 0.5124 & \textcolor{blue}{\underline{0.3895}} & \textcolor{blue}{\underline{0.3987}} \\
+\midrule
+\multirow{4}{*}{\rotatebox[origin=c]{90}{Weather}} & $10\%\,/\,8$ & \textcolor{red}{0.0424} & \textcolor{blue}{\underline{0.0435}} & 0.0616 & 0.0685 & \textcolor{blue}{\underline{0.0427}} & \textcolor{red}{0.0361} & 0.0550 & 0.0547 & 0.0670 & 0.1062 & 0.0474 & 0.0646 \\
+ & $15\%\,/\,8$ & \textcolor{blue}{\underline{0.0525}} & \textcolor{blue}{\underline{0.0539}} & 0.0719 & 0.0843 & \textcolor{red}{0.0506} & \textcolor{red}{0.0435} & 0.0636 & 0.0641 & 0.0829 & 0.1226 & 0.0608 & 0.0775 \\
+ & $20\%\,/\,8$ & \textcolor{red}{0.0646} & \textcolor{blue}{\underline{0.0703}} & 0.0911 & 0.1079 & \textcolor{blue}{\underline{0.0665}} & \textcolor{red}{0.0589} & 0.0878 & 0.0808 & 0.1090 & 0.1466 & 0.0835 & 0.1041 \\
+ & $10\%\,/\,16$ & \textcolor{blue}{\underline{0.0786}} & \textcolor{blue}{\underline{0.0929}} & 0.1057 & 0.1255 & \textcolor{red}{0.0776} & \textcolor{red}{0.0731} & 0.0919 & 0.0967 & 0.1621 & 0.1950 & 0.1237 & 0.1488 \\
+\midrule
+\multirow{4}{*}{\rotatebox[origin=c]{90}{Exchange}} & $10\%\,/\,8$ & \textcolor{blue}{\underline{0.0092}} & 0.0578 & 1.2295 & 0.8475 & 0.0098 & \textcolor{blue}{\underline{0.0575}} & 0.0576 & 0.1501 & 0.0196 & 0.0918 & \textcolor{red}{0.0084} & \textcolor{red}{0.0515} \\
+ & $15\%\,/\,8$ & \textcolor{blue}{\underline{0.0154}} & \textcolor{blue}{\underline{0.0739}} & 1.2301 & 0.8567 & 0.0169 & 0.0752 & 0.0945 & 0.1931 & 0.0241 & 0.1006 & \textcolor{red}{0.0140} & \textcolor{red}{0.0662} \\
+ & $20\%\,/\,8$ & 0.0542 & \textcolor{blue}{\underline{0.0985}} & 1.1269 & 0.8653 & \textcolor{red}{0.0447} & 0.1056 & 0.1195 & 0.2175 & 0.0577 & 0.1234 & \textcolor{blue}{\underline{0.0476}} & \textcolor{red}{0.0964} \\
+ & $10\%\,/\,16$ & \textcolor{blue}{\underline{0.1623}} & \textcolor{red}{0.1720} & 1.2345 & 0.9078 & \textcolor{red}{0.1577} & 0.1864 & 0.2713 & 0.3147 & 0.1997 & 0.2001 & 0.1636 & \textcolor{blue}{\underline{0.1774}} \\
+\midrule
+\multirow{4}{*}{\rotatebox[origin=c]{90}{Beijing AQ}} & $10\%\,/\,8$ & \textcolor{red}{0.0772} & \textcolor{blue}{\underline{0.1446}} & 0.1023 & 0.1684 & \textcolor{blue}{\underline{0.0776}} & \textcolor{red}{0.1419} & 0.0868 & 0.1502 & 0.2273 & 0.2927 & 0.0861 & 0.1585 \\
+ & $15\%\,/\,8$ & \textcolor{blue}{\underline{0.0948}} & \textcolor{blue}{\underline{0.1631}} & 0.1185 & 0.1843 & \textcolor{red}{0.0915} & \textcolor{red}{0.1575} & 0.0998 & 0.1658 & 0.3430 & 0.3638 & 0.1285 & 0.1971 \\
+ & $20\%\,/\,8$ & \textcolor{blue}{\underline{0.1228}} & 0.1882 & 0.1426 & 0.2074 & \textcolor{red}{0.1176} & \textcolor{red}{0.1814} & 0.1244 & \textcolor{blue}{\underline{0.1877}} & 0.5200 & 0.4459 & 0.2255 & 0.2643 \\
+ & $10\%\,/\,16$ & \textcolor{blue}{\underline{0.1468}} & \textcolor{blue}{\underline{0.2069}} & 0.1541 & 0.2150 & \textcolor{red}{0.1359} & \textcolor{red}{0.1950} & 0.1533 & 0.2101 & 0.7528 & 0.5501 & 0.3924 & 0.3617 \\
+\midrule
+\multirow{4}{*}{\rotatebox[origin=c]{90}{PhysioNet}} & $10\%\,/\,8$ & \textcolor{blue}{\underline{0.3868}} & \textcolor{blue}{\underline{0.3434}} & 0.5181 & 0.4190 & 0.5745 & 0.4547 & \textcolor{red}{0.3742} & \textcolor{red}{0.3337} & 0.5314 & 0.4412 & 0.4871 & 0.4144 \\
+ & $15\%\,/\,8$ & \textcolor{blue}{\underline{0.4765}} & \textcolor{blue}{\underline{0.4038}} & 0.5882 & 0.4680 & 0.6721 & 0.5119 & \textcolor{red}{0.4614} & \textcolor{red}{0.3936} & 0.6574 & 0.5078 & 0.5970 & 0.4727 \\
+ & $20\%\,/\,8$ & \textcolor{blue}{\underline{0.5648}} & \textcolor{blue}{\underline{0.4553}} & 0.6522 & 0.5090 & 1.0306 & 0.6609 & \textcolor{red}{0.5362} & \textcolor{red}{0.4440} & 0.7701 & 0.5579 & 0.7328 & 0.5394 \\
+ & $10\%\,/\,16$ & \textcolor{blue}{\underline{0.5818}} & \textcolor{blue}{\underline{0.4699}} & 0.6863 & 0.5383 & 0.9781 & 0.6614 & \textcolor{red}{0.5494} & \textcolor{red}{0.4573} & 0.8291 & 0.5854 & 0.7736 & 0.5610 \\
+\midrule
+\multirow{4}{*}{\rotatebox[origin=c]{90}{PAMAP2}} & $10\%\,/\,8$ & \textcolor{red}{0.2276} & \textcolor{red}{0.1816} & 0.6593 & 0.4508 & 0.4340 & 0.2374 & 0.4385 & 0.2525 & 0.5484 & 0.3305 & \textcolor{blue}{\underline{0.2299}} & \textcolor{blue}{\underline{0.1867}} \\
+ & $15\%\,/\,8$ & \textcolor{red}{0.3267} & \textcolor{red}{0.2308} & 0.7439 & 0.4847 & 0.5172 & 0.2796 & 0.5474 & 0.2979 & 0.6128 & 0.3548 & \textcolor{blue}{\underline{0.3367}} & \textcolor{blue}{\underline{0.2397}} \\
+ & $20\%\,/\,8$ & \textcolor{red}{0.4669} & \textcolor{red}{0.2927} & 0.8260 & 0.5248 & 0.6143 & 0.3225 & 0.6146 & 0.3350 & 0.7205 & 0.3896 & \textcolor{blue}{\underline{0.5020}} & \textcolor{blue}{\underline{0.3066}} \\
+ & $10\%\,/\,16$ & \textcolor{red}{0.5320} & \textcolor{red}{0.3346} & 0.9201 & 0.5719 & 0.6497 & \textcolor{blue}{\underline{0.3514}} & 0.6713 & 0.3693 & 0.7834 & 0.4232 & \textcolor{blue}{\underline{0.5913}} & 0.3536 \\
 \bottomrule
 \end{tabular}

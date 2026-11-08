@@ -1,8 +1,8 @@
 \begin{equation}
- \begin{split}
- \mathcal L_{\rm rec}^{\rm coarse}
-   &=\operatorname{MSE}_{\E}(\X^{\rm c},\X),\\
- \mathcal L_{\rm rec}^{\rm refine}
-   &=\operatorname{MAE}_{\E}(\widehat\X,\X).
- \end{split}\label{eq:objectives}
+ \mathcal L_{\rm init}=\operatorname{MSE}_{\E}(\X^{\rm i},\X)+\lambda_k\mathcal L_{\rm key}+\lambda_l\mathcal L_{\rm level}.
+ \label{eq:initial_objective}
+\end{equation}
+\begin{equation}
+ \mathcal L_{\rm refine}=\frac{\|w\Had\E\Had(\widehat\X-\X)\|_1}{\|\E\|_1}.
+ \label{eq:refinement_objective}
 \end{equation}
