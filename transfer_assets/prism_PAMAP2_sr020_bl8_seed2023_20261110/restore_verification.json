@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "scope": "restoration only; no training, selection, full-test rerun, checkpoint serialization or original-result writes",
+  "target": {
+    "dataset": "PAMAP2",
+    "scene": "sr020_bl8",
+    "seed": 2023,
+    "variant": "H_GLOBAL",
+    "paper_name": "PRISM"
+  },
+  "environment": {
+    "python": "3.11.17 (main, Oct  7 2026, 00:02:24) [GCC 15.3.0]",
+    "torch": "2.5.1+cu124",
+    "cuda": "12.4",
+    "numpy": "1.26.4"
+  },
+  "selected_main_epoch": 99,
+  "selected_calibration_epoch": 34,
+  "checkpoint_sha256": {
+    "outputs/evaluation/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/model.pt": "cf4ae288225ac7f4f3410b9676fbdef373ff7800c1c307a42ee5592b1831f159",
+    "outputs/runs/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/main/best.pt": "159667fcd23372010421ee876596da8f5d76c105167afbd07f2962f846e368a6",
+    "outputs/runs/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt": "1a05192b33cba1fb9eb31d28b1904abdbb0373833627c555b0f58ceb0478debd"
+  },
+  "original_masks_verified": 21,
+  "windows": {
+    "test": {
+      "count": 3349,
+      "first": 214633,
+      "last": 272422,
+      "sha256": "a0f5bdcb24f05d6b7b606f85bc0f582442e6ed6772ab4521f2be2dfa6bc37353"
+    },
+    "train": {
+      "count": 10958,
+      "first": 0,
+      "last": 191113,
+      "sha256": "70da0a93092b3c7dd4605ac53bc81f50397a8a43a67430d4d9fcaf7214d52913"
+    },
+    "validation": {
+      "count": 1306,
+      "first": 191344,
+      "last": 214439,
+      "sha256": "569cfa723ce7550a8c8c323432ffdd52861d1044144293ed2bd1d2da35e1648f"
+    }
+  },
+  "retrieval_library_sha256": "e83d93b98a5a3c2eaa09510d1d43cf5e421d1f1c31662f5aaa955fe3a3122127",
+  "model_state_sha256": "498725b1badb73b78f0982a649e4aa7afbf900473bdc7c402b4ab9b38bf1e91d",
+  "parameters_registered": 587618,
+  "state_and_retrieval_unchanged_after_inference": true,
+  "checks": [
+    {
+      "split": "validation",
+      "mask_seed": 2021,
+      "starts": [
+        191344,
+        191360
+      ],
+      "prediction_sha256": "8b53b59e32766c43eb3a3ab5cbb3c46e99a4f7b7a2d27bb4895b852e0e5e3fa2",
+      "export_vs_selected_stages_bitwise_equal": true,
+      "visible_values_preserved": true
+    },
+    {
+      "split": "test",
+      "mask_seed": 2026101401,
+      "starts": [
+        214633,
+        214649
+      ],
+      "prediction_sha256": "25f3f970d3bf5442ea75e958cb7f0731d45ed13e8cae61f1ea47813365088f17",
+      "export_vs_selected_stages_bitwise_equal": true,
+      "visible_values_preserved": true
+    }
+  ]
+}

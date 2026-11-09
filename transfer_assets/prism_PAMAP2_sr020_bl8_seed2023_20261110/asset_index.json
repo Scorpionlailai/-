@@ -1,0 +1,100 @@
+{
+  "target": {
+    "dataset": "PAMAP2",
+    "scene": "sr020_bl8",
+    "seed": 2023,
+    "variant": "H_GLOBAL",
+    "paper_name": "PRISM"
+  },
+  "model_commit": "59419e9bbc8f2e8833c8265505d0e84fa2b04de4",
+  "original_publication_commit": "dc97c14fa84bf901d03deef3f95f414845be890d",
+  "original_archive": "E23/artifacts/performance/R3_final_weather_pamap2_3seed_20261101",
+  "original_local_source": "/home/xyw/r3_final_runs_20261030",
+  "branch": "assets/prism-pamap2-sr020-bl8-seed2023-20261110",
+  "release_tag": "prism-pamap2-sr020-bl8-seed2023-20261110",
+  "archive": {
+    "name": "PRISM_PAMAP2_sr020_bl8_seed2023_R3_20261110.tar.gz",
+    "bytes": 51313803,
+    "sha256": "710069a24b3978ba20a7969294ef1413bcf32ee9e1b39f01a8066cd6a47bad62",
+    "download_url": "https://github.com/Scorpionlailai/-/releases/download/prism-pamap2-sr020-bl8-seed2023-20261110/PRISM_PAMAP2_sr020_bl8_seed2023_R3_20261110.tar.gz"
+  },
+  "primary_checkpoint": {
+    "path": "r3_final_runs_20261030/outputs/evaluation/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/model.pt",
+    "sha256": "cf4ae288225ac7f4f3410b9676fbdef373ff7800c1c307a42ee5592b1831f159"
+  },
+  "original_selected_checkpoints": {
+    "outputs/evaluation/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/model.pt": "cf4ae288225ac7f4f3410b9676fbdef373ff7800c1c307a42ee5592b1831f159",
+    "outputs/runs/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/main/best.pt": "159667fcd23372010421ee876596da8f5d76c105167afbd07f2962f846e368a6",
+    "outputs/runs/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt": "1a05192b33cba1fb9eb31d28b1904abdbb0373833627c555b0f58ceb0478debd"
+  },
+  "published_target_checkpoint_record": {
+    "dataset": "PAMAP2",
+    "scene": "sr020_bl8",
+    "seed": 2023,
+    "main_relative_path": "outputs/runs/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/main/best.pt",
+    "main_sha256": "159667fcd23372010421ee876596da8f5d76c105167afbd07f2962f846e368a6",
+    "head_relative_path": "outputs/runs/PAMAP2/sr020_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+    "head_sha256": "1a05192b33cba1fb9eb31d28b1904abdbb0373833627c555b0f58ceb0478debd",
+    "export_sha256": "cf4ae288225ac7f4f3410b9676fbdef373ff7800c1c307a42ee5592b1831f159",
+    "checkpoints_uploaded": false
+  },
+  "mask_seeds": {
+    "validation": [
+      2021
+    ],
+    "test": [
+      2026101401,
+      2026101402,
+      2026101403,
+      2026101404,
+      2026101405,
+      2026101406,
+      2026101407,
+      2026101408,
+      2026101409,
+      2026101410,
+      2026101411,
+      2026101412,
+      2026101413,
+      2026101414,
+      2026101415,
+      2026101416,
+      2026101417,
+      2026101418,
+      2026101419,
+      2026101420
+    ]
+  },
+  "data_bulk_included": false,
+  "original_prepared_data_files": [
+    {
+      "relative_to_data_root": "data/processed/pamap2_10hz_recordwise/elapsed_seconds.npy",
+      "existing_path": "/home/xyw/paper/data/processed/pamap2_10hz_recordwise/elapsed_seconds.npy",
+      "sha256": "0c5f94f6d993ebbd4470121784d09efc12f6d493ad263caad672c836bed0b671",
+      "bytes": 2181040,
+      "included": false
+    },
+    {
+      "relative_to_data_root": "data/processed/pamap2_10hz_recordwise/native_observed.npy",
+      "existing_path": "/home/xyw/paper/data/processed/pamap2_10hz_recordwise/native_observed.npy",
+      "sha256": "85c948f3e66bfbf3e74ba62ca48208e9d121b22821efb4cb8e54dec8db175493",
+      "bytes": 10904688,
+      "included": false
+    },
+    {
+      "relative_to_data_root": "data/processed/pamap2_10hz_recordwise/values.npy",
+      "existing_path": "/home/xyw/paper/data/processed/pamap2_10hz_recordwise/values.npy",
+      "sha256": "e7439dcc860c6201db8813f7822e2d01287f06b32dc7b157a53cdd660e8cd531",
+      "bytes": 43618368,
+      "included": false
+    }
+  ],
+  "source_locks_verified": {
+    "release_files": 218,
+    "vendor_files": 158
+  },
+  "original_published_target_evidence_matches": 5,
+  "archive_per_file_sha256_verified": 506,
+  "cpu_restore_verified": true,
+  "missing_files": []
+}
