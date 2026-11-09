@@ -1,0 +1,391 @@
+{
+  "backbone_parameters": 9439237,
+  "case": {
+    "config": {
+      "batch_size": 32,
+      "configuration_note": "predeclared shared configuration: L=2,K=3,M=1,Adam/L2/lr=.001 within reported paper choices; width64,FFN64,heads8,kernels6,dropout.1 fixed adaptation; batch32 memory adaptation versus paper512; not claimed as author dataset-optimal configuration; no extra window normalization",
+      "epochs": 100,
+      "loss": "hidden MSE",
+      "lr": 0.001,
+      "model": {
+        "channel_independence": true,
+        "channel_mixing": true,
+        "d_ffn": 64,
+        "d_model": 64,
+        "downsampling_layers": 1,
+        "downsampling_method": "avg",
+        "downsampling_window": 2,
+        "dropout": 0.1,
+        "n_heads": 8,
+        "n_kernels": 6,
+        "n_layers": 2,
+        "n_pred_steps": 0,
+        "n_steps": 96,
+        "task_name": "imputation",
+        "top_k": 3,
+        "use_future_temporal_feature": false,
+        "use_norm": false
+      },
+      "patience": 10,
+      "seed": 2021,
+      "seed_source": "no author recommended/best seed found; fixed protocol fallback 2021",
+      "selection": "mse",
+      "source": "PyPOTS TimeMixer++ backbone, upstream commit 2271533587bab250163437ed39cfe13cefd8b80a",
+      "weight_decay": 0.0
+    },
+    "dataset": "BeijingAirQuality",
+    "key": "BeijingAirQuality/sr020_bl8/TimeMixerPP",
+    "model": "TimeMixerPP",
+    "ogrr_epochs": 100,
+    "ogrr_loss": "full96 MAE + .25 last32 MAE",
+    "ogrr_seed": 2023,
+    "ogrr_selection": "fixed full96 validation MAE",
+    "scene": "sr020_bl8",
+    "smoke": false,
+    "training_mask_seed": 2023
+  },
+  "coarse": {
+    "checkpoint_sha256": "961788a1995bced22d70b6213ef1cfa631cb7f980df5ffd777a03909995daf1f",
+    "resources": {
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 4090 D",
+      "max_allocated_gib": 1.4117588996887207,
+      "max_reserved_gib": 2.15234375,
+      "torch": "2.7.1+cu128"
+    },
+    "seconds": 3196.9647292469162,
+    "selected_epoch": 17,
+    "selection": "mse",
+    "train_seconds": 3048.643255644245,
+    "trained_epochs": 27
+  },
+  "gpu": "NVIDIA GeForce RTX 4090 D",
+  "head": {
+    "backbone_after": "57d4d804ae71d961c81af64c25f2863c8807699e836e2761dce8a8683e9ca4d2",
+    "backbone_before": "57d4d804ae71d961c81af64c25f2863c8807699e836e2761dce8a8683e9ca4d2",
+    "checkpoint_sha256": "f01cb07e854edae89bd08648f8daec358ea4f8c91eefaf219b069a358f2f53c3",
+    "epochs": 100,
+    "resources": {
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 4090 D",
+      "max_allocated_gib": 1.0120301246643066,
+      "max_reserved_gib": 2.15234375,
+      "torch": "2.7.1+cu128"
+    },
+    "seconds": 4133.260884368792,
+    "selected_epoch": 93,
+    "train_seconds": 4126.222195530776
+  },
+  "inference_p50_ms": {
+    "backbone": 202.6828839443624,
+    "backbone_plus_ogrr": 203.57192400842905
+  },
+  "latency_batch_size": 128,
+  "ogrr": {
+    "mae": 0.19845709593168864,
+    "mae_mask_std_ddof1": 0.0020096206127596205,
+    "mse": 0.13442637124079496,
+    "mse_mask_std_ddof1": 0.006537084461638591
+  },
+  "ogrr_parameters": 49880,
+  "paired": {
+    "mae": {
+      "positive_masks": 20,
+      "relative_reduction_pct": 36.776897210746256
+    },
+    "mse": {
+      "positive_masks": 20,
+      "relative_reduction_pct": 49.42056379976205
+    }
+  },
+  "per_mask": [
+    {
+      "mask_seed": 2026101301,
+      "ogrr": {
+        "coordinates": 6486661,
+        "mae": 0.1942924157642315,
+        "mse": 0.1230213990988253
+      },
+      "raw": {
+        "coordinates": 6486661,
+        "mae": 0.3142122977494386,
+        "mse": 0.26074590941063475
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101302,
+      "ogrr": {
+        "coordinates": 6477365,
+        "mae": 0.20144354525346958,
+        "mse": 0.13640652228370967
+      },
+      "raw": {
+        "coordinates": 6477365,
+        "mae": 0.31359590648752883,
+        "mse": 0.2563107774682988
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101303,
+      "ogrr": {
+        "coordinates": 6500293,
+        "mae": 0.19989574441547547,
+        "mse": 0.13342785518408343
+      },
+      "raw": {
+        "coordinates": 6500293,
+        "mae": 0.3192222410735634,
+        "mse": 0.27076119378104985
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101304,
+      "ogrr": {
+        "coordinates": 6483630,
+        "mae": 0.1992429625225479,
+        "mse": 0.1461930060657531
+      },
+      "raw": {
+        "coordinates": 6483630,
+        "mae": 0.31439330388036896,
+        "mse": 0.27850672484910965
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101305,
+      "ogrr": {
+        "coordinates": 6494534,
+        "mae": 0.19697017304956355,
+        "mse": 0.1307094659373063
+      },
+      "raw": {
+        "coordinates": 6494534,
+        "mae": 0.31294146297690895,
+        "mse": 0.2533565871344236
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101306,
+      "ogrr": {
+        "coordinates": 6523058,
+        "mae": 0.1972551134206843,
+        "mse": 0.1333686549400043
+      },
+      "raw": {
+        "coordinates": 6523058,
+        "mae": 0.31141747281344534,
+        "mse": 0.26505149302520475
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101307,
+      "ogrr": {
+        "coordinates": 6509610,
+        "mae": 0.19579551411804041,
+        "mse": 0.14311931642795267
+      },
+      "raw": {
+        "coordinates": 6509610,
+        "mae": 0.319736834162477,
+        "mse": 0.28459612267429346
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101308,
+      "ogrr": {
+        "coordinates": 6508975,
+        "mae": 0.19764357077175213,
+        "mse": 0.13026020835582616
+      },
+      "raw": {
+        "coordinates": 6508975,
+        "mae": 0.3105284544122463,
+        "mse": 0.26115715023082003
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101309,
+      "ogrr": {
+        "coordinates": 6488001,
+        "mae": 0.19693758087918212,
+        "mse": 0.127257209764228
+      },
+      "raw": {
+        "coordinates": 6488001,
+        "mae": 0.3128239438550912,
+        "mse": 0.25996454167070215
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101310,
+      "ogrr": {
+        "coordinates": 6501990,
+        "mae": 0.1988898850533926,
+        "mse": 0.13278374455349934
+      },
+      "raw": {
+        "coordinates": 6501990,
+        "mae": 0.3136137546421553,
+        "mse": 0.26361992922859734
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101311,
+      "ogrr": {
+        "coordinates": 6532547,
+        "mae": 0.20076799130770073,
+        "mse": 0.13589619462103408
+      },
+      "raw": {
+        "coordinates": 6532547,
+        "mae": 0.31837879739095853,
+        "mse": 0.2755509945005136
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101312,
+      "ogrr": {
+        "coordinates": 6510464,
+        "mae": 0.1981144105015987,
+        "mse": 0.13865654337891925
+      },
+      "raw": {
+        "coordinates": 6510464,
+        "mae": 0.309135260579308,
+        "mse": 0.2649624218618538
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101313,
+      "ogrr": {
+        "coordinates": 6491208,
+        "mae": 0.19690330447813476,
+        "mse": 0.12772121442701181
+      },
+      "raw": {
+        "coordinates": 6491208,
+        "mae": 0.3112465692880032,
+        "mse": 0.2559835428325722
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101314,
+      "ogrr": {
+        "coordinates": 6543827,
+        "mae": 0.1987141433360526,
+        "mse": 0.14057058804365494
+      },
+      "raw": {
+        "coordinates": 6543827,
+        "mae": 0.3089798572290185,
+        "mse": 0.26571739279235035
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101315,
+      "ogrr": {
+        "coordinates": 6470353,
+        "mae": 0.19854744850765998,
+        "mse": 0.12913065958931197
+      },
+      "raw": {
+        "coordinates": 6470353,
+        "mae": 0.31294562016473076,
+        "mse": 0.2604370334736652
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101316,
+      "ogrr": {
+        "coordinates": 6509338,
+        "mae": 0.20266304229077034,
+        "mse": 0.14551049589521578
+      },
+      "raw": {
+        "coordinates": 6509338,
+        "mae": 0.3208647072594065,
+        "mse": 0.28908943352501026
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101317,
+      "ogrr": {
+        "coordinates": 6518371,
+        "mae": 0.19859077236272726,
+        "mse": 0.1299179221995998
+      },
+      "raw": {
+        "coordinates": 6518371,
+        "mae": 0.31604312471991985,
+        "mse": 0.26071566912355154
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101318,
+      "ogrr": {
+        "coordinates": 6485599,
+        "mae": 0.1987563329944453,
+        "mse": 0.13335362238141585
+      },
+      "raw": {
+        "coordinates": 6485599,
+        "mae": 0.30839545831803766,
+        "mse": 0.25623610381290673
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101319,
+      "ogrr": {
+        "coordinates": 6497232,
+        "mae": 0.20083607935911296,
+        "mse": 0.14263223691515622
+      },
+      "raw": {
+        "coordinates": 6497232,
+        "mae": 0.3180442999029347,
+        "mse": 0.2797904748269481
+      },
+      "windows": 6919
+    },
+    {
+      "mask_seed": 2026101320,
+      "ogrr": {
+        "coordinates": 6520817,
+        "mae": 0.19688188824723077,
+        "mse": 0.12859056475339106
+      },
+      "raw": {
+        "coordinates": 6520817,
+        "mae": 0.31147355581513986,
+        "mse": 0.2529020066271893
+      },
+      "windows": 6919
+    }
+  ],
+  "process_seconds": 7557.305078520905,
+  "raw": {
+    "mae": 0.31389964613603416,
+    "mae_mask_std_ddof1": 0.003726871062926309,
+    "mse": 0.26577277514248476,
+    "mse_mask_std_ddof1": 0.010546701560686234
+  },
+  "test_masks": 20
+}

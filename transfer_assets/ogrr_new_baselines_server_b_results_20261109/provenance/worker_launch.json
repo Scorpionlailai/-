@@ -1,0 +1,69 @@
+{
+  "source_commit": "f46822e78a4cb96b931ba8f54e233e1778ccf15c",
+  "started_at": "2026-11-09T11:42:16.249100+08:00",
+  "workers": [
+    {
+      "slot": 0,
+      "gpu": 0,
+      "pid": 2081652,
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/ogrr-server-b-20261109/bin/python",
+        "/home/xyw/paper/E23/artifacts/performance/OGRR_new_baselines_20261109/orchestration/partition_worker.py",
+        "--server",
+        "server_b",
+        "--slot",
+        "0"
+      ],
+      "log": "/home/xyw/ogrr_server_b_handoff_20261109/worker_0.log",
+      "cases": [
+        "BeijingAirQuality/sr015_bl8/SAITS",
+        "BeijingAirQuality/sr015_bl8/TimeMixerPP",
+        "BeijingAirQuality/sr010_bl8/ModernTCN",
+        "BeijingAirQuality/sr020_bl8/SAITS",
+        "BeijingAirQuality/sr020_bl8/TimeMixerPP",
+        "BeijingAirQuality/sr010_bl16/ModernTCN",
+        "Exchange-Rate/sr015_bl8/SAITS",
+        "Exchange-Rate/sr015_bl8/TimeMixerPP",
+        "Exchange-Rate/sr010_bl8/ModernTCN",
+        "Exchange-Rate/sr020_bl8/SAITS",
+        "Exchange-Rate/sr020_bl8/TimeMixerPP",
+        "Exchange-Rate/sr010_bl16/ModernTCN"
+      ]
+    },
+    {
+      "slot": 1,
+      "gpu": 1,
+      "pid": 2081653,
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/ogrr-server-b-20261109/bin/python",
+        "/home/xyw/paper/E23/artifacts/performance/OGRR_new_baselines_20261109/orchestration/partition_worker.py",
+        "--server",
+        "server_b",
+        "--slot",
+        "1"
+      ],
+      "log": "/home/xyw/ogrr_server_b_handoff_20261109/worker_1.log",
+      "cases": [
+        "BeijingAirQuality/sr015_bl8/ModernTCN",
+        "BeijingAirQuality/sr010_bl8/SAITS",
+        "BeijingAirQuality/sr010_bl8/TimeMixerPP",
+        "BeijingAirQuality/sr020_bl8/ModernTCN",
+        "BeijingAirQuality/sr010_bl16/SAITS",
+        "BeijingAirQuality/sr010_bl16/TimeMixerPP",
+        "Exchange-Rate/sr015_bl8/ModernTCN",
+        "Exchange-Rate/sr010_bl8/SAITS",
+        "Exchange-Rate/sr010_bl8/TimeMixerPP",
+        "Exchange-Rate/sr020_bl8/ModernTCN",
+        "Exchange-Rate/sr010_bl16/SAITS",
+        "Exchange-Rate/sr010_bl16/TimeMixerPP"
+      ]
+    }
+  ],
+  "datasets": [
+    "BeijingAirQuality",
+    "Exchange-Rate"
+  ],
+  "total_cases": 24,
+  "sealed_files_reverified": 976,
+  "path_adaptations": []
+}

@@ -1,0 +1,385 @@
+{
+  "backbone_parameters": 1330080,
+  "case": {
+    "config": {
+      "batch_size": 128,
+      "epochs": 10000,
+      "loss": "ORT mean of three visible MAEs + MIT hidden MAE",
+      "lr": 0.001,
+      "model": {
+        "MIT": true,
+        "d_inner": 128,
+        "d_k": 64,
+        "d_model": 256,
+        "d_v": 64,
+        "diagonal_attention_mask": true,
+        "dropout": 0.1,
+        "input_with_mask": true,
+        "n_group_inner_layers": 1,
+        "n_groups": 2,
+        "n_head": 4,
+        "param_sharing_strategy": "inner_group"
+      },
+      "patience": 30,
+      "seed": 26,
+      "selection": "mae",
+      "selection_override": "shared fixed full-validation MAE; evaluation once per epoch",
+      "source_config": "/home/xyw/paper/E23/artifacts/performance/OGRR_new_baselines_20261109/implementation/vendor/saits/configs/PhysioNet2012_SAITS_base.ini",
+      "weight_decay": 0.0
+    },
+    "dataset": "Exchange-Rate",
+    "key": "Exchange-Rate/sr015_bl8/SAITS",
+    "model": "SAITS",
+    "ogrr_epochs": 100,
+    "ogrr_loss": "full96 MAE + .25 last32 MAE",
+    "ogrr_seed": 2023,
+    "ogrr_selection": "fixed full96 validation MAE",
+    "scene": "sr015_bl8",
+    "smoke": false,
+    "training_mask_seed": 2023
+  },
+  "coarse": {
+    "checkpoint_sha256": "fb681b18e2f771f2bc0eb4d79909d53d3dd9e74970013cd782da53328215e264",
+    "resources": {
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 4090 D",
+      "max_allocated_gib": 0.6094341278076172,
+      "max_reserved_gib": 0.685546875,
+      "torch": "2.7.1+cu128"
+    },
+    "seconds": 40.13077990501188,
+    "selected_epoch": 15,
+    "selection": "mae",
+    "train_seconds": 38.56507542566396,
+    "trained_epochs": 45
+  },
+  "gpu": "NVIDIA GeForce RTX 4090 D",
+  "head": {
+    "backbone_after": "c6f749c9150bf2f1581f712e748c2fb784d870aabeae04f3d9cd9068a13e14e1",
+    "backbone_before": "c6f749c9150bf2f1581f712e748c2fb784d870aabeae04f3d9cd9068a13e14e1",
+    "checkpoint_sha256": "cc252892a053cd2bb4549cc4e5b9ab8eee3d39dd65f02da2db2f49d3a25dd0ba",
+    "epochs": 100,
+    "resources": {
+      "cuda": "12.8",
+      "gpu": "NVIDIA GeForce RTX 4090 D",
+      "max_allocated_gib": 0.1878800392150879,
+      "max_reserved_gib": 0.685546875,
+      "torch": "2.7.1+cu128"
+    },
+    "seconds": 55.073416921077296,
+    "selected_epoch": 38,
+    "train_seconds": 53.47657181485556
+  },
+  "inference_p50_ms": {
+    "backbone": 3.0669530387967825,
+    "backbone_plus_ogrr": 3.9443618152290583
+  },
+  "latency_batch_size": 128,
+  "ogrr": {
+    "mae": 0.17857882612207882,
+    "mae_mask_std_ddof1": 0.005283277517013528,
+    "mse": 0.06952804632461472,
+    "mse_mask_std_ddof1": 0.00713048292347977
+  },
+  "ogrr_parameters": 48080,
+  "paired": {
+    "mae": {
+      "positive_masks": 20,
+      "relative_reduction_pct": 61.604385763638376
+    },
+    "mse": {
+      "positive_masks": 20,
+      "relative_reduction_pct": 77.49011047521076
+    }
+  },
+  "per_mask": [
+    {
+      "mask_seed": 2026101001,
+      "ogrr": {
+        "coordinates": 789114,
+        "mae": 0.17616237707363042,
+        "mse": 0.06557340402405262
+      },
+      "raw": {
+        "coordinates": 789114,
+        "mae": 0.4588814451183228,
+        "mse": 0.2939533730447539
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101002,
+      "ogrr": {
+        "coordinates": 796591,
+        "mae": 0.18143089268552862,
+        "mse": 0.07067437723221912
+      },
+      "raw": {
+        "coordinates": 796591,
+        "mae": 0.47922626409831115,
+        "mse": 0.32235668528233974
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101003,
+      "ogrr": {
+        "coordinates": 799516,
+        "mae": 0.1788054012444943,
+        "mse": 0.0683686811387568
+      },
+      "raw": {
+        "coordinates": 799516,
+        "mae": 0.467993367337421,
+        "mse": 0.3113171115367854
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101004,
+      "ogrr": {
+        "coordinates": 798453,
+        "mae": 0.18667058924798305,
+        "mse": 0.07779775949411885
+      },
+      "raw": {
+        "coordinates": 798453,
+        "mae": 0.4684680933818699,
+        "mse": 0.3219497510863509
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101005,
+      "ogrr": {
+        "coordinates": 800003,
+        "mae": 0.17803232431534904,
+        "mse": 0.06562662598415012
+      },
+      "raw": {
+        "coordinates": 800003,
+        "mae": 0.4632563335087254,
+        "mse": 0.3042911070964921
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101006,
+      "ogrr": {
+        "coordinates": 810613,
+        "mae": 0.17698136875157947,
+        "mse": 0.06728937654889411
+      },
+      "raw": {
+        "coordinates": 810613,
+        "mae": 0.45853157191227567,
+        "mse": 0.29976248533300076
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101007,
+      "ogrr": {
+        "coordinates": 792753,
+        "mae": 0.17771789742339897,
+        "mse": 0.0683806723707052
+      },
+      "raw": {
+        "coordinates": 792753,
+        "mae": 0.46184744607279016,
+        "mse": 0.3065902978642414
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101008,
+      "ogrr": {
+        "coordinates": 801398,
+        "mae": 0.175544394546916,
+        "mse": 0.06525754109238217
+      },
+      "raw": {
+        "coordinates": 801398,
+        "mae": 0.4623503964275581,
+        "mse": 0.3066573303879929
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101009,
+      "ogrr": {
+        "coordinates": 797529,
+        "mae": 0.1700949402135471,
+        "mse": 0.061496890494835275
+      },
+      "raw": {
+        "coordinates": 797529,
+        "mae": 0.4579460723108719,
+        "mse": 0.29625844157441206
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101010,
+      "ogrr": {
+        "coordinates": 795089,
+        "mae": 0.18727249111208527,
+        "mse": 0.0890415040110148
+      },
+      "raw": {
+        "coordinates": 795089,
+        "mae": 0.48149241939932763,
+        "mse": 0.34222379654825064
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101011,
+      "ogrr": {
+        "coordinates": 817885,
+        "mae": 0.18232110100432083,
+        "mse": 0.07209707099924931
+      },
+      "raw": {
+        "coordinates": 817885,
+        "mae": 0.46976002601565325,
+        "mse": 0.31010816736903674
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101012,
+      "ogrr": {
+        "coordinates": 812174,
+        "mae": 0.1748275697257711,
+        "mse": 0.06669283385748392
+      },
+      "raw": {
+        "coordinates": 812174,
+        "mae": 0.46562354977374637,
+        "mse": 0.3105542234770837
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101013,
+      "ogrr": {
+        "coordinates": 785758,
+        "mae": 0.17097826965703525,
+        "mse": 0.057769102477044164
+      },
+      "raw": {
+        "coordinates": 785758,
+        "mae": 0.45436473305199454,
+        "mse": 0.2877859298732113
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101014,
+      "ogrr": {
+        "coordinates": 810923,
+        "mae": 0.18950210530807424,
+        "mse": 0.08233006573832634
+      },
+      "raw": {
+        "coordinates": 810923,
+        "mae": 0.4759868633809037,
+        "mse": 0.3322249608008992
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101015,
+      "ogrr": {
+        "coordinates": 793882,
+        "mae": 0.17105125760444556,
+        "mse": 0.06402917143082332
+      },
+      "raw": {
+        "coordinates": 793882,
+        "mae": 0.45969530417105653,
+        "mse": 0.30680194660931087
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101016,
+      "ogrr": {
+        "coordinates": 786455,
+        "mae": 0.17893052741696264,
+        "mse": 0.06936336845515478
+      },
+      "raw": {
+        "coordinates": 786455,
+        "mae": 0.46980872776935245,
+        "mse": 0.30972875994149446
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101017,
+      "ogrr": {
+        "coordinates": 795140,
+        "mae": 0.1777938432293656,
+        "mse": 0.06923429963370235
+      },
+      "raw": {
+        "coordinates": 795140,
+        "mae": 0.4604600910008589,
+        "mse": 0.30877820358981667
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101018,
+      "ogrr": {
+        "coordinates": 796559,
+        "mae": 0.18005339202259432,
+        "mse": 0.07146059003633289
+      },
+      "raw": {
+        "coordinates": 796559,
+        "mae": 0.4653779422580512,
+        "mse": 0.3096391321916238
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101019,
+      "ogrr": {
+        "coordinates": 795723,
+        "mae": 0.17511694866340383,
+        "mse": 0.0644063975123994
+      },
+      "raw": {
+        "coordinates": 795723,
+        "mae": 0.46017606156006047,
+        "mse": 0.29519954577781055
+      },
+      "windows": 1423
+    },
+    {
+      "mask_seed": 2026101020,
+      "ogrr": {
+        "coordinates": 799504,
+        "mae": 0.18228883119509043,
+        "mse": 0.0736711939606486
+      },
+      "raw": {
+        "coordinates": 799504,
+        "mae": 0.4607962291028343,
+        "mse": 0.3013742866426056
+      },
+      "windows": 1423
+    }
+  ],
+  "process_seconds": 97.12412836798467,
+  "raw": {
+    "mae": 0.4651021468825992,
+    "mae_mask_std_ddof1": 0.007305464235177679,
+    "mse": 0.3088777768013756,
+    "mse_mask_std_ddof1": 0.0129980562753602
+  },
+  "test_masks": 20
+}
