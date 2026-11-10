@@ -1,0 +1,61 @@
+{
+  "addon_commit": "b97f79f4a65df143042c97dee49e9ed0d1ab0aab",
+  "implementation_commit": "f46822e78a4cb96b931ba8f54e233e1778ccf15c",
+  "started_at": "2026-11-09T23:07:44.250585+08:00",
+  "dataset": "PAMAP2",
+  "new_cases": 12,
+  "prior_complete_cases": 24,
+  "path_adaptations": [],
+  "workers": [
+    {
+      "slot": 0,
+      "gpu": 0,
+      "pid": 2135162,
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/ogrr-server-b-20261109/bin/python",
+        "/home/xyw/paper/E23/artifacts/performance/OGRR_new_baselines_20261109/orchestration/partition_worker.py",
+        "--server",
+        "server_b",
+        "--slot",
+        "0",
+        "--gpu",
+        "0"
+      ],
+      "pending_cases": [
+        "PAMAP2/sr015_bl8/SAITS",
+        "PAMAP2/sr015_bl8/TimeMixerPP",
+        "PAMAP2/sr010_bl8/ModernTCN",
+        "PAMAP2/sr020_bl8/SAITS",
+        "PAMAP2/sr020_bl8/TimeMixerPP",
+        "PAMAP2/sr010_bl16/ModernTCN"
+      ],
+      "existing_complete_cases_skipped": 12,
+      "log": "/home/xyw/ogrr_pamap2_server_b_handoff_20261109/worker_0.log"
+    },
+    {
+      "slot": 1,
+      "gpu": 1,
+      "pid": 2135163,
+      "command": [
+        "/home/xyw/.local/share/mamba/envs/ogrr-server-b-20261109/bin/python",
+        "/home/xyw/paper/E23/artifacts/performance/OGRR_new_baselines_20261109/orchestration/partition_worker.py",
+        "--server",
+        "server_b",
+        "--slot",
+        "1",
+        "--gpu",
+        "1"
+      ],
+      "pending_cases": [
+        "PAMAP2/sr015_bl8/ModernTCN",
+        "PAMAP2/sr010_bl8/SAITS",
+        "PAMAP2/sr010_bl8/TimeMixerPP",
+        "PAMAP2/sr020_bl8/ModernTCN",
+        "PAMAP2/sr010_bl16/SAITS",
+        "PAMAP2/sr010_bl16/TimeMixerPP"
+      ],
+      "existing_complete_cases_skipped": 12,
+      "log": "/home/xyw/ogrr_pamap2_server_b_handoff_20261109/worker_1.log"
+    }
+  ]
+}
