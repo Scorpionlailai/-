@@ -1,0 +1,1172 @@
+{
+  "name": "P2PI",
+  "archived_names": [
+    "R3",
+    "H_GLOBAL"
+  ],
+  "training_seed": 2023,
+  "model_code_commit": "59419e9bbc8f2e8833c8265505d0e84fa2b04de4",
+  "original_results_publication_commit": "dc97c14fa84bf901d03deef3f95f414845be890d",
+  "original_archive": "E23/artifacts/performance/R3_final_weather_pamap2_3seed_20261101",
+  "source_root": "/home/xyw/r3_final_runs_20261030",
+  "cases": [
+    {
+      "dataset": "Weather",
+      "scene": "sr010_bl8",
+      "training_seed": 2023,
+      "archived_variant": "H_GLOBAL",
+      "model_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr010_bl8/seed_2023/H_GLOBAL/model.pt",
+      "model_sha256": "6b0d4ed99ebacf9e3f8b51bcdfa16f74b69520249c6fc2e7a4846eb5f267d15a",
+      "main_path": "r3_final_runs_20261030/outputs/runs/Weather/sr010_bl8/seed_2023/H_GLOBAL/main/best.pt",
+      "main_sha256": "dc8ca01190108e29edfd1ab5777f601d2ffc9410c6f8a34feacba52ed7248486",
+      "calibration_path": "r3_final_runs_20261030/outputs/runs/Weather/sr010_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+      "calibration_sha256": "7309d0fb15e5fb5cad6e0bd0af40cf3aa7b317c60c68d4ea2bf226584c69421a",
+      "original_main_selected_epoch": 42,
+      "original_calibration_selected_epoch": 95,
+      "selection": "Original main validation MSE and calibration validation MAE; epoch numbering unchanged.",
+      "original_results_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr010_bl8/seed_2023/H_GLOBAL/results.json",
+      "masks": [
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/validation_2021.npz",
+          "split": "validation",
+          "seed": 2021,
+          "sha256": "1bfe67bb3e3019fd79c21e94bc65a8f91c3b4703027c65bbb1a908e38d26824c",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/validation_2021.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100801.npz",
+          "split": "test",
+          "seed": 2026100801,
+          "sha256": "7302d61742757cbceb629f54e107a5a2a977d187c21045cf986025caa35e4094",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100801.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100802.npz",
+          "split": "test",
+          "seed": 2026100802,
+          "sha256": "84caa1c6b82df75226de773fe9718c35c05fb58a7462e7d5025ae054711df9a1",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100802.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100803.npz",
+          "split": "test",
+          "seed": 2026100803,
+          "sha256": "fc7c14c0d1ab2af4adc5c0e2a10a301dd9a9ea43460fd809c8ade58dbb04b930",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100803.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100804.npz",
+          "split": "test",
+          "seed": 2026100804,
+          "sha256": "b16f99780f65e640488e149810ee65b733b103af41cdfa5f8d7e78f8623e6b90",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100804.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100805.npz",
+          "split": "test",
+          "seed": 2026100805,
+          "sha256": "cc62352fb56884a0d8aaca8d98f2aff1bde847b6831a09c249d5f5485a696161",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100805.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100806.npz",
+          "split": "test",
+          "seed": 2026100806,
+          "sha256": "fc1aece406c0835de5bb8cf0aea9f160acea4f3de4fd9fd0e5dbd18bf989a5ed",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100806.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100807.npz",
+          "split": "test",
+          "seed": 2026100807,
+          "sha256": "9b930cffc1c4e88c5ebdd39d28a0626deb119975229713e42235b2f0fac48e4f",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100807.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100808.npz",
+          "split": "test",
+          "seed": 2026100808,
+          "sha256": "799127b69b3a69d07c5580332fd47d8fa0a8654c8efba0d066360c4240960b73",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100808.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100809.npz",
+          "split": "test",
+          "seed": 2026100809,
+          "sha256": "a40bd125bc0633b6e9d2b7373736456bc61f74c29f4428ab2d2e14d937657d1d",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100809.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100810.npz",
+          "split": "test",
+          "seed": 2026100810,
+          "sha256": "d2cfc20c7ebeeaf5a25dec876f78fde702bd2dbdcfdc89d526e9d1f182105323",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100810.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100811.npz",
+          "split": "test",
+          "seed": 2026100811,
+          "sha256": "ca3b6959d832a217b04a2b90a2839b9115f607b833e21f51ce3471e22170fb16",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100811.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100812.npz",
+          "split": "test",
+          "seed": 2026100812,
+          "sha256": "38bc0068cd13146323fc1768799cc08a145423c755fbf8432290364ac635f909",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100812.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100813.npz",
+          "split": "test",
+          "seed": 2026100813,
+          "sha256": "ff72879725e96d56024b4516a7e6087565ee26aaaeda85363a713388a9e8c896",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100813.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100814.npz",
+          "split": "test",
+          "seed": 2026100814,
+          "sha256": "4d136658c9cef3ccbbe7221c58d38f2767a0bf807411c98850bd4e33138f017c",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100814.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100815.npz",
+          "split": "test",
+          "seed": 2026100815,
+          "sha256": "3caae0e3ef45dadd0c5528e18ea7ed052efbf933a730f230d4c0a3679c7e52df",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100815.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100816.npz",
+          "split": "test",
+          "seed": 2026100816,
+          "sha256": "9726106f82414a0376d50b5b1feb19ed2fb5973bdbd986e2c1002ca3ef9f6d99",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100816.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100817.npz",
+          "split": "test",
+          "seed": 2026100817,
+          "sha256": "810ccf718f4cb6c2b51097b39581bdbc3a8c3837b1546a57dc03d7c4e21db9ae",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100817.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100818.npz",
+          "split": "test",
+          "seed": 2026100818,
+          "sha256": "2f993cc6ff8485c88ffa596a03c22d6a9d55c017da3a58e91102d2e378c7fdb3",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100818.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100819.npz",
+          "split": "test",
+          "seed": 2026100819,
+          "sha256": "1cea26cb484cac158a03feafb5eb5abb4eb92f9ee7414d8d9b372af0fc16166e",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100819.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl8/test_2026100820.npz",
+          "split": "test",
+          "seed": 2026100820,
+          "sha256": "afadccd3943038816628022dd4efbea198f0f0e7587a3ddbdf15872dfe79c682",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl8/test_2026100820.npz"
+        }
+      ]
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr015_bl8",
+      "training_seed": 2023,
+      "archived_variant": "H_GLOBAL",
+      "model_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr015_bl8/seed_2023/H_GLOBAL/model.pt",
+      "model_sha256": "283030eed4861211b69fdf21961fd69c2e3b5929f051f2f4360a2f21f23a401e",
+      "main_path": "r3_final_runs_20261030/outputs/runs/Weather/sr015_bl8/seed_2023/H_GLOBAL/main/best.pt",
+      "main_sha256": "d43534cd13c6b1493b25b81f2bf44dd5be3c00664c80b69edde4a30eaf897426",
+      "calibration_path": "r3_final_runs_20261030/outputs/runs/Weather/sr015_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+      "calibration_sha256": "e1b22e928c8c5d88e2c0a042a896124a9551c049a8135cb42b9f6c6e0b9ca1e0",
+      "original_main_selected_epoch": 86,
+      "original_calibration_selected_epoch": 95,
+      "selection": "Original main validation MSE and calibration validation MAE; epoch numbering unchanged.",
+      "original_results_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr015_bl8/seed_2023/H_GLOBAL/results.json",
+      "masks": [
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/validation_2021.npz",
+          "split": "validation",
+          "seed": 2021,
+          "sha256": "ff4bcda193da00ef86689dd9dc4cb2589d638496d3d92021bbfda089108e8b15",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/validation_2021.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100801.npz",
+          "split": "test",
+          "seed": 2026100801,
+          "sha256": "682a10b0747b916b25ca55b1f1373e3a0a56d187e59fe152551addf93ec0a823",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100801.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100802.npz",
+          "split": "test",
+          "seed": 2026100802,
+          "sha256": "8ce5fc2704b79263261ef0350d11afec21610b140475498389e04e63e0bc29f3",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100802.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100803.npz",
+          "split": "test",
+          "seed": 2026100803,
+          "sha256": "266ae7402edba9bbb4d2f27315d1d91cc0b0b79adfcf22589d0259dd400b09a8",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100803.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100804.npz",
+          "split": "test",
+          "seed": 2026100804,
+          "sha256": "17591542e1e277b88840cbc8f16c8d3066e6c356be90eb9abb2d6c79cfaaf72c",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100804.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100805.npz",
+          "split": "test",
+          "seed": 2026100805,
+          "sha256": "45d1d5efa2cbf874d4c8f4e2909a606b9be11354814c1061e075dac2db29b02f",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100805.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100806.npz",
+          "split": "test",
+          "seed": 2026100806,
+          "sha256": "4af17d5872489151e42c91a82619adfcb23443e0491cbc780aab843e77074a6d",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100806.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100807.npz",
+          "split": "test",
+          "seed": 2026100807,
+          "sha256": "f7fa1caf38b2ce1436dd756df61075f05f6dfb1a9bf34cc85ec3904675e04f65",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100807.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100808.npz",
+          "split": "test",
+          "seed": 2026100808,
+          "sha256": "02145c0e0862332d495970a5fa0f0857b4d6d479b68c3b6fc62c2aad3cae4242",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100808.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100809.npz",
+          "split": "test",
+          "seed": 2026100809,
+          "sha256": "3c811c045a3d8a908fea8efdcf6cf1653657e6aa1fcfda5716dd111223f12bf5",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100809.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100810.npz",
+          "split": "test",
+          "seed": 2026100810,
+          "sha256": "3dd1df652815e15a3557f6e6c66c81c3ecf576f435c2d76a6e91f47625eb9700",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100810.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100811.npz",
+          "split": "test",
+          "seed": 2026100811,
+          "sha256": "60187d1fdd49c0c847855ff53735148ff24f9c06f4fe79221c74cf173b810e5d",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100811.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100812.npz",
+          "split": "test",
+          "seed": 2026100812,
+          "sha256": "638bf4daed76fb41a08762b195bfbec06afc3bee6e0048a28f3d17f60560f890",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100812.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100813.npz",
+          "split": "test",
+          "seed": 2026100813,
+          "sha256": "6a30c2c65941d6d8ab2510a0de0e859695db0ed17da6e5a8777fac63c78f79ee",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100813.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100814.npz",
+          "split": "test",
+          "seed": 2026100814,
+          "sha256": "363da3031a1e6454cf2ef93e5986eedbd52b58c019bc90724c37f761e14141af",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100814.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100815.npz",
+          "split": "test",
+          "seed": 2026100815,
+          "sha256": "df6184be2845aaa001ed4be9ce62c954392b6154808e9186043f9f050cec7034",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100815.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100816.npz",
+          "split": "test",
+          "seed": 2026100816,
+          "sha256": "4e60effb8f994ec1fe6c45f95e6f7546ec2246175f70f485f8845da5594fe0dd",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100816.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100817.npz",
+          "split": "test",
+          "seed": 2026100817,
+          "sha256": "fc6ee614d9d80bc68f8df3cc87e76c83969bb50e28fd74a0860172cfb759a2f1",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100817.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100818.npz",
+          "split": "test",
+          "seed": 2026100818,
+          "sha256": "6f0a68cb808a1e11eeae3e38d48ab54f7386e1220739f52af69cdaca7a436183",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100818.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100819.npz",
+          "split": "test",
+          "seed": 2026100819,
+          "sha256": "43ed28d9ec34bd4dc538ecef567b99bfb45939ee21017925e0df02debc2703a9",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100819.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr015_bl8/test_2026100820.npz",
+          "split": "test",
+          "seed": 2026100820,
+          "sha256": "46a683f0e0f8fb8d49cf5d596092e50ce19a82f3a54427a20d589bd8e90c88e8",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr015_bl8/test_2026100820.npz"
+        }
+      ]
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr020_bl8",
+      "training_seed": 2023,
+      "archived_variant": "H_GLOBAL",
+      "model_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr020_bl8/seed_2023/H_GLOBAL/model.pt",
+      "model_sha256": "a083822915727324f87c424c6bf35aee7ffb9c014d716ae2ff1c6c6d9042e80e",
+      "main_path": "r3_final_runs_20261030/outputs/runs/Weather/sr020_bl8/seed_2023/H_GLOBAL/main/best.pt",
+      "main_sha256": "11294796e13a5d9f90d844efae4ab911cdd3fafc30c3e6f484f6c070f693d95c",
+      "calibration_path": "r3_final_runs_20261030/outputs/runs/Weather/sr020_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+      "calibration_sha256": "c49c73f9086736f8556cf870e946cc32126f109340032956395dc9b8c0e28f53",
+      "original_main_selected_epoch": 89,
+      "original_calibration_selected_epoch": 89,
+      "selection": "Original main validation MSE and calibration validation MAE; epoch numbering unchanged.",
+      "original_results_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr020_bl8/seed_2023/H_GLOBAL/results.json",
+      "masks": [
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/validation_2021.npz",
+          "split": "validation",
+          "seed": 2021,
+          "sha256": "1a141323cbad0a6b8a6b888ee0ba626b4b46d189b900803737ede05edc83bb30",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/validation_2021.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100801.npz",
+          "split": "test",
+          "seed": 2026100801,
+          "sha256": "f8349af088dc23e494bc0728eebf9b7e91e81666bec369e1e83335008c6a35bb",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100801.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100802.npz",
+          "split": "test",
+          "seed": 2026100802,
+          "sha256": "9646aee97e6f0f2a8f31b382681e1b9fbb7a60312b9e9dbacad20925217eaf00",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100802.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100803.npz",
+          "split": "test",
+          "seed": 2026100803,
+          "sha256": "6c4669574cb048c9487045c87bf52982eba87ad3c7e0ea884ab959a60abee6d1",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100803.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100804.npz",
+          "split": "test",
+          "seed": 2026100804,
+          "sha256": "0ca98034514fd3161aa447b790803c2fbf3e2e5ec7ee13c3f2816e8b6b9cd4bd",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100804.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100805.npz",
+          "split": "test",
+          "seed": 2026100805,
+          "sha256": "5c4759962c1c1e597f4ea96286b7bc3d06a17e4cc645d285c06f396f09ff0728",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100805.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100806.npz",
+          "split": "test",
+          "seed": 2026100806,
+          "sha256": "8ba4557e29b40f828c7443bbe065a1774e35717198f0a86b3d8b8016bc680511",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100806.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100807.npz",
+          "split": "test",
+          "seed": 2026100807,
+          "sha256": "cbe2600c841327ab208a75fd8747df1a7f6867cbc23e1185cd1646cf7b8cad72",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100807.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100808.npz",
+          "split": "test",
+          "seed": 2026100808,
+          "sha256": "c02142715a2f90ebe276f40314aee051ef0b72be384ed902170ddad2cc9a3f15",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100808.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100809.npz",
+          "split": "test",
+          "seed": 2026100809,
+          "sha256": "743eaa58743263953f52311f32f740a7e557f0f7f770a04b38bed3d42d782376",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100809.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100810.npz",
+          "split": "test",
+          "seed": 2026100810,
+          "sha256": "e42e2b6b6747b04e5668353361aad4d6036401eff2b9ad33709e67cb5440e34b",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100810.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100811.npz",
+          "split": "test",
+          "seed": 2026100811,
+          "sha256": "90c34fd16982281104b8ca49350ad94e896a482f78152002adeea716d1350e46",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100811.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100812.npz",
+          "split": "test",
+          "seed": 2026100812,
+          "sha256": "cc76131debe934e7cc99fe7b72cc1b2cfe223ef2c0ca4818a22d21f4d52172aa",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100812.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100813.npz",
+          "split": "test",
+          "seed": 2026100813,
+          "sha256": "69192e616eccfb81fd15003045850bd7dcbf5eebbfb99c7805a2e929ea1e0731",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100813.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100814.npz",
+          "split": "test",
+          "seed": 2026100814,
+          "sha256": "13f9e74026c0d9d881d7147366fd4244913af712663cba93d3b351c0040bf77e",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100814.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100815.npz",
+          "split": "test",
+          "seed": 2026100815,
+          "sha256": "28451c7170912937076975d0881ce603819e4478be679d824cffe2d4fd2ae06e",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100815.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100816.npz",
+          "split": "test",
+          "seed": 2026100816,
+          "sha256": "1853b0e304d66880a57d4fb1a4b575ea9fd555d87de3fb83cc2801af9f96eaa8",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100816.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100817.npz",
+          "split": "test",
+          "seed": 2026100817,
+          "sha256": "100cbaca2b65aa4b88515761665ad46bfc481a8858661f46d4ce9c4d454259d4",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100817.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100818.npz",
+          "split": "test",
+          "seed": 2026100818,
+          "sha256": "b6c4571e71e7f2bfea2a1a16b9af1305138b5800d4d5b45f5a886825a077c17e",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100818.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100819.npz",
+          "split": "test",
+          "seed": 2026100819,
+          "sha256": "c8881f4c4056213574aa47826aad6aa1c7bfca479519518d16b17ae1a337de56",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100819.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr020_bl8/test_2026100820.npz",
+          "split": "test",
+          "seed": 2026100820,
+          "sha256": "f24c82db9b7fd96857d081ce0f4fbdea639befac0e7124ffee2539a6fee311e6",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr020_bl8/test_2026100820.npz"
+        }
+      ]
+    },
+    {
+      "dataset": "Weather",
+      "scene": "sr010_bl16",
+      "training_seed": 2023,
+      "archived_variant": "H_GLOBAL",
+      "model_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr010_bl16/seed_2023/H_GLOBAL/model.pt",
+      "model_sha256": "b09a533f62872ae2b026d2b5f5057b5888f29f6eed8e6aedda9f0ab26f0594ab",
+      "main_path": "r3_final_runs_20261030/outputs/runs/Weather/sr010_bl16/seed_2023/H_GLOBAL/main/best.pt",
+      "main_sha256": "5965e36077feaee2adcda9447f85c9a732257d9c378e708549a580a14ec94057",
+      "calibration_path": "r3_final_runs_20261030/outputs/runs/Weather/sr010_bl16/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+      "calibration_sha256": "c884137d0d70734172720d28828a6131f5bdc495ccf3a8e1f809326b04002977",
+      "original_main_selected_epoch": 83,
+      "original_calibration_selected_epoch": 99,
+      "selection": "Original main validation MSE and calibration validation MAE; epoch numbering unchanged.",
+      "original_results_path": "r3_final_runs_20261030/outputs/evaluation/Weather/sr010_bl16/seed_2023/H_GLOBAL/results.json",
+      "masks": [
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/validation_2021.npz",
+          "split": "validation",
+          "seed": 2021,
+          "sha256": "44ddbd61719a8c850f4c79c9c02992587e9af6a4e4196a0cdd6b54c1e4712572",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/validation_2021.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100801.npz",
+          "split": "test",
+          "seed": 2026100801,
+          "sha256": "b043e60e3fddc5ec443fdf01efc3f19679b808892975158147042cc1d089e292",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100801.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100802.npz",
+          "split": "test",
+          "seed": 2026100802,
+          "sha256": "e0914424d82d1a0535264f5e9897c671ae5cb9d05b766479aabe7ca999f5ba2a",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100802.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100803.npz",
+          "split": "test",
+          "seed": 2026100803,
+          "sha256": "21c9b2d4c640b3d3a571fc39e80a5c2a22d5d69853c7beaeaad8f8f8b106cfc1",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100803.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100804.npz",
+          "split": "test",
+          "seed": 2026100804,
+          "sha256": "788665d2a58926960d8a87ff73d5f46c086c74cde4eb6a45d271df9cb3fe24b5",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100804.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100805.npz",
+          "split": "test",
+          "seed": 2026100805,
+          "sha256": "e7922419e586eb48a717db54fdfe99b1f26f61b0b46417fcd17679e576cba5a9",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100805.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100806.npz",
+          "split": "test",
+          "seed": 2026100806,
+          "sha256": "2f58d7b553af17d29ebc1d27ec81a9cd82e84811199d937a1282482f1f4ae338",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100806.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100807.npz",
+          "split": "test",
+          "seed": 2026100807,
+          "sha256": "689ae023a501e4aecb790dcddd349951f1d91de2f689f544d8b54a0913878619",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100807.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100808.npz",
+          "split": "test",
+          "seed": 2026100808,
+          "sha256": "f22f10bc16eb534b3fd05712e0ea193ef0d367c576fcbd56c85ecddaa0561209",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100808.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100809.npz",
+          "split": "test",
+          "seed": 2026100809,
+          "sha256": "1552c82a219c327b40ea4f286270aa9a99d601847a49d011e983d48d8a39c41a",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100809.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100810.npz",
+          "split": "test",
+          "seed": 2026100810,
+          "sha256": "a79d5c8de112343eef3173d4445378e50f7894449d9250c181b233925666e0a1",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100810.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100811.npz",
+          "split": "test",
+          "seed": 2026100811,
+          "sha256": "335d83d3a2bd56bc70d64d47d3a22031c1c34fc2a213c86814ff9ee5d950c75c",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100811.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100812.npz",
+          "split": "test",
+          "seed": 2026100812,
+          "sha256": "fe3be8037d1183f5a8a9030da7ae85092c22a1cf05cce280b29b94b0669f29c1",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100812.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100813.npz",
+          "split": "test",
+          "seed": 2026100813,
+          "sha256": "fbc1b5e9e79fdfada5f7f26658c01b76464c48eb1d888369f6a676376e8ed56a",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100813.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100814.npz",
+          "split": "test",
+          "seed": 2026100814,
+          "sha256": "7f9db810206c36c670879fa4d57f843faead1bd2764bc061299421c7ab0b241e",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100814.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100815.npz",
+          "split": "test",
+          "seed": 2026100815,
+          "sha256": "98aec18ea8e07b51cb34c8270866c40c05b0a1fe984831b803cc1c95f9381e63",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100815.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100816.npz",
+          "split": "test",
+          "seed": 2026100816,
+          "sha256": "07823dfac87940d4f9e3bc2883b172053314042405921cca056515645491ef48",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100816.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100817.npz",
+          "split": "test",
+          "seed": 2026100817,
+          "sha256": "8dca905ce37add90a70b3bdef8ded86fbc286a953c6ef8f871666176506f3be6",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100817.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100818.npz",
+          "split": "test",
+          "seed": 2026100818,
+          "sha256": "a8f83eb2e4840072da460e6f0e0d9ce24d6a5f716e1474aac763173da5d3b973",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100818.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100819.npz",
+          "split": "test",
+          "seed": 2026100819,
+          "sha256": "bb96652f97ef72a20ef20823953f20f6864c73ecba3bac0650e497d698b75de5",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100819.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/Weather/sr010_bl16/test_2026100820.npz",
+          "split": "test",
+          "seed": 2026100820,
+          "sha256": "ae8069e6ace2c981f692f3680f9780f5d79eb61ccd02e5057ab54aadadaf1386",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/repair_reproduction_20261010/shared_assets/Weather/sr010_bl16/test_2026100820.npz"
+        }
+      ]
+    },
+    {
+      "dataset": "PAMAP2",
+      "scene": "sr010_bl8",
+      "training_seed": 2023,
+      "archived_variant": "H_GLOBAL",
+      "model_path": "r3_final_runs_20261030/outputs/evaluation/PAMAP2/sr010_bl8/seed_2023/H_GLOBAL/model.pt",
+      "model_sha256": "e4da2673191fabf2dd59a55b73623c464496ded34080762e58b6e14c813e198a",
+      "main_path": "r3_final_runs_20261030/outputs/runs/PAMAP2/sr010_bl8/seed_2023/H_GLOBAL/main/best.pt",
+      "main_sha256": "104c48868a307002b476fe76b18039eded4cb3308fd67ab31442a064e15a9741",
+      "calibration_path": "r3_final_runs_20261030/outputs/runs/PAMAP2/sr010_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+      "calibration_sha256": "56b4ada45dee692a1ce229557b9f558c605a661df25b9ac116dcb55839532a8b",
+      "original_main_selected_epoch": 99,
+      "original_calibration_selected_epoch": 41,
+      "selection": "Original main validation MSE and calibration validation MAE; epoch numbering unchanged.",
+      "original_results_path": "r3_final_runs_20261030/outputs/evaluation/PAMAP2/sr010_bl8/seed_2023/H_GLOBAL/results.json",
+      "masks": [
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/validation_2021.npz",
+          "split": "validation",
+          "seed": 2021,
+          "sha256": "73e1891aeddfc21f33433f910f3b986eeed3a8f362d19f9b15263b12f8b35060",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/validation_2021.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101401.npz",
+          "split": "test",
+          "seed": 2026101401,
+          "sha256": "e4d821b30dfc6e29a3fa39d3c663cce7f80e4582ab8e2d5e87ed740bb59d3e62",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101401.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101402.npz",
+          "split": "test",
+          "seed": 2026101402,
+          "sha256": "3d3907b5fed37c9ed91c98ef19205b9fd49af387f439dcc74d76338a234ad007",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101402.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101403.npz",
+          "split": "test",
+          "seed": 2026101403,
+          "sha256": "0135238a3f80e31dafc866e17450620cd6e6009a7458df40cb4f97cf1c9251ea",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101403.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101404.npz",
+          "split": "test",
+          "seed": 2026101404,
+          "sha256": "2fe9ff1358b31de74179c70226e45e59d411732ad7ff95b89fb735390b5d3160",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101404.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101405.npz",
+          "split": "test",
+          "seed": 2026101405,
+          "sha256": "0ac9a91eecc370a24d9c8635be300be02bd79050fa5491bdd3e50648e019bab2",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101405.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101406.npz",
+          "split": "test",
+          "seed": 2026101406,
+          "sha256": "16e49b9b713deb6f5ff3b99b778fd3292d0911c2701d0435f66d6e3c22b21e39",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101406.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101407.npz",
+          "split": "test",
+          "seed": 2026101407,
+          "sha256": "f70c39d801194f65a36db587f378a1b29fc273f20eccf9ad696a90a3ac0ea1f4",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101407.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101408.npz",
+          "split": "test",
+          "seed": 2026101408,
+          "sha256": "d0c0ccf0119584a4fe8219f150600d10ad53605f75088d5fc96779b01ade8d70",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101408.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101409.npz",
+          "split": "test",
+          "seed": 2026101409,
+          "sha256": "33d7551517af0c287cf120d690cd465ffe14b25f4bba437572cce637cd697b91",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101409.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101410.npz",
+          "split": "test",
+          "seed": 2026101410,
+          "sha256": "97ef173ac1dce5465a27be2da361efdc462bc92a9d69f5e3499714d5e138501c",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101410.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101411.npz",
+          "split": "test",
+          "seed": 2026101411,
+          "sha256": "7dfd496834922f11cc5d75e00f3d18d9193ebedcd2b9da48de549d5f692a2fe4",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101411.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101412.npz",
+          "split": "test",
+          "seed": 2026101412,
+          "sha256": "99f37ec831f2df3c2a0140bb40d24c8182f8171b887b41bc208d1c4b7f8d3486",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101412.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101413.npz",
+          "split": "test",
+          "seed": 2026101413,
+          "sha256": "68e6c4dd3f56aedf82c5d9f6f80920e986fca235598e9d9abb285dd2fc318c8c",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101413.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101414.npz",
+          "split": "test",
+          "seed": 2026101414,
+          "sha256": "70f9fa92f88788a1068f85592b9932e2910e13e66390c195cf98daf809765a46",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101414.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101415.npz",
+          "split": "test",
+          "seed": 2026101415,
+          "sha256": "bd09b14611fefc9dcf635b8f77dad6196ed832becaff0e33d89314273f710afa",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101415.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101416.npz",
+          "split": "test",
+          "seed": 2026101416,
+          "sha256": "199f9398bf2c9712a5964c0eb7df255e19dd0ceb65f2943e04cc86961e9f32d7",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101416.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101417.npz",
+          "split": "test",
+          "seed": 2026101417,
+          "sha256": "76e44c5de21a19781ffa185e91592c1a1d0951f7c2dc07b4665c2cd6d2636fe7",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101417.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101418.npz",
+          "split": "test",
+          "seed": 2026101418,
+          "sha256": "1ce3e0ee2619a1e620648721298b47852a624a2f491ad7e5687eb82cfc025869",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101418.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101419.npz",
+          "split": "test",
+          "seed": 2026101419,
+          "sha256": "d863a37c0f7ea676e2711a04006c98590935d8736a6355a2b31f44061527d979",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101419.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl8/test_2026101420.npz",
+          "split": "test",
+          "seed": 2026101420,
+          "sha256": "cacb4634baed83711e1e143bbf02799de9c072464ed31ef560659271fe4111f1",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl8/test_2026101420.npz"
+        }
+      ]
+    },
+    {
+      "dataset": "PAMAP2",
+      "scene": "sr015_bl8",
+      "training_seed": 2023,
+      "archived_variant": "H_GLOBAL",
+      "model_path": "r3_final_runs_20261030/outputs/evaluation/PAMAP2/sr015_bl8/seed_2023/H_GLOBAL/model.pt",
+      "model_sha256": "7f1817a73bb4ebeb996b71c88eaad7daeb146187ef322b43e61bdc93559ba908",
+      "main_path": "r3_final_runs_20261030/outputs/runs/PAMAP2/sr015_bl8/seed_2023/H_GLOBAL/main/best.pt",
+      "main_sha256": "8221649a017dbe02b07e57348ecda81c334da3661fb402ab50474055e74d69ee",
+      "calibration_path": "r3_final_runs_20261030/outputs/runs/PAMAP2/sr015_bl8/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+      "calibration_sha256": "dad19364bc95997c22132ba534bb2edfbd92dcc0edaf9c60f850c1af3a3044f4",
+      "original_main_selected_epoch": 98,
+      "original_calibration_selected_epoch": 98,
+      "selection": "Original main validation MSE and calibration validation MAE; epoch numbering unchanged.",
+      "original_results_path": "r3_final_runs_20261030/outputs/evaluation/PAMAP2/sr015_bl8/seed_2023/H_GLOBAL/results.json",
+      "masks": [
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/validation_2021.npz",
+          "split": "validation",
+          "seed": 2021,
+          "sha256": "ef3d51f8861d75818e7787b71bf5d3732a78b96c60206921c131c5fb0260d622",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/validation_2021.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101401.npz",
+          "split": "test",
+          "seed": 2026101401,
+          "sha256": "ae58f630f879609380a4e3ceb3a7279109d563fff213950982fd54679b831b89",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101401.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101402.npz",
+          "split": "test",
+          "seed": 2026101402,
+          "sha256": "b8c208d629e0ab7c0e015f2a633993f9d72f407dbf3c8bdc642978f909204edb",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101402.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101403.npz",
+          "split": "test",
+          "seed": 2026101403,
+          "sha256": "b8024d5db77a385e4c7d21e9434106b96d2b2338473d461032f9fd0912173801",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101403.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101404.npz",
+          "split": "test",
+          "seed": 2026101404,
+          "sha256": "a7ced9fb49f0dbf0d825b09b94bf80601a1bf0db66d55a6bd8b419c9f79f3da6",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101404.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101405.npz",
+          "split": "test",
+          "seed": 2026101405,
+          "sha256": "c2196778470c217a17b199b7b054cd8a596f56d4e7e8c1cfb37345219c287c6a",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101405.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101406.npz",
+          "split": "test",
+          "seed": 2026101406,
+          "sha256": "08237545f113370df50039d6fc1bbd9c10e2325738787fbf83c47eed1c2eb1c0",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101406.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101407.npz",
+          "split": "test",
+          "seed": 2026101407,
+          "sha256": "735ee7065a648fe174bd2eef1ef85e9e379d5697fba55c3f94f27438d2dbec3f",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101407.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101408.npz",
+          "split": "test",
+          "seed": 2026101408,
+          "sha256": "0c2d9aa163b8de06ee3f583c45661897b2826dd4952f383eb254c48b7d3773d3",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101408.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101409.npz",
+          "split": "test",
+          "seed": 2026101409,
+          "sha256": "6af500e39d05788646fb71a122aae59c0d65497b64afd412b2cf2e22da2b57a3",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101409.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101410.npz",
+          "split": "test",
+          "seed": 2026101410,
+          "sha256": "774b806d242c40f8f2ce5a77bcf12874bd585f0eb20c1dc5eae8a166456d3a26",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101410.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101411.npz",
+          "split": "test",
+          "seed": 2026101411,
+          "sha256": "b645803b11dff8f4c5840c7ac771dcbc9c891a42a0c2b7805d07a25020d83500",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101411.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101412.npz",
+          "split": "test",
+          "seed": 2026101412,
+          "sha256": "2f53c7a37a0d547f9cb8a7f343ce5d09a35bda7dac923a84d66054d86bff5627",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101412.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101413.npz",
+          "split": "test",
+          "seed": 2026101413,
+          "sha256": "c9589bef88f8222d74104bb0d01a267f5545bd7883611d973e4f5377ecb005f8",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101413.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101414.npz",
+          "split": "test",
+          "seed": 2026101414,
+          "sha256": "f301ae7002c8e1d41608e6c8c7e14ef3ae87f2addcbdbd1567d254a10178cf96",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101414.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101415.npz",
+          "split": "test",
+          "seed": 2026101415,
+          "sha256": "03457a0ac2e4b049eb3c9ed8d2094b4532fbfe069a9a0ec0ec5079b8fdbf3152",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101415.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101416.npz",
+          "split": "test",
+          "seed": 2026101416,
+          "sha256": "6feb8f50b4c8332dae35e92f928537d609cfadce0a4c15bfc94c5d2c19879ad7",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101416.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101417.npz",
+          "split": "test",
+          "seed": 2026101417,
+          "sha256": "3239dab38fdb883c08cda3c2198a6dead134fb0ee93680de2f4766bf526415d7",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101417.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101418.npz",
+          "split": "test",
+          "seed": 2026101418,
+          "sha256": "626dcccb5297caff51f449edd54e86d3345e7c150c056ee4bcd2f1b529c19cd2",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101418.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101419.npz",
+          "split": "test",
+          "seed": 2026101419,
+          "sha256": "ea5f794aa7b0599e0d46ed6953ade48a74e2d8b761de1286d1b41d6ad4bad156",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101419.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr015_bl8/test_2026101420.npz",
+          "split": "test",
+          "seed": 2026101420,
+          "sha256": "00f809caf00b6f4470cdf1792e1c5f493f0b973c20c5c545c77d6758cc699d36",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr015_bl8/test_2026101420.npz"
+        }
+      ]
+    },
+    {
+      "dataset": "PAMAP2",
+      "scene": "sr010_bl16",
+      "training_seed": 2023,
+      "archived_variant": "H_GLOBAL",
+      "model_path": "r3_final_runs_20261030/outputs/evaluation/PAMAP2/sr010_bl16/seed_2023/H_GLOBAL/model.pt",
+      "model_sha256": "dfd613e36247552525194927bf24a6da968564fdbf3054b5c2f907d14e070344",
+      "main_path": "r3_final_runs_20261030/outputs/runs/PAMAP2/sr010_bl16/seed_2023/H_GLOBAL/main/best.pt",
+      "main_sha256": "baef03ad584a7705a15a6576ce7dfc0c4393c6a582b2eb430130ba2f8a9b3892",
+      "calibration_path": "r3_final_runs_20261030/outputs/runs/PAMAP2/sr010_bl16/seed_2023/H_GLOBAL/calibration/best_mae.pt",
+      "calibration_sha256": "2a3489b135211ec34fb0ddd3caf50e0df79ea732b8b8b70b43c0387bc3416708",
+      "original_main_selected_epoch": 93,
+      "original_calibration_selected_epoch": 85,
+      "selection": "Original main validation MSE and calibration validation MAE; epoch numbering unchanged.",
+      "original_results_path": "r3_final_runs_20261030/outputs/evaluation/PAMAP2/sr010_bl16/seed_2023/H_GLOBAL/results.json",
+      "masks": [
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/validation_2021.npz",
+          "split": "validation",
+          "seed": 2021,
+          "sha256": "c7bb5231027474995febd3eb2d9ae4a24fcb75cf3c3d9dc0741e9b3517a34a8f",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/validation_2021.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101401.npz",
+          "split": "test",
+          "seed": 2026101401,
+          "sha256": "0070f44fcdd9f191e26c56e8ebe185fdcbf18a6a1837d9090a116d9502700b03",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101401.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101402.npz",
+          "split": "test",
+          "seed": 2026101402,
+          "sha256": "b7c75dcbf5eda9609e78b50933c06928332e296ad6e1cd82a0d5b6ab128ab003",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101402.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101403.npz",
+          "split": "test",
+          "seed": 2026101403,
+          "sha256": "eb0c07db5efa2a1741e4f5e6a3b99aa6121370e499afe80a3e1daca9ed5fd226",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101403.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101404.npz",
+          "split": "test",
+          "seed": 2026101404,
+          "sha256": "9d0cb3ac572585b1f83f8869270cbaf43659de517abd5a5f4409593a44582a84",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101404.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101405.npz",
+          "split": "test",
+          "seed": 2026101405,
+          "sha256": "09cd7a6471266d778243e28dbbf0fbf959a31b7a3148cec6b0ba334e91cce8b5",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101405.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101406.npz",
+          "split": "test",
+          "seed": 2026101406,
+          "sha256": "5b553d6f934534a6498e28a98469513ef106e15a9899dd65f89532d387d02626",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101406.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101407.npz",
+          "split": "test",
+          "seed": 2026101407,
+          "sha256": "51a95379e2992db714305e5945cde7c3e49e4149867bbf37a1ca27077944dbf3",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101407.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101408.npz",
+          "split": "test",
+          "seed": 2026101408,
+          "sha256": "4711487a51853d362ae513d5f1690ba186651a3938c7c5a61610caf2c24a55b5",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101408.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101409.npz",
+          "split": "test",
+          "seed": 2026101409,
+          "sha256": "2e60365b1e0c845763b96d25ff7035ab8b0ab7e5484b3909ec4d7d352715b512",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101409.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101410.npz",
+          "split": "test",
+          "seed": 2026101410,
+          "sha256": "0c77ba8181e61f79f9c8d6227bce77c2f5a87838665e9ad6292116334ceb3409",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101410.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101411.npz",
+          "split": "test",
+          "seed": 2026101411,
+          "sha256": "a4fd98eec158278485995c6fe73ee758356df43a0fdaec7467b2650da970bc37",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101411.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101412.npz",
+          "split": "test",
+          "seed": 2026101412,
+          "sha256": "41373511532f77573c2c125fe8b61c8e322ab543a6c24819a2383c02890e4989",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101412.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101413.npz",
+          "split": "test",
+          "seed": 2026101413,
+          "sha256": "d9416613f069131a015a58f4eb237b15c4f7319c07a70af2f940da415ce0ad6b",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101413.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101414.npz",
+          "split": "test",
+          "seed": 2026101414,
+          "sha256": "2ba00915dfec8d10ad8ee86273a204fd56d55a8668c6e6286a50a4aa6b8b8e7b",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101414.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101415.npz",
+          "split": "test",
+          "seed": 2026101415,
+          "sha256": "93b972082a663f792d83edf77828132c32a3669a156fcc70e7590f59d1391976",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101415.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101416.npz",
+          "split": "test",
+          "seed": 2026101416,
+          "sha256": "3ba5f5a76bb5a675ccd154bef88bdb3bc4f00491d4f90ce25bd4debce2234d07",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101416.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101417.npz",
+          "split": "test",
+          "seed": 2026101417,
+          "sha256": "05368589661a1fb41b2c6bb4b86d49e03c538ae078d17de55743b0b2b91ba40e",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101417.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101418.npz",
+          "split": "test",
+          "seed": 2026101418,
+          "sha256": "5f3522ce57d5e54bb6933b4e233a374e17cb90e2508ac182c87fc11426c3a7d5",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101418.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101419.npz",
+          "split": "test",
+          "seed": 2026101419,
+          "sha256": "f6c3d4e67e394efd85b0974c4047161c0cd4945891b28e9401a02c4187dc81e0",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101419.npz"
+        },
+        {
+          "path": "r3_final_runs_20261030/outputs/assets/PAMAP2/sr010_bl16/test_2026101420.npz",
+          "split": "test",
+          "seed": 2026101420,
+          "sha256": "b8663b6918ab0e86729ce7600bbe6ecba91636a3daa07555fc09250065433362",
+          "original_shared_baseline_source": "/home/xyw/paper/E24/artifacts/pamap2_reproduction_20261014/shared_assets/PAMAP2/sr010_bl16/test_2026101420.npz"
+        }
+      ]
+    }
+  ],
+  "missing": [],
+  "retrained": false,
+  "reselected": false
+}
